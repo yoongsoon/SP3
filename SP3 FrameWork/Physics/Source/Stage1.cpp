@@ -27,16 +27,59 @@ void Stage1::Init()
 	m_worldHeight = 100.f;
 	m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
 
+	theFactory = new Factory();
+	theEnemy = new Enemy(GameObject::GO_ENEMY, this);
+	gom = new GameObjectManager(this);
+
+	GameObject *go = new Enemy(GameObject::GO_ENEMY, this);
+	go->active = true;
+	go->meshValue = SceneBase::GEO_ARCHER;
+	go->scale.Set(5, 5, 5);
+	go->vel.Set(0.f, 0.f, 0.f);
+	go->pos.Set(m_worldWidth / 10, m_worldHeight / 2, 0.f);
+	static_cast<Enemy*> (go)->enemyType = Enemy::E_ARCHER;
+	static_cast<Enemy*> (go)->hp = 100.f;
+	static_cast<Enemy*> (go)->range = 1.f;
+	static_cast<Enemy*> (go)->damage = 10.f;
+	static_cast<Enemy*> (go)->cooldown = 3.f;
+	theFactory->createGameObject(go);
 }
 
 void Stage1::Update(double dt)
 {
 	_elapsedTime += (float)dt;
 	pressDelay += (float)dt;
+	_dt = (float)dt;
 
 	//Calculating aspect ratio
 	m_worldHeight = 100.f;
 	m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
+
+	static bool spacepress = false;
+	if (Application::IsKeyPressed(VK_SPACE) && !spacepress)
+	{
+		GameObject *go = new Enemy(GameObject::GO_ENEMY, this);
+		go->active = true;
+		go->scale.Set(5, 5, 5);
+		go->vel.Set(-10.f, 0.f, 0.f);
+		go->pos.Set(m_worldWidth / 2, m_worldHeight / 2, 0.f);
+		static_cast<Enemy*> (go)->enemyType = Enemy::E_SOLDIER;
+		static_cast<Enemy*> (go)->hp = 100.f;
+		static_cast<Enemy*> (go)->range = 1.f;
+		static_cast<Enemy*> (go)->damage = 10.f;
+		static_cast<Enemy*> (go)->cooldown = 3.f;
+		theFactory->createGameObject(go);
+		/*cout << "hi" << endl;*/
+		spacepress = true;
+	}
+	else if (!Application::IsKeyPressed(VK_SPACE) && spacepress)
+	{
+		spacepress = false;
+	}
+	// update all game objects
+	theFactory->updateGameObject();
+	gom->update();
+	//theEnemy->update();
 }
 
 void Stage1::Render()
@@ -57,6 +100,9 @@ void Stage1::Render()
 	);
 	// Model matrix : an identity matrix (model will be at the origin)
 	modelStack.LoadIdentity();
+
+	//Render all the game objects
+	theFactory->renderGameObject();
 
 }
 

@@ -2,7 +2,7 @@
 
 #include "GameObject.h"
 #include "SceneBase.h"
-
+#include "Enemy.h"
 class SceneManager;
 
 class Stage1 : public SceneBase
@@ -17,15 +17,10 @@ public:
 	virtual void Render();
 	virtual void Exit();
 
-
-
-
 protected:
 	static Stage1 * sInstance; // The pointer to the object that gets registered
 
 
 							   //Physics
 	float m_speed;
-
-
 };

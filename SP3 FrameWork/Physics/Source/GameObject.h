@@ -16,8 +16,8 @@ public:
 		GO_BALL,
 		GO_WALL,
 		GO_PILLAR,
-	
-		GO_TOTAL, //must be last
+		GO_ENEMY,
+		GO_TOTAL //must be last
 	};
 	GAMEOBJECT_TYPE type;
 	Vector3 pos;
@@ -28,6 +28,7 @@ public:
 	float rotateX;
 	float rotateY;
 	float rotateZ;
+
 	unsigned meshValue;
 
 	Vector3 m_force; // thrust force

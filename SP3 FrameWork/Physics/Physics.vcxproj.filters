@@ -27,6 +27,9 @@
     <Filter Include="Source Files\Collider">
       <UniqueIdentifier>{d956ff2a-4c16-4fa7-aec1-6900ee9dcb3a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Enemy">
+      <UniqueIdentifier>{85bd4b80-e666-43b7-9d73-9270bfc618a1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
@@ -76,6 +79,9 @@
     </ClCompile>
     <ClCompile Include="Source\CollisionManager.cpp">
       <Filter>Source Files\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy.cpp">
+      <Filter>Source Files\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -138,6 +144,9 @@
     </ClInclude>
     <ClInclude Include="Source\CollisionManager.h">
       <Filter>Header Files\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy.h">
+      <Filter>Source Files\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

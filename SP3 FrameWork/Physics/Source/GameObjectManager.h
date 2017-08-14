@@ -2,6 +2,7 @@
 
 class SceneBase;
 class GameObject;
+class CollisionManager;
 
 class GameObjectManager
 {
@@ -10,11 +11,12 @@ public:
 	GameObjectManager(SceneBase * scene);
 	~GameObjectManager();
 
-
-
+	void update();
+	
+	CollisionManager * collider;
 
 private:
-	SceneBase * _scene;
+	SceneBase * theScene;
 
 	
 
