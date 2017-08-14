@@ -113,6 +113,9 @@ void SceneBase::Init()
 	meshList[GEO_SOLDIER] = MeshBuilder::GenerateCube("cube", Color(1, 0, 1), 2.f);
 	meshList[GEO_ARCHER] = MeshBuilder::GenerateSphere("ball", Color(1, 0, 0), 10, 10, 1.f);
 
+	meshList[GEO_BACKGROUND] = MeshBuilder::GenerateQuad("BackGround", Color(1.f, 1.f, 1.f), 1.f);
+	meshList[GEO_BACKGROUND]->textureID = LoadTGA("Image/BackGround.tga");
+
 	bLightEnabled = false;
 
 }

@@ -10,6 +10,7 @@ GameObject::GameObject(GAMEOBJECT_TYPE typeValue)
 	,dir(Vector3(1,0,0))
 	, momentOfInertia(1.f)
 	, angularVelocity(0.f)
+	, m_gravity(-9.8f)
 {
 }
 
@@ -27,6 +28,7 @@ GameObject::GameObject(GAMEOBJECT_TYPE typeValue, SceneBase * scene)
 	, dir(Vector3(1, 0, 0))
 	, momentOfInertia(1.f)
 	, angularVelocity(0.f)
+	,m_gravity(-9.8f)
 {
 
 }

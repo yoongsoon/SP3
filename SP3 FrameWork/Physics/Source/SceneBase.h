@@ -12,6 +12,7 @@
 #include "Factory.h"
 #include "Enemy.h"
 #include "GameObjectManager.h"
+#include "Projectile.h"
 
 #include <vector>
 
@@ -22,6 +23,7 @@ class SceneBase : public Scene
 	friend CollisionManager;
 	friend Enemy;
 	friend GameObjectManager;
+	friend Projectile;
 
 	enum UNIFORM_TYPE
 	{
@@ -62,6 +64,8 @@ public:
 		GEO_SOLDIER,
 		GEO_ARCHER,
 		GEO_WIZARD,
+		GEO_BACKGROUND,
+
 		NUM_GEOMETRY,
 	};
 public:
@@ -105,10 +109,12 @@ protected:
 	float _elapsedTime = 0.f;
 	float _dt = 0.f;
 
-
 	Factory * theFactory;
 	Enemy * theEnemy;
 	GameObjectManager * gom;
+	GameObject * theGhostProj;
+
+	double mouseX, mouseY;
 };
 
 #endif

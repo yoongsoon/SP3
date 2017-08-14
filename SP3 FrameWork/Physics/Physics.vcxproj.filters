@@ -80,6 +80,9 @@
     <ClCompile Include="Source\CollisionManager.cpp">
       <Filter>Source Files\Collider</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Projectile.cpp">
+      <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Enemy.cpp">
       <Filter>Source Files\Enemy</Filter>
     </ClCompile>
@@ -147,6 +150,9 @@
     </ClInclude>
     <ClInclude Include="Source\Enemy.h">
       <Filter>Source Files\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Projectile.h">
+      <Filter>Header Files\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
