@@ -16,7 +16,9 @@ public:
 		GO_BALL,
 		GO_WALL,
 		GO_PILLAR,
-	
+
+		GO_PROJECTILE,
+
 		GO_TOTAL, //must be last
 	};
 	GAMEOBJECT_TYPE type;
@@ -34,6 +36,7 @@ public:
 	Vector3 dir; //direction/orientation
 	float momentOfInertia;
 	float angularVelocity; //in radians
+	const float m_gravity; 
 
 	GameObject(GAMEOBJECT_TYPE typeValue = GO_BALL);
 	GameObject(GAMEOBJECT_TYPE typeValue, SceneBase * scene);

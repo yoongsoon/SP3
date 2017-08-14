@@ -10,6 +10,7 @@
 #include "GameObject.h"
 #include "CollisionManager.h"
 #include "Factory.h"
+#include "Projectile.h"
 
 #include <vector>
 
@@ -18,6 +19,7 @@ class SceneBase : public Scene
 {
 	friend GameObject;
 	friend CollisionManager;
+	friend Projectile;
 
 	enum UNIFORM_TYPE
 	{
@@ -55,6 +57,8 @@ public:
 		GEO_BALL,
 		GEO_CUBE,
 		GEO_CIRCLE,
+
+		GEO_BACKGROUND,
 
 		NUM_GEOMETRY,
 
@@ -98,9 +102,13 @@ protected:
 	float pressDelay = 0.f;
 	const float cooldownPressed = 0.5f;
 	float _elapsedTime = 0.f;
-
+	float _dt = 0.f;
+	double mouseX, mouseY;
 
 	Factory * theFactory;
+	GameObject * theGhostProj;
+
+
 };
 
 #endif

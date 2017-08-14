@@ -111,6 +111,9 @@ void SceneBase::Init()
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//ExportedFont2.tga");
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
 
+	meshList[GEO_BACKGROUND] = MeshBuilder::GenerateQuad("BackGround", Color(1.f, 1.f, 1.f), 1.f);
+	meshList[GEO_BACKGROUND]->textureID = LoadTGA("Image/BackGround.tga");
+
 	bLightEnabled = false;
 
 }
