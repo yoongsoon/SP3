@@ -18,6 +18,8 @@ public:
 		GO_PILLAR,
 		GO_ENEMY,
 		GO_PROJECTILE,
+		GO_BRICK,
+		GO_CASTLE,
 		GO_TOTAL, //must be last
 	};
 	GAMEOBJECT_TYPE type;
@@ -25,6 +27,7 @@ public:
 	Vector3 vel;
 	Vector3 scale;
 	bool active;
+	bool m_gEffect;
 	float mass;
 	float rotateX;
 	float rotateY;

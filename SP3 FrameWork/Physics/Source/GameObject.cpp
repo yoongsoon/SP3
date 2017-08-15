@@ -11,6 +11,7 @@ GameObject::GameObject(GAMEOBJECT_TYPE typeValue)
 	, momentOfInertia(1.f)
 	, angularVelocity(0.f)
 	, m_gravity(-9.8f)
+	, m_gEffect(true)
 {
 }
 

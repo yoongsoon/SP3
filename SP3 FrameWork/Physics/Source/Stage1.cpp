@@ -27,12 +27,16 @@ void Stage1::Init()
 	//Calculating aspect ratio
 	m_worldHeight = 100.f;
 	m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
-
+	//initialise the factory class
+	// MUST BE FIRST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	theFactory = new Factory();
+	theCollider = new CollisionManager(this);
 	//intialise ghost projectile
 	theGhostProj = new Projectile(GameObject::GO_PROJECTILE, this);
-	//initialise the factory class
-	theFactory = new Factory();
-
+	// Initialize castle object
+	theCastle = new Castle(GameObject::GO_BRICK, this);
+	theFactory->createGameObject(theCastle);
+	
 	theEnemy = new Enemy(GameObject::GO_ENEMY, this);
 	gom = new GameObjectManager(this);
 
@@ -48,6 +52,7 @@ void Stage1::Init()
 	static_cast<Enemy*> (go)->damage = 10.f;
 	static_cast<Enemy*> (go)->cooldown = 3.f;
 	theFactory->createGameObject(go);
+	
 }
 
 void Stage1::Update(double dt)
@@ -117,6 +122,7 @@ void Stage1::Update(double dt)
 	//Update all Game Objects
 	theFactory->updateGameObject();
 	gom->update();
+	theCollider->Update(dt);
 }
 
 void Stage1::Render()

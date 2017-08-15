@@ -18,7 +18,8 @@ Projectile::~Projectile()
 
 void Projectile::update()
 {
-	vel.y += m_gravity *theScene->_dt;
+	if (m_gEffect)
+		vel.y += m_gravity *theScene->_dt;
 
 	pos.x +=  vel.x * theScene->_dt;
 	pos.y += vel.y * theScene->_dt + ( 0.5 *  m_gravity * (theScene->_dt * theScene->_dt));
