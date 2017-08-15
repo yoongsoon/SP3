@@ -38,7 +38,7 @@ void GameObjectManager::update()
 		
 				if (static_cast <Enemy *>(it->second)->enemyType == Enemy::E_ARCHER && static_cast <Enemy *>(it2->second)->enemyType == Enemy::E_SOLDIER)
 				{
-					cout << "hi" << endl;
+					
 
 					if ((static_cast <Enemy *>(it2->second)->pos.x + static_cast <Enemy *>(it2->second)->range) - (static_cast <Enemy *>(it->second)->pos.x) < 1.f ||
 						(static_cast <Enemy *>(it2->second)->pos.x - static_cast <Enemy *>(it2->second)->range) - (static_cast <Enemy *>(it->second)->pos.x) < 1.f)
@@ -46,7 +46,9 @@ void GameObjectManager::update()
 						//static_cast <Enemy *>(it2->second)->hp -= static_cast <Enemy *>(it->second)->damage;
 						it2->second->rotateX += 30.f;
 						static_cast <Enemy *>(it2->second)->StopToAttack = true;
+
 						cout << "bpoom" << endl; // dafuq is bpoom?
+
 					}
 					//if ((static_cast <Enemy *>(it2->second)->pos.x + static_cast <Enemy *>(it2->second)->range) == (static_cast <Enemy *>(it->second)->pos.x))
 					//{

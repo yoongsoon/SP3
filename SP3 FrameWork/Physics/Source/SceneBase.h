@@ -14,6 +14,8 @@
 #include "GameObjectManager.h"
 #include "Projectile.h"
 #include "Castle.h"
+#include "BackGround.h"
+
 
 #include <vector>
 
@@ -26,6 +28,7 @@ class SceneBase : public Scene
 	friend GameObjectManager;
 	friend Projectile;
 	friend Castle;
+	friend BackGround;
 
 	enum UNIFORM_TYPE
 	{
@@ -120,6 +123,7 @@ protected:
 	GameObject* theCastle;
 
 	double mouseX, mouseY;
+	float backGroundX = 40.f;
 };
 
 #endif

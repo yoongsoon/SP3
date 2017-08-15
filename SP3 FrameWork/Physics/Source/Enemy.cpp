@@ -14,6 +14,14 @@ Enemy::~Enemy()
 
 void Enemy::update()
 {
+	//destroy enemy when it ran out of hp
+	if (hp <= 0)
+	{
+		isDestroyed = true;
+		return;
+	}
+
+
 	if (enemyType == ENEMY_TYPE::E_SOLDIER)
 	{
 		if (StopToAttack)

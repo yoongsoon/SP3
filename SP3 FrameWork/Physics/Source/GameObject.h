@@ -51,6 +51,12 @@ public:
 
      SceneBase * theScene;
 
+	 //a bool to check whether the object should be deleted
+	 bool isDestroyed;
+
+
+
+
 };
 
 #endif
