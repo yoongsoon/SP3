@@ -30,6 +30,12 @@
     <Filter Include="Source Files\Enemy">
       <UniqueIdentifier>{85bd4b80-e666-43b7-9d73-9270bfc618a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\WeaponInfo">
+      <UniqueIdentifier>{875ee0cd-2d39-495b-a54d-852d6d8d6aea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PlayerInfo">
+      <UniqueIdentifier>{54d20883-15a9-4c52-9776-1aefea58518b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
@@ -85,6 +91,24 @@
     </ClCompile>
     <ClCompile Include="Source\Enemy.cpp">
       <Filter>Source Files\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WeaponInfo.cpp">
+      <Filter>Source Files\WeaponInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Start_Scene.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlayerInfo.cpp">
+      <Filter>Source Files\PlayerInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Bow.cpp">
+      <Filter>Source Files\WeaponInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Catapult.cpp">
+      <Filter>Source Files\WeaponInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Cannon.cpp">
+      <Filter>Source Files\WeaponInfo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +177,24 @@
     </ClInclude>
     <ClInclude Include="Source\Projectile.h">
       <Filter>Header Files\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WeaponInfo.h">
+      <Filter>Source Files\WeaponInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Start_Scene.h">
+      <Filter>Source Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlayerInfo.h">
+      <Filter>Source Files\PlayerInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Bow.h">
+      <Filter>Source Files\WeaponInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Catapult.h">
+      <Filter>Source Files\WeaponInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Cannon.h">
+      <Filter>Source Files\WeaponInfo</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

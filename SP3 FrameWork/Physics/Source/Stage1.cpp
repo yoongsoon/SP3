@@ -3,6 +3,7 @@
 #include "GL\glew.h"
 #include "Application.h"
 #include "SceneManager.h"
+#include "WeaponInfo.h"
 
 Stage1 * Stage1::sInstance = new Stage1(SceneManager::getInstance());
 
@@ -53,7 +54,7 @@ void Stage1::Init()
 void Stage1::Update(double dt)
 {
 	_elapsedTime += (float)dt;
-	pressDelay += (float)dt;
+	//pressDelay += (float)dt;
 	_dt = (float)dt;
 
 	//Calculating aspect ratio
@@ -84,7 +85,7 @@ void Stage1::Update(double dt)
 
 	//Mouse Section
 	static bool bLButtonState = false;
-	if (!bLButtonState && Application::IsMousePressed(0) && pressDelay >= cooldownPressed)
+	if (!bLButtonState && Application::IsMousePressed(0))
 	{
 		bLButtonState = true;
 
@@ -97,18 +98,25 @@ void Stage1::Update(double dt)
 	else if (bLButtonState && !Application::IsMousePressed(0))
 	{
 		bLButtonState = false;
-
+		//when button click call discharge of weapon//TO DO****
 		Vector3 currentPos;
 		Application::GetCursorPos(&mouseX, &mouseY);
 		currentPos.x = (float)mouseX / Application::GetWindowWidth() * m_worldWidth;;
 		currentPos.y = (Application::GetWindowHeight() - (float)mouseY) / Application::GetWindowHeight() * m_worldHeight;
-
+	
+		Weapon_Info potato;
+		//potato.Get_OBJECT();
+		
 		GameObject *tempObject = new  Projectile(GameObject::GO_PROJECTILE , this);
-		tempObject->pos = theGhostProj->pos;
+		//info to shoot bullet
+		potato.Discharge(currentPos, theGhostProj->pos,tempObject, this);
+	/*	tempObject->pos = theGhostProj->pos;
 		tempObject->vel = tempObject->pos - currentPos;
 		tempObject->scale.Set(3, 3, 3);
 		tempObject->mass = 3;
 		tempObject->active = true;
+*/
+
 		theGhostProj->active = false;
 
 		// add object into factory

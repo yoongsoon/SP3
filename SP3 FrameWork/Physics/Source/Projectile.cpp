@@ -23,3 +23,25 @@ void Projectile::update()
 	pos.x +=  vel.x * theScene->_dt;
 	pos.y += vel.y * theScene->_dt + ( 0.5 *  m_gravity * (theScene->_dt * theScene->_dt));
 }
+
+//
+//Projectile* Create::Projectile(const std::string& _meshName,
+//	const Vector3& _position,
+//	const Vector3& _direction,
+//	const float m_fLifetime,
+//	const float m_fSpeed,
+//	Projectile* _source)
+//{
+//	Mesh* modelMesh = MeshBuilder::GetInstance()->GetMesh(_meshName);
+//	if (modelMesh == nullptr)
+//		return nullptr;
+//
+//	Projectile* result = new Projectile(modelMesh);
+//	result->Set(_position, _direction, m_fLifetime, m_fSpeed);
+//	result->SetStatus(true);
+//	result->SetCollider(true);
+//	result->SetSource(_source);
+//	EntityManager::GetInstance()->AddEntity(result);
+//
+//	return result;
+//}
