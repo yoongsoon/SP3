@@ -41,7 +41,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -160,6 +160,8 @@
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\Cannon.cpp" />
     <ClCompile Include="Source\Catapult.cpp" />
+    <ClCompile Include="Source\BackGround.cpp" />
+    <ClCompile Include="Source\Castle.cpp" />
     <ClCompile Include="Source\CollisionManager.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\Factory.cpp" />
@@ -186,6 +188,8 @@
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\Cannon.h" />
     <ClInclude Include="Source\Catapult.h" />
+    <ClInclude Include="Source\BackGround.h" />
+    <ClInclude Include="Source\Castle.h" />
     <ClInclude Include="Source\CollisionManager.h" />
     <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\Factory.h" />

@@ -1,13 +1,23 @@
 #pragma once
 
 #include "GameObject.h"
-#include "Factory.h"
 #include "Vector3.h"
 #include <list>
+
 class Projectile : public GameObject
 {
 public:
-	Projectile(GAMEOBJECT_TYPE typeValue, SceneBase * scene);
+	enum PROJECTILE_TYPE
+	{
+		ARROW_PROJECTILE,
+		ROCK_PROJECTILE,
+		CANNON_BALL_PROJECTILE,
+	};
+
+	PROJECTILE_TYPE typeOfProjectile;
+
+    // Constructor / Destructor
+	Projectile(PROJECTILE_TYPE _typeofProjectile, GAMEOBJECT_TYPE typeValue, SceneBase * scene);
 	virtual ~Projectile();
 
 	//set active=true/false
@@ -15,9 +25,13 @@ public:
 	//get active=true/false
 	bool GetStatus(void) const;
 	
-
+	//Update to run projectile logic
 	virtual void update();
+
+	// use to cap speed of projectile
 	const float MAX_SPEED;
+	// damage of projectile
+	float m_damage;
 
 	//-------
 
