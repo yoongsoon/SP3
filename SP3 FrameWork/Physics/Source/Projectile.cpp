@@ -1,12 +1,33 @@
 #include "Projectile.h"
 #include "SceneBase.h"
 
-Projectile::Projectile(GAMEOBJECT_TYPE typeValue, SceneBase * scene)
+Projectile::Projectile(PROJECTILE_TYPE _typeofProjectile, GAMEOBJECT_TYPE typeValue, SceneBase * scene)
 	:GameObject(typeValue , scene)
 	, m_launchAngle(30.f)
 	, MAX_SPEED(15.f)
 {
 	meshValue = SceneBase::GEO_CIRCLE;
+	typeOfProjectile = _typeofProjectile;
+
+	switch (typeOfProjectile)
+	{
+	case ARROW_PROJECTILE:
+	{
+		m_damage = 1.f;
+	}
+	break;
+	case ROCK_PROJECTILE:
+	{
+		m_damage = 5.f;
+	}
+	break;
+	case CANNON_BALL_PROJECTILE:
+	{
+		m_damage = 10.f;
+	}
+	break;
+	}
+
 
 	vel.x = vel.Length() * cos(Math::RadianToDegree(m_launchAngle));
 	vel.y = vel.Length() * sin(Math::RadianToDegree(m_launchAngle));

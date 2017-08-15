@@ -83,6 +83,12 @@
     <ClCompile Include="Source\Projectile.cpp">
       <Filter>Source Files\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy.cpp">
+      <Filter>Source Files\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BackGround.cpp">
+      <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -149,6 +155,9 @@
       <Filter>Source Files\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Source\Projectile.h">
+      <Filter>Header Files\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BackGround.h">
       <Filter>Header Files\GameObject</Filter>
     </ClInclude>
   </ItemGroup>

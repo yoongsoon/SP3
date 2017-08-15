@@ -110,7 +110,7 @@ void SceneBase::Init()
 	meshList[GEO_CIRCLE] = MeshBuilder::GenerateSphere("circle", Color(1, 0, 0), 10, 10, 1.f);
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//ExportedFont2.tga");
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
-	meshList[GEO_SOLDIER] = MeshBuilder::GenerateCube("cube", Color(1, 0, 1), 2.f);
+	meshList[GEO_SOLDIER] = MeshBuilder::GenerateCube("cube", Color(1, 0, 1), 1.f);
 	meshList[GEO_ARCHER] = MeshBuilder::GenerateSphere("ball", Color(1, 0, 0), 10, 10, 1.f);
 
 	meshList[GEO_BACKGROUND] = MeshBuilder::GenerateQuad("BackGround", Color(1.f, 1.f, 1.f), 1.f);
@@ -206,7 +206,7 @@ void SceneBase::RenderMeshOnScreen(Mesh* mesh, float x, float y, float sizeX, fl
 {
 	glDisable(GL_DEPTH_TEST);
 	Mtx44 ortho;
-	ortho.SetToOrtho(0, 80, 0, 60, -10, 10); //size of screen UI
+	ortho.SetToOrtho(0, 160, 0, 60, -10, 10); //size of screen UI
 	projectionStack.PushMatrix();
 	projectionStack.LoadMatrix(ortho);
 	viewStack.PushMatrix();

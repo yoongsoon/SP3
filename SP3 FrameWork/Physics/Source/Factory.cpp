@@ -13,79 +13,61 @@ void Factory::createGameObject(GameObject * value)
 
 }
 
-void Factory::destroyGameObject(GameObject * value)
-{
-	gameObjectIter = g_FactoryMap.begin();
 
-	for (gameObjectIter; gameObjectIter != g_FactoryMap.end();)
-	{
-		if (gameObjectIter->first == value->type)
-		{
-			//Erase return the next valid iterator
-			gameObjectIter = g_FactoryMap.erase(gameObjectIter);
-			isErased = true;
-			return;
-		}
-		else
-		{
-			gameObjectIter++;
-		}
-	}
-
-
-	iteratorProject = g_ProjectileVector.begin();
-
-	for (iteratorProject; iteratorProject != g_ProjectileVector.end();)
-	{
-		if ((*iteratorProject) == static_cast<Projectile*>(value))
-		{
-			//Erase return the next valid iterator
-			iteratorProject = g_ProjectileVector.erase(iteratorProject);
-			isProjectileErased = true;
-			return;
-		}
-		else
-		{
-			iteratorProject++;
-		}
-	}
-
-}
 
 void Factory::updateGameObject()
 {
-	gameObjectIter = g_FactoryMap.begin();
-	for (gameObjectIter; gameObjectIter != g_FactoryMap.end();)
-	{
-		gameObjectIter->second->update();
+	// -------------------CODES TO DESRYOYED GAMEOBJECTS------------------------------//
 
-		if (isErased == false)
+	Mapping::iterator MapIt, MapEnd;
+	MapEnd = g_FactoryMap.end();
+
+	for (MapIt = g_FactoryMap.begin(); MapIt != MapEnd; MapIt++)
+	{
+		MapIt->second->update();
+	}
+
+	MapIt = g_FactoryMap.begin();
+	while (MapIt != g_FactoryMap.end())
+	{
+		if (MapIt->second->isDestroyed == true)
 		{
-			gameObjectIter++;
+			 //Delete if done
+			MapIt = g_FactoryMap.erase(MapIt);
 		}
 		else
 		{
-			//one of the GameObject * is Erased , so reset bool isErased
-			isErased = false;
+			// Move on otherwise
+			++MapIt;
 		}
 	}
 
 
-	iteratorProject = g_ProjectileVector.begin();
-	for (iteratorProject; iteratorProject != g_ProjectileVector.end();)
-	{
-		(*iteratorProject)->update();
 
-		if (isProjectileErased == false)
+    // -------------------CODES TO DESRYOYED PROJECTILES------------------------------//
+	Vectoring::iterator  VecIt, VecEnd;
+	VecEnd = g_ProjectileVector.end();
+
+	for (VecIt = g_ProjectileVector.begin(); VecIt != VecEnd; VecIt++)
+	{
+		(*VecIt)->update();
+	}
+
+	VecIt = g_ProjectileVector.begin();
+	while (VecIt != g_ProjectileVector.end())
+	{
+		if ((*VecIt)->isDestroyed == true)
 		{
-			iteratorProject++;
+			// Delete if done
+			VecIt = g_ProjectileVector.erase(VecIt);
 		}
 		else
 		{
-			//one of the GameObject * is Erased , so reset bool isErased
-			isProjectileErased = false;
+			// Move on otherwise
+			++VecIt;
 		}
 	}
+
 
 }
 
@@ -103,7 +85,7 @@ void Factory::renderGameObject()
 	}
 
 
-	vector<Projectile*>::iterator iter = g_ProjectileVector.begin();
+	Vectoring::iterator iter = g_ProjectileVector.begin();
 
 	for (iter; iter != g_ProjectileVector.end(); ++iter)
 	{
@@ -138,7 +120,7 @@ Factory::~Factory()
 	g_FactoryMap.clear();
 
 
-	vector<Projectile*>::iterator iter;
+	Vectoring::iterator iter;
 
 	for (iter = g_ProjectileVector.begin(); iter != g_ProjectileVector.end(); ++iter)
 	{

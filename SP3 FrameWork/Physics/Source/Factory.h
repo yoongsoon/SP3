@@ -8,27 +8,29 @@
 
 //multimap allow insertion of multiple times of the same key  unlike map
 typedef std::multimap<GameObject::GAMEOBJECT_TYPE, GameObject* > Mapping;
-using std::vector;
+typedef std::vector<Projectile*> Vectoring;
 
 class Factory
 {
 public:
+	//Create 
 	void createGameObject(GameObject * value);
-	void destroyGameObject(GameObject * value);
+	//TO destroy object just called object->isDestroyed = true
 
 	void updateGameObject();
 	void renderGameObject();
 
+	//Containers
 	Mapping g_FactoryMap;
-	vector<Projectile*> g_ProjectileVector;
+	Vectoring g_ProjectileVector;
 
+	//Constructors/Destructors
 	Factory();
 	~Factory();
 
+	//Iterators
 	Mapping::iterator gameObjectIter;
-	vector<Projectile*>::iterator iteratorProject;
+	Vectoring::iterator iteratorProject;
 
-	bool isErased = false;
-	bool isProjectileErased = false;
 
 };
