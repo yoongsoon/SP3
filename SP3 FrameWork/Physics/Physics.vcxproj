@@ -158,7 +158,6 @@
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\CollisionManager.cpp" />
-    <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\Factory.cpp" />
     <ClCompile Include="Source\GameObjectManager.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />

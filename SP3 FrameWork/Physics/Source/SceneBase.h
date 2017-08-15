@@ -115,6 +115,7 @@ protected:
 	GameObject * theGhostProj;
 
 	double mouseX, mouseY;
+	float backGroundX = 40.f;
 };
 
 #endif

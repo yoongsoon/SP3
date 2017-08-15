@@ -83,9 +83,6 @@
     <ClCompile Include="Source\Projectile.cpp">
       <Filter>Source Files\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Enemy.cpp">
-      <Filter>Source Files\Enemy</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">

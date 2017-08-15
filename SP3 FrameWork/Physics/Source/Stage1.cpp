@@ -33,10 +33,11 @@ void Stage1::Init()
 	//initialise the factory class
 	theFactory = new Factory();
 
-	theEnemy = new Enemy(GameObject::GO_ENEMY, this);
+	/*theEnemy = new Enemy(GameObject::GO_ENEMY, this);*/
 	gom = new GameObjectManager(this);
 
-	GameObject *go = new Enemy(GameObject::GO_ENEMY, this);
+
+	/*GameObject *go = new Enemy(GameObject::GO_ENEMY, this);
 	go->active = true;
 	go->meshValue = SceneBase::GEO_ARCHER;
 	go->scale.Set(5, 5, 5);
@@ -47,7 +48,7 @@ void Stage1::Init()
 	static_cast<Enemy*> (go)->range = 1.f;
 	static_cast<Enemy*> (go)->damage = 10.f;
 	static_cast<Enemy*> (go)->cooldown = 3.f;
-	theFactory->createGameObject(go);
+	theFactory->createGameObject(go);*/
 }
 
 void Stage1::Update(double dt)
@@ -60,27 +61,27 @@ void Stage1::Update(double dt)
 	m_worldHeight = 100.f;
 	m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
 
-	static bool spacepress = false;
-	if (Application::IsKeyPressed(VK_SPACE) && !spacepress)
-	{
-		GameObject *go = new Enemy(GameObject::GO_ENEMY, this);
-		go->active = true;
-		go->scale.Set(5, 5, 5);
-		go->vel.Set(-10.f, 0.f, 0.f);
-		go->pos.Set(m_worldWidth / 2, m_worldHeight / 2, 0.f);
-		static_cast<Enemy*> (go)->enemyType = Enemy::E_SOLDIER;
-		static_cast<Enemy*> (go)->hp = 100.f;
-		static_cast<Enemy*> (go)->range = 1.f;
-		static_cast<Enemy*> (go)->damage = 10.f;
-		static_cast<Enemy*> (go)->cooldown = 3.f;
-		theFactory->createGameObject(go);
-		/*cout << "hi" << endl;*/
-		spacepress = true;
-	}
-	else if (!Application::IsKeyPressed(VK_SPACE) && spacepress)
-	{
-		spacepress = false;
-	}
+	//static bool spacepress = false;
+	//if (Application::IsKeyPressed(VK_SPACE) && !spacepress)
+	//{
+	//	GameObject *go = new Enemy(GameObject::GO_ENEMY, this);
+	//	go->active = true;
+	//	go->scale.Set(5, 5, 5);
+	//	go->vel.Set(-10.f, 0.f, 0.f);
+	//	go->pos.Set(m_worldWidth / 2, m_worldHeight / 2, 0.f);
+	//	static_cast<Enemy*> (go)->enemyType = Enemy::E_SOLDIER;
+	//	static_cast<Enemy*> (go)->hp = 100.f;
+	//	static_cast<Enemy*> (go)->range = 1.f;
+	//	static_cast<Enemy*> (go)->damage = 10.f;
+	//	static_cast<Enemy*> (go)->cooldown = 3.f;
+	//	theFactory->createGameObject(go);
+	//	/*cout << "hi" << endl;*/
+	//	spacepress = true;
+	//}
+	//else if (!Application::IsKeyPressed(VK_SPACE) && spacepress)
+	//{
+	//	spacepress = false;
+	//}
 
 	//Mouse Section
 	static bool bLButtonState = false;
@@ -103,7 +104,7 @@ void Stage1::Update(double dt)
 		currentPos.x = (float)mouseX / Application::GetWindowWidth() * m_worldWidth;;
 		currentPos.y = (Application::GetWindowHeight() - (float)mouseY) / Application::GetWindowHeight() * m_worldHeight;
 
-		GameObject *tempObject = new  Projectile(GameObject::GO_PROJECTILE , this);
+		GameObject * tempObject = new  Projectile(GameObject::GO_PROJECTILE, this);
 		tempObject->pos = theGhostProj->pos;
 		tempObject->vel = tempObject->pos - currentPos;
 		tempObject->scale.Set(3, 3, 3);
@@ -114,6 +115,8 @@ void Stage1::Update(double dt)
 		// add object into factory
 		theFactory->createGameObject(tempObject);
 	}
+
+
 	//Update all Game Objects
 	theFactory->updateGameObject();
 	gom->update();
