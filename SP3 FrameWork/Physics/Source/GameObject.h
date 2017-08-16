@@ -26,12 +26,13 @@ public:
 	Vector3 pos;
 	Vector3 vel;
 	Vector3 scale;
+	Vector3 topLeft, topRight, bottomLeft, bottomRight;
 	bool active;
 	bool m_gEffect;
 	float mass;
 	float rotateX;
 	float rotateY;
-	float rotateZ;
+	float rotateZ; 
 
 	unsigned meshValue;
 
@@ -39,8 +40,8 @@ public:
 	Vector3 dir; //direction/orientation
 	float momentOfInertia;
 	float angularVelocity; //in radians
-	const float m_gravity; 
-
+	float m_gravity; 
+	
 	GameObject(GAMEOBJECT_TYPE typeValue = GO_BALL);
 	GameObject(GAMEOBJECT_TYPE typeValue, SceneBase * scene);
 	virtual ~GameObject(); //<--- have to be virtual so in scenario where base class pointer poins to derived class

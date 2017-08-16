@@ -23,34 +23,55 @@ bool CollisionManager::checkCollision(GameObject * object1, GameObject * object2
 	Vector3 obj1scale = object1->scale;
 	Vector3 obj2scale = object2->scale;
 	Vector3 obj2Normal = object2->dir;
-	Vector3 obj2NormalP = obj2Normal.Cross(Vector3(0, 0, 1));
-	Vector3 relativePos = obj1pos - obj2pos;
+	Vector3 obj2Right = obj2Normal.Cross(Vector3(0, 0, 1));
+	Vector3 relativePos1 = obj1pos - obj2pos;
+	Vector3 relativePos2 = obj2pos - obj1pos;
+	Vector3 ballDir = relativePos2.Normalized();
+	ballDir.Normalize();
+	Vector3 radialPosToTarget = obj1pos + ballDir;
 	Vector3 relativeVel = object1->vel - object2->vel;
 
-	switch (object1->type)
+	if (object1->type == GameObject::GO_PROJECTILE)
 	{
-		// obj1 = ball
-	case GameObject::GO_PROJECTILE:
 		switch (object2->type)
 		{
 			// obj2 = ball
 		case GameObject::GO_PROJECTILE:
-			return (relativeVel.Dot(relativePos) < 0 && (relativePos).LengthSquared() <= (obj1scale.x + obj2scale.x) * (obj1scale.x + obj2scale.x));
+			return (relativeVel.Dot(relativePos1) < 0 && (relativePos1).LengthSquared() <= (obj1scale.x + obj2scale.x) * (obj1scale.x + obj2scale.x));
 			break;
 			// obj2 = wall
-		case GameObject::GO_ENEMY:
+		//case GameObject::GO_ENEMY:
 		case GameObject::GO_BRICK:
-			if (relativePos.Dot(obj2Normal) > 0)
+			// testing
+
+			/*if (relativePos1.Dot(obj2Normal) > 0)
 				obj2Normal = -obj2Normal;
-			return object1->vel.Dot(obj2Normal) > 0 && (abs((obj2pos - obj1pos).Dot(obj2Normal)) < (obj1scale.x + obj2scale.x / 2))
-				&& (abs((obj2pos - obj1pos).Dot(obj2NormalP)) < (obj1scale.x + obj2scale.y / 2));
-			break;
-		default:
-			cout << "Nothing to compare to!" << endl;
-			break;
+			if (relativePos1.Dot(obj2Right) > 0)
+				obj2Right = -obj2Right;*/
+			//cout << "Pos: " << obj1pos << "Rad pos: " << radialPosToTarget << endl;
+			if (radialPosToTarget.x >= object2->topLeft.x && radialPosToTarget.y <= object2->topLeft.y
+				&& radialPosToTarget.x <= object2->topRight.x && radialPosToTarget.y <= object2->topRight.y
+				&& radialPosToTarget.x >= object2->bottomLeft.x && radialPosToTarget.y >= object2->bottomLeft.y
+				&& radialPosToTarget.x <= object2->bottomRight.x && radialPosToTarget.y >= object2->bottomRight.y)
+			{
+				cout << "Has collided" << endl;
+				return true;
+			}
+			
+
+
+
+			//// To check if ball object is at this cube/quad's top or bottom
+			//if (relativePos1.Dot(obj2Normal) > 0)
+			//	obj2Normal = -obj2Normal;
+			//// To check if ball object is at this cube/quad's left or right
+			//if (relativePos1.Dot(obj2Right) > 0)
+			//	obj2Right = -obj2Right;
+
+			//if (object1->vel.Dot(obj2Normal) > 0)
+			//	return (abs((obj2pos - obj1pos).Dot(obj2Normal)) < (obj1scale.x + obj2scale.x / 2)) && (abs((obj2pos - obj1pos).Dot(obj2Right)) < (obj1scale.x + obj2scale.y / 2));
 		}
 		return false;
-		break;
 		
 		/*else if (object2->type == GameObject::GO_PILLAR) {
 			Vector3 p1 = object1->pos;
@@ -133,10 +154,21 @@ void CollisionManager::Update(float dt)
 			if (it2->second->active == false)
 				continue;
 
+			GameObject* goA = (*it);
+			GameObject* goB = it2->second;
+
 			//check projectile collision with other game object
-			if (checkCollision((*it), it2->second) == true) 
+			if ((*it)->type != GameObject::GO_PROJECTILE)
 			{
-				collisionResponse((*it), it2->second);
+				if (it2->second->type != GameObject::GO_PROJECTILE)
+					continue;
+				goA = it2->second;
+				goB = (*it);
+			}
+
+			if (checkCollision(goA, goB)) 
+			{
+				collisionResponse(goA, goB);
 			}
 
 		}
