@@ -16,7 +16,7 @@ class PlayerInfo
 {
 protected:
 	static PlayerInfo *s_instance;
-	PlayerInfo(void);
+	
 public:
 	static PlayerInfo *GetInstance()
 	{
@@ -34,6 +34,7 @@ public:
 		}
 		return false;
 	}
+	PlayerInfo(void);
 	~PlayerInfo(void);
 
 	// Initialise this class instance
@@ -88,6 +89,8 @@ public:
 	int GetWeapon(void) const;
 	// Discharge Primary Weapon
 	bool DischargePrimaryWeapon(const float deltaTime);
+
+	bool DischargePPTEST(Vector3 position, Vector3 target, GameObject* tempObject, SceneBase *_scene);
 	// Constrain the position within the borders
 	void Constrain(void);
 
@@ -102,10 +105,10 @@ public:
 	//CCollider GetplayerAABB();
 
 	// Scrollable weapon switching
-	//Weapon_Info** weaponManager;
+	Weapon_Info** weap_manager;
 	int m_iCurrentWeapon;
-	const int m_iNumOfWeapon = 2;
-	//Weapon_Info* primaryWeapon;
+	//const int m_iNumOfWeapon = 2;
+	Weapon_Info* primaryWeapon;
 	//Weapon_Info* secondaryWeapon;
 
 	//Health
@@ -125,7 +128,7 @@ private:
 	double m_dElapsedTime;
 
 	//FPSCamera* attachedCamera;
-public:
+//public:
 	// Camera Sway
 	//float m_fCameraSwayAngle;
 	//float m_fCameraSwayDeltaAngle;

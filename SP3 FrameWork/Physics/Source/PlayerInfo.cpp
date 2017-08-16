@@ -1,6 +1,10 @@
 #include "PlayerInfo.h"
 #include <iostream>
 #include "Cannon.h"
+#include "Bow.h"
+#include "Catapult.h"
+
+#include "Application.h"
 //#include "MouseController.h"
 //#include "KeyboardController.h"
 //#include "Mtx44.h"
@@ -19,11 +23,11 @@ PlayerInfo::PlayerInfo(void)
 	, m_dElapsedTime(0.0)
 	//, attachedCamera(NULL)
 	//, m_pTerrain(NULL)
-	//, primaryWeapon(NULL)
+	, primaryWeapon(NULL)
 	//, secondaryWeapon(NULL)
 	//, theCurrentPosture(STAND)
-//	, weaponManager(NULL)
-	, m_iCurrentWeapon(0)
+	//, weap_manager(NULL)
+	//, m_iCurrentWeapon(0)
 	//, m_fCameraSwayAngle(0.0f)
 	//, m_fCameraSwayDeltaAngle(0.1f)
 	//, m_fCameraSwayAngle_LeftLimit(-0.3f)
@@ -49,12 +53,12 @@ PlayerInfo::~PlayerInfo(void)
 	{
 		delete secondaryWeapon;
 		secondaryWeapon = NULL;
-	}
+	}*/
 	if (primaryWeapon)
 	{
 		delete primaryWeapon;
 		primaryWeapon = NULL;
-	}*/
+	}
 	//m_pTerrain = NULL;
 }
 
@@ -76,9 +80,20 @@ void PlayerInfo::Init(void)
 	minBoundary.Set(-1, -1, -1);
 
 	// Set the pistol as the primary weapon
-	//primaryWeapon = new Cannon();
-	//primaryWeapon->Init();
+	primaryWeapon = new Bow();
+	primaryWeapon->Init();
 
+	//weap_manager = new Weapon_Info*[3];
+	///*potato = new Catapult();
+	//potato->Init();*/
+	//weap_manager[0] = new Bow();
+	//weap_manager[0]->Init();
+	//weap_manager[1] = new Cannon();
+	//weap_manager[1]->Init();
+	//weap_manager[2] = new Catapult();
+	//weap_manager[2]->Init();
+
+	//m_iCurrentWeapon = 0;
 	//weaponManager = new Weapon_Info*[m_iNumOfWeapon];
 	//weaponManager[0] = new Cannon();
 	//weaponManager[0]->Init();
@@ -97,13 +112,13 @@ void PlayerInfo::Init(void)
 }
 
 // Returns true if the player is on ground
-bool PlayerInfo::isOnGround(void)
-{
-	//if (m_bJumpUpwards == false && m_bFallDownwards == false && position.y == m_pTerrain->GetTerrainHeight(position))
-		return true;
-
-	//return false;
-}
+//bool PlayerInfo::isOnGround(void)
+//{
+//	//if (m_bJumpUpwards == false && m_bFallDownwards == false && position.y == m_pTerrain->GetTerrainHeight(position))
+//		return true;
+//
+//	//return false;
+//}
 
 
 // Set position
@@ -125,11 +140,11 @@ void PlayerInfo::SetUp(const Vector3& up)
 }
 
 // Set the boundary for the player info
-void PlayerInfo::SetBoundary(Vector3 max, Vector3 min)
-{
-	//maxBoundary = max;
-	//minBoundary = min;
-}
+//void PlayerInfo::SetBoundary(Vector3 max, Vector3 min)
+//{
+//	//maxBoundary = max;
+//	//minBoundary = min;
+//}
 
 // Set the terrain for the player info
 //void PlayerInfo::SetTerrain(GroundEntity* m_pTerrain)
@@ -177,12 +192,14 @@ Hero Update
 void PlayerInfo::Update(double dt)
 {
 	
-	/*if (primaryWeapon)
+	if (primaryWeapon)
 		primaryWeapon->Update(dt);
-	if (secondaryWeapon)
+	/*if (secondaryWeapon)
 		secondaryWeapon->Update(dt);*/
-	/*if (weaponManager[m_iCurrentWeapon])
-		weaponManager[m_iCurrentWeapon]->Update(dt);
+	
+	
+	/*if (weap_manager[m_iCurrentWeapon])
+		weap_manager[m_iCurrentWeapon]->Update(dt);
 */
 }
 
@@ -423,6 +440,7 @@ void PlayerInfo::Update(double dt)
 //
 //	return false;
 //}
+
 // Detect and process left / right movement on the controller
 //bool PlayerInfo::Move_LeftRight(const float deltaTime, const bool direction, const float speedMultiplier, std::list<GenericEntity*>obj, std::list<CEnemy3D*>Enemy)
 //{
@@ -565,7 +583,7 @@ void PlayerInfo::Update(double dt)
 //
 //	return true;
 //}
-//
+
 //bool PlayerInfo::Look_LeftRight(const float deltaTime, const bool direction, const float speedMultiplier)
 //{
 //	if (speedMultiplier == 0.0f)
@@ -601,7 +619,7 @@ void PlayerInfo::Update(double dt)
 //
 //	return true;
 //}
-//
+
 //// masterrace
 //bool PlayerInfo::Look_UpDownM(const float deltaTime, const bool direction, const float speedMultiplier)
 //{
@@ -629,7 +647,7 @@ void PlayerInfo::Update(double dt)
 //
 //	return true;
 //}
-//
+
 //bool PlayerInfo::Look_LeftRightM(const float deltaTime, const bool direction, const float speedMultiplier)
 //{
 //	if (speedMultiplier == 0.0f)
@@ -650,7 +668,7 @@ void PlayerInfo::Update(double dt)
 //
 //	return true;
 //}
-//
+
 //// Stop sway
 //bool PlayerInfo::StopSway(const float deltaTime)
 //{
@@ -684,7 +702,7 @@ void PlayerInfo::Update(double dt)
 //	}
 //	return true;
 //}
-//
+
 //bool PlayerInfo::ChangeWeaponK(void)
 //{
 //	m_iCurrentWeapon++;
@@ -700,24 +718,45 @@ void PlayerInfo::Update(double dt)
 //}
 
 // Get Current Weapon
-int PlayerInfo::GetWeapon(void) const
-{
-	return m_iCurrentWeapon;
-}
+//int PlayerInfo::GetWeapon(void) const
+//{
+//	return m_iCurrentWeapon;
+//}
 
 // Discharge Primary Weapon
 bool PlayerInfo::DischargePrimaryWeapon(const float deltaTime)
 {
-	//if (primaryWeapon)
-	//	primaryWeapon->Discharge(position, target, this);
+	//GameObject *tempObject = new  Projectile(Projectile::ARROW_PROJECTILE, GameObject::GO_PROJECTILE, this);
 
-	//if (weaponManager[m_iCurrentWeapon])
-	//{
-	//	weaponManager[m_iCurrentWeapon]->Discharge(position, target, this);
-		return true;
+	if (primaryWeapon)
+	{	//primaryWeapon->Discharge(position, target, this);
+	}
+	////if (weaponManager[m_iCurrentWeapon])
+	////{
+	////	weaponManager[m_iCurrentWeapon]->Discharge(position, target, this);
+	//	return true;
 	//}
 
-	//return false;
+	return false;
+}
+// Discharge Primary Weapon
+bool PlayerInfo::DischargePPTEST(Vector3 position, Vector3 target, GameObject* tempObject, SceneBase *_scene)
+{
+	//GameObject *tempObject = new  Projectile(Projectile::ARROW_PROJECTILE, GameObject::GO_PROJECTILE, this);
+
+	if (primaryWeapon)
+	{	
+		primaryWeapon->Discharge(position, target,tempObject, _scene);
+		return true;
+	}
+
+	//if (weap_manager[m_iCurrentWeapon])
+	//{
+	//	weap_manager[m_iCurrentWeapon]->Discharge(position, target, tempObject, _scene);
+	//	return true;
+	//}
+
+	return false;
 }
 
 // Constrain the position within the borders

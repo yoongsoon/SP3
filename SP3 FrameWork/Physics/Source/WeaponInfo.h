@@ -8,6 +8,13 @@
 class Weapon_Info
 {
 public:
+	enum WEAPON_TYPE
+	{
+		TYPE_BOW,
+		TYPE_CANNON,
+		TYPE_CATAPULT
+	};
+	
 	Weapon_Info();
 	~Weapon_Info();
 	//virtual ~Weapon_Info();
@@ -15,7 +22,7 @@ public:
 	void Update(const double dt);
 	//void Discharge(Vector3 position, Vector3 target, PlayerInfo _source = NULL);
 
-	
+	WEAPON_TYPE WeaponType;
 //	void f_Set_
 //	void b_Set_
 //	void d_Set_

@@ -21,7 +21,7 @@ Weapon_Info::~Weapon_Info()
 
 void Weapon_Info::Init(void)
 {
-	d_timeBetweenShots = 0.5;
+	d_timeBetweenShots = 3;
 	d_elapsedTime = 0.0;
 	i_Fire_Rate = 1;
 	b_Fire = true;
@@ -33,6 +33,12 @@ void Weapon_Info::Init(void)
 }
 void Weapon_Info::Update(const double dt)
 {
+	d_elapsedTime += dt;
+	if (d_elapsedTime > d_timeBetweenShots)
+	{
+		b_Fire = true;
+		d_elapsedTime = 0.0;
+	}
 
 }
 

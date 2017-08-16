@@ -4,6 +4,10 @@
 #include "Application.h"
 #include "SceneManager.h"
 #include "WeaponInfo.h"
+#include "PlayerInfo.h"
+#include "Cannon.h"
+#include "Catapult.h"
+#include "Bow.h"
 
 Stage1 * Stage1::sInstance = new Stage1(SceneManager::getInstance());
 
@@ -19,7 +23,7 @@ Stage1::~Stage1()
 void Stage1::Init()
 {
 	SceneBase::Init();
-
+	weap_manager = NULL;
 	//Physics code here
 	m_speed = 1.f;
 
@@ -35,15 +39,31 @@ void Stage1::Init()
 	theFactory = new Factory();
 	theCollider = new CollisionManager(this);
 	//intialise ghost projectile
-	theGhostProj = new Projectile(Projectile::ARROW_PROJECTILE,GameObject::GO_PROJECTILE, this);
+	theGhostProj = new Projectile(Projectile::ARROW_PROJECTILE, GameObject::GO_PROJECTILE, this);
 	// Initialize castle object
 	theCastle = new Castle(GameObject::GO_BRICK, this);
 	theFactory->createGameObject(theCastle);
-	
+
 	theEnemy = new Enemy(GameObject::GO_ENEMY, this);
 	gom = new GameObjectManager(this);
-	BackGround * theBackGround = new BackGround(BackGround::BACK_GROUND_STAGE1, GameObject::GO_BALL , this);
+	BackGround * theBackGround = new BackGround(BackGround::BACK_GROUND_STAGE1, GameObject::GO_BALL, this);
 	theFactory->createGameObject(theBackGround);
+
+
+	//CHANGE THIS TO Bow/Cannon/Catapult for different cooldown
+	weap_manager = new Weapon_Info*[3];
+	potato = new Catapult();
+	potato->Init();
+	weap_manager[0] = new Bow();
+	weap_manager[0]->Init();
+	weap_manager[1] = new Cannon();
+	weap_manager[1]->Init();
+	weap_manager[2] = new Catapult();
+	weap_manager[2]->Init();
+
+	thePlayer = new PlayerInfo();
+	thePlayer->Init();
+
 
 	GameObject *go = new Enemy(GameObject::GO_ENEMY, this);
 	go->active = true;
@@ -70,6 +90,36 @@ void Stage1::Update(double dt)
 	m_worldHeight = 100.f;
 	m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
 
+	static bool bow = false;
+	if (Application::IsKeyPressed(VK_NUMPAD1) && !bow)
+	{
+		curr_weapon = 0;
+		bow = true;
+	}
+	else if (!Application::IsKeyPressed(VK_NUMPAD1) && bow)
+	{
+		bow = false;
+	}
+//	static bool bow = false;
+	if (Application::IsKeyPressed(VK_NUMPAD2) && !bow)
+	{
+		curr_weapon = 1;
+		bow = true;
+	}
+	else if (!Application::IsKeyPressed(VK_NUMPAD2) && bow)
+	{
+		bow = false;
+	}
+//	static bool bow = false;
+	if (Application::IsKeyPressed(VK_NUMPAD3) && !bow)
+	{
+		curr_weapon = 2;
+		bow = true;
+	}
+	else if (!Application::IsKeyPressed(VK_NUMPAD3) && bow)
+	{
+		bow = false;
+	}
 	static bool spacepress = false;
 	if (Application::IsKeyPressed(VK_SPACE) && !spacepress)
 	{
@@ -111,26 +161,29 @@ void Stage1::Update(double dt)
 		currentPos.x = (float)mouseX / Application::GetWindowWidth() * m_worldWidth;;
 		currentPos.y = (Application::GetWindowHeight() - (float)mouseY) / Application::GetWindowHeight() * m_worldHeight;
 	
-		Weapon_Info potato;
+		//Weapon_Info potato;
 		//potato.Get_OBJECT();
+
 		
 		GameObject *tempObject = new  Projectile(Projectile::ARROW_PROJECTILE, GameObject::GO_PROJECTILE , this);
+		GameObject *tempObject1 = new  Projectile(Projectile::CANNON_BALL_PROJECTILE, GameObject::GO_PROJECTILE, this);
+		GameObject *tempObject2 = new  Projectile(Projectile::ROCK_PROJECTILE, GameObject::GO_PROJECTILE, this);
 		//info to shoot bullet
-		potato.Discharge(currentPos, theGhostProj->pos,tempObject, this);
 		tempObject->pos = theGhostProj->pos;
+		tempObject1->pos = theGhostProj->pos;
+		tempObject2->pos = theGhostProj->pos;
+		weap_manager[0]->Discharge(currentPos, theGhostProj->pos,tempObject, this);
+		//thePlayer->DischargePPTEST(currentPos, theGhostProj->pos, tempObject, this);
+		weap_manager[1]->Discharge(currentPos, theGhostProj->pos, tempObject1, this);
+		//thePlayer->DischargePPTEST(currentPos, theGhostProj->pos, tempObject, this);
+		weap_manager[2]->Discharge(currentPos, theGhostProj->pos, tempObject2, this);
 
-	/*	GameObject * tempObject = new  Projectile(Projectile::ARROW_PROJECTILE, GameObject::GO_PROJECTILE, this);
-		tempObject->pos = theGhostProj->pos;
-		tempObject->vel = tempObject->pos - currentPos;
-		tempObject->scale.Set(3, 3, 3);
-		tempObject->mass = 3;
-		tempObject->active = true;*/
-
-
+		theFactory->createGameObject(tempObject);
+		theFactory->createGameObject(tempObject1);
+		theFactory->createGameObject(tempObject2);
 		theGhostProj->active = false;
 
 		// add object into factory
-		theFactory->createGameObject(tempObject);
 	}
 
 
@@ -156,6 +209,10 @@ void Stage1::Update(double dt)
 	theCollider->Update(dt);
 
 	gom->update();
+
+	thePlayer->Update(dt);
+	if (weap_manager)
+		weap_manager[curr_weapon]->Update(dt);
 
 }
 
