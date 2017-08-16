@@ -2,7 +2,7 @@
 #include "SceneBase.h"
 
 Projectile::Projectile(PROJECTILE_TYPE _typeofProjectile, GAMEOBJECT_TYPE typeValue, SceneBase * scene)
-	:GameObject(typeValue , scene)
+	:GameObject(typeValue, scene)
 	, m_launchAngle(30.f)
 	, MAX_SPEED(15.f)
 {
@@ -28,13 +28,32 @@ Projectile::Projectile(PROJECTILE_TYPE _typeofProjectile, GAMEOBJECT_TYPE typeVa
 	break;
 	}
 
-
+	
 	vel.x = vel.Length() * cos(Math::RadianToDegree(m_launchAngle));
 	vel.y = vel.Length() * sin(Math::RadianToDegree(m_launchAngle));
+
 }
 
 Projectile::~Projectile()
 {
+}
+
+void Projectile::setInitVel(float _range)
+{
+	// s= v^2 sin20 /g
+	 // v = sqrt ( s  / sin20/g)
+
+	 // range = velX * time
+	 // time = 2 * vel  * sin 0 / g
+	 // velx  = vel * cos0
+
+	vel = sqrt(_range * -m_gravity) / (2 * sin(Math::RadianToDegree(m_launchAngle) * cos(Math::RadianToDegree(m_launchAngle))));
+
+
+	
+	vel.x = vel.Length() * cos(Math::RadianToDegree(m_launchAngle));
+	vel.y = vel.Length() * sin(Math::RadianToDegree(m_launchAngle));
+
 }
 
 void Projectile::update()
@@ -42,8 +61,25 @@ void Projectile::update()
 	if (m_gEffect)
 		vel.y += m_gravity *theScene->_dt;
 
-	pos.x +=  vel.x * theScene->_dt;
-	pos.y += vel.y * theScene->_dt + ( 0.5f *  m_gravity * (theScene->_dt * theScene->_dt));
+	pos.x += vel.x * theScene->_dt;
+	pos.y += vel.y * theScene->_dt + (0.5f *  m_gravity * (theScene->_dt * theScene->_dt));
+
+	// delete projectile when it goes out of range
+	if (pos.x < 0.f)
+	{
+		isDestroyed = true;
+		return;
+	}
+	else if (pos.x > theScene->m_worldWidth * 2)
+	{
+		isDestroyed = true;
+		return;
+	}
+	else if (pos.y < 0.f)
+	{
+		isDestroyed = true;
+		return;
+	}
 }
 
 //
@@ -67,3 +103,14 @@ void Projectile::update()
 //
 //	return result;
 //}
+
+Projectile * Create::createProjectile(Projectile::PROJECTILE_TYPE _typeofProjectile, GameObject::GAMEOBJECT_TYPE typevalue, SceneBase * scene)
+{
+	// initialse projectile pointer
+	Projectile * theProjectile = new Projectile(_typeofProjectile, typevalue, scene);
+	// push the projectile pointer into the factory
+	theProjectile->theScene->theFactory->createGameObject(theProjectile);
+
+	// return the projectile pointer so it can be use in other classes to set the projectile pos ,sclae and etc
+	return theProjectile;
+}

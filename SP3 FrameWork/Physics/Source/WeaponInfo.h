@@ -65,7 +65,12 @@ public:
 	//void Discharge(Vector3 position,Vector3 target,)
 	//void Discharge(Vector3 position, Vector3 target, CPlayerInfo* _source = NULL);
 	//void Discharge(Vector3 position, Vector3 target,SceneBase * _scene);
-	void Discharge(Vector3 position, Vector3 target,GameObject*tempObject, SceneBase * _scene);
+	void Discharge(Vector3 position, Vector3 target, SceneBase * _scene);
+
+    //-------------Discharge for Castle AI----------------------//
+	//  position of projectile , range of projectile , scene
+	void Discharge(Vector3 position, float range, SceneBase * _scene);
+
 
 	//prints details of weapon
 	void PrintSelf(void);

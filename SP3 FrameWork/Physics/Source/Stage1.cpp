@@ -45,6 +45,10 @@ void Stage1::Init()
 	BackGround * theBackGround = new BackGround(BackGround::BACK_GROUND_STAGE1, GameObject::GO_BALL , this);
 	theFactory->createGameObject(theBackGround);
 
+	AICastle * theAICastle = new AICastle(GameObject::GO_CASTLE, this);
+	theFactory->createGameObject(theAICastle);
+
+
 	GameObject *go = new Enemy(GameObject::GO_ENEMY, this);
 	go->active = true;
 	go->meshValue = SceneBase::GEO_ARCHER;
@@ -114,10 +118,8 @@ void Stage1::Update(double dt)
 		Weapon_Info potato;
 		//potato.Get_OBJECT();
 		
-		GameObject *tempObject = new  Projectile(Projectile::ARROW_PROJECTILE, GameObject::GO_PROJECTILE , this);
 		//info to shoot bullet
-		potato.Discharge(currentPos, theGhostProj->pos,tempObject, this);
-		tempObject->pos = theGhostProj->pos;
+		potato.Discharge(theGhostProj->pos, currentPos, this);
 
 	/*	GameObject * tempObject = new  Projectile(Projectile::ARROW_PROJECTILE, GameObject::GO_PROJECTILE, this);
 		tempObject->pos = theGhostProj->pos;
@@ -129,8 +131,7 @@ void Stage1::Update(double dt)
 
 		theGhostProj->active = false;
 
-		// add object into factory
-		theFactory->createGameObject(tempObject);
+
 	}
 
 

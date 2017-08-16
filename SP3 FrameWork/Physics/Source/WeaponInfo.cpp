@@ -33,7 +33,13 @@ void Weapon_Info::Init(void)
 }
 void Weapon_Info::Update(const double dt)
 {
+	d_elapsedTime += dt;
 
+	if (d_elapsedTime > d_timeBetweenShots)
+	{
+		b_Fire = true;
+		d_elapsedTime = 0.0;
+	}
 }
 
 
@@ -107,7 +113,7 @@ bool Weapon_Info::Get_b_Burst_Fire()
 	return b_Burst_Fire;
 }
 
-void Weapon_Info::Discharge(Vector3 position, Vector3 target,GameObject* tempObject,SceneBase *_scene)
+void Weapon_Info::Discharge(Vector3 position, Vector3 target,SceneBase *_scene)
 {
 	if (b_Fire)
 	{
@@ -115,13 +121,13 @@ void Weapon_Info::Discharge(Vector3 position, Vector3 target,GameObject* tempObj
 		//I NEEDDSSS PROJECTILE
 		//and player
 
-
-		//tempObject = new  Projectile(GameObject::GO_PROJECTILE, _scene);
-		tempObject->pos = target;
-		tempObject->vel = tempObject->pos - position;
-		tempObject->scale.Set(3, 3, 3);
-		tempObject->mass = 3;
-		tempObject->active = true;
+		Projectile * aProjectile = Create::createProjectile(Projectile::PROJECTILE_TYPE::ARROW_PROJECTILE, GameObject::GO_BALL, _scene);
+		aProjectile->pos = position;
+		aProjectile->vel = aProjectile->pos - target;
+		aProjectile->scale.Set(3, 3, 3);
+		aProjectile->mass = 3;
+		aProjectile->active = true;
+		
 		//// Create a projectile with a cube mesh. Its position and direction is same as the player.
 		//// It will last for 3.0 seconds and travel at 500 units per second
 		//Projectile* aProjectile = Create::Projectile("sphere",
@@ -136,7 +142,20 @@ void Weapon_Info::Discharge(Vector3 position, Vector3 target,GameObject* tempObj
 		b_Fire = false;
 		//bFired = true;
 		////magRounds--;
-	//	theFactory->createGameObject(tempObject);
+	}
+}
+
+void Weapon_Info::Discharge(Vector3 position, float range, SceneBase * _scene)
+{
+	if (b_Fire)
+	{
+		Projectile * aProjectile = Create::createProjectile(Projectile::PROJECTILE_TYPE::ARROW_PROJECTILE, GameObject::GO_BALL, _scene);
+		aProjectile->pos = position;
+	/*	aProjectile->vel =*/ aProjectile->setInitVel(range);
+		aProjectile->scale.Set(3, 3, 3);
+		aProjectile->mass = 3;
+		aProjectile->active = true;
+		b_Fire = false;
 	}
 }
 

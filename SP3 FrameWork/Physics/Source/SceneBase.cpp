@@ -226,7 +226,7 @@ void SceneBase::RenderMeshOnScreen(Mesh* mesh, float x, float y, float sizeX, fl
 }
 
 
-void SceneBase::RenderMeshOnScreen(Mesh* mesh, float x, float y, float sizeX, float sizeY ,float rotateX , float rotateY)
+void SceneBase::RenderMeshOnScreen(Mesh* mesh, float x, float y, float sizeX, float sizeY, float rotateX, float rotateY)
 {
 	glDisable(GL_DEPTH_TEST);
 	Mtx44 ortho;

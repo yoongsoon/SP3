@@ -104,8 +104,7 @@ void CollisionManager::collisionResponse(GameObject * object1, GameObject * obje
 	{
 		//store as projectile damage as temporary variable
 		float projectileDamage = static_cast<Projectile*>(object1)->m_damage;
-		//set the indicator to destroyed in the factory
-		object1->isDestroyed = true;
+		object1->active = false;
 
 		//deduct enemy hp  with projectile damage
 		static_cast<Enemy*>(object2)->hp -= projectileDamage;
