@@ -14,10 +14,8 @@ public:
 	void update();
 	
 	CollisionManager * collider;
+	void Enemy_Enemy_Collision();
 
 private:
 	SceneBase * theScene;
-
-	
-
 };

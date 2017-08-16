@@ -1,6 +1,5 @@
 #include "AICastle.h"
 #include "Projectile.h"
-#include "WeaponInfo.h"
 #include "Cannon.h"
 
 AICastle::AICastle(GAMEOBJECT_TYPE typeValue, SceneBase * scene)

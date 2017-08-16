@@ -6,17 +6,17 @@
 
 using namespace std;
 
-class Enemy : public GameObject
+class PlayerTroop : public GameObject
 {
 public:
-	enum ENEMY_TYPE
+	enum PLAYER_TYPE
 	{
-		E_SOLDIER,
-		E_ARCHER,
-		E_WIZARD
+		P_SOLDIER,
+		P_ARCHER,
+		P_WIZARD
 	};
-	Enemy(GAMEOBJECT_TYPE GO_ENEMY,SceneBase *scene,ENEMY_TYPE meshvalue);
-	~Enemy();
+	PlayerTroop(GAMEOBJECT_TYPE GO_PLAYER, SceneBase *scene, PLAYER_TYPE meshvalue);
+	~PlayerTroop();
 	virtual void update();
 
 	bool StopToAttack;
@@ -28,7 +28,7 @@ public:
 	float spawncooldown;
 	float cost;
 	float timer;
-	ENEMY_TYPE enemyType;
+	PLAYER_TYPE playerType;
 	StopWatch m_timer;
 
 private:

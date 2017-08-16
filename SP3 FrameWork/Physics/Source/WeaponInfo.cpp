@@ -21,7 +21,7 @@ Weapon_Info::~Weapon_Info()
 
 void Weapon_Info::Init(void)
 {
-	d_timeBetweenShots = 0.5;
+	d_timeBetweenShots = 3;
 	d_elapsedTime = 0.0;
 	i_Fire_Rate = 1;
 	b_Fire = true;
@@ -111,6 +111,23 @@ int Weapon_Info::Get_Burst_Fire_Rate()
 bool Weapon_Info::Get_b_Burst_Fire()
 {
 	return b_Burst_Fire;
+}
+
+void Weapon_Info::Discharge(Vector3 position, Vector3 target, GameObject * object, SceneBase * _scene)
+{
+	if (b_Fire)
+	{
+		//CREATE PROJECTILE
+		//I NEEDDSSS PROJECTILE
+		//and player
+
+		object->pos = position;
+		object->vel = object->pos - target;
+		object->scale.Set(3, 3, 3);
+		object->mass = 3;
+		object->active = true;
+		b_Fire = false;
+	}
 }
 
 void Weapon_Info::Discharge(Vector3 position, Vector3 target,SceneBase *_scene)

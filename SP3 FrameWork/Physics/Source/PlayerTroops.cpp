@@ -1,10 +1,10 @@
-#include "Enemy.h"
+#include "PlayerTroops.h"
 #include "SceneBase.h"
 #include "Application.h"
 
-Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) :GameObject( GO_ENEMY, scene)
+PlayerTroop::PlayerTroop(GAMEOBJECT_TYPE GO_PLAYER, SceneBase * scene, PLAYER_TYPE meshvalue) :GameObject(GO_PLAYER, scene)
 {
-	if (meshvalue == E_SOLDIER)
+	if (meshvalue == P_SOLDIER)
 	{
 		float m_worldHeight = 100.f;
 		float m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
@@ -12,16 +12,16 @@ Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) 
 		active = true;
 		meshValue = SceneBase::GEO_SOLDIER;
 		scale.Set(5, 5, 5);
-		vel.Set(-10.f, 0.f, 0.f);
-		pos.Set((m_worldWidth * 2) - (m_worldWidth / 10), m_worldHeight / 2, 0.f);
-		enemyType = Enemy::E_SOLDIER;
+		vel.Set(10.f, 0.f, 0.f);
+		pos.Set(m_worldWidth / 10, m_worldHeight / 2, 0.f);
+		playerType = PlayerTroop::P_SOLDIER;
 		hp = 100.f;
 		range = 1.f;
 		damage = 10.f;
 		attackcooldown = 3.f;
 		cost = 50.f;
 	}
-	else if(meshvalue == E_ARCHER)
+	else if (meshvalue == P_ARCHER)
 	{
 		float m_worldHeight = 100.f;
 		float m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
@@ -29,16 +29,16 @@ Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) 
 		active = true;
 		meshValue = SceneBase::GEO_ARCHER;
 		scale.Set(5, 5, 5);
-		vel.Set(-10.f, 0.f, 0.f);
-		pos.Set((m_worldWidth * 2) - (m_worldWidth / 10), m_worldHeight / 2, 0.f);
-		enemyType = Enemy::E_ARCHER;
+		vel.Set(10.f, 0.f, 0.f);
+		pos.Set(m_worldWidth / 10, m_worldHeight / 2, 0.f);
+		playerType = PlayerTroop::P_ARCHER;
 		hp = 50.f;
 		range = 10.f;
 		damage = 15.f;
 		attackcooldown = 3.f;
 		cost = 75.f;
 	}
-	else if (meshvalue == E_WIZARD)
+	else if (meshvalue == P_WIZARD)
 	{
 		float m_worldHeight = 100.f;
 		float m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
@@ -46,9 +46,9 @@ Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) 
 		active = true;
 		meshValue = SceneBase::GEO_WIZARD;
 		scale.Set(5, 5, 5);
-		vel.Set(-10.f, 0.f, 0.f);
-		pos.Set((m_worldWidth * 2) - (m_worldWidth / 10), m_worldHeight / 2, 0.f);
-		enemyType = Enemy::E_WIZARD;
+		vel.Set(10.f, 0.f, 0.f);
+		pos.Set(m_worldWidth / 10, m_worldHeight / 2, 0.f);
+		playerType = PlayerTroop::P_WIZARD;
 		hp = 70.f;
 		range = 10.f;
 		damage = 25.f;
@@ -60,35 +60,20 @@ Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) 
 	Attacked = false;
 }
 
-Enemy::~Enemy()
+PlayerTroop::~PlayerTroop()
 {
 
 }
 
-void Enemy::update()
+void PlayerTroop::update()
 {
-	//destroy enemy when it ran out of hp
+	//destroy PlayerTroop when it ran out of hp
+	float m_worldHeight = 100.f;
+	float m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
 
-	if (enemyType == ENEMY_TYPE::E_SOLDIER)
+	if (!StopToAttack)
 	{
-		if (!StopToAttack)
-		{
-			pos += vel * theScene->_dt;
-		}
-	}
-	else if (enemyType == ENEMY_TYPE::E_ARCHER)
-	{
-		if (!StopToAttack)
-		{
-			pos += vel * theScene->_dt;
-		}
-	}
-	else if (enemyType == ENEMY_TYPE::E_WIZARD)
-	{
-		if (!StopToAttack)
-		{
-			pos += vel * theScene->_dt;
-		}
+		pos += vel * theScene->_dt;
 	}
 	if (Attacked)
 	{
@@ -97,16 +82,16 @@ void Enemy::update()
 		{
 			Attacked = false;
 			timer = 0.0f;
-			cout << "RESET" << endl;
+			cout << "player RESET" << endl;
 		}
 	}
 	if (hp <= 0.f)
 	{
 		active = false;
 	}
-	if (pos.x <= 0)
+	if (pos.x <= 0 || pos.x > (m_worldWidth * 2))
 	{
 		active = false;
 	}
-	
+
 }

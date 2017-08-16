@@ -116,7 +116,6 @@ protected:
 	float m_worldWidth;
 	float m_worldHeight;
 
-
 	CollisionManager * theCollider;
 	Enemy * theEnemy;
 	GameObjectManager * gom;
