@@ -106,6 +106,7 @@ public:
 
 	// Scrollable weapon switching
 	Weapon_Info** weap_manager;
+
 	int m_iCurrentWeapon;
 	//const int m_iNumOfWeapon = 2;
 	Weapon_Info* primaryWeapon;
@@ -127,11 +128,4 @@ private:
 
 	double m_dElapsedTime;
 
-	//FPSCamera* attachedCamera;
-//public:
-	// Camera Sway
-	//float m_fCameraSwayAngle;
-	//float m_fCameraSwayDeltaAngle;
-	//float m_fCameraSwayAngle_LeftLimit, m_fCameraSwayAngle_RightLimit;	//	The limits for left and right sway
-	//bool m_bCameraSwayDirection;	// false = left, true = right
 };

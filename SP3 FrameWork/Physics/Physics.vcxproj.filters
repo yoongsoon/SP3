@@ -30,19 +30,46 @@
     <Filter Include="Source Files\Enemy">
       <UniqueIdentifier>{85bd4b80-e666-43b7-9d73-9270bfc618a1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\WeaponInfo">
-      <UniqueIdentifier>{875ee0cd-2d39-495b-a54d-852d6d8d6aea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\PlayerInfo">
-      <UniqueIdentifier>{54d20883-15a9-4c52-9776-1aefea58518b}</UniqueIdentifier>
+    <Filter Include="Source Files\Player">
+      <UniqueIdentifier>{7155dc7a-d7b0-4ffb-8a90-38841a572d93}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Bow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Camera.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Cannon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Catapult.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BackGround.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Castle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CollisionManager.cpp">
+      <Filter>Source Files\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy.cpp">
+      <Filter>Source Files\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Factory.cpp">
+      <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObjectManager.cpp">
+      <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject.cpp">
+      <Filter>Source Files\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Source\LoadOBJ.cpp">
       <Filter>Source Files</Filter>
@@ -59,11 +86,8 @@
     <ClCompile Include="Source\MeshBuilder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Utility.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Source\Projectile.cpp">
+      <Filter>Source Files\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Source\SceneBase.cpp">
       <Filter>Source Files</Filter>
@@ -71,61 +95,64 @@
     <ClCompile Include="Source\SceneManager.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Source\shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Stage1.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameObject.cpp">
-      <Filter>Source Files\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameObjectManager.cpp">
-      <Filter>Source Files\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Factory.cpp">
-      <Filter>Source Files\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\CollisionManager.cpp">
-      <Filter>Source Files\Collider</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Projectile.cpp">
-      <Filter>Source Files\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Enemy.cpp">
-      <Filter>Source Files\Enemy</Filter>
-    </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="Source\WeaponInfo.cpp">
-      <Filter>Source Files\WeaponInfo</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Start_Scene.cpp">
-      <Filter>Source Files\Scene</Filter>
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utility.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WeaponInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlayerTroops.cpp">
+      <Filter>Source Files\Player</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerInfo.cpp">
-      <Filter>Source Files\PlayerInfo</Filter>
+      <Filter>Source Files\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Bow.cpp">
-      <Filter>Source Files\WeaponInfo</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Catapult.cpp">
-      <Filter>Source Files\WeaponInfo</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Cannon.cpp">
-      <Filter>Source Files\WeaponInfo</Filter>
-=======
-<<<<<<< HEAD
-    <ClCompile Include="Source\Castle.cpp">
-=======
-    <ClCompile Include="Source\BackGround.cpp">
->>>>>>> b79f04aefe02ff1c92d9c42f28d7fe6241a60cf1
-      <Filter>Source Files\GameObject</Filter>
->>>>>>> cdc2d0eea06d6d92ffb1af95298d7fc14eb71084
+    <ClCompile Include="Source\Player.cpp">
+      <Filter>Source Files\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Bow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Camera.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Cannon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Catapult.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BackGround.h">
+      <Filter>Header Files\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Castle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CollisionManager.h">
+      <Filter>Header Files\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Factory.h">
+      <Filter>Header Files\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObjectManager.h">
+      <Filter>Header Files\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject.h">
+      <Filter>Header Files\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="Source\Light.h">
       <Filter>Header Files</Filter>
@@ -145,11 +172,29 @@
     <ClInclude Include="Source\MeshBuilder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Projectile.h">
+      <Filter>Header Files\GameObject</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\SceneBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneManager.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
     <ClInclude Include="Source\shader.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Singleton.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Stage1.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Start_Scene.h">
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Source\Utility.h">
       <Filter>Header Files</Filter>
@@ -157,62 +202,20 @@
     <ClInclude Include="Source\Vertex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SceneBase.h">
+    <ClInclude Include="Source\WeaponInfo.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Singleton.h">
-      <Filter>Header Files\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SceneManager.h">
-      <Filter>Header Files\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Stage1.h">
-      <Filter>Header Files\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Factory.h">
-      <Filter>Header Files\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameObject.h">
-      <Filter>Header Files\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameObjectManager.h">
-      <Filter>Header Files\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\CollisionManager.h">
-      <Filter>Header Files\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Source\Enemy.h">
       <Filter>Source Files\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Projectile.h">
-      <Filter>Header Files\GameObject</Filter>
-    </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="Source\WeaponInfo.h">
-      <Filter>Source Files\WeaponInfo</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Start_Scene.h">
-      <Filter>Source Files\Scene</Filter>
+    <ClInclude Include="Source\PlayerTroops.h">
+      <Filter>Source Files\Player</Filter>
     </ClInclude>
     <ClInclude Include="Source\PlayerInfo.h">
-      <Filter>Source Files\PlayerInfo</Filter>
+      <Filter>Source Files\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Bow.h">
-      <Filter>Source Files\WeaponInfo</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Catapult.h">
-      <Filter>Source Files\WeaponInfo</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Cannon.h">
-      <Filter>Source Files\WeaponInfo</Filter>
-=======
-<<<<<<< HEAD
-    <ClInclude Include="Source\Castle.h">
-=======
-    <ClInclude Include="Source\BackGround.h">
->>>>>>> b79f04aefe02ff1c92d9c42f28d7fe6241a60cf1
-      <Filter>Header Files\GameObject</Filter>
->>>>>>> cdc2d0eea06d6d92ffb1af95298d7fc14eb71084
+    <ClInclude Include="Source\Player.h">
+      <Filter>Source Files\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

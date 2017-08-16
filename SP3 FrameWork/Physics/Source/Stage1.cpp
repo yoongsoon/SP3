@@ -37,6 +37,7 @@ void Stage1::Init()
 	//initialise the factory class
 	// MUST BE FIRST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	theFactory = new Factory();
+
 	theCollider = new CollisionManager(this);
 	//intialise ghost projectile
 	theGhostProj = new Projectile(Projectile::ARROW_PROJECTILE, GameObject::GO_PROJECTILE, this);
@@ -44,7 +45,8 @@ void Stage1::Init()
 	theCastle = new Castle(GameObject::GO_BRICK, this);
 	theFactory->createGameObject(theCastle);
 
-	theEnemy = new Enemy(GameObject::GO_ENEMY, this);
+	theplayer = new Player();
+	theplayer->setScene(this);
 	gom = new GameObjectManager(this);
 	BackGround * theBackGround = new BackGround(BackGround::BACK_GROUND_STAGE1, GameObject::GO_BALL, this);
 	theFactory->createGameObject(theBackGround);
@@ -63,21 +65,6 @@ void Stage1::Init()
 
 	thePlayer = new PlayerInfo();
 	thePlayer->Init();
-
-
-	GameObject *go = new Enemy(GameObject::GO_ENEMY, this);
-	go->active = true;
-	go->meshValue = SceneBase::GEO_ARCHER;
-	go->scale.Set(5, 5, 5);
-	go->vel.Set(0.f, 0.f, 0.f);
-	go->pos.Set(m_worldWidth / 10, m_worldHeight / 2, 0.f);
-	static_cast<Enemy*> (go)->enemyType = Enemy::E_ARCHER;
-	static_cast<Enemy*> (go)->hp = 100.f;
-	static_cast<Enemy*> (go)->range = 1.f;
-	static_cast<Enemy*> (go)->damage = 10.f;
-	static_cast<Enemy*> (go)->cooldown = 3.f;
-	theFactory->createGameObject(go);
-	
 }
 
 void Stage1::Update(double dt)
@@ -120,26 +107,79 @@ void Stage1::Update(double dt)
 	{
 		bow = false;
 	}
-	static bool spacepress = false;
-	if (Application::IsKeyPressed(VK_SPACE) && !spacepress)
+	static bool onepress = false;
+	if (Application::IsKeyPressed('1') && !onepress)
 	{
-		GameObject *go = new Enemy(GameObject::GO_ENEMY, this);
-		go->active = true;
-		go->scale.Set(5, 5, 5);
-		go->vel.Set(-10.f, 0.f, 0.f);
-		go->pos.Set(m_worldWidth / 2, m_worldHeight / 2, 0.f);
-		static_cast<Enemy*> (go)->enemyType = Enemy::E_SOLDIER;
-		static_cast<Enemy*> (go)->hp = 1.f;
-		static_cast<Enemy*> (go)->range = 1.f;
-		static_cast<Enemy*> (go)->damage = 10.f;
-		static_cast<Enemy*> (go)->cooldown = 3.f;
-		theFactory->createGameObject(go);
-		spacepress = true;
+		CreateEnemySoldier();
+		onepress = true;
 	}
-	else if (!Application::IsKeyPressed(VK_SPACE) && spacepress)
+	else if (!Application::IsKeyPressed('1') && onepress)
 	{
-		spacepress = false;
+		onepress = false;
 	}
+
+	static bool twopress = false;
+	if (Application::IsKeyPressed('2') && !twopress)
+	{
+		CreateEnemyArcher();
+		twopress = true;
+	}
+	else if (!Application::IsKeyPressed('2') && twopress)
+	{
+		twopress = false;
+	}
+	static bool threepress = false;
+	if (Application::IsKeyPressed('3') && !threepress)
+	{
+		CreateEnemyWizard();
+		threepress = true;
+	}
+	else if (!Application::IsKeyPressed('3') && threepress)
+	{
+		threepress = false;
+	}
+
+	static bool fourpress = false;
+	if (Application::IsKeyPressed('4') && !fourpress)
+	{
+		CreateFriendlySoldier();
+		fourpress = true;
+	}
+	else if (!Application::IsKeyPressed('4') && fourpress)
+	{
+		fourpress = false;
+	}
+
+	static bool fivepress = false;
+	if (Application::IsKeyPressed('5') && !fivepress)
+	{
+		CreateFriendlyArcher();
+		fivepress = true;
+	}
+	else if (!Application::IsKeyPressed('5') && fivepress)
+	{
+		fivepress = false;
+	}
+	static bool sixpress = false;
+	if (Application::IsKeyPressed('6') && !sixpress)
+	{
+		CreateFriendlyWizard();
+		sixpress = true;
+	}
+	else if (!Application::IsKeyPressed('6') && sixpress)
+	{
+		sixpress = false;
+	}
+	//static bool spacepress = false;
+	//if (Application::IsKeyPressed(VK_SPACE) && !spacepress)
+	//{
+	//	CreateEnemySoldier();
+	//	spacepress = true;
+	//}
+	//else if (!Application::IsKeyPressed(VK_SPACE) && spacepress)
+	//{
+	//	spacepress = false;
+	//}
 
 	//Mouse Section
 	static bool bLButtonState = false;
@@ -209,6 +249,7 @@ void Stage1::Update(double dt)
 	theCollider->Update(dt);
 
 	gom->update();
+	theplayer->update();
 
 	thePlayer->Update(dt);
 	if (weap_manager)
@@ -245,4 +286,46 @@ void Stage1::Render()
 void Stage1::Exit()
 {
 	SceneBase::Exit();
+}
+
+void Stage1::CreateEnemySoldier()
+{
+	GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_SOLDIER);
+	theFactory->createGameObject(go);
+	cout << "Soldier" << endl;
+}
+
+void Stage1::CreateEnemyArcher()
+{
+	GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_ARCHER);
+	theFactory->createGameObject(go);
+	cout << "Archer" << endl;
+}
+
+void Stage1::CreateEnemyWizard()
+{
+	GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_WIZARD);
+	theFactory->createGameObject(go);
+	cout << "Wizard" << endl;
+}
+
+void Stage1::CreateFriendlySoldier()
+{
+	GameObject *go = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_SOLDIER);
+	theFactory->createGameObject(go);
+	cout << "friend Soldier" << endl;
+}
+
+void Stage1::CreateFriendlyArcher()
+{
+	GameObject *go = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_ARCHER);
+	theFactory->createGameObject(go);
+	cout << "friend Archer" << endl;
+}
+
+void Stage1::CreateFriendlyWizard()
+{
+	GameObject *go = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_WIZARD);
+	theFactory->createGameObject(go);
+	cout << "friend Wizard" << endl;
 }

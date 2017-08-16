@@ -4,6 +4,8 @@
 #include "SceneBase.h"
 #include "Enemy.h"
 #include "WeaponInfo.h"
+#include "PlayerTroops.h"
+#include "Player.h"
 class SceneManager;
 
 class Stage1 : public SceneBase
@@ -17,6 +19,13 @@ public:
 	virtual void Update(double dt);
 	virtual void Render();
 	virtual void Exit();
+
+	void CreateEnemySoldier();
+	void CreateEnemyArcher();
+	void CreateEnemyWizard();
+	void CreateFriendlySoldier();
+	void CreateFriendlyArcher();
+	void CreateFriendlyWizard();
 
 protected:
 	static Stage1 * sInstance; // The pointer to the object that gets registered
@@ -33,4 +42,5 @@ protected:
 	Weapon_Info* potato;
 							   //Physics
 	float m_speed;
+	Player *theplayer;
 };

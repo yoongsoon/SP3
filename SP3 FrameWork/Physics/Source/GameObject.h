@@ -17,6 +17,7 @@ public:
 		GO_WALL,
 		GO_PILLAR,
 		GO_ENEMY,
+		GO_PLAYER,
 		GO_PROJECTILE,
 		GO_BRICK,
 		GO_CASTLE,
