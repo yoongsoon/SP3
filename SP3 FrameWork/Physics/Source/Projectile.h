@@ -4,6 +4,8 @@
 #include "Vector3.h"
 #include <list>
 
+class SceneBase;
+
 class Projectile : public GameObject
 {
 public:
@@ -24,21 +26,30 @@ public:
 	void SetStatus(const bool bStatus);
 	//get active=true/false
 	bool GetStatus(void) const;
+
+    // this function is used to set INITIAL VELOCITY using RANGE
+	void setInitVel(float _range);
 	
 	//Update to run projectile logic
 	virtual void update();
-
+   
 	// use to cap speed of projectile
 	const float MAX_SPEED;
 	// damage of projectile
 	float m_damage;
-
 	//-------
 
 
 private:
+	// angle must be between 0 to 90
 	float m_launchAngle;
 };
+
+namespace Create
+{
+	Projectile* createProjectile(Projectile::PROJECTILE_TYPE _typeofProjectile, GameObject::GAMEOBJECT_TYPE typevalue, SceneBase * scene);
+
+}
 
 
 //#include "EntityBase.h"

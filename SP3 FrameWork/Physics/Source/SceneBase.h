@@ -15,7 +15,7 @@
 #include "Projectile.h"
 #include "Castle.h"
 #include "BackGround.h"
-
+#include "AICastle.h"
 
 #include <vector>
 
@@ -90,6 +90,13 @@ public:
 	void RenderMeshOnScreen(Mesh* mesh, float x, float y, float sizeX, float sizeY);
 	void RenderMeshOnScreen(Mesh* mesh, float x, float y, float sizeX, float sizeY, float rotateX, float rotateY);
 
+	//-------------------------------Variables---------------------------------------------------//
+	float pressDelay = 0.f;
+	const float cooldownPressed = 0.5f;
+	float _elapsedTime = 0.f;
+	float _dt = 0.f;
+
+	Factory * theFactory;
 protected:
 	unsigned m_vertexArrayID;
 	Mesh* meshList[NUM_GEOMETRY];
@@ -109,13 +116,6 @@ protected:
 	float m_worldWidth;
 	float m_worldHeight;
 
-	//-------------------------------Variables---------------------------------------------------//
-	float pressDelay = 0.f;
-	const float cooldownPressed = 0.5f;
-	float _elapsedTime = 0.f;
-	float _dt = 0.f;
-
-	Factory * theFactory;
 	CollisionManager * theCollider;
 	Enemy * theEnemy;
 	GameObjectManager * gom;

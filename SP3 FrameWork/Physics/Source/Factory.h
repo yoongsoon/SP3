@@ -2,10 +2,11 @@
 
 //#include "GameObject.h"
 #include "Projectile.h"
-
+#include "GameObjectManager.h"
 #include <map>
 #include <vector>
-
+#include "Enemy.h"
+ 
 //multimap allow insertion of multiple times of the same key  unlike map
 typedef std::multimap<GameObject::GAMEOBJECT_TYPE, GameObject* > Mapping;
 typedef std::vector<Projectile*> Vectoring;
@@ -31,6 +32,6 @@ public:
 	//Iterators
 	Mapping::iterator gameObjectIter;
 	Vectoring::iterator iteratorProject;
-
-
+	SceneBase * theScene1;
+	Enemy * en1;
 };
