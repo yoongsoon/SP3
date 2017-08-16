@@ -33,7 +33,7 @@ void GameObjectManager::Enemy_Enemy_Collision()
 		{
 			if (it == it2)
 				continue;
-			if (it->first == GameObject::GO_ENEMY && it2->first == GameObject::GO_ENEMY)
+			if (it->first == GameObject::GO_PLAYER && it2->first == GameObject::GO_ENEMY || it->first == GameObject::GO_ENEMY && it2->first == GameObject::GO_PLAYER)
 			{
 				//if (static_cast <Enemy *>(it->second)->enemyType == Enemy::E_ARCHER && static_cast <Enemy *>(it2->second)->enemyType == Enemy::E_SOLDIER)
 				//{
@@ -73,6 +73,7 @@ void GameObjectManager::Enemy_Enemy_Collision()
 						{
 							soldier_stoptoattack = false;//soldier move after enemy died
 							/*alive = true;*/
+							//Enemy::isDestroyed = true;
 						}
 					}
 					else if ((soldier_position < archer_position) && ((soldier_position + soldier_range + soldier_scale - archer_position) > 1.f) && soldier_active)//collision for soldier(for if archer is on right side) && soldier is active
@@ -83,12 +84,14 @@ void GameObjectManager::Enemy_Enemy_Collision()
 							{
 								archer_hp -= soldier_damage; //archer hp - soldier damage (attack)
 								soldier_attacked = true;//start attack cooldown
+								cout << "archer " << archer_hp << endl;
 							}
 							soldier_stoptoattack = true;//soldier stop moving to attack
 						}
 						else // if archer not active
 						{
 							soldier_stoptoattack = false;//soldier move after enemy died
+							//cout << archer
 						}
 					}
 					if ((archer_position > soldier_position) && ((archer_position - archer_range - archer_scale - soldier_position) < 1.f) && archer_active)//collision for soldier(for if archer is on left side)
@@ -99,6 +102,7 @@ void GameObjectManager::Enemy_Enemy_Collision()
 							{
 								soldier_hp -= archer_damage; //soldier hp - archer damage (attack)
 								archer_attacked = true;//start attack cooldown
+								cout << "soldier " << soldier_hp << endl;
 							}
 							archer_stoptoattack = true;//archer stop moving to attack
 						}

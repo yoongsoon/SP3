@@ -91,18 +91,6 @@ public:
 	// Constrain the position within the borders
 	void Constrain(void);
 
-	// Handling Camera
-	//void AttachCamera(FPSCamera* _cameraPtr);
-	//void DetachCamera();
-
-	//GetProj
-	//std::list<CProjectile*>GetProj();
-
-	//Get Player AABB
-	//CCollider GetplayerAABB();
-
-	// Scrollable weapon switching
-	//Weapon_Info** weaponManager;
 	int m_iCurrentWeapon;
 	const int m_iNumOfWeapon = 2;
 	//Weapon_Info* primaryWeapon;
@@ -126,9 +114,5 @@ private:
 
 	//FPSCamera* attachedCamera;
 public:
-	// Camera Sway
-	//float m_fCameraSwayAngle;
-	//float m_fCameraSwayDeltaAngle;
-	//float m_fCameraSwayAngle_LeftLimit, m_fCameraSwayAngle_RightLimit;	//	The limits for left and right sway
-	//bool m_bCameraSwayDirection;	// false = left, true = right
+
 };

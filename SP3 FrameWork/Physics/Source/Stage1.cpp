@@ -42,10 +42,10 @@ void Stage1::Init()
 	theFactory->createGameObject(theCastle);
 	
 	gom = new GameObjectManager(this);
+	theplayer = new Player();
+	theplayer->setScene(this);
 	BackGround * theBackGround = new BackGround(BackGround::BACK_GROUND_STAGE1, GameObject::GO_BALL , this);
 	theFactory->createGameObject(theBackGround);
-
-	CreateNewArcher();
 }
 
 void Stage1::Update(double dt)
@@ -58,16 +58,79 @@ void Stage1::Update(double dt)
 	m_worldHeight = 100.f;
 	m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
 
-	static bool spacepress = false;
-	if (Application::IsKeyPressed(VK_SPACE) && !spacepress)
+	static bool onepress = false;
+	if (Application::IsKeyPressed('1') && !onepress)
 	{
-		CreateNewSoldier();
-		spacepress = true;
+		CreateEnemySoldier();
+		onepress = true;
 	}
-	else if (!Application::IsKeyPressed(VK_SPACE) && spacepress)
+	else if (!Application::IsKeyPressed('1') && onepress)
 	{
-		spacepress = false;
+		onepress = false;
 	}
+
+	static bool twopress = false;
+	if (Application::IsKeyPressed('2') && !twopress)
+	{
+		CreateEnemyArcher();
+		twopress = true;
+	}
+	else if (!Application::IsKeyPressed('2') && twopress)
+	{
+		twopress = false;
+	}
+	static bool threepress = false;
+	if (Application::IsKeyPressed('3') && !threepress)
+	{
+		CreateEnemyWizard();
+		threepress = true;
+	}
+	else if (!Application::IsKeyPressed('3') && threepress)
+	{
+		threepress = false;
+	}
+
+	static bool fourpress = false;
+	if (Application::IsKeyPressed('4') && !fourpress)
+	{
+		CreateFriendlySoldier();
+		fourpress = true;
+	}
+	else if (!Application::IsKeyPressed('4') && fourpress)
+	{
+		fourpress = false;
+	}
+
+	static bool fivepress = false;
+	if (Application::IsKeyPressed('5') && !fivepress)
+	{
+		CreateFriendlyArcher();
+		fivepress = true;
+	}
+	else if (!Application::IsKeyPressed('5') && fivepress)
+	{
+		fivepress = false;
+	}
+	static bool sixpress = false;
+	if (Application::IsKeyPressed('6') && !sixpress)
+	{
+		CreateFriendlyWizard();
+		sixpress = true;
+	}
+	else if (!Application::IsKeyPressed('6') && sixpress)
+	{
+		sixpress = false;
+	}
+	//static bool spacepress = false;
+	//if (Application::IsKeyPressed(VK_SPACE) && !spacepress)
+	//{
+	//	CreateEnemySoldier();
+	//	spacepress = true;
+	//}
+	//else if (!Application::IsKeyPressed(VK_SPACE) && spacepress)
+	//{
+	//	spacepress = false;
+	//}
 
 	//Mouse Section
 	static bool bLButtonState = false;
@@ -134,6 +197,7 @@ void Stage1::Update(double dt)
 	theCollider->Update(dt);
 
 	gom->update();
+	theplayer->update();
 
 }
 
@@ -168,23 +232,44 @@ void Stage1::Exit()
 	SceneBase::Exit();
 }
 
-void Stage1::CreateNewSoldier()
+void Stage1::CreateEnemySoldier()
 {
 	GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_SOLDIER);
 	theFactory->createGameObject(go);
 	cout << "Soldier" << endl;
 }
 
-void Stage1::CreateNewArcher()
+void Stage1::CreateEnemyArcher()
 {
 	GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_ARCHER);
 	theFactory->createGameObject(go);
 	cout << "Archer" << endl;
 }
 
-void Stage1::CreateNewWizard()
+void Stage1::CreateEnemyWizard()
 {
 	GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_WIZARD);
 	theFactory->createGameObject(go);
 	cout << "Wizard" << endl;
+}
+
+void Stage1::CreateFriendlySoldier()
+{
+	GameObject *go = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_SOLDIER);
+	theFactory->createGameObject(go);
+	cout << "friend Soldier" << endl;
+}
+
+void Stage1::CreateFriendlyArcher()
+{
+	GameObject *go = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_ARCHER);
+	theFactory->createGameObject(go);
+	cout << "friend Archer" << endl;
+}
+
+void Stage1::CreateFriendlyWizard()
+{
+	GameObject *go = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_WIZARD);
+	theFactory->createGameObject(go);
+	cout << "friend Wizard" << endl;
 }
