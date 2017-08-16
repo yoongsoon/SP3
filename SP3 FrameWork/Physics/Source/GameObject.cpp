@@ -11,6 +11,7 @@ GameObject::GameObject(GAMEOBJECT_TYPE typeValue)
 	, momentOfInertia(1.f)
 	, angularVelocity(0.f)
 	, m_gravity(-9.8f)
+	, m_gEffect(true)
 {
 }
 
@@ -29,6 +30,7 @@ GameObject::GameObject(GAMEOBJECT_TYPE typeValue, SceneBase * scene)
 	, momentOfInertia(1.f)
 	, angularVelocity(0.f)
 	,m_gravity(-9.8f)
+	,isDestroyed(false)
 {
 
 }
@@ -55,3 +57,4 @@ void GameObject::render()
 	theScene->modelStack.PopMatrix();
 
 }
+

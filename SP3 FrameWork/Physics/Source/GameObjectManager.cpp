@@ -5,9 +5,8 @@
 
 using std::next;
 
-GameObjectManager::GameObjectManager(SceneBase * scene)
-	:theScene(scene)
 
+GameObjectManager::GameObjectManager(SceneBase * scene):theScene(scene)
 {
 
 }
@@ -19,8 +18,6 @@ GameObjectManager::~GameObjectManager()
 		delete theScene;
 		theScene = NULL;
 	}
-
-
 }
 
 void GameObjectManager::update()
@@ -60,6 +57,7 @@ void GameObjectManager::Enemy_Enemy_Collision()
 
 					if ((soldier_position > archer_position) && ((soldier_position - soldier_range - soldier_scale - archer_position) < 1.f) && soldier_active)//collision for soldier(for if archer is on left side) && soldier is active
 					{
+						
 						if (archer_active)//if archer is active
 						{
 							if (!soldier_attacked)//if soldier has not attacked
@@ -69,10 +67,12 @@ void GameObjectManager::Enemy_Enemy_Collision()
 								cout << "archer " << archer_hp << endl;
 							}
 							soldier_stoptoattack = true;//soldier stop moving to attack
+							
 						}
-						else // if archer not active
+						else  //if archer not active
 						{
 							soldier_stoptoattack = false;//soldier move after enemy died
+							/*alive = true;*/
 						}
 					}
 					else if ((soldier_position < archer_position) && ((soldier_position + soldier_range + soldier_scale - archer_position) > 1.f) && soldier_active)//collision for soldier(for if archer is on right side) && soldier is active
@@ -108,7 +108,6 @@ void GameObjectManager::Enemy_Enemy_Collision()
 						}
 					}
 					else if ((archer_position < soldier_position) && ((archer_position + archer_range + archer_scale - soldier_position) > 1.f) && archer_active)//collision for soldier(for if archer is on right side)
-
 					{
 						if (soldier_active)//if soldier is active
 						{

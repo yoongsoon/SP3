@@ -1,6 +1,7 @@
 #pragma once
 
-//include vetor3
+#include "SceneBase.h"
+#include "Vector3.h"
 //include where them projectile header???
 #include <list>
 
@@ -25,12 +26,12 @@ public:
 
 	void Set_d_timeBetweenShots(double);
 	void Set_d_elapsedTime(double);
-	void Set_f_Fire_Rate(float);
+	void Set_Fire_Rate(int);
 	void Set_b_Fire(bool);
 
 	void Set_d_Burst_timeBetweenShots(double);
 	void Set_d_Burst_elapsedTime(double);
-	void Set_f_Burst_Fire_Rate(float);
+	void Set_Burst_Fire_Rate(int);
 	void Set_b_Burst_Fire(bool);
 	/*void fSet
 		void fSet
@@ -51,20 +52,27 @@ public:
 
 	double Get_d_timeBetweenShots();
 	double Get_d_elapsedTime();
-	float Get_f_Fire_Rate();
+	int Get_Fire_Rate();
 	bool Get_b_Fire();
 
 	double Get_d_Burst_timeBetweenShots();
 	double Get_d_Burst_elapsedTime();
-	float Get_f_Burst_Fire_Rate();
+	int Get_Burst_Fire_Rate();
 	bool Get_b_Burst_Fire();
+
+	//GameObject Get_OBJECT();
+
+	//void Discharge(Vector3 position,Vector3 target,)
+	//void Discharge(Vector3 position, Vector3 target, CPlayerInfo* _source = NULL);
+	//void Discharge(Vector3 position, Vector3 target,SceneBase * _scene);
+	void Discharge(Vector3 position, Vector3 target,GameObject*tempObject, SceneBase * _scene);
 
 	//prints details of weapon
 	void PrintSelf(void);
 	//getPRojectiles
 //	std::list<Projectile*>GetProj();
 
-private:
+protected:
 	//since infinite ammo
 	/*
 	//number of ammunition in a magazine
@@ -78,8 +86,8 @@ private:
 
 	*/
 
-
-
+	//GameObject tempObject;
+	GameObject *tempObject;
 	//damage dealt by weapon
 	//float Damage;
 	//speed of projectile when shot
@@ -90,7 +98,7 @@ private:
 	//elapsed time in between shots
 	double d_elapsedTime;//starts Null
 	//fire rate of triggered
-	float f_Fire_Rate;
+	int i_Fire_Rate;
 	//Flag availability to Fire
 	bool b_Fire;
 	//_________________BURST_____FIRE_______________________________
@@ -100,7 +108,7 @@ private:
 	//elapsed time of burst
 	double d_Burst_elapsedTime;
 	//fire rate of projectiles in between projectiles
-	float f_Burst_Fire_Rate;
+	int i_Burst_Fire_Rate;
 	//Flag if burst firing is done/available
 	bool b_Burst_Fire;
 	//std::list</*Projectile*/>bullets;

@@ -24,7 +24,6 @@ public:
 protected:
 	static Stage1 * sInstance; // The pointer to the object that gets registered
 
-
 							   //Physics
 	float m_speed;
 };

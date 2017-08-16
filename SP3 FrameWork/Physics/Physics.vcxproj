@@ -156,7 +156,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp" />
+    <ClCompile Include="Source\Bow.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
+    <ClCompile Include="Source\Cannon.cpp" />
+    <ClCompile Include="Source\Catapult.cpp" />
+    <ClCompile Include="Source\BackGround.cpp" />
+    <ClCompile Include="Source\Castle.cpp" />
     <ClCompile Include="Source\CollisionManager.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\Factory.cpp" />
@@ -167,16 +172,24 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\MeshBuilder.cpp" />
+    <ClCompile Include="Source\PlayerInfo.cpp" />
     <ClCompile Include="Source\Projectile.cpp" />
     <ClCompile Include="Source\SceneBase.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\shader.cpp" />
     <ClCompile Include="Source\Stage1.cpp" />
+    <ClCompile Include="Source\Start_Scene.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
+    <ClCompile Include="Source\WeaponInfo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h" />
+    <ClInclude Include="Source\Bow.h" />
     <ClInclude Include="Source\Camera.h" />
+    <ClInclude Include="Source\Cannon.h" />
+    <ClInclude Include="Source\Catapult.h" />
+    <ClInclude Include="Source\BackGround.h" />
+    <ClInclude Include="Source\Castle.h" />
     <ClInclude Include="Source\CollisionManager.h" />
     <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\Factory.h" />
@@ -188,6 +201,7 @@
     <ClInclude Include="Source\Material.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\MeshBuilder.h" />
+    <ClInclude Include="Source\PlayerInfo.h" />
     <ClInclude Include="Source\Projectile.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneBase.h" />
@@ -195,8 +209,10 @@
     <ClInclude Include="Source\shader.hpp" />
     <ClInclude Include="Source\Singleton.h" />
     <ClInclude Include="Source\Stage1.h" />
+    <ClInclude Include="Source\Start_Scene.h" />
     <ClInclude Include="Source\Utility.h" />
     <ClInclude Include="Source\Vertex.h" />
+    <ClInclude Include="Source\WeaponInfo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

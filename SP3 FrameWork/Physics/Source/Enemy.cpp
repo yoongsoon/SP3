@@ -67,6 +67,8 @@ Enemy::~Enemy()
 
 void Enemy::update()
 {
+	//destroy enemy when it ran out of hp
+
 	if (enemyType == ENEMY_TYPE::E_SOLDIER)
 	{
 		if (!StopToAttack)
@@ -102,4 +104,6 @@ void Enemy::update()
 	{
 		active = false;
 	}
+
+	
 }

@@ -2,6 +2,7 @@
 
 class GameObject;
 class SceneBase;
+class Projectile;
 
 class CollisionManager
 {
@@ -14,7 +15,7 @@ public:
 	//Collision Response between Game Objects
 	void collisionResponse(GameObject * object1, GameObject * object2);
 
-	void Update(double dt);
+	void Update(float dt);
 
 private:
 	SceneBase * theScene;
