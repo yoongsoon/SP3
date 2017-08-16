@@ -33,21 +33,10 @@ void Stage1::Init()
 	//initialise the factory class
 	theFactory = new Factory();
 
-	theEnemy = new Enemy(GameObject::GO_ENEMY, this);
+	//theEnemy = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_SOLDIER);
 	gom = new GameObjectManager(this);
 
-	GameObject *go = new Enemy(GameObject::GO_ENEMY, this);
-	go->active = true;
-	go->meshValue = SceneBase::GEO_ARCHER;
-	go->scale.Set(5, 5, 5);
-	go->vel.Set(0.f, 0.f, 0.f);
-	go->pos.Set(m_worldWidth / 10, m_worldHeight / 2, 0.f);
-	static_cast<Enemy*> (go)->enemyType = Enemy::E_ARCHER;
-	static_cast<Enemy*> (go)->hp = 100.f;
-	static_cast<Enemy*> (go)->range = 1.f;
-	static_cast<Enemy*> (go)->damage = 10.f;
-	static_cast<Enemy*> (go)->cooldown = 3.f;
-	theFactory->createGameObject(go);
+	CreateNewArcher();
 }
 
 void Stage1::Update(double dt)
@@ -63,17 +52,7 @@ void Stage1::Update(double dt)
 	static bool spacepress = false;
 	if (Application::IsKeyPressed(VK_SPACE) && !spacepress)
 	{
-		GameObject *go = new Enemy(GameObject::GO_ENEMY, this);
-		go->active = true;
-		go->scale.Set(5, 5, 5);
-		go->vel.Set(-10.f, 0.f, 0.f);
-		go->pos.Set(m_worldWidth / 2, m_worldHeight / 2, 0.f);
-		static_cast<Enemy*> (go)->enemyType = Enemy::E_SOLDIER;
-		static_cast<Enemy*> (go)->hp = 100.f;
-		static_cast<Enemy*> (go)->range = 1.f;
-		static_cast<Enemy*> (go)->damage = 10.f;
-		static_cast<Enemy*> (go)->cooldown = 3.f;
-		theFactory->createGameObject(go);
+		CreateNewSoldier();
 		/*cout << "hi" << endl;*/
 		spacepress = true;
 	}
@@ -148,4 +127,25 @@ void Stage1::Render()
 void Stage1::Exit()
 {
 	SceneBase::Exit();
+}
+
+void Stage1::CreateNewSoldier()
+{
+	GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_SOLDIER);
+	theFactory->createGameObject(go);
+	cout << "Soldier" << endl;
+}
+
+void Stage1::CreateNewArcher()
+{
+	GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_ARCHER);
+	theFactory->createGameObject(go);
+	cout << "Archer" << endl;
+}
+
+void Stage1::CreateNewWizard()
+{
+	GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_WIZARD);
+	theFactory->createGameObject(go);
+	cout << "Wizard" << endl;
 }

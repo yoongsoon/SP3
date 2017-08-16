@@ -17,6 +17,10 @@ public:
 	virtual void Render();
 	virtual void Exit();
 
+	void CreateNewSoldier();
+	void CreateNewArcher();
+	void CreateNewWizard();
+
 protected:
 	static Stage1 * sInstance; // The pointer to the object that gets registered
 
