@@ -2,6 +2,8 @@
 
 #include "SceneBase.h"
 #include "Vector3.h"
+#include "Projectile.h"
+#include "GameObject.h"
 //include where them projectile header???
 #include <list>
 
@@ -14,7 +16,9 @@ public:
 		TYPE_CANNON,
 		TYPE_CATAPULT
 	};
-	
+
+	WEAPON_TYPE WeaponType;
+	Projectile::PROJECTILE_TYPE projectile_type;
 	Weapon_Info();
 	~Weapon_Info();
 	//virtual ~Weapon_Info();
@@ -22,7 +26,6 @@ public:
 	void Update(const double dt);
 	//void Discharge(Vector3 position, Vector3 target, PlayerInfo _source = NULL);
 
-	WEAPON_TYPE WeaponType;
 //	void f_Set_
 //	void b_Set_
 //	void d_Set_
@@ -40,20 +43,7 @@ public:
 	void Set_d_Burst_elapsedTime(double);
 	void Set_Burst_Fire_Rate(int);
 	void Set_b_Burst_Fire(bool);
-	/*void fSet
-		void fSet
-		void fSet
-		void fSet
-		void fSet
-		void fSet
-		
-		void fSet
-		void fSet
-		void fSet
-		void fSet
-		void fSet
-		void fSet
-*/
+	
 
 //_________________BURST_____FIRE_______________________________
 
@@ -74,10 +64,14 @@ public:
 	//void Discharge(Vector3 position, Vector3 target,SceneBase * _scene);
 	void Discharge(Vector3 position, Vector3 target,GameObject * object,SceneBase * _scene);
 
+	// ------------Discharge for player---------------------//
 	void Discharge(Vector3 position, Vector3 target, SceneBase * _scene);
+
     //-------------Discharge for Castle AI----------------------//
-	//  position of projectile , range of projectile , scene
-	void Discharge(Vector3 position, float range, SceneBase * _scene);
+	//  position of projectile , range of projectile , scene  (PROJECTILE_MOTION)
+	void castleAIDischarge(Vector3 position,  float range, SceneBase * _scene );
+	// position of projectile ,target of projectile , scene (LINEAR MOTION)
+	void castleAIDischarge(Vector3 position, Vector3 target, SceneBase * _scene);
 
 
 	//prints details of weapon
@@ -126,5 +120,4 @@ protected:
 	bool b_Burst_Fire;
 	//std::list</*Projectile*/>bullets;
 
-	//bool b_Fired
 };

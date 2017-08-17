@@ -16,6 +16,7 @@
 #include "Castle.h"
 #include "BackGround.h"
 #include "AICastle.h"
+#include "MiniMap.h"
 
 #include <vector>
 
@@ -29,6 +30,7 @@ class SceneBase : public Scene
 	friend Projectile;
 	friend Castle;
 	friend BackGround;
+	friend MiniMap;
 
 	enum UNIFORM_TYPE
 	{
@@ -71,6 +73,13 @@ public:
 		GEO_WIZARD,
 		GEO_BACKGROUND,
 		GEO_BRICK,
+		//for different projectile colours
+		GEO_SPHERE1,
+		GEO_SPHERE2,
+		GEO_SPHERE3,
+
+		GEO_MINI_ENEMY,
+		GEO_MINI_BACKGROUND,
 
 		NUM_GEOMETRY,
 	};
@@ -85,10 +94,11 @@ public:
 
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
-	void RenderMesh(Mesh *mesh, bool enableLight);
+	 void RenderMesh(Mesh *mesh, bool enableLight);
 
 	void RenderMeshOnScreen(Mesh* mesh, float x, float y, float sizeX, float sizeY);
 	void RenderMeshOnScreen(Mesh* mesh, float x, float y, float sizeX, float sizeY, float rotateX, float rotateY);
+
 
 	//-------------------------------Variables---------------------------------------------------//
 	float pressDelay = 0.f;
@@ -97,6 +107,8 @@ public:
 	float _dt = 0.f;
 
 	Factory * theFactory;
+	MiniMap * theMiniMap;
+
 protected:
 	unsigned m_vertexArrayID;
 	Mesh* meshList[NUM_GEOMETRY];
@@ -119,8 +131,13 @@ protected:
 	CollisionManager * theCollider;
 	Enemy * theEnemy;
 	GameObjectManager * gom;
+	GameObject** thePredictionLine;
+	GameObject * thePredictGHOST;
+	GameObject * thePredictGHOST2;
 	GameObject * theGhostProj;
-	GameObject* theCastle;
+	GameObject * theReleaseMouseGhostProj;
+	GameObject * theMouseGhostProj;
+	GameObject * theCastle;
 
 	double mouseX, mouseY;
 	float backGroundX = 40.f;

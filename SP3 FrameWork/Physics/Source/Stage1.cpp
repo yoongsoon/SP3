@@ -8,6 +8,8 @@
 #include "Cannon.h"
 #include "Catapult.h"
 #include "Bow.h"
+#include "MeshBuilder.h"
+#include "LoadTGA.h"
 
 Stage1 * Stage1::sInstance = new Stage1(SceneManager::getInstance());
 
@@ -33,6 +35,9 @@ void Stage1::Init()
 	m_worldHeight = 100.f;
 	m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
 
+	//MiniMap
+	theMiniMap = new MiniMap(GameObject::GO_NONE, this);
+
 
 	//initialise the factory class
 	// MUST BE FIRST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -40,7 +45,17 @@ void Stage1::Init()
 
 	theCollider = new CollisionManager(this);
 	//intialise ghost projectile
-	theGhostProj = new Projectile(Projectile::ARROW_PROJECTILE, GameObject::GO_PROJECTILE, this);
+	thePredictionLine = new GameObject*[10];
+	for (size_t i = 0; i < 10; i++)
+	{
+		thePredictionLine[i]=new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_PROJECTILE, this);
+	}
+	thePredictGHOST = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_PROJECTILE, this);
+	thePredictGHOST2 = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_PROJECTILE, this);
+	theGhostProj = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_PROJECTILE, this);
+	theReleaseMouseGhostProj = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_PROJECTILE, this);
+	theMouseGhostProj = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_PROJECTILE, this);
+	//theFactory->createGameObject(theGhostProj);
 	// Initialize castle object
 	theCastle = new Castle(GameObject::GO_BRICK, this);
 	theFactory->createGameObject(theCastle);
@@ -55,15 +70,15 @@ void Stage1::Init()
 	theFactory->createGameObject(theAICastle);
 
 	//CHANGE THIS TO Bow/Cannon/Catapult for different cooldown
-	weap_manager = new Weapon_Info*[3];
-	potato = new Catapult();
-	potato->Init();
-	weap_manager[0] = new Bow();
-	weap_manager[0]->Init();
-	weap_manager[1] = new Cannon();
-	weap_manager[1]->Init();
-	weap_manager[2] = new Catapult();
-	weap_manager[2]->Init();
+	//weap_manager = new Weapon_Info*[3];
+	/*potato = new Bow();
+	potato->Init();*/
+	//weap_manager[0] = new Bow();
+	//weap_manager[0]->Init();
+	//weap_manager[1] = new Cannon();
+	//weap_manager[1]->Init();
+	//weap_manager[2] = new Catapult();
+	//weap_manager[2]->Init();
 
 	thePlayer = new PlayerInfo();
 	thePlayer->Init();
@@ -82,7 +97,8 @@ void Stage1::Update(double dt)
 	static bool bow = false;
 	if (Application::IsKeyPressed(VK_NUMPAD1) && !bow)
 	{
-		curr_weapon = 0;
+		//curr_weapon = 0;
+		thePlayer->SetWeapon(0);
 		bow = true;
 	}
 	else if (!Application::IsKeyPressed(VK_NUMPAD1) && bow)
@@ -92,7 +108,8 @@ void Stage1::Update(double dt)
 //	static bool bow = false;
 	if (Application::IsKeyPressed(VK_NUMPAD2) && !bow)
 	{
-		curr_weapon = 1;
+		//curr_weapon = 1;
+		thePlayer->SetWeapon(1);
 		bow = true;
 	}
 	else if (!Application::IsKeyPressed(VK_NUMPAD2) && bow)
@@ -102,7 +119,8 @@ void Stage1::Update(double dt)
 //	static bool bow = false;
 	if (Application::IsKeyPressed(VK_NUMPAD3) && !bow)
 	{
-		curr_weapon = 2;
+		//curr_weapon = 2;
+		thePlayer->SetWeapon(2);
 		bow = true;
 	}
 	else if (!Application::IsKeyPressed(VK_NUMPAD3) && bow)
@@ -184,65 +202,95 @@ void Stage1::Update(double dt)
 	//}
 
 	//Mouse Section
+
+	//gets mouse position
+	Vector3 currentPos;
+	Application::GetCursorPos(&mouseX, &mouseY);
+	currentPos.x = (float)mouseX / Application::GetWindowWidth() * m_worldWidth;
+	currentPos.y = (Application::GetWindowHeight() - (float)mouseY) / Application::GetWindowHeight() * m_worldHeight;
 	static bool bLButtonState = false;
 	if (!bLButtonState && Application::IsMousePressed(0))
 	{
 		bLButtonState = true;
 
 		Application::GetCursorPos(&mouseX, &mouseY);
-		theGhostProj->pos.x = (float)mouseX / Application::GetWindowWidth() * m_worldWidth;
-		theGhostProj->pos.y = (Application::GetWindowHeight() - (float)mouseY) / Application::GetWindowHeight() * m_worldHeight;
+		//places current mouse pos and fixes to the pos where mouse clicked
+		theGhostProj->pos = currentPos;// (float)mouseX / Application::GetWindowWidth() * m_worldWidth;
+	//	theGhostProj->pos.y = (Application::GetWindowHeight() - (float)mouseY) / Application::GetWindowHeight() * m_worldHeight;
 		theGhostProj->active = true;
+		theReleaseMouseGhostProj->active = false;
+		theFactory->createGameObject(theGhostProj);
+
 	}
 	else if (bLButtonState && !Application::IsMousePressed(0))
 	{
 		bLButtonState = false;
-		//when button click call discharge of weapon//TO DO****
-		Vector3 currentPos;
-		Application::GetCursorPos(&mouseX, &mouseY);
-		currentPos.x = (float)mouseX / Application::GetWindowWidth() * m_worldWidth;;
-		currentPos.y = (Application::GetWindowHeight() - (float)mouseY) / Application::GetWindowHeight() * m_worldHeight;
+		//when mouseclick release it renders wwhere the mouse was released 
+		theReleaseMouseGhostProj->pos = currentPos;
+		theReleaseMouseGhostProj->active = true;
+		theFactory->createGameObject(theReleaseMouseGhostProj);
+
+	
+		//shoots projectile
+		thePlayer->DischargePPTEST(theGhostProj->pos, currentPos, this);
 	
 		//Weapon_Info potato;
 		//potato.Get_OBJECT();
 
 		
 		//info to shoot bullet
-		potato->Discharge(theGhostProj->pos, currentPos, this);
-		GameObject *tempObject = new  Projectile(Projectile::ARROW_PROJECTILE, GameObject::GO_PROJECTILE , this);
-		GameObject *tempObject1 = new  Projectile(Projectile::CANNON_BALL_PROJECTILE, GameObject::GO_PROJECTILE, this);
-		GameObject *tempObject2 = new  Projectile(Projectile::ROCK_PROJECTILE, GameObject::GO_PROJECTILE, this);
-		//info to shoot bullet
-		tempObject->pos = theGhostProj->pos;
-		tempObject1->pos = theGhostProj->pos;
-		tempObject2->pos = theGhostProj->pos;
-		weap_manager[0]->Discharge(currentPos, theGhostProj->pos,tempObject, this);
+		//potato->Discharge(theGhostProj->pos, currentPos, this);
+		//GameObject *tempObject = new  Projectile(Projectile::ARROW_PROJECTILE, GameObject::GO_PROJECTILE , this);
+		//GameObject *tempObject1 = new  Projectile(Projectile::CANNON_BALL_PROJECTILE, GameObject::GO_PROJECTILE, this);
+		//GameObject *tempObject2 = new  Projectile(Projectile::ROCK_PROJECTILE, GameObject::GO_PROJECTILE, this);
+		////info to shoot bullet
+		//tempObject->pos = theGhostProj->pos;
+		//tempObject1->pos = theGhostProj->pos;
+		//tempObject2->pos = theGhostProj->pos;
+		//weap_manager[0]->Discharge(currentPos, theGhostProj->pos,tempObject, this);
 		//thePlayer->DischargePPTEST(currentPos, theGhostProj->pos, tempObject, this);
-		weap_manager[1]->Discharge(currentPos, theGhostProj->pos, tempObject1, this);
+		//weap_manager[1]->Discharge(currentPos, theGhostProj->pos, tempObject1, this);
 		//thePlayer->DischargePPTEST(currentPos, theGhostProj->pos, tempObject, this);
-		weap_manager[2]->Discharge(currentPos, theGhostProj->pos, tempObject2, this);
+		//weap_manager[2]->Discharge(currentPos, theGhostProj->pos, tempObject2, this);
 
-		theFactory->createGameObject(tempObject);
-		theFactory->createGameObject(tempObject1);
-		theFactory->createGameObject(tempObject2);
+		//theFactory->createGameObject(tempObject);
+		//theFactory->createGameObject(tempObject1);
+		//theFactory->createGameObject(tempObject2);
 		theGhostProj->active = false;
 
 
 	// add object into factory
 	}
-
+	//shows where mouse is(if need remove mouse cursor)
+	theMouseGhostProj->pos = currentPos;
+	//prediction line
+	if (bLButtonState)
+	{
+		for (size_t i = 0; i < 10; i++)
+		{
+			double tline = i * 0.10;
+			thePredictionLine[i]->pos.y = (((theGhostProj->pos.y) + ((theGhostProj->pos.y - theMouseGhostProj->pos.y) * tline)) + ((-9.8 *(tline * tline)) / 2));
+			thePredictionLine[i]->pos.x = (theGhostProj->pos.x) + ((theGhostProj->pos.x - theMouseGhostProj->pos.x) * tline);
+			thePredictionLine[i]->active = true;
+			theFactory->createGameObject(thePredictionLine[i]);
+		}
+	}
 
 	if (Application::IsKeyPressed(VK_RIGHT) )
 	{
+		//theMouseGhostProj->pos.x += _dt * 50;
 		camera.position.x += _dt * 50;
 		camera.target.x += _dt * 50;
 	}
 
 	if (Application::IsKeyPressed(VK_LEFT) )
 	{
+		//theMouseGhostProj->pos.x -= _dt * 50;
 		camera.position.x -= _dt * 50;
 		camera.target.x -= _dt * 50;
 	}
+	
+	theMouseGhostProj->active = true;
 
 	 //clamp camera position and target between World X coordinate 0 and m_world *2
 	camera.position.x = Math::Clamp(camera.position.x, 0.f, m_worldWidth * 2);
@@ -256,10 +304,17 @@ void Stage1::Update(double dt)
 	gom->update();
 	theplayer->update();
 
+	//potato->Update(dt);
 	thePlayer->Update(dt);
-	if (weap_manager)
-		weap_manager[curr_weapon]->Update(dt);
+	theFactory->createGameObject(theMouseGhostProj);
 
+	//trying text for ui display
+	/*std::ostringstream ss0;
+	ss0.precision(5);
+	ss0 << "NINJA X GTA";*/
+	//textObj[0]->SetText(ss0.str());
+
+	
 }
 
 void Stage1::Render()
@@ -286,6 +341,10 @@ void Stage1::Render()
 
 	//Render the all Game Objects
 	theFactory->renderGameObject();
+
+	theMiniMap->RenderUI();
+
+	
 }
 
 void Stage1::Exit()

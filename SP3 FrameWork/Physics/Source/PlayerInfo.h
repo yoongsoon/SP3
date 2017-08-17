@@ -55,6 +55,7 @@ public:
 	// Set the terrain for the player info
 	//void SetTerrain(GroundEntity* m_pTerrain);
 
+	void SetWeapon(int w);
 	// Get position
 	Vector3 GetPos(void) const;
 	// Get target
@@ -90,7 +91,8 @@ public:
 	// Discharge Primary Weapon
 	bool DischargePrimaryWeapon(const float deltaTime);
 
-	bool DischargePPTEST(Vector3 position, Vector3 target, GameObject* tempObject, SceneBase *_scene);
+	//bool DischargePPTEST(Vector3 position, Vector3 target, GameObject* tempObject, SceneBase *_scene);
+	bool DischargePPTEST(Vector3 position, Vector3 target, SceneBase *_scene);
 	// Constrain the position within the borders
 	void Constrain(void);
 
@@ -106,9 +108,8 @@ public:
 
 	// Scrollable weapon switching
 	Weapon_Info** weap_manager;
-
 	int m_iCurrentWeapon;
-	//const int m_iNumOfWeapon = 2;
+	const int m_iNumOfWeapon = 3;
 	Weapon_Info* primaryWeapon;
 	//Weapon_Info* secondaryWeapon;
 

@@ -44,4 +44,6 @@ protected:
 	float m_speed;
 	Player *theplayer;
 	Enemy *enemy;
+private:
+	//TextEntity* textObj[3];
 };
