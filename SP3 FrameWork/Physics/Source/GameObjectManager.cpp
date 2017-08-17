@@ -37,6 +37,9 @@ void GameObjectManager::Enemy_Enemy_Collision()
 			{
 				//if (static_cast <Enemy *>(it->second)->enemyType == Enemy::E_ARCHER && static_cast <Enemy *>(it2->second)->enemyType == Enemy::E_SOLDIER)
 				//{
+//----------------------------------------------Enemy vs Player Units Collision----------------------------------------------------------------------------------------------------------------
+
+					//Soldier is actually refering to player
 					float soldier_position = static_cast <Enemy *>(it2->second)->pos.x;
 					float soldier_range = static_cast <Enemy *>(it2->second)->range;
 					float soldier_scale = static_cast <Enemy *>(it2->second)->scale.x;
@@ -45,7 +48,7 @@ void GameObjectManager::Enemy_Enemy_Collision()
 					bool soldier_attacked = static_cast <Enemy *>(it2->second)->Attacked;
 					bool soldier_stoptoattack = static_cast <Enemy *>(it2->second)->StopToAttack;
 					bool soldier_active = static_cast <Enemy *>(it2->second)->active;
-
+					//Archer is refering to enemy
 					float archer_position = static_cast <Enemy *>(it->second)->pos.x;
 					float archer_range = static_cast <Enemy *>(it->second)->range;
 					float archer_scale = static_cast <Enemy *>(it->second)->scale.x;
@@ -145,6 +148,7 @@ void GameObjectManager::Enemy_Enemy_Collision()
 					static_cast <Enemy *>(it->second)->Attacked = archer_attacked;
 					static_cast <Enemy *>(it->second)->StopToAttack = archer_stoptoattack;
 					static_cast <Enemy *>(it->second)->active = archer_active;
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
 				//}
 			}
 		}

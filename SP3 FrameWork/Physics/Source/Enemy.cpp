@@ -53,7 +53,7 @@ Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) 
 		range = 10.f;
 		damage = 25.f;
 		attackcooldown = 3.f;
-		cost = 250.f;
+		cost = 150.f;
 	}
 	StopToAttack = false;
 	timer = 0.0f;

@@ -296,41 +296,78 @@ void Stage1::Exit()
 void Stage1::CreateEnemySoldier()
 {
 	GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_SOLDIER);
-	theFactory->createGameObject(go);
-	cout << "Soldier" << endl;
+	Enemy * tempEnemy = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_SOLDIER);
+	cout << theplayer->ReturnEnemyWallet() << endl;
+	if (theplayer->ReturnEnemyWallet() > tempEnemy->cost)
+	{
+		theplayer->ReduceEnemyWalletAmount(tempEnemy->cost);
+		theFactory->createGameObject(go);
+		cout << "Soldier" << endl;
+	}
+	delete tempEnemy;
 }
 
 void Stage1::CreateEnemyArcher()
 {
 	GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_ARCHER);
-	theFactory->createGameObject(go);
-	cout << "Archer" << endl;
+	Enemy * tempEnemy = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_ARCHER);
+	cout << theplayer->ReturnEnemyWallet() << endl;
+	if (theplayer->ReturnEnemyWallet() > tempEnemy->cost)
+	{
+		theplayer->ReduceEnemyWalletAmount(tempEnemy->cost);
+		theFactory->createGameObject(go);
+		cout << "Archer" << endl;
+	}
 }
 
 void Stage1::CreateEnemyWizard()
 {
 	GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_WIZARD);
-	theFactory->createGameObject(go);
-	cout << "Wizard" << endl;
+	Enemy * tempEnemy = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_WIZARD);
+	cout << theplayer->ReturnEnemyWallet() << endl;
+	if (theplayer->ReturnEnemyWallet() > tempEnemy->cost)
+	{
+		theplayer->ReduceEnemyWalletAmount(tempEnemy->cost);
+		theFactory->createGameObject(go);
+		cout << "Wizard" << endl;
+	}
 }
 
 void Stage1::CreateFriendlySoldier()
 {
 	GameObject *go = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_SOLDIER);
-	theFactory->createGameObject(go);
-	cout << "friend Soldier" << endl;
+	PlayerTroop * tempPlayer = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_SOLDIER);
+	cout << theplayer->ReturnWallet() << endl;
+	if (theplayer->ReturnWallet() > tempPlayer->cost)
+	{
+		theplayer->ReduceWalletAmount(tempPlayer->cost);
+		theFactory->createGameObject(go);
+		cout << "friend Soldier" << endl;
+	}
 }
 
 void Stage1::CreateFriendlyArcher()
 {
 	GameObject *go = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_ARCHER);
-	theFactory->createGameObject(go);
-	cout << "friend Archer" << endl;
+	PlayerTroop * tempPlayer = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_ARCHER);
+	cout << theplayer->ReturnWallet() << endl;
+	if (theplayer->ReturnWallet() > tempPlayer->cost)
+	{
+		theplayer->ReduceWalletAmount(tempPlayer->cost);
+		theFactory->createGameObject(go);
+		cout << "friend Archer" << endl;
+	}
 }
 
 void Stage1::CreateFriendlyWizard()
 {
 	GameObject *go = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_WIZARD);
-	theFactory->createGameObject(go);
-	cout << "friend Wizard" << endl;
+	PlayerTroop * tempPlayer = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_WIZARD);
+	cout << theplayer->ReturnWallet() << endl;
+	if (theplayer->ReturnWallet() > tempPlayer->cost)
+	{
+		theplayer->ReduceWalletAmount(tempPlayer->cost);
+		theFactory->createGameObject(go);
+		cout << "friend Wizard" << endl;
+	}
 }

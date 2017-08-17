@@ -95,7 +95,6 @@ bool PlayerInfo::isOnGround(void)
 		return true;
 }
 
-
 // Set position
 void PlayerInfo::SetPos(const Vector3& pos)
 {

@@ -43,4 +43,5 @@ protected:
 							   //Physics
 	float m_speed;
 	Player *theplayer;
+	Enemy *enemy;
 };
