@@ -11,6 +11,7 @@ class Projectile : public GameObject
 public:
 	enum PROJECTILE_TYPE
 	{
+		GHOST_PROJECTILE,
 		ARROW_PROJECTILE,
 		ROCK_PROJECTILE,
 		CANNON_BALL_PROJECTILE,

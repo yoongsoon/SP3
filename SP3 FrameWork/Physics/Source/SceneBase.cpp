@@ -108,6 +108,9 @@ void SceneBase::Init()
 	meshList[GEO_CUBE] = MeshBuilder::GenerateCube("cube", Color(1, 1, 1), 2.f);
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_CIRCLE] = MeshBuilder::GenerateSphere("circle", Color(1, 0, 0), 10, 10, 1.f);
+	meshList[GEO_SPHERE1] = MeshBuilder::GenerateSphere("sphere1", Color(1, 1, 0), 10, 10, 1.f);
+	meshList[GEO_SPHERE2] = MeshBuilder::GenerateSphere("sphere2", Color(0, 1, 1), 10, 10, 1.f);
+	meshList[GEO_SPHERE3] = MeshBuilder::GenerateSphere("sphere3", Color(1, 0, 1), 10, 10, 1.f);
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//ExportedFont2.tga");
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
 	meshList[GEO_SOLDIER] = MeshBuilder::GenerateCube("cube", Color(1, 0, 1), 1.f);

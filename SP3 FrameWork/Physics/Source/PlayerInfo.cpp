@@ -24,7 +24,7 @@ PlayerInfo::PlayerInfo(void)
 	, primaryWeapon(NULL)
 	//, secondaryWeapon(NULL)
 	//, theCurrentPosture(STAND)
-	//, weap_manager(NULL)
+	, weap_manager(NULL)
 	, m_iCurrentWeapon(0)
 	, health(100)
 	, colliding(false)
@@ -33,16 +33,16 @@ PlayerInfo::PlayerInfo(void)
 
 PlayerInfo::~PlayerInfo(void)
 {
-	/*if (weaponManager)
+	if (weap_manager)
 	{
 		for (int i = 0; i < m_iNumOfWeapon; i++)
 		{
-			delete weaponManager[i];
+			delete weap_manager[i];
 		}
-		delete[] weaponManager;
-		weaponManager = NULL;
+		delete[] weap_manager;
+		weap_manager = NULL;
 	}
-	if (secondaryWeapon)
+	/*if (secondaryWeapon)
 	{
 		delete secondaryWeapon;
 		secondaryWeapon = NULL;
@@ -73,18 +73,18 @@ void PlayerInfo::Init(void)
 	minBoundary.Set(-1, -1, -1);
 
 	// Set the pistol as the primary weapon
-	primaryWeapon = new Bow();
+	/*primaryWeapon = new Bow();
 	primaryWeapon->Init();
-
-	//weap_manager = new Weapon_Info*[3];
-	//*potato = new Catapult();
-	//potato->Init();*/
-	//weap_manager[0] = new Bow();
-	//weap_manager[0]->Init();
-	//weap_manager[1] = new Cannon();
-	//weap_manager[1]->Init();
-	//weap_manager[2] = new Catapult();
-	//weap_manager[2]->Init();
+*/
+	weap_manager = new Weapon_Info*[m_iNumOfWeapon];
+	//potato = new Catapult();
+	//potato->Init();
+	weap_manager[0] = new Bow();
+	weap_manager[0]->Init();
+	weap_manager[1] = new Cannon();
+	weap_manager[1]->Init();
+	weap_manager[2] = new Catapult();
+	weap_manager[2]->Init();
 
 }
 
@@ -134,6 +134,7 @@ void PlayerInfo::Reset(void)
 	//StopVerticalMovement();
 }
 
+
 // Get position x of the player
 Vector3 PlayerInfo::GetPos(void) const
 {
@@ -151,21 +152,26 @@ Vector3 PlayerInfo::GetUp(void) const
 	return up;
 }
 
+void PlayerInfo::SetWeapon(int w)
+{
+	m_iCurrentWeapon = w;
+}
+
 /********************************************************************************
 Hero Update
 ********************************************************************************/
 void PlayerInfo::Update(double dt)
 {
 	
-	if (primaryWeapon)
-		primaryWeapon->Update(dt);
+	//if (primaryWeapon)
+	//	primaryWeapon->Update(dt);
 	/*if (secondaryWeapon)
 		secondaryWeapon->Update(dt);*/
 	
 	
-	/*if (weap_manager[m_iCurrentWeapon])
+	if (weap_manager[m_iCurrentWeapon])
 		weap_manager[m_iCurrentWeapon]->Update(dt);
-*/
+
 }
 
 // Get Current Weapon
@@ -174,38 +180,43 @@ void PlayerInfo::Update(double dt)
 //	return m_iCurrentWeapon;
 //}
 
+bool PlayerInfo::ChangeWeapon(void)
+{
+	return false;
+}
+
 // Discharge Primary Weapon
 bool PlayerInfo::DischargePrimaryWeapon(const float deltaTime)
 {
 	//GameObject *tempObject = new  Projectile(Projectile::ARROW_PROJECTILE, GameObject::GO_PROJECTILE, this);
 
-	if (primaryWeapon)
-	{	//primaryWeapon->Discharge(position, target, this);
-	}
-	////if (weaponManager[m_iCurrentWeapon])
-	////{
-	////	weaponManager[m_iCurrentWeapon]->Discharge(position, target, this);
-	//	return true;
+	//if (primaryWeapon)
+	//{	//primaryWeapon->Discharge(position, target, this);
 	//}
-
+	/*if (weap_manager[m_iCurrentWeapon])
+	{
+		weap_manager[m_iCurrentWeapon]->Discharge(position, target, this);
+		return true;
+	}
+*/
 	return false;
 }
 // Discharge Primary Weapon
-bool PlayerInfo::DischargePPTEST(Vector3 position, Vector3 target, GameObject* tempObject, SceneBase *_scene)
+bool PlayerInfo::DischargePPTEST(Vector3 position, Vector3 target, SceneBase *_scene)
 {
 	//GameObject *tempObject = new  Projectile(Projectile::ARROW_PROJECTILE, GameObject::GO_PROJECTILE, this);
 
-	if (primaryWeapon)
+	/*if (primaryWeapon)
 	{	
 		primaryWeapon->Discharge(position, target,tempObject, _scene);
 		return true;
 	}
-
-	//if (weap_manager[m_iCurrentWeapon])
-	//{
-	//	weap_manager[m_iCurrentWeapon]->Discharge(position, target, tempObject, _scene);
-	//	return true;
-	//}
+*/
+	if (weap_manager[m_iCurrentWeapon])
+	{
+		weap_manager[m_iCurrentWeapon]->Discharge(position, target, _scene);
+		return true;
+	}
 
 	return false;
 }

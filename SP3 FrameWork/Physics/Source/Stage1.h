@@ -39,8 +39,10 @@ protected:
 	//switch weapons
 	Weapon_Info** weap_manager;
 	int curr_weapon = 0;
-	Weapon_Info* potato;
+	//Weapon_Info* potato;
 							   //Physics
 	float m_speed;
 	Player *theplayer;
+private:
+	//TextEntity* textObj[3];
 };

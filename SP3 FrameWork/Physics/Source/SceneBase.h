@@ -71,6 +71,10 @@ public:
 		GEO_WIZARD,
 		GEO_BACKGROUND,
 		GEO_BRICK,
+		//for different projectile colours
+		GEO_SPHERE1,
+		GEO_SPHERE2,
+		GEO_SPHERE3,
 
 		NUM_GEOMETRY,
 	};
@@ -119,8 +123,13 @@ protected:
 	CollisionManager * theCollider;
 	Enemy * theEnemy;
 	GameObjectManager * gom;
+	GameObject** thePredictionLine;
+	GameObject * thePredictGHOST;
+	GameObject * thePredictGHOST2;
 	GameObject * theGhostProj;
-	GameObject* theCastle;
+	GameObject * theReleaseMouseGhostProj;
+	GameObject * theMouseGhostProj;
+	GameObject * theCastle;
 
 	double mouseX, mouseY;
 	float backGroundX = 40.f;

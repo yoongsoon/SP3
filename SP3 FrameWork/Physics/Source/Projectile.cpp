@@ -13,17 +13,27 @@ Projectile::Projectile(PROJECTILE_TYPE _typeofProjectile, GAMEOBJECT_TYPE typeVa
 	{
 	case ARROW_PROJECTILE:
 	{
+		meshValue = SceneBase::GEO_SPHERE1;
 		m_damage = 1.f;
 	}
 	break;
 	case ROCK_PROJECTILE:
 	{
+		meshValue = SceneBase::GEO_SPHERE2;
 		m_damage = 5.f;
 	}
 	break;
 	case CANNON_BALL_PROJECTILE:
 	{
+		meshValue = SceneBase::GEO_SPHERE3;
 		m_damage = 10.f;
+	}
+	break;
+	case GHOST_PROJECTILE:
+	{
+		meshValue = SceneBase::GEO_CIRCLE;
+		m_damage = 0;
+		m_gravity = 0;
 	}
 	break;
 	}
