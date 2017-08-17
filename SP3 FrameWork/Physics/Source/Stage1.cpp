@@ -209,22 +209,22 @@ void Stage1::Update(double dt)
 		
 		//info to shoot bullet
 		potato->Discharge(theGhostProj->pos, currentPos, this);
-		GameObject *tempObject = new  Projectile(Projectile::ARROW_PROJECTILE, GameObject::GO_PROJECTILE , this);
-		GameObject *tempObject1 = new  Projectile(Projectile::CANNON_BALL_PROJECTILE, GameObject::GO_PROJECTILE, this);
-		GameObject *tempObject2 = new  Projectile(Projectile::ROCK_PROJECTILE, GameObject::GO_PROJECTILE, this);
-		//info to shoot bullet
-		tempObject->pos = theGhostProj->pos;
-		tempObject1->pos = theGhostProj->pos;
-		tempObject2->pos = theGhostProj->pos;
-		weap_manager[0]->Discharge(currentPos, theGhostProj->pos,tempObject, this);
-		//thePlayer->DischargePPTEST(currentPos, theGhostProj->pos, tempObject, this);
-		weap_manager[1]->Discharge(currentPos, theGhostProj->pos, tempObject1, this);
-		//thePlayer->DischargePPTEST(currentPos, theGhostProj->pos, tempObject, this);
-		weap_manager[2]->Discharge(currentPos, theGhostProj->pos, tempObject2, this);
+		//GameObject *tempObject = new  Projectile(Projectile::ARROW_PROJECTILE, GameObject::GO_PROJECTILE , this);
+		//GameObject *tempObject1 = new  Projectile(Projectile::CANNON_BALL_PROJECTILE, GameObject::GO_PROJECTILE, this);
+		//GameObject *tempObject2 = new  Projectile(Projectile::ROCK_PROJECTILE, GameObject::GO_PROJECTILE, this);
+		////info to shoot bullet
+		//tempObject->pos = theGhostProj->pos;
+		//tempObject1->pos = theGhostProj->pos;
+		//tempObject2->pos = theGhostProj->pos;
+		//weap_manager[0]->Discharge(currentPos, theGhostProj->pos,tempObject, this);
+		////thePlayer->DischargePPTEST(currentPos, theGhostProj->pos, tempObject, this);
+		//weap_manager[1]->Discharge(currentPos, theGhostProj->pos, tempObject1, this);
+		////thePlayer->DischargePPTEST(currentPos, theGhostProj->pos, tempObject, this);
+		//weap_manager[2]->Discharge(currentPos, theGhostProj->pos, tempObject2, this);
 
-		theFactory->createGameObject(tempObject);
-		theFactory->createGameObject(tempObject1);
-		theFactory->createGameObject(tempObject2);
+		//theFactory->createGameObject(tempObject);
+		//theFactory->createGameObject(tempObject1);
+		//theFactory->createGameObject(tempObject2);
 		theGhostProj->active = false;
 
 

@@ -16,7 +16,15 @@ public:
 		CANNON_BALL_PROJECTILE,
 	};
 
+	enum MOTION_TYPE
+	{
+		LINEAR_MOTION,
+		PROJECTILE_MOTION,
+	};
+
+
 	PROJECTILE_TYPE typeOfProjectile;
+	MOTION_TYPE typeOfMotion;
 
     // Constructor / Destructor
 	Projectile(PROJECTILE_TYPE _typeofProjectile, GAMEOBJECT_TYPE typeValue, SceneBase * scene);
@@ -39,9 +47,9 @@ public:
 	float m_damage;
 	//-------
 
+	float speed;
 
 private:
-	// angle must be between 0 to 90
 	float m_launchAngle;
 };
 
