@@ -5,28 +5,29 @@ Projectile::Projectile(PROJECTILE_TYPE _typeofProjectile, GAMEOBJECT_TYPE typeVa
 	:GameObject(typeValue, scene)
 	, m_launchAngle(30.f)
 	, MAX_SPEED(15.f)
+	,speed (50.f)
 {
 	meshValue = SceneBase::GEO_CIRCLE;
 	typeOfProjectile = _typeofProjectile;
-
+  
 	switch (typeOfProjectile)
 	{
 	case ARROW_PROJECTILE:
 	{
 		meshValue = SceneBase::GEO_SPHERE1;
-		m_damage = 1.f;
+		m_damage = 10.f;
 	}
 	break;
 	case ROCK_PROJECTILE:
 	{
 		meshValue = SceneBase::GEO_SPHERE2;
-		m_damage = 5.f;
+		m_damage = 20.f;
 	}
 	break;
 	case CANNON_BALL_PROJECTILE:
 	{
 		meshValue = SceneBase::GEO_SPHERE3;
-		m_damage = 10.f;
+		m_damage = 30.f;
 	}
 	break;
 	case GHOST_PROJECTILE:
@@ -38,9 +39,9 @@ Projectile::Projectile(PROJECTILE_TYPE _typeofProjectile, GAMEOBJECT_TYPE typeVa
 	break;
 	}
 
-	
-	vel.x = vel.Length() * cos(Math::RadianToDegree(m_launchAngle));
-	vel.y = vel.Length() * sin(Math::RadianToDegree(m_launchAngle));
+
+	/*vel.x = speed * cos(Math::RadianToDegree(m_launchAngle));
+	vel.y = speed * sin(Math::RadianToDegree(m_launchAngle));*/
 
 }
 
@@ -57,30 +58,47 @@ void Projectile::setInitVel(float _range)
 	 // time = 2 * vel  * sin 0 / g
 	 // velx  = vel * cos0
 
-	vel = sqrt(_range * -m_gravity) / (2 * sin(Math::RadianToDegree(m_launchAngle) * cos(Math::RadianToDegree(m_launchAngle))));
+	m_launchAngle = 220;
+
+	vel = sqrt(_range * m_gravity) / (2 * sin(Math::DegreeToRadian(m_launchAngle) * cos(Math::DegreeToRadian(m_launchAngle))));
+
+	// to check if square root gives any invalid value , if is does negate the sign for m_gravity
+	if (std::isnan(vel.x) || std::isnan(vel.y) ||std::isnan(vel.z) )
+		vel = sqrt(_range * -m_gravity) / (2 * sin(Math::DegreeToRadian(m_launchAngle) * cos(Math::DegreeToRadian(m_launchAngle))));
 
 
-	
-	vel.x = vel.Length() * cos(Math::RadianToDegree(m_launchAngle));
-	vel.y = vel.Length() * sin(Math::RadianToDegree(m_launchAngle));
+	//vel.x = speed * cos(Math::DegreeToRadian(m_launchAngle));
+	//vel.y = speed * sin(Math::DegreeToRadian(m_launchAngle));
 
 }
 
 void Projectile::update()
 {
-	if (m_gEffect)
-		vel.y += m_gravity *theScene->_dt;
+	switch (typeOfMotion)
+	{
+	case PROJECTILE_MOTION:
+	{
+		if (m_gEffect)
+			vel.y += m_gravity *theScene->_dt;
 
-	pos.x += vel.x * theScene->_dt;
-	pos.y += vel.y * theScene->_dt + (0.5f *  m_gravity * (theScene->_dt * theScene->_dt));
+		pos += vel * theScene->_dt;
+	}
+	break;
+	case LINEAR_MOTION:
+	{
+		pos += vel * theScene->_dt;
+	}
+	break;
+	}
 
+	
 	// delete projectile when it goes out of range
 	if (pos.x < 0.f)
 	{
 		isDestroyed = true;
 		return;
 	}
-	else if (pos.x > theScene->m_worldWidth * 2)
+	else if (pos.x > theScene->m_worldWidth * 3)
 	{
 		isDestroyed = true;
 		return;

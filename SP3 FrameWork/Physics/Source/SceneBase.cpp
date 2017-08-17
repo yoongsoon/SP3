@@ -2,12 +2,11 @@
 #include "GL\glew.h"
 
 #include "shader.hpp"
-#include "MeshBuilder.h"
 #include "Application.h"
 #include "Utility.h"
-#include "LoadTGA.h"
 #include <sstream>
-
+#include "MeshBuilder.h"
+#include "LoadTGA.h"
 
 
 SceneBase::SceneBase()
@@ -117,9 +116,14 @@ void SceneBase::Init()
 	meshList[GEO_ARCHER] = MeshBuilder::GenerateSphere("ball", Color(1, 0, 0), 10, 10, 1.f);
 	meshList[GEO_WIZARD] = MeshBuilder::GenerateCube("cube", Color(0, 0, 0), 1.f);
 	meshList[GEO_BRICK] = MeshBuilder::GenerateCube("brick", Color(.5f, .5f, .5f), 1.f);
-	meshList[GEO_BRICK]->textureID = LoadTGA("Image//castlebrick.tga");
+	//meshList[GEO_BRICK]->textureID = LoadTGA("Image//castlebrick.tga");
 	meshList[GEO_BACKGROUND] = MeshBuilder::GenerateQuad("BackGround", Color(1.f, 1.f, 1.f), 1.f);
 	meshList[GEO_BACKGROUND]->textureID = LoadTGA("Image/BackGround.tga");
+
+	meshList[GEO_MINI_BACKGROUND] = MeshBuilder::GenerateQuad("BackGround", Color(1.f, 1.f, 1.f), 1.f);
+	meshList[GEO_MINI_ENEMY] = (MeshBuilder::GenerateQuad("miniEnemy", Color(1.f, 1.f, 1.f), 1.f));
+	meshList[GEO_MINI_ENEMY]->textureID = LoadTGA("Image/mini_enemy.tga");
+
 
 	bLightEnabled = false;
 

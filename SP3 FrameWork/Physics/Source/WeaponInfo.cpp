@@ -144,7 +144,7 @@ void Weapon_Info::Discharge(Vector3 position, Vector3 target, GameObject * objec
 	}
 }
 
-void Weapon_Info::Discharge(Vector3 position, Vector3 target,SceneBase *_scene)
+void Weapon_Info::Discharge(Vector3 position, Vector3 target, SceneBase *_scene)
 {
 	if (b_Fire)
 	{
@@ -154,47 +154,53 @@ void Weapon_Info::Discharge(Vector3 position, Vector3 target,SceneBase *_scene)
 		
 		//needs get projectile type to change projectiles or maybe weapon type
 		Projectile * aProjectile = Create::createProjectile(projectile_type, GameObject::GO_BALL, _scene);
+		//Projectile * aProjectile = Create::createProjectile(Projectile::PROJECTILE_TYPE::ARROW_PROJECTILE, GameObject::GO_PROJECTILE, _scene);
+		aProjectile->typeOfMotion = Projectile::PROJECTILE_MOTION;
 		aProjectile->pos = position;
 		aProjectile->vel = position - target;
 		aProjectile->scale.Set(3, 3, 3);
 		//aProjectile->mass = 3;
 		aProjectile->active = true;
-		
-		//// Create a projectile with a cube mesh. Its position and direction is same as the player.
-		//// It will last for 3.0 seconds and travel at 500 units per second
-		//Projectile* aProjectile = Create::Projectile("sphere",
-		//	position,
-		//	(target - position).Normalized(),
-		//	3.0f,
-		//	100.0f,
-		//	_source);
-		//aProjectile->SetCollider(true);
-		//aProjectile->SetAABB(Vector3(0.5f, 0.5f, 0.5f), Vector3(-0.5f, -0.5f, -0.5f));
-		//bullets.push_back(aProjectile);
-		b_Fire = false;
-		//bFired = true;
-		////magRounds--;
+		/*	b_Fire = false;*/
+
 	}
 }
 
-void Weapon_Info::Discharge(Vector3 position, float range, SceneBase * _scene)
+void Weapon_Info::castleAIDischarge(Vector3 position, float range, SceneBase * _scene)
 {
 	if (b_Fire)
 	{
-		Projectile * aProjectile = Create::createProjectile(Projectile::PROJECTILE_TYPE::ARROW_PROJECTILE, GameObject::GO_BALL, _scene);
+		Projectile * aProjectile = Create::createProjectile(Projectile::PROJECTILE_TYPE::ARROW_PROJECTILE, GameObject::GO_PROJECTILE, _scene);
+		aProjectile->typeOfMotion = Projectile::MOTION_TYPE::PROJECTILE_MOTION;
 		aProjectile->pos = position;
-	/*	aProjectile->vel =*/ aProjectile->setInitVel(range);
+		aProjectile->setInitVel(range);
 		aProjectile->scale.Set(3, 3, 3);
-		//aProjectile->mass = 3;
+		aProjectile->mass = 3;
 		aProjectile->active = true;
 		b_Fire = false;
 	}
 }
 
+void Weapon_Info::castleAIDischarge(Vector3 position, Vector3 target, SceneBase * _scene)
+{
+	if (b_Fire)
+	{
+		Projectile * aProjectile = Create::createProjectile(Projectile::PROJECTILE_TYPE::ARROW_PROJECTILE, GameObject::GO_PROJECTILE, _scene);
+		aProjectile->typeOfMotion = Projectile::MOTION_TYPE::LINEAR_MOTION;
+		aProjectile->pos = position;
+		aProjectile->vel = target - aProjectile->pos;
+		aProjectile->scale.Set(3, 3, 3);
+		//aProjectile->mass = 3;
+		aProjectile->active = true;
+		b_Fire = false;
+	}
+
+}
+
 void Weapon_Info::PrintSelf(void)
 {
 }
-	
+
 //GameObject Weapon_Info::Get_OBJECT()
 //{
 //	GameObject &temp = tempObject;

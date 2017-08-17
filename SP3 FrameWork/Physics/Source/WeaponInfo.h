@@ -64,10 +64,14 @@ public:
 	//void Discharge(Vector3 position, Vector3 target,SceneBase * _scene);
 	void Discharge(Vector3 position, Vector3 target,GameObject * object,SceneBase * _scene);
 
+	// ------------Discharge for player---------------------//
 	void Discharge(Vector3 position, Vector3 target, SceneBase * _scene);
+
     //-------------Discharge for Castle AI----------------------//
-	//  position of projectile , range of projectile , scene
-	void Discharge(Vector3 position, float range, SceneBase * _scene);
+	//  position of projectile , range of projectile , scene  (PROJECTILE_MOTION)
+	void castleAIDischarge(Vector3 position,  float range, SceneBase * _scene );
+	// position of projectile ,target of projectile , scene (LINEAR MOTION)
+	void castleAIDischarge(Vector3 position, Vector3 target, SceneBase * _scene);
 
 
 	//prints details of weapon
