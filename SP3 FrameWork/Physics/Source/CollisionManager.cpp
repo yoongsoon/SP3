@@ -24,13 +24,14 @@ bool CollisionManager::checkCollision(GameObject * object1, GameObject * object2
 	Vector3 obj2scale = object2->scale;
 	Vector3 obj2Normal = object2->dir;
 	Vector3 obj2Right = obj2Normal.Cross(Vector3(0, 0, 1));
+	// Get vector to object1 from object2
 	Vector3 relativePos1 = obj1pos - obj2pos;
+	// Get vector to object2 from object1
 	Vector3 relativePos2 = obj2pos - obj1pos;
-	Vector3 ballDir = relativePos2.Normalized();
-	ballDir.Normalize();
-	Vector3 radialPosToTarget = obj1pos + ballDir;
+	Vector3 selfToTargetDirection;
+	Vector3 radialPosToTarget;
 	Vector3 relativeVel = object1->vel - object2->vel;
-
+	float scaleOffset = 0;
 	if (object1->type == GameObject::GO_PROJECTILE)
 	{
 		switch (object2->type)
@@ -43,30 +44,61 @@ bool CollisionManager::checkCollision(GameObject * object1, GameObject * object2
 		//case GameObject::GO_ENEMY:
 		case GameObject::GO_BRICK:
 			// testing
+			object2->topLeft.Set(obj2pos.x - (obj2scale.x * 0.5f), obj2pos.y + (obj2scale.y * 0.5f), 0);
+			object2->topRight.Set(obj2pos.x + (obj2scale.x * 0.5f), obj2pos.y + (obj2scale.y * 0.5f), 0);
+			object2->bottomLeft.Set(obj2pos.x - (obj2scale.x * 0.5f), obj2pos.y - (obj2scale.y * 0.5f), 0);
+			object2->bottomRight.Set(obj2pos.x + (obj2scale.x * 0.5f), obj2pos.y - (obj2scale.y * 0.5f), 0);
 
-			/*if (relativePos1.Dot(obj2Normal) > 0)
-				obj2Normal = -obj2Normal;
-			if (relativePos1.Dot(obj2Right) > 0)
-				obj2Right = -obj2Right;*/
-			//cout << "Pos: " << obj1pos << "Rad pos: " << radialPosToTarget << endl;
-			if (radialPosToTarget.x >= object2->topLeft.x && radialPosToTarget.y <= object2->topLeft.y
-				&& radialPosToTarget.x <= object2->topRight.x && radialPosToTarget.y <= object2->topRight.y
-				&& radialPosToTarget.x >= object2->bottomLeft.x && radialPosToTarget.y >= object2->bottomLeft.y
-				&& radialPosToTarget.x <= object2->bottomRight.x && radialPosToTarget.y >= object2->bottomRight.y)
+			// Check if object1 is relatively close to object2 in terms of Y-axis
+			if (obj1pos.y <= object2->topLeft.y && obj1pos.y >= object2->bottomRight.y)
 			{
-				cout << "Has collided" << endl;
-				return true;
+				if (obj1pos.x > obj2pos.x)
+					selfToTargetDirection.Set(-1, 0, 0);
+				else
+					selfToTargetDirection.Set(1, 0, 0);
+			}
+			// Check if object1 is relatively close to object2 in terms of X-axis
+			else if (obj1pos.x >= object2->topLeft.x && obj1pos.x <= object2->bottomRight.x)
+			{
+				if (obj1pos.y > obj2pos.y)
+					selfToTargetDirection.Set(0, -1, 0);
+				else
+					selfToTargetDirection.Set(0, 1, 0);
+			}
+			else
+			{
+				if (obj1pos.y > object2->topLeft.y)
+				{
+					if (obj1pos.x < object2->topLeft.x)
+						selfToTargetDirection = object2->topLeft - obj1pos;
+					else
+						selfToTargetDirection = object2->topRight - obj1pos;
+				}
+				else if (obj1pos.y < object2->bottomRight.y)
+				{
+					if (obj1pos.x < object2->bottomLeft.x)
+						selfToTargetDirection = object2->bottomLeft - obj1pos;
+					else
+						selfToTargetDirection = object2->bottomRight - obj1pos;
+				}
+				selfToTargetDirection.Normalize();
 			}
 			
+			radialPosToTarget = obj1pos + (selfToTargetDirection * obj1scale.x);
 
-
-
-			//// To check if ball object is at this cube/quad's top or bottom
-			//if (relativePos1.Dot(obj2Normal) > 0)
-			//	obj2Normal = -obj2Normal;
-			//// To check if ball object is at this cube/quad's left or right
-			//if (relativePos1.Dot(obj2Right) > 0)
-			//	obj2Right = -obj2Right;
+			if (relativePos1.Dot(obj2Normal) > 0)
+				obj2Normal = -obj2Normal;
+			if (relativePos1.Dot(obj2Right) > 0)
+				obj2Right = -obj2Right;
+			
+			
+			if (object1->vel.Dot(obj2Normal) > 0 || object1->vel.Dot(obj2Right) > 0)
+			{
+				return (radialPosToTarget.x >= object2->topLeft.x && radialPosToTarget.y <= object2->topLeft.y
+					&& radialPosToTarget.x <= object2->topRight.x && radialPosToTarget.y <= object2->topRight.y
+					&& radialPosToTarget.x >= object2->bottomLeft.x && radialPosToTarget.y >= object2->bottomLeft.y
+					&& radialPosToTarget.x <= object2->bottomRight.x && radialPosToTarget.y >= object2->bottomRight.y);
+			}
 
 			//if (object1->vel.Dot(obj2Normal) > 0)
 			//	return (abs((obj2pos - obj1pos).Dot(obj2Normal)) < (obj1scale.x + obj2scale.x / 2)) && (abs((obj2pos - obj1pos).Dot(obj2Right)) < (obj1scale.x + obj2scale.y / 2));
@@ -114,7 +146,8 @@ void CollisionManager::collisionResponse(GameObject * object1, GameObject * obje
 	}
 	else if (object2->type == GameObject::GO_BRICK)
 	{
-		object1->vel = object1->vel - ((2 * object1->vel).Dot(object2->dir) *object2->dir);
+		object1->vel *= -1;
+		//object1->vel = object1->vel - ((2 * object1->vel).Dot(object2->dir) *object2->dir);
 	}
 	else if (object2->type == GameObject::GO_PILLAR) {
 		Vector3 u = object1->vel;
