@@ -8,6 +8,8 @@
 #include "Cannon.h"
 #include "Catapult.h"
 #include "Bow.h"
+#include "MeshBuilder.h"
+#include "LoadTGA.h"
 
 Stage1 * Stage1::sInstance = new Stage1(SceneManager::getInstance());
 
@@ -32,6 +34,9 @@ void Stage1::Init()
 	//Calculating aspect ratio
 	m_worldHeight = 100.f;
 	m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
+
+	//MiniMap
+	theMiniMap = new MiniMap(GameObject::GO_NONE, this);
 
 
 	//initialise the factory class
@@ -217,9 +222,9 @@ void Stage1::Update(double dt)
 		//tempObject1->pos = theGhostProj->pos;
 		//tempObject2->pos = theGhostProj->pos;
 		//weap_manager[0]->Discharge(currentPos, theGhostProj->pos,tempObject, this);
-		////thePlayer->DischargePPTEST(currentPos, theGhostProj->pos, tempObject, this);
+		//thePlayer->DischargePPTEST(currentPos, theGhostProj->pos, tempObject, this);
 		//weap_manager[1]->Discharge(currentPos, theGhostProj->pos, tempObject1, this);
-		////thePlayer->DischargePPTEST(currentPos, theGhostProj->pos, tempObject, this);
+		//thePlayer->DischargePPTEST(currentPos, theGhostProj->pos, tempObject, this);
 		//weap_manager[2]->Discharge(currentPos, theGhostProj->pos, tempObject2, this);
 
 		//theFactory->createGameObject(tempObject);
@@ -286,6 +291,10 @@ void Stage1::Render()
 
 	//Render the all Game Objects
 	theFactory->renderGameObject();
+
+	theMiniMap->RenderUI();
+
+	
 }
 
 void Stage1::Exit()

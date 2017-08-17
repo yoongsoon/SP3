@@ -42,6 +42,7 @@ bool CollisionManager::checkCollision(GameObject * object1, GameObject * object2
 			break;
 			// obj2 = wall
 		//case GameObject::GO_ENEMY:
+		case GameObject::GO_PLAYER:
 		case GameObject::GO_BRICK:
 			// testing
 			object2->topLeft.Set(obj2pos.x - (obj2scale.x * 0.5f), obj2pos.y + (obj2scale.y * 0.5f), 0);
@@ -154,7 +155,7 @@ void CollisionManager::collisionResponse(GameObject * object1, GameObject * obje
 		Vector3 N = (object2->pos - object1->pos).Normalize();
 		object1->vel = u - (2 * u.Dot(N)) * N;
 	}
-	else if (object2->type == GameObject::GO_ENEMY)
+	else if (object2->type == GameObject::GO_ENEMY || object2->type == GameObject::GO_PLAYER)
 	{
 		//store as projectile damage as temporary variable
 		float projectileDamage = static_cast<Projectile*>(object1)->m_damage;
@@ -164,17 +165,15 @@ void CollisionManager::collisionResponse(GameObject * object1, GameObject * obje
 		static_cast<Enemy*>(object2)->hp -= projectileDamage;
 
 	}
+	
 }
 
 
 void CollisionManager::Update(float dt)
 {
 // double for loop to compare projectile with other games object
-	for (Vectoring::iterator it = theScene->theFactory->g_ProjectileVector.begin();
-		it != theScene->theFactory->g_ProjectileVector.end();
-		it++) 
+	for (Vectoring::iterator it = theScene->theFactory->g_ProjectileVector.begin(); it != theScene->theFactory->g_ProjectileVector.end();it++) 
 	{
-
 
 		if ((*it)->active == false)
 			continue;

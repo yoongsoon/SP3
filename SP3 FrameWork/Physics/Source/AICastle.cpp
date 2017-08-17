@@ -50,13 +50,13 @@ void AICastle::update()
 			// starting firing projectile within castle range 
 			//and the projectile motion will be "PROJECTILE_MOTION" if the
 			// distance between enemy and castle is greater than 10
-			if ( abs(distanceX) < m_castleRange && abs(distanceX) > 10) 
+			if ( abs(distanceX) < m_castleRange && abs(distanceX) > 10 && it.second->active == true)
 			{
 				theAIweapon->castleAIDischarge(Vector3(200, 60, 0),distanceX - 50, theScene );
 			}
 			// change projectile motion to "LINEAR MOTION"  if the distance between
 			// enemy and castle is lesser than 10
-			else if (abs(distanceX) < 10)
+			else if (abs(distanceX) < 10 && it.second->active == true)
 			{
 				theAIweapon->castleAIDischarge(Vector3(200, 60, 0), it.second->pos , theScene);
 			}

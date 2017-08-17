@@ -9,27 +9,26 @@ Projectile::Projectile(PROJECTILE_TYPE _typeofProjectile, GAMEOBJECT_TYPE typeVa
 {
 	meshValue = SceneBase::GEO_CIRCLE;
 	typeOfProjectile = _typeofProjectile;
-
+  
 	switch (typeOfProjectile)
 	{
 	case ARROW_PROJECTILE:
 	{
-		m_damage = 1.f;
+		m_damage = 10.f;
 	}
 	break;
 	case ROCK_PROJECTILE:
 	{
-		m_damage = 5.f;
+		m_damage = 20.f;
 	}
 	break;
 	case CANNON_BALL_PROJECTILE:
 	{
-		m_damage = 10.f;
+		m_damage = 30.f;
 	}
 	break;
 	}
 
-	m_launchAngle = 0;
 
 	/*vel.x = speed * cos(Math::RadianToDegree(m_launchAngle));
 	vel.y = speed * sin(Math::RadianToDegree(m_launchAngle));*/
@@ -83,8 +82,6 @@ void Projectile::update()
 	}
 
 	
-
-
 	// delete projectile when it goes out of range
 	if (pos.x < 0.f)
 	{
