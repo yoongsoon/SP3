@@ -120,9 +120,16 @@ void SceneBase::Init()
 	meshList[GEO_BACKGROUND] = MeshBuilder::GenerateQuad("BackGround", Color(1.f, 1.f, 1.f), 1.f);
 	meshList[GEO_BACKGROUND]->textureID = LoadTGA("Image/BackGround.tga");
 
-	meshList[GEO_MINI_BACKGROUND] = MeshBuilder::GenerateQuad("BackGround", Color(1.f, 1.f, 1.f), 1.f);
-	meshList[GEO_MINI_ENEMY] = (MeshBuilder::GenerateQuad("miniEnemy", Color(1.f, 1.f, 1.f), 1.f));
+	meshList[GEO_MINI_BORDER] = MeshBuilder::GenerateQuad("miniBorder", Color(1.f, 1.f, 1.f), 1.f);
+	meshList[GEO_MINI_BORDER]->textureID = LoadTGA("Image/mini_border.tga");
+	meshList[GEO_MINI_ENEMY] = MeshBuilder::GenerateQuad("miniEnemy", Color(1.f, 1.f, 1.f), 1.f);
 	meshList[GEO_MINI_ENEMY]->textureID = LoadTGA("Image/mini_enemy.tga");
+	meshList[GEO_MINI_ALLIES] = MeshBuilder::GenerateQuad("miniallies", Color(1.f, 1.f, 1.f), 1.f);
+	meshList[GEO_MINI_ALLIES]->textureID = LoadTGA("Image/mini_allies.tga");
+	meshList[GEO_MINI_PLAYER_CASTLE] = MeshBuilder::GenerateQuad("mini_playercastle", Color(1.f, 1.f, 1.f), 1.f);
+	meshList[GEO_MINI_PLAYER_CASTLE]->textureID = LoadTGA("Image/miniPlayerCastle.tga");
+	meshList[GEO_MINI_ENEMY_CASTLE] = MeshBuilder::GenerateQuad("mini_enemy_castle", Color(1.f, 1.f, 1.f), 1.f);
+	meshList[GEO_MINI_ENEMY_CASTLE]->textureID = LoadTGA("Image/miniEnemyCastle.tga");
 
 
 	bLightEnabled = false;

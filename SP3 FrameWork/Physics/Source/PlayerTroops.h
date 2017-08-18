@@ -30,6 +30,7 @@ public:
 	float timer;
 	PLAYER_TYPE playerType;
 	StopWatch m_timer;
+	float playerMoveX;
 
 private:
 };

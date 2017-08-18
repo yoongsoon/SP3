@@ -18,7 +18,7 @@ BackGround::BackGround(BACKGROUND_TYPE  _backGroundType, GAMEOBJECT_TYPE typeVal
 	}
 
 
-	scale.Set(theScene->m_worldWidth *4, theScene->m_worldHeight, 0);
+	scale.Set(theScene->m_worldWidth *4, theScene->m_worldHeight, 1);
 	pos.Set(theScene->m_worldWidth * 2, theScene->m_worldHeight * 0.5, 0);
 
 

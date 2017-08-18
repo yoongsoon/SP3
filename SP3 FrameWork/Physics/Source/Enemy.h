@@ -30,6 +30,7 @@ public:
 	float timer;
 	ENEMY_TYPE enemyType;
 	StopWatch m_timer;
+	float enemyMoveX;
 
 private:
 };

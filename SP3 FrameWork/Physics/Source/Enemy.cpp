@@ -4,6 +4,7 @@
 
 Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) :GameObject( GO_ENEMY, scene)
 {
+	enemyMoveX = 0.f;
 	if (meshvalue == E_SOLDIER)
 	{
 		float m_worldHeight = 100.f;
@@ -13,7 +14,7 @@ Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) 
 		meshValue = SceneBase::GEO_SOLDIER;
 		scale.Set(5, 5, 5);
 		vel.Set(-10.f, 0.f, 0.f);
-		pos.Set((m_worldWidth * 2) - (m_worldWidth / 10), m_worldHeight / 2, 0.f);
+		pos.Set((m_worldWidth) *3, m_worldHeight / 2, 0.f);
 		enemyType = Enemy::E_SOLDIER;
 		hp = 100.f;
 		range = 1.f;

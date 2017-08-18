@@ -12,7 +12,7 @@ AICastle::AICastle(GAMEOBJECT_TYPE typeValue, SceneBase * scene)
 	active = true;
 
 	meshValue = SceneBase::GEO_BRICK;
-	scale.Set(10, 10, 1); // prevent it from appearing
+	scale.Set(10, 10, 1); 
 	pos = Vector3(200, 50, 0);
 
 	theAIweapon = new Cannon();

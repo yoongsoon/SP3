@@ -38,7 +38,6 @@ void Stage1::Init()
 	//MiniMap
 	theMiniMap = new MiniMap(GameObject::GO_NONE, this);
 
-
 	//initialise the factory class
 	// MUST BE FIRST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	theFactory = new Factory();
@@ -60,14 +59,17 @@ void Stage1::Init()
 	theCastle = new Castle(GameObject::GO_BRICK, this);
 	theFactory->createGameObject(theCastle);
 
+	AICastle * theAICastle = new AICastle(GameObject::GO_AI_CASTLE, this);
+	theFactory->createGameObject(theAICastle);
+
+	BackGround * theBackGround = new BackGround(BackGround::BACK_GROUND_STAGE1, GameObject::GO_NONE, this);
+	theFactory->createGameObject(theBackGround);
+
 	theplayer = new Player();
 	theplayer->setScene(this);
 	gom = new GameObjectManager(this);
-	BackGround * theBackGround = new BackGround(BackGround::BACK_GROUND_STAGE1, GameObject::GO_BALL, this);
-	theFactory->createGameObject(theBackGround);
 
-	AICastle * theAICastle = new AICastle(GameObject::GO_CASTLE, this);
-	theFactory->createGameObject(theAICastle);
+
 
 	//CHANGE THIS TO Bow/Cannon/Catapult for different cooldown
 	//weap_manager = new Weapon_Info*[3];
@@ -289,7 +291,7 @@ void Stage1::Update(double dt)
 		camera.position.x -= _dt * 50;
 		camera.target.x -= _dt * 50;
 	}
-	
+
 	theMouseGhostProj->active = true;
 
 	 //clamp camera position and target between World X coordinate 0 and m_world *2
@@ -314,7 +316,7 @@ void Stage1::Update(double dt)
 	ss0 << "NINJA X GTA";*/
 	//textObj[0]->SetText(ss0.str());
 
-	
+	theMiniMap->Update();
 }
 
 void Stage1::Render()
@@ -342,9 +344,9 @@ void Stage1::Render()
 	//Render the all Game Objects
 	theFactory->renderGameObject();
 
+	
 	theMiniMap->RenderUI();
 
-	
 }
 
 void Stage1::Exit()
