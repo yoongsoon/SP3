@@ -47,6 +47,7 @@ void Weapon_Info::Init(void)
 }
 void Weapon_Info::Update(const double dt)
 {
+	if(!b_Fire)
 	d_elapsedTime += dt;
 
 	if (d_elapsedTime > d_timeBetweenShots)
@@ -162,7 +163,7 @@ void Weapon_Info::Discharge(Vector3 position, Vector3 target, SceneBase *_scene)
 		//aProjectile->mass = 3;
 		aProjectile->active = true;
 		/*	b_Fire = false;*/
-
+		b_Fire = false;
 	}
 }
 

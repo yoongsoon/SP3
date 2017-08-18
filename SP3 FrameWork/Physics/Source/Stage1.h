@@ -40,7 +40,8 @@ protected:
 	Weapon_Info** weap_manager;
 	int curr_weapon = 0;
 	Weapon_Info* potato;
-							   //Physics
+				
+	//Physics
 	float m_speed;
 	Player *theplayer;
 	Enemy *enemy;
@@ -49,6 +50,16 @@ protected:
 	bool release_ghost_exist = false;
 	bool M_ghost_exist = false;
 	bool canPredict;
+
+	//for text
+	int a;
+	double e;
+	string player_weap_choice;
+	string currweap_cooldown;
+	string weap1_cool;
+	string weap2_cool;
+	string weap3_cool;
+
 private:
 	//TextEntity* textObj[3];
 };

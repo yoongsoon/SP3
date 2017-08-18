@@ -87,7 +87,9 @@ public:
 	// Change current weapon
 	bool ChangeWeapon(void);
 	// Get Current Weapon
-	int GetWeapon(void) const;
+	int GetWeapon(void)const;
+	//get elapsed time of cooldown
+	double GetElapsedTime(void);
 	// Discharge Primary Weapon
 	bool DischargePrimaryWeapon(const float deltaTime);
 
