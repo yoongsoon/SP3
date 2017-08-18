@@ -71,15 +71,14 @@ void Stage1::Init()
 
 	//CHANGE THIS TO Bow/Cannon/Catapult for different cooldown
 	//weap_manager = new Weapon_Info*[3];
-	/*potato = new Bow();
-	potato->Init();*/
 	//weap_manager[0] = new Bow();
 	//weap_manager[0]->Init();
 	//weap_manager[1] = new Cannon();
 	//weap_manager[1]->Init();
 	//weap_manager[2] = new Catapult();
 	//weap_manager[2]->Init();
-
+	/*potato = new Bow();
+	potato->Init();*/
 	thePlayer = new PlayerInfo();
 	thePlayer->Init();
 }
@@ -190,6 +189,7 @@ void Stage1::Update(double dt)
 	{
 		sixpress = false;
 	}
+
 	//static bool spacepress = false;
 	//if (Application::IsKeyPressed(VK_SPACE) && !spacepress)
 	//{
@@ -209,6 +209,10 @@ void Stage1::Update(double dt)
 	currentPos.x = (float)mouseX / Application::GetWindowWidth() * m_worldWidth;
 	currentPos.y = (Application::GetWindowHeight() - (float)mouseY) / Application::GetWindowHeight() * m_worldHeight;
 	static bool bLButtonState = false;
+	//to only create ghosts balls ONCE not every update
+	static bool ghost_exist = false;
+	static bool release_ghost_exist = false;
+	static bool M_ghost_exist = false;
 	if (!bLButtonState && Application::IsMousePressed(0))
 	{
 		bLButtonState = true;
@@ -218,8 +222,14 @@ void Stage1::Update(double dt)
 		theGhostProj->pos = currentPos;// (float)mouseX / Application::GetWindowWidth() * m_worldWidth;
 	//	theGhostProj->pos.y = (Application::GetWindowHeight() - (float)mouseY) / Application::GetWindowHeight() * m_worldHeight;
 		theGhostProj->active = true;
+		//changes prev mouse ghost
 		theReleaseMouseGhostProj->active = false;
-		theFactory->createGameObject(theGhostProj);
+		if (!ghost_exist)
+		{
+			theFactory->createGameObject(theGhostProj);
+			ghost_exist = true;
+		}
+		
 
 	}
 	else if (bLButtonState && !Application::IsMousePressed(0))
@@ -228,8 +238,12 @@ void Stage1::Update(double dt)
 		//when mouseclick release it renders wwhere the mouse was released 
 		theReleaseMouseGhostProj->pos = currentPos;
 		theReleaseMouseGhostProj->active = true;
-		theFactory->createGameObject(theReleaseMouseGhostProj);
-
+		if (!release_ghost_exist)
+		{
+			theFactory->createGameObject(theReleaseMouseGhostProj);
+			release_ghost_exist = true;
+		}
+		
 	
 		//shoots projectile
 		thePlayer->DischargePPTEST(theGhostProj->pos, currentPos, this);
@@ -252,14 +266,11 @@ void Stage1::Update(double dt)
 		//weap_manager[1]->Discharge(currentPos, theGhostProj->pos, tempObject1, this);
 		//thePlayer->DischargePPTEST(currentPos, theGhostProj->pos, tempObject, this);
 		//weap_manager[2]->Discharge(currentPos, theGhostProj->pos, tempObject2, this);
-
 		//theFactory->createGameObject(tempObject);
 		//theFactory->createGameObject(tempObject1);
 		//theFactory->createGameObject(tempObject2);
+
 		theGhostProj->active = false;
-
-
-	// add object into factory
 	}
 	//shows where mouse is(if need remove mouse cursor)
 	theMouseGhostProj->pos = currentPos;
@@ -275,14 +286,14 @@ void Stage1::Update(double dt)
 			theFactory->createGameObject(thePredictionLine[i]);
 		}
 	}
-
+	//parralax scrolling right
 	if (Application::IsKeyPressed(VK_RIGHT) )
 	{
 		//theMouseGhostProj->pos.x += _dt * 50;
 		camera.position.x += _dt * 50;
 		camera.target.x += _dt * 50;
 	}
-
+	//parralax scrolling left
 	if (Application::IsKeyPressed(VK_LEFT) )
 	{
 		//theMouseGhostProj->pos.x -= _dt * 50;
@@ -306,16 +317,23 @@ void Stage1::Update(double dt)
 
 	//potato->Update(dt);
 	thePlayer->Update(dt);
-	theFactory->createGameObject(theMouseGhostProj);
+	if (!M_ghost_exist)
+	{
+		theFactory->createGameObject(theMouseGhostProj);
+		M_ghost_exist = true;
+	}
+	
 
 	//trying text for ui display
-	/*std::ostringstream ss0;
-	ss0.precision(5);
-	ss0 << "NINJA X GTA";*/
-	//textObj[0]->SetText(ss0.str());
 
+	std::ostringstream ss0;
+	ss0.precision(5);
+	ss0 << "NINJA X GTA";
+	//textObj[0]->SetText(ss0.str());
 	
-}
+	Mesh * potatas;
+
+	}
 
 void Stage1::Render()
 {
@@ -344,7 +362,11 @@ void Stage1::Render()
 
 	theMiniMap->RenderUI();
 
-	
+	string texttest;
+	texttest = "wow";
+
+	RenderTextOnScreen(meshList[GEO_TEXT], texttest, Color(1, 0, 0), 5, 10, 10);
+
 }
 
 void Stage1::Exit()
