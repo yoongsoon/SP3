@@ -44,18 +44,24 @@ void Stage1::Init()
 	theFactory = new Factory();
 
 	theCollider = new CollisionManager(this);
-	//intialise ghost projectile
+	//intialise ghost projectile prediction
 	thePredictionLine = new GameObject*[10];
 	for (size_t i = 0; i < 10; i++)
 	{
 		thePredictionLine[i]=new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_PROJECTILE, this);
+		theFactory->createGameObject(thePredictionLine[i]);
 	}
-	thePredictGHOST = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_PROJECTILE, this);
-	thePredictGHOST2 = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_PROJECTILE, this);
+	//initialize ghosts
 	theGhostProj = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_PROJECTILE, this);
+	theFactory->createGameObject(theGhostProj);
+	
 	theReleaseMouseGhostProj = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_PROJECTILE, this);
+	theFactory->createGameObject(theReleaseMouseGhostProj);
+
 	theMouseGhostProj = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_PROJECTILE, this);
-	//theFactory->createGameObject(theGhostProj);
+	theMouseGhostProj->active = true;
+	theFactory->createGameObject(theMouseGhostProj);
+
 	// Initialize castle object
 	theCastle = new Castle(GameObject::GO_BRICK, this);
 	theFactory->createGameObject(theCastle);
@@ -69,16 +75,7 @@ void Stage1::Init()
 	AICastle * theAICastle = new AICastle(GameObject::GO_CASTLE, this);
 	theFactory->createGameObject(theAICastle);
 
-	//CHANGE THIS TO Bow/Cannon/Catapult for different cooldown
-	//weap_manager = new Weapon_Info*[3];
-	//weap_manager[0] = new Bow();
-	//weap_manager[0]->Init();
-	//weap_manager[1] = new Cannon();
-	//weap_manager[1]->Init();
-	//weap_manager[2] = new Catapult();
-	//weap_manager[2]->Init();
-	/*potato = new Bow();
-	potato->Init();*/
+	//player itself
 	thePlayer = new PlayerInfo();
 	thePlayer->Init();
 }
@@ -208,11 +205,8 @@ void Stage1::Update(double dt)
 	Application::GetCursorPos(&mouseX, &mouseY);
 	currentPos.x = (float)mouseX / Application::GetWindowWidth() * m_worldWidth;
 	currentPos.y = (Application::GetWindowHeight() - (float)mouseY) / Application::GetWindowHeight() * m_worldHeight;
+	
 	static bool bLButtonState = false;
-	//to only create ghosts balls ONCE not every update
-	static bool ghost_exist = false;
-	static bool release_ghost_exist = false;
-	static bool M_ghost_exist = false;
 	if (!bLButtonState && Application::IsMousePressed(0))
 	{
 		bLButtonState = true;
@@ -224,12 +218,7 @@ void Stage1::Update(double dt)
 		theGhostProj->active = true;
 		//changes prev mouse ghost
 		theReleaseMouseGhostProj->active = false;
-		if (!ghost_exist)
-		{
-			theFactory->createGameObject(theGhostProj);
-			ghost_exist = true;
-		}
-		
+	
 
 	}
 	else if (bLButtonState && !Application::IsMousePressed(0))
@@ -238,43 +227,15 @@ void Stage1::Update(double dt)
 		//when mouseclick release it renders wwhere the mouse was released 
 		theReleaseMouseGhostProj->pos = currentPos;
 		theReleaseMouseGhostProj->active = true;
-		if (!release_ghost_exist)
-		{
-			theFactory->createGameObject(theReleaseMouseGhostProj);
-			release_ghost_exist = true;
-		}
-		
 	
 		//shoots projectile
 		thePlayer->DischargePPTEST(theGhostProj->pos, currentPos, this);
 	
-		//Weapon_Info potato;
-		//potato.Get_OBJECT();
-
-		
-		//info to shoot bullet
-		//potato->Discharge(theGhostProj->pos, currentPos, this);
-		//GameObject *tempObject = new  Projectile(Projectile::ARROW_PROJECTILE, GameObject::GO_PROJECTILE , this);
-		//GameObject *tempObject1 = new  Projectile(Projectile::CANNON_BALL_PROJECTILE, GameObject::GO_PROJECTILE, this);
-		//GameObject *tempObject2 = new  Projectile(Projectile::ROCK_PROJECTILE, GameObject::GO_PROJECTILE, this);
-		////info to shoot bullet
-		//tempObject->pos = theGhostProj->pos;
-		//tempObject1->pos = theGhostProj->pos;
-		//tempObject2->pos = theGhostProj->pos;
-		//weap_manager[0]->Discharge(currentPos, theGhostProj->pos,tempObject, this);
-		//thePlayer->DischargePPTEST(currentPos, theGhostProj->pos, tempObject, this);
-		//weap_manager[1]->Discharge(currentPos, theGhostProj->pos, tempObject1, this);
-		//thePlayer->DischargePPTEST(currentPos, theGhostProj->pos, tempObject, this);
-		//weap_manager[2]->Discharge(currentPos, theGhostProj->pos, tempObject2, this);
-		//theFactory->createGameObject(tempObject);
-		//theFactory->createGameObject(tempObject1);
-		//theFactory->createGameObject(tempObject2);
-
 		theGhostProj->active = false;
 	}
 	//shows where mouse is(if need remove mouse cursor)
 	theMouseGhostProj->pos = currentPos;
-	//prediction line
+	//prediction line when hold leftclick
 	if (bLButtonState)
 	{
 		for (size_t i = 0; i < 10; i++)
@@ -283,7 +244,6 @@ void Stage1::Update(double dt)
 			thePredictionLine[i]->pos.y = (((theGhostProj->pos.y) + ((theGhostProj->pos.y - theMouseGhostProj->pos.y) * tline)) + ((-9.8 *(tline * tline)) / 2));
 			thePredictionLine[i]->pos.x = (theGhostProj->pos.x) + ((theGhostProj->pos.x - theMouseGhostProj->pos.x) * tline);
 			thePredictionLine[i]->active = true;
-			theFactory->createGameObject(thePredictionLine[i]);
 		}
 	}
 	//parralax scrolling right
@@ -301,8 +261,6 @@ void Stage1::Update(double dt)
 		camera.target.x -= _dt * 50;
 	}
 	
-	theMouseGhostProj->active = true;
-
 	 //clamp camera position and target between World X coordinate 0 and m_world *2
 	camera.position.x = Math::Clamp(camera.position.x, 0.f, m_worldWidth * 2);
 	camera.target.x = Math::Clamp(camera.target.x, 0.f, m_worldWidth * 2);
@@ -313,27 +271,40 @@ void Stage1::Update(double dt)
 	theCollider->Update(dt);
 
 	gom->update();
+	//player units
 	theplayer->update();
-
-	//potato->Update(dt);
+	//playerinfo
 	thePlayer->Update(dt);
-	if (!M_ghost_exist)
-	{
-		theFactory->createGameObject(theMouseGhostProj);
-		M_ghost_exist = true;
-	}
-	
 
-	//trying text for ui display
 
-	std::ostringstream ss0;
-	ss0.precision(5);
-	ss0 << "NINJA X GTA";
+	/*TEXT STUFF*/
+	//std::ostringstream ss0;
+	//ss0.precision(5);
+	//ss0 << "NINJA X GTA";
 	//textObj[0]->SetText(ss0.str());
-	
-	Mesh * potatas;
+	a = thePlayer->GetWeapon();
+	stringstream ss;
+	ss << a;
+	player_weap_choice = ss.str();
+	//player_weap_choice = string(intstr);
+	e= thePlayer->weap_manager[thePlayer->m_iCurrentWeapon]->Get_d_elapsedTime();
+	stringstream ss1;
+	ss1 << e;
+	currweap_cooldown = ss1.str();
 
-	}
+	e = thePlayer->weap_manager[0]->Get_d_elapsedTime();
+	stringstream ss2;
+	ss2 << e;
+	weap1_cool = ss2.str();
+	e = thePlayer->weap_manager[1]->Get_d_elapsedTime();
+	stringstream ss3;
+	ss3 << e;
+	weap2_cool = ss3.str();
+	e = thePlayer->weap_manager[2]->Get_d_elapsedTime();
+	stringstream ss4;
+	ss4 << e;
+	weap3_cool = ss4.str();
+}
 
 void Stage1::Render()
 {
@@ -362,10 +333,14 @@ void Stage1::Render()
 
 	theMiniMap->RenderUI();
 
-	string texttest;
-	texttest = "wow";
 
-	RenderTextOnScreen(meshList[GEO_TEXT], texttest, Color(1, 0, 0), 5, 10, 10);
+	//render choice of weapon
+	RenderTextOnScreen(meshList[GEO_TEXT], player_weap_choice, Color(1, 0, 0), 5, 10, 20);
+	RenderTextOnScreen(meshList[GEO_TEXT], currweap_cooldown, Color(1, 0, 0), 5, 10, 18);
+
+	RenderTextOnScreen(meshList[GEO_TEXT], weap1_cool, Color(1, 0, 0), 5, 10, 15);
+	RenderTextOnScreen(meshList[GEO_TEXT], weap2_cool, Color(1, 0, 0), 5, 10, 13);
+	RenderTextOnScreen(meshList[GEO_TEXT], weap3_cool, Color(1, 0, 0), 5, 10, 11);
 
 }
 
