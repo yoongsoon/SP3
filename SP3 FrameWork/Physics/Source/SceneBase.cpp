@@ -107,31 +107,37 @@ void SceneBase::Init()
 	meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference", 1000, 1000, 1000);
 	meshList[GEO_BALL] = MeshBuilder::GenerateSphere("ball", Color(1, 1, 1), 10, 10, 1.f);
 	meshList[GEO_CUBE] = MeshBuilder::GenerateCube("cube", Color(1, 1, 1), 2.f);
-	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_CIRCLE] = MeshBuilder::GenerateSphere("circle", Color(1, 0, 0), 10, 10, 1.f);
 	meshList[GEO_SPHERE1] = MeshBuilder::GenerateSphere("sphere1", Color(1, 1, 0), 10, 10, 1.f);
 	meshList[GEO_SPHERE2] = MeshBuilder::GenerateSphere("sphere2", Color(0, 1, 1), 10, 10, 1.f);
 	meshList[GEO_SPHERE3] = MeshBuilder::GenerateSphere("sphere3", Color(1, 0, 1), 10, 10, 1.f);
+	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//ExportedFont2.tga");
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
-	//meshList[GEO_SOLDIER] = MeshBuilder::GenerateCube("cube", Color(1, 0, 1), 1.f);
-	//meshList[GEO_ARCHER] = MeshBuilder::GenerateSphere("ball", Color(1, 0, 0), 10, 10, 1.f);
-	//meshList[GEO_WIZARD] = MeshBuilder::GenerateCube("cube", Color(0, 0, 0), 1.f);
 	meshList[GEO_BRICK] = MeshBuilder::GenerateCube("brick", Color(.5f, .5f, .5f), 1.f);
 	//meshList[GEO_BRICK]->textureID = LoadTGA("Image//castlebrick.tga");
-	meshList[GEO_BACKGROUND] = MeshBuilder::GenerateQuad("BackGround", Color(1.f, 1.f, 1.f), 1.f);
-	meshList[GEO_BACKGROUND]->textureID = LoadTGA("Image/BackGround.tga");
-
 	meshList[GEO_SOLDIER] = MeshBuilder::GenerateSpriteAnimation("soldier", 4, 4, 1.0f);
 	meshList[GEO_SOLDIER]->textureID = LoadTGA("Image//fire.tga");
 	meshList[GEO_ARCHER] = MeshBuilder::GenerateSpriteAnimation("archer", 4, 4, 1.0f);
 	meshList[GEO_ARCHER]->textureID = LoadTGA("Image//fire.tga");
 	meshList[GEO_WIZARD] = MeshBuilder::GenerateSpriteAnimation("wizard", 4, 4, 1.0f);
 	meshList[GEO_WIZARD]->textureID = LoadTGA("Image//fire.tga");
-
 	meshList[GEO_MINI_BACKGROUND] = MeshBuilder::GenerateQuad("BackGround", Color(1.f, 1.f, 1.f), 1.f);
-	meshList[GEO_MINI_ENEMY] = (MeshBuilder::GenerateQuad("miniEnemy", Color(1.f, 1.f, 1.f), 1.f));
+	meshList[GEO_BRICK] = MeshBuilder::GenerateQuad("brick", Color(.5f, .5f, .5f), 1.f);
+	meshList[GEO_BRICK]->textureID = LoadTGA("Image//castlebrick.tga");
+	meshList[GEO_BACKGROUND] = MeshBuilder::GenerateQuad("BackGround", Color(1.f, 1.f, 1.f), 1.f);
+	meshList[GEO_BACKGROUND]->textureID = LoadTGA("Image/BackGround.tga");
+
+	meshList[GEO_MINI_BORDER] = MeshBuilder::GenerateQuad("miniBorder", Color(1.f, 1.f, 1.f), 1.f);
+	meshList[GEO_MINI_BORDER]->textureID = LoadTGA("Image/mini_border.tga");
+	meshList[GEO_MINI_ENEMY] = MeshBuilder::GenerateQuad("miniEnemy", Color(1.f, 1.f, 1.f), 1.f);
 	meshList[GEO_MINI_ENEMY]->textureID = LoadTGA("Image/mini_enemy.tga");
+	meshList[GEO_MINI_ALLIES] = MeshBuilder::GenerateQuad("miniallies", Color(1.f, 1.f, 1.f), 1.f);
+	meshList[GEO_MINI_ALLIES]->textureID = LoadTGA("Image/mini_allies.tga");
+	meshList[GEO_MINI_PLAYER_CASTLE] = MeshBuilder::GenerateQuad("mini_playercastle", Color(1.f, 1.f, 1.f), 1.f);
+	meshList[GEO_MINI_PLAYER_CASTLE]->textureID = LoadTGA("Image/miniPlayerCastle.tga");
+	meshList[GEO_MINI_ENEMY_CASTLE] = MeshBuilder::GenerateQuad("mini_enemy_castle", Color(1.f, 1.f, 1.f), 1.f);
+	meshList[GEO_MINI_ENEMY_CASTLE]->textureID = LoadTGA("Image/miniEnemyCastle.tga");
 
 
 	bLightEnabled = false;

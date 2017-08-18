@@ -9,7 +9,7 @@ public:
 	MiniMap(GAMEOBJECT_TYPE typeValue, SceneBase * scene);
 	virtual ~MiniMap();
 
-	virtual void RenderUI();
-
+	 void Update();
+	 virtual void RenderUI();
 
 };

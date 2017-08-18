@@ -22,6 +22,7 @@ public:
 		GO_BRICK,
 		GO_CASTLE,
 		GO_FIRE,
+		GO_AI_CASTLE,
 		GO_TOTAL, //must be last
 	};
 	GAMEOBJECT_TYPE type;

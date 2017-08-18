@@ -5,6 +5,7 @@
 
 PlayerTroop::PlayerTroop(GAMEOBJECT_TYPE GO_PLAYER, SceneBase * scene, PLAYER_TYPE meshvalue) :GameObject(GO_PLAYER, scene)
 {
+	playerMoveX = 0.f;
 	if (meshvalue == P_SOLDIER)
 	{
 		float m_worldHeight = 100.f;

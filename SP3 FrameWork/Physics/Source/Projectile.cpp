@@ -93,17 +93,18 @@ void Projectile::update()
 
 	
 	// delete projectile when it goes out of range
-	if (pos.x < 0.f)
+	//dont destroy ghostsprojectile for prediction lines
+	if ((pos.x < 0.f)&&(typeOfProjectile != GHOST_PROJECTILE))
 	{
 		isDestroyed = true;
 		return;
 	}
-	else if (pos.x > theScene->m_worldWidth * 3)
+	else if ((pos.x > theScene->m_worldWidth * 3 )&& (typeOfProjectile != GHOST_PROJECTILE))
 	{
 		isDestroyed = true;
 		return;
 	}
-	else if (pos.y < 0.f)
+	else if ((pos.y < 0.f )&& (typeOfProjectile != GHOST_PROJECTILE))
 	{
 		isDestroyed = true;
 		return;

@@ -5,6 +5,7 @@
 
 Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) :GameObject( GO_ENEMY, scene)
 {
+	enemyMoveX = 0.f;
 	if (meshvalue == E_SOLDIER)
 	{
 		float m_worldHeight = 100.f;
