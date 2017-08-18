@@ -184,6 +184,16 @@ bool PlayerInfo::ChangeWeapon(void)
 	return false;
 }
 
+int PlayerInfo::GetWeapon(void)const
+{
+	return m_iCurrentWeapon;
+}
+
+double PlayerInfo::GetElapsedTime(void)
+{
+	return m_dElapsedTime;
+}
+
 // Discharge Primary Weapon
 bool PlayerInfo::DischargePrimaryWeapon(const float deltaTime)
 {

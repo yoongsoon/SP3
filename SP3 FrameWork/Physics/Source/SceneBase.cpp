@@ -115,8 +115,8 @@ void SceneBase::Init()
 	meshList[GEO_SOLDIER] = MeshBuilder::GenerateCube("cube", Color(1, 0, 1), 1.f);
 	meshList[GEO_ARCHER] = MeshBuilder::GenerateSphere("ball", Color(1, 0, 0), 10, 10, 1.f);
 	meshList[GEO_WIZARD] = MeshBuilder::GenerateCube("cube", Color(0, 0, 0), 1.f);
-	meshList[GEO_BRICK] = MeshBuilder::GenerateCube("brick", Color(.5f, .5f, .5f), 1.f);
-	//meshList[GEO_BRICK]->textureID = LoadTGA("Image//castlebrick.tga");
+	meshList[GEO_BRICK] = MeshBuilder::GenerateQuad("brick", Color(.5f, .5f, .5f), 1.f);
+	meshList[GEO_BRICK]->textureID = LoadTGA("Image//castlebrick.tga");
 	meshList[GEO_BACKGROUND] = MeshBuilder::GenerateQuad("BackGround", Color(1.f, 1.f, 1.f), 1.f);
 	meshList[GEO_BACKGROUND]->textureID = LoadTGA("Image/BackGround.tga");
 

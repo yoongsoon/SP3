@@ -25,31 +25,33 @@ bool CollisionManager::checkCollision(GameObject * object1, GameObject * object2
 	Vector3 obj2Normal = object2->dir;
 	Vector3 obj2Right = obj2Normal.Cross(Vector3(0, 0, 1));
 	// Get vector to object1 from object2
-	Vector3 relativePos1 = obj1pos - obj2pos;
+	Vector3 Pos1ToPos2 = obj1pos - obj2pos;
 	// Get vector to object2 from object1
-	Vector3 relativePos2 = obj2pos - obj1pos;
+	Vector3 Pos2ToPos1 = obj2pos - obj1pos;
 	Vector3 selfToTargetDirection;
 	Vector3 radialPosToTarget;
 	Vector3 relativeVel = object1->vel - object2->vel;
-	float scaleOffset = 0;
+	float rotateAngle;
+
 	if (object1->type == GameObject::GO_PROJECTILE)
 	{
 		switch (object2->type)
 		{
 			// obj2 = ball
-		case GameObject::GO_PROJECTILE:
+		/*case GameObject::GO_PROJECTILE:
 			return (relativeVel.Dot(relativePos1) < 0 && (relativePos1).LengthSquared() <= (obj1scale.x + obj2scale.x) * (obj1scale.x + obj2scale.x));
-			break;
+			break;*/
 			// obj2 = wall
 		//case GameObject::GO_ENEMY:
 		case GameObject::GO_PLAYER:
 		case GameObject::GO_BRICK:
-			// testing
+			//rotateAngle = 
+
 			object2->topLeft.Set(obj2pos.x - (obj2scale.x * 0.5f), obj2pos.y + (obj2scale.y * 0.5f), 0);
 			object2->topRight.Set(obj2pos.x + (obj2scale.x * 0.5f), obj2pos.y + (obj2scale.y * 0.5f), 0);
 			object2->bottomLeft.Set(obj2pos.x - (obj2scale.x * 0.5f), obj2pos.y - (obj2scale.y * 0.5f), 0);
 			object2->bottomRight.Set(obj2pos.x + (obj2scale.x * 0.5f), obj2pos.y - (obj2scale.y * 0.5f), 0);
-
+			//cout << obj2Normal << endl;
 			// Check if object1 is relatively close to object2 in terms of Y-axis
 			if (obj1pos.y <= object2->topLeft.y && obj1pos.y >= object2->bottomRight.y)
 			{
@@ -84,15 +86,15 @@ bool CollisionManager::checkCollision(GameObject * object1, GameObject * object2
 				}
 				selfToTargetDirection.Normalize();
 			}
-			
+
 			radialPosToTarget = obj1pos + (selfToTargetDirection * obj1scale.x);
 
-			if (relativePos1.Dot(obj2Normal) > 0)
+			if (Pos1ToPos2.Dot(obj2Normal) > 0)
 				obj2Normal = -obj2Normal;
-			if (relativePos1.Dot(obj2Right) > 0)
+			if (Pos1ToPos2.Dot(obj2Right) > 0)
 				obj2Right = -obj2Right;
-			
-			
+
+
 			if (object1->vel.Dot(obj2Normal) > 0 || object1->vel.Dot(obj2Right) > 0)
 			{
 				return (radialPosToTarget.x >= object2->topLeft.x && radialPosToTarget.y <= object2->topLeft.y
@@ -100,12 +102,15 @@ bool CollisionManager::checkCollision(GameObject * object1, GameObject * object2
 					&& radialPosToTarget.x >= object2->bottomLeft.x && radialPosToTarget.y >= object2->bottomLeft.y
 					&& radialPosToTarget.x <= object2->bottomRight.x && radialPosToTarget.y >= object2->bottomRight.y);
 			}
-
-			//if (object1->vel.Dot(obj2Normal) > 0)
-			//	return (abs((obj2pos - obj1pos).Dot(obj2Normal)) < (obj1scale.x + obj2scale.x / 2)) && (abs((obj2pos - obj1pos).Dot(obj2Right)) < (obj1scale.x + obj2scale.y / 2));
 		}
-		return false;
+	}
+			// testing
 		
+
+		//	//	
+		//}
+		//return false;
+
 		/*else if (object2->type == GameObject::GO_PILLAR) {
 			Vector3 p1 = object1->pos;
 			Vector3 p2 = object2->pos;
@@ -119,8 +124,7 @@ bool CollisionManager::checkCollision(GameObject * object1, GameObject * object2
 
 			return (rel.Dot(dist) < 0 && (p2 - p1).LengthSquared() < (r1 + r2) * (r1 + r2))
 				&& ((p2 - p1).Dot(u) > 0);*/
-	}
-	
+	return false;
 }
 
 void CollisionManager::collisionResponse(GameObject * object1, GameObject * object2)
@@ -174,7 +178,7 @@ void CollisionManager::Update(float dt)
 // double for loop to compare projectile with other games object
 	for (Vectoring::iterator it = theScene->theFactory->g_ProjectileVector.begin(); it != theScene->theFactory->g_ProjectileVector.end();it++) 
 	{
-
+		
 		if ((*it)->active == false)
 			continue;
 

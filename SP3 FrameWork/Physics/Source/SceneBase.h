@@ -135,8 +135,6 @@ protected:
 	Enemy * theEnemy;
 	GameObjectManager * gom;
 	GameObject** thePredictionLine;
-	GameObject * thePredictGHOST;
-	GameObject * thePredictGHOST2;
 	GameObject * theGhostProj;
 	GameObject * theReleaseMouseGhostProj;
 	GameObject * theMouseGhostProj;
