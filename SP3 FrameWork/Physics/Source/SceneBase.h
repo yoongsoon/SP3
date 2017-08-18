@@ -17,6 +17,7 @@
 #include "BackGround.h"
 #include "AICastle.h"
 #include "MiniMap.h"
+#include "PlayerTroops.h"
 
 #include <vector>
 
@@ -26,6 +27,7 @@ class SceneBase : public Scene
 	friend GameObject;
 	friend CollisionManager;
 	friend Enemy;
+	friend PlayerTroop;
 	friend GameObjectManager;
 	friend Projectile;
 	friend Castle;
@@ -80,7 +82,7 @@ public:
 
 		GEO_MINI_ENEMY,
 		GEO_MINI_BACKGROUND,
-
+		GEO_SPRITE_FIRE,
 		NUM_GEOMETRY,
 	};
 public:
@@ -98,7 +100,7 @@ public:
 
 	void RenderMeshOnScreen(Mesh* mesh, float x, float y, float sizeX, float sizeY);
 	void RenderMeshOnScreen(Mesh* mesh, float x, float y, float sizeX, float sizeY, float rotateX, float rotateY);
-
+	//void RenderFire();
 
 	//-------------------------------Variables---------------------------------------------------//
 	float pressDelay = 0.f;
@@ -111,7 +113,6 @@ public:
 
 protected:
 	unsigned m_vertexArrayID;
-	Mesh* meshList[NUM_GEOMETRY];
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
 
@@ -141,6 +142,7 @@ protected:
 
 	double mouseX, mouseY;
 	float backGroundX = 40.f;
+	Mesh* meshList[NUM_GEOMETRY];
 };
 
 #endif

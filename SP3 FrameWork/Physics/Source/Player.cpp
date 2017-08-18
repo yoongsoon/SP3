@@ -3,9 +3,9 @@
 Player::Player()
 {
 	cashamount = 10.f;
-	wallet = 0.f;
+	wallet = 200.f;
 	enemycashamount = 10.f;
-	enemywallet = 0.f;
+	enemywallet = 200.f;
 }
 
 Player::~Player()

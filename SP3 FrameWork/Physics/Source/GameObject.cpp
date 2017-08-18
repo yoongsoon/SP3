@@ -55,6 +55,5 @@ void GameObject::render()
 	theScene->modelStack.Scale(scale.x, scale.y, scale.z);
 	theScene->RenderMesh(theScene->meshList[meshValue], false);
 	theScene->modelStack.PopMatrix();
-
 }
 

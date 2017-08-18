@@ -26,7 +26,6 @@ public:
 	void CreateFriendlySoldier();
 	void CreateFriendlyArcher();
 	void CreateFriendlyWizard();
-
 protected:
 	static Stage1 * sInstance; // The pointer to the object that gets registered
 	//player(aka the player on tower)
@@ -44,6 +43,7 @@ protected:
 	float m_speed;
 	Player *theplayer;
 	Enemy *enemy;
+	SceneBase * scenebase;
 private:
 	//TextEntity* textObj[3];
 };

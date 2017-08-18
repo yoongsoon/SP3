@@ -9,6 +9,7 @@
 #include "LoadTGA.h"
 
 
+
 SceneBase::SceneBase()
 {
 }
@@ -36,7 +37,8 @@ void SceneBase::Init()
 	glGenVertexArrays(1, &m_vertexArrayID);
 	glBindVertexArray(m_vertexArrayID);
 
-	m_programID = LoadShaders("Shader//comg.vertexshader", "Shader//comg.fragmentshader");
+	//m_programID = LoadShaders("Shader//comg.vertexshader", "Shader//comg.fragmentshader");
+	m_programID = LoadShaders("Shader//Shadow.vertexshader", "Shader//Shadow.fragmentshader");
 
 	// Get a handle for our uniform
 	m_parameters[U_MVP] = glGetUniformLocation(m_programID, "MVP");
@@ -112,13 +114,20 @@ void SceneBase::Init()
 	meshList[GEO_SPHERE3] = MeshBuilder::GenerateSphere("sphere3", Color(1, 0, 1), 10, 10, 1.f);
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//ExportedFont2.tga");
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
-	meshList[GEO_SOLDIER] = MeshBuilder::GenerateCube("cube", Color(1, 0, 1), 1.f);
-	meshList[GEO_ARCHER] = MeshBuilder::GenerateSphere("ball", Color(1, 0, 0), 10, 10, 1.f);
-	meshList[GEO_WIZARD] = MeshBuilder::GenerateCube("cube", Color(0, 0, 0), 1.f);
+	//meshList[GEO_SOLDIER] = MeshBuilder::GenerateCube("cube", Color(1, 0, 1), 1.f);
+	//meshList[GEO_ARCHER] = MeshBuilder::GenerateSphere("ball", Color(1, 0, 0), 10, 10, 1.f);
+	//meshList[GEO_WIZARD] = MeshBuilder::GenerateCube("cube", Color(0, 0, 0), 1.f);
 	meshList[GEO_BRICK] = MeshBuilder::GenerateCube("brick", Color(.5f, .5f, .5f), 1.f);
 	//meshList[GEO_BRICK]->textureID = LoadTGA("Image//castlebrick.tga");
 	meshList[GEO_BACKGROUND] = MeshBuilder::GenerateQuad("BackGround", Color(1.f, 1.f, 1.f), 1.f);
 	meshList[GEO_BACKGROUND]->textureID = LoadTGA("Image/BackGround.tga");
+
+	meshList[GEO_SOLDIER] = MeshBuilder::GenerateSpriteAnimation("soldier", 4, 4, 1.0f);
+	meshList[GEO_SOLDIER]->textureID = LoadTGA("Image//fire.tga");
+	meshList[GEO_ARCHER] = MeshBuilder::GenerateSpriteAnimation("archer", 4, 4, 1.0f);
+	meshList[GEO_ARCHER]->textureID = LoadTGA("Image//fire.tga");
+	meshList[GEO_WIZARD] = MeshBuilder::GenerateSpriteAnimation("wizard", 4, 4, 1.0f);
+	meshList[GEO_WIZARD]->textureID = LoadTGA("Image//fire.tga");
 
 	meshList[GEO_MINI_BACKGROUND] = MeshBuilder::GenerateQuad("BackGround", Color(1.f, 1.f, 1.f), 1.f);
 	meshList[GEO_MINI_ENEMY] = (MeshBuilder::GenerateQuad("miniEnemy", Color(1.f, 1.f, 1.f), 1.f));
@@ -126,7 +135,6 @@ void SceneBase::Init()
 
 
 	bLightEnabled = false;
-
 }
 
 void SceneBase::Update(double dt)
@@ -142,7 +150,28 @@ void SceneBase::Update(double dt)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	fps = (float)(1.f / dt);
+
 }
+
+//void SceneBase::RenderFire()
+//{
+//	m_worldHeight = 100.f;
+//	m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
+//
+//	modelStack.PushMatrix();
+//
+//	Vector3 pos;
+//	pos.x = m_worldWidth / 2;
+//	pos.z = 0.f;
+//
+//	pos.y = m_worldHeight / 2;
+//
+//	modelStack.Translate(pos.x, pos.y, pos.z);
+//	modelStack.Scale(10, 10, 10);
+//	RenderMesh(meshList[GEO_SPRITE_FIRE], false);
+//	modelStack.PopMatrix();
+//}
+
 
 void SceneBase::RenderText(Mesh* mesh, std::string text, Color color)
 {
@@ -304,6 +333,7 @@ void SceneBase::RenderMesh(Mesh *mesh, bool enableLight)
 void SceneBase::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 }
 
 void SceneBase::Exit()

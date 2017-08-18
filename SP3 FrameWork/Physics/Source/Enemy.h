@@ -18,6 +18,7 @@ public:
 	Enemy(GAMEOBJECT_TYPE GO_ENEMY,SceneBase *scene,ENEMY_TYPE meshvalue);
 	~Enemy();
 	virtual void update();
+	virtual void render();
 
 	bool StopToAttack;
 	bool Attacked;

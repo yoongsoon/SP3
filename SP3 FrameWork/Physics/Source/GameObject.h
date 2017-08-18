@@ -21,6 +21,7 @@ public:
 		GO_PROJECTILE,
 		GO_BRICK,
 		GO_CASTLE,
+		GO_FIRE,
 		GO_TOTAL, //must be last
 	};
 	GAMEOBJECT_TYPE type;

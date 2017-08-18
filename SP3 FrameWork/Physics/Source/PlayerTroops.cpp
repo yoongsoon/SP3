@@ -1,6 +1,7 @@
 #include "PlayerTroops.h"
 #include "SceneBase.h"
 #include "Application.h"
+#include "GL\glew.h"
 
 PlayerTroop::PlayerTroop(GAMEOBJECT_TYPE GO_PLAYER, SceneBase * scene, PLAYER_TYPE meshvalue) :GameObject(GO_PLAYER, scene)
 {
@@ -13,7 +14,7 @@ PlayerTroop::PlayerTroop(GAMEOBJECT_TYPE GO_PLAYER, SceneBase * scene, PLAYER_TY
 		meshValue = SceneBase::GEO_SOLDIER;
 		scale.Set(5, 5, 5);
 		vel.Set(10.f, 0.f, 0.f);
-		pos.Set(m_worldWidth / 10, m_worldHeight / 2, 0.f);
+		pos.Set(m_worldWidth / 10, m_worldHeight / 2, 1.f);
 		playerType = PlayerTroop::P_SOLDIER;
 		hp = 100.f;
 		range = 1.f;
@@ -30,7 +31,7 @@ PlayerTroop::PlayerTroop(GAMEOBJECT_TYPE GO_PLAYER, SceneBase * scene, PLAYER_TY
 		meshValue = SceneBase::GEO_ARCHER;
 		scale.Set(5, 5, 5);
 		vel.Set(10.f, 0.f, 0.f);
-		pos.Set(m_worldWidth / 10, m_worldHeight / 2, 0.f);
+		pos.Set(m_worldWidth / 10, m_worldHeight / 2, 1.f);
 		playerType = PlayerTroop::P_ARCHER;
 		hp = 50.f;
 		range = 10.f;
@@ -47,7 +48,7 @@ PlayerTroop::PlayerTroop(GAMEOBJECT_TYPE GO_PLAYER, SceneBase * scene, PLAYER_TY
 		meshValue = SceneBase::GEO_WIZARD;
 		scale.Set(5, 5, 5);
 		vel.Set(10.f, 0.f, 0.f);
-		pos.Set(m_worldWidth / 10, m_worldHeight / 2, 0.f);
+		pos.Set(m_worldWidth / 10, m_worldHeight / 2, 1.f);
 		playerType = PlayerTroop::P_WIZARD;
 		hp = 70.f;
 		range = 10.f;
@@ -94,4 +95,15 @@ void PlayerTroop::update()
 		active = false;
 	}
 
+}
+
+void PlayerTroop::render()
+{
+	glDisable(GL_DEPTH_TEST);
+	theScene->modelStack.PushMatrix();
+	theScene->modelStack.Translate(pos.x, pos.y, pos.z);
+	theScene->modelStack.Scale(scale.x, scale.y, scale.z);
+	theScene->RenderMesh(theScene->meshList[meshValue], false);
+	theScene->modelStack.PopMatrix();
+	glEnable(GL_DEPTH_TEST);
 }

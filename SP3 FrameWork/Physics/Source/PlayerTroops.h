@@ -18,6 +18,7 @@ public:
 	PlayerTroop(GAMEOBJECT_TYPE GO_PLAYER, SceneBase *scene, PLAYER_TYPE meshvalue);
 	~PlayerTroop();
 	virtual void update();
+	virtual void render();
 
 	bool StopToAttack;
 	bool Attacked;

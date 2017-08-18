@@ -68,7 +68,7 @@ void Stage1::Init()
 
 	AICastle * theAICastle = new AICastle(GameObject::GO_CASTLE, this);
 	theFactory->createGameObject(theAICastle);
-
+	scenebase = new SceneBase();
 	//CHANGE THIS TO Bow/Cannon/Catapult for different cooldown
 	//weap_manager = new Weapon_Info*[3];
 	/*potato = new Bow();
@@ -82,6 +82,25 @@ void Stage1::Init()
 
 	thePlayer = new PlayerInfo();
 	thePlayer->Init();
+
+	SpriteAnimation* wizard = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD]);
+	SpriteAnimation* archer = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER]);
+	SpriteAnimation* soldier = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER]);
+	if (wizard)
+	{
+		wizard->m_anim = new Animation();
+		wizard->m_anim->Set(0, 15, 0, 1.0f, true);
+	}
+	if (archer)
+	{
+		archer->m_anim = new Animation();
+		archer->m_anim->Set(0, 15, 0, 1.0f, true);
+	}
+	if (soldier)
+	{
+		soldier->m_anim = new Animation();
+		soldier->m_anim->Set(0, 15, 0, 1.0f, true);
+	}
 }
 
 void Stage1::Update(double dt)
@@ -257,8 +276,6 @@ void Stage1::Update(double dt)
 		//theFactory->createGameObject(tempObject1);
 		//theFactory->createGameObject(tempObject2);
 		theGhostProj->active = false;
-
-
 	// add object into factory
 	}
 	//shows where mouse is(if need remove mouse cursor)
@@ -313,8 +330,24 @@ void Stage1::Update(double dt)
 	ss0.precision(5);
 	ss0 << "NINJA X GTA";*/
 	//textObj[0]->SetText(ss0.str());
-
-	
+	SpriteAnimation* wizard = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD]);
+	SpriteAnimation* archer = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER]);
+	SpriteAnimation* soldier = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER]);
+	if (wizard)
+	{
+		wizard->Update(dt);
+		wizard->m_anim->animActive = true;
+	}
+	if (archer)
+	{
+		archer->Update(dt);
+		archer->m_anim->animActive = true;
+	}
+	if (soldier)
+	{
+		soldier->Update(dt);
+		soldier->m_anim->animActive = true;
+	}
 }
 
 void Stage1::Render()
@@ -341,7 +374,7 @@ void Stage1::Render()
 
 	//Render the all Game Objects
 	theFactory->renderGameObject();
-
+	
 	theMiniMap->RenderUI();
 
 	

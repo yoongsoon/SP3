@@ -39,6 +39,9 @@
     <Filter Include="Source Files\UI">
       <UniqueIdentifier>{ac0be372-a7ee-4865-8a8f-3110f120d4ed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\SpriteAnimation">
+      <UniqueIdentifier>{45c18a86-c16a-4e4d-b9fe-a4ab85f98b2c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
@@ -130,6 +133,9 @@
     </ClCompile>
     <ClCompile Include="Source\MiniMap.cpp">
       <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SpriteAnimation.cpp">
+      <Filter>Source Files\SpriteAnimation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -234,6 +240,9 @@
     </ClInclude>
     <ClInclude Include="Source\MiniMap.h">
       <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SpriteAnimation.h">
+      <Filter>Source Files\SpriteAnimation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

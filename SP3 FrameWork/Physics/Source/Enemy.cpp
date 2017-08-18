@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "SceneBase.h"
 #include "Application.h"
+#include "GL\glew.h"
 
 Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) :GameObject( GO_ENEMY, scene)
 {
@@ -13,7 +14,7 @@ Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) 
 		meshValue = SceneBase::GEO_SOLDIER;
 		scale.Set(5, 5, 5);
 		vel.Set(-10.f, 0.f, 0.f);
-		pos.Set((m_worldWidth * 2) - (m_worldWidth / 10), m_worldHeight / 2, 0.f);
+		pos.Set((m_worldWidth * 2) - (m_worldWidth / 10), m_worldHeight / 2, 1.f);
 		enemyType = Enemy::E_SOLDIER;
 		hp = 100.f;
 		range = 1.f;
@@ -30,7 +31,7 @@ Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) 
 		meshValue = SceneBase::GEO_ARCHER;
 		scale.Set(5, 5, 5);
 		vel.Set(-10.f, 0.f, 0.f);
-		pos.Set((m_worldWidth * 2) - (m_worldWidth / 10), m_worldHeight / 2, 0.f);
+		pos.Set((m_worldWidth * 2) - (m_worldWidth / 10), m_worldHeight / 2, 1.f);
 		enemyType = Enemy::E_ARCHER;
 		hp = 50.f;
 		range = 10.f;
@@ -47,7 +48,7 @@ Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) 
 		meshValue = SceneBase::GEO_WIZARD;
 		scale.Set(5, 5, 5);
 		vel.Set(-10.f, 0.f, 0.f);
-		pos.Set((m_worldWidth * 2) - (m_worldWidth / 10), m_worldHeight / 2, 0.f);
+		pos.Set((m_worldWidth * 2) - (m_worldWidth / 10), m_worldHeight / 2, 1.f);
 		enemyType = Enemy::E_WIZARD;
 		hp = 70.f;
 		range = 10.f;
@@ -109,4 +110,15 @@ void Enemy::update()
 		active = false;
 	}
 	
+}
+
+void Enemy::render()
+{
+	glDisable(GL_DEPTH_TEST);
+	theScene->modelStack.PushMatrix();
+	theScene->modelStack.Translate(pos.x, pos.y, pos.z);
+	theScene->modelStack.Scale(scale.x, scale.y, scale.z);
+	theScene->RenderMesh(theScene->meshList[meshValue], false);
+	theScene->modelStack.PopMatrix();
+	glEnable(GL_DEPTH_TEST);
 }

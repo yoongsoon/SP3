@@ -181,6 +181,7 @@
     <ClCompile Include="Source\SceneBase.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\shader.cpp" />
+    <ClCompile Include="Source\SpriteAnimation.cpp" />
     <ClCompile Include="Source\Stage1.cpp" />
     <ClCompile Include="Source\Start_Scene.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
@@ -216,6 +217,7 @@
     <ClInclude Include="Source\SceneManager.h" />
     <ClInclude Include="Source\shader.hpp" />
     <ClInclude Include="Source\Singleton.h" />
+    <ClInclude Include="Source\SpriteAnimation.h" />
     <ClInclude Include="Source\Stage1.h" />
     <ClInclude Include="Source\Start_Scene.h" />
     <ClInclude Include="Source\Utility.h" />
