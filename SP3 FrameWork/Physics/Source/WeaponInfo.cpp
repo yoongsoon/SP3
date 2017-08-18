@@ -153,7 +153,7 @@ void Weapon_Info::Discharge(Vector3 position, Vector3 target, SceneBase *_scene)
 		//and player
 		
 		//needs get projectile type to change projectiles or maybe weapon type
-		Projectile * aProjectile = Create::createProjectile(projectile_type, GameObject::GO_BALL, _scene);
+		Projectile * aProjectile = Create::createProjectile(projectile_type, GameObject::GO_PROJECTILE, _scene);
 		//Projectile * aProjectile = Create::createProjectile(Projectile::PROJECTILE_TYPE::ARROW_PROJECTILE, GameObject::GO_PROJECTILE, _scene);
 		aProjectile->typeOfMotion = Projectile::PROJECTILE_MOTION;
 		aProjectile->pos = position;

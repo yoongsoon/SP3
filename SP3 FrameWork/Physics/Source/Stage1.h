@@ -44,6 +44,11 @@ protected:
 	float m_speed;
 	Player *theplayer;
 	Enemy *enemy;
+
+	bool ghost_exist = false;
+	bool release_ghost_exist = false;
+	bool M_ghost_exist = false;
+	bool canPredict;
 private:
 	//TextEntity* textObj[3];
 };

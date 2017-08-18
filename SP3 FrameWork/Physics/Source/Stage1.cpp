@@ -25,6 +25,10 @@ Stage1::~Stage1()
 void Stage1::Init()
 {
 	SceneBase::Init();
+	ghost_exist = false;
+	release_ghost_exist = false;
+	M_ghost_exist = false;
+	canPredict = true;
 	weap_manager = NULL;
 	//Physics code here
 	m_speed = 1.f;
@@ -49,6 +53,7 @@ void Stage1::Init()
 	for (size_t i = 0; i < 10; i++)
 	{
 		thePredictionLine[i]=new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_PROJECTILE, this);
+		theFactory->createGameObject(thePredictionLine[i]);
 	}
 	thePredictGHOST = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_PROJECTILE, this);
 	thePredictGHOST2 = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_PROJECTILE, this);
@@ -210,9 +215,7 @@ void Stage1::Update(double dt)
 	currentPos.y = (Application::GetWindowHeight() - (float)mouseY) / Application::GetWindowHeight() * m_worldHeight;
 	static bool bLButtonState = false;
 	//to only create ghosts balls ONCE not every update
-	static bool ghost_exist = false;
-	static bool release_ghost_exist = false;
-	static bool M_ghost_exist = false;
+	
 	if (!bLButtonState && Application::IsMousePressed(0))
 	{
 		bLButtonState = true;
@@ -269,7 +272,7 @@ void Stage1::Update(double dt)
 		//theFactory->createGameObject(tempObject);
 		//theFactory->createGameObject(tempObject1);
 		//theFactory->createGameObject(tempObject2);
-
+		//canPredict = true;
 		theGhostProj->active = false;
 	}
 	//shows where mouse is(if need remove mouse cursor)
@@ -283,8 +286,11 @@ void Stage1::Update(double dt)
 			thePredictionLine[i]->pos.y = (((theGhostProj->pos.y) + ((theGhostProj->pos.y - theMouseGhostProj->pos.y) * tline)) + ((-9.8 *(tline * tline)) / 2));
 			thePredictionLine[i]->pos.x = (theGhostProj->pos.x) + ((theGhostProj->pos.x - theMouseGhostProj->pos.x) * tline);
 			thePredictionLine[i]->active = true;
-			theFactory->createGameObject(thePredictionLine[i]);
+			
+				
+			
 		}
+		//canPredict = false;
 	}
 	//parralax scrolling right
 	if (Application::IsKeyPressed(VK_RIGHT) )
