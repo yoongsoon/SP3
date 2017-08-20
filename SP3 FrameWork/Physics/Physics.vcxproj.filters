@@ -42,6 +42,9 @@
     <Filter Include="Source Files\SpriteAnimation">
       <UniqueIdentifier>{45c18a86-c16a-4e4d-b9fe-a4ab85f98b2c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\SoundEngine">
+      <UniqueIdentifier>{a8b1639e-8e90-4871-8157-034ba84e7810}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
@@ -136,6 +139,9 @@
     </ClCompile>
     <ClCompile Include="Source\SpriteAnimation.cpp">
       <Filter>Source Files\SpriteAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SoundEngine.cpp">
+      <Filter>Source Files\SoundEngine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -243,6 +249,9 @@
     </ClInclude>
     <ClInclude Include="Source\SpriteAnimation.h">
       <Filter>Source Files\SpriteAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SoundEngine.h">
+      <Filter>Source Files\SoundEngine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

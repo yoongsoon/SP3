@@ -1,6 +1,8 @@
 #pragma once
 #include "WeaponInfo.h"
-#include "Vector3.h"/*
+#include "Vector3.h"
+#include "SoundEngine.h"
+/*
 #include "../FPSCamera.h"
 #include "../GroundEntity.h"
 #include "../WeaponInfo/WeaponInfo.h"
@@ -119,6 +121,7 @@ public:
 	float health;
 
 	bool colliding;
+
 
 private:
 	Vector3 defaultPosition, defaultTarget, defaultUp;

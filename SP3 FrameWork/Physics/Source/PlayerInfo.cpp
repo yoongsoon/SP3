@@ -5,6 +5,7 @@
 #include "Catapult.h"
 
 #include "Application.h"
+#include "SoundEngine.h"
 //#include "MouseController.h"
 //#include "KeyboardController.h"
 //#include "Mtx44.h"
@@ -29,6 +30,7 @@ PlayerInfo::PlayerInfo(void)
 	, health(100)
 	, colliding(false)
 {
+
 }
 
 PlayerInfo::~PlayerInfo(void)
@@ -166,8 +168,7 @@ void PlayerInfo::Update(double dt)
 	//	primaryWeapon->Update(dt);
 	/*if (secondaryWeapon)
 		secondaryWeapon->Update(dt);*/
-	
-	
+
 	if (weap_manager[m_iCurrentWeapon])
 		weap_manager[m_iCurrentWeapon]->Update(dt);
 
@@ -221,6 +222,24 @@ bool PlayerInfo::DischargePPTEST(Vector3 position, Vector3 target, SceneBase *_s
 		return true;
 	}
 */
+	switch (m_iCurrentWeapon)
+	{
+	case 0:
+		CSoundEngine::getInstance()->AddSound("Arrow", "Sound//Arrow.ogg");
+		CSoundEngine::getInstance()->PlayASound("Arrow", false, false);
+		break;
+	case 1:
+		CSoundEngine::getInstance()->AddSound("Catapult", "Sound//Catapult.ogg");
+		CSoundEngine::getInstance()->PlayASound("Catapult", false, false);
+		break;
+	case 2:
+		CSoundEngine::getInstance()->AddSound("Cannon", "Sound//Cannon.ogg");
+		CSoundEngine::getInstance()->PlayASound("Cannon", false, false);
+		break;
+
+	}
+	CSoundEngine::getInstance()->theCurrentSound->setVolume(1.0f);
+
 	if (weap_manager[m_iCurrentWeapon])
 	{
 		weap_manager[m_iCurrentWeapon]->Discharge(position, target, _scene);

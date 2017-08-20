@@ -39,6 +39,12 @@ void Stage1::Init()
 	m_worldHeight = 100.f;
 	m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
 
+	//Create Sound Engine to the play sounds
+	CSoundEngine::getInstance()->Init();
+	CSoundEngine::getInstance()->AddSound("BackGround Music", "Sound//Crossroads.ogg");
+	CSoundEngine::getInstance()->PlayASound("BackGround Music", true, false);
+	CSoundEngine::getInstance()->theCurrentSound->setVolume(0.4f);
+
 	//MiniMap
 	theMiniMap = new MiniMap(GameObject::GO_NONE, this);
 
