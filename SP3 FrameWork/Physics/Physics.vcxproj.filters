@@ -143,6 +143,9 @@
     <ClCompile Include="Source\SoundEngine.cpp">
       <Filter>Source Files\SoundEngine</Filter>
     </ClCompile>
+    <ClCompile Include="Source\LoadHmap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -252,6 +255,9 @@
     </ClInclude>
     <ClInclude Include="Source\SoundEngine.h">
       <Filter>Source Files\SoundEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LoadHmap.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

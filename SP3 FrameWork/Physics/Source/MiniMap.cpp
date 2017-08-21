@@ -19,17 +19,19 @@ void MiniMap::Update()
 {
 	float distBorderX = 60.f;
 
-	for (auto & it : theScene->theFactory->g_FactoryMap)
-	{
-		if (it.first == GameObject::GO_ENEMY  && static_cast<Enemy*>(it.second)->StopToAttack == false)
+	
+		for (auto & it : theScene->theFactory->g_FactoryMap)
 		{
-			static_cast<Enemy*>(it.second)->enemyMoveX += distBorderX / (theScene->m_worldWidth * 3) * (it.second->vel.x * theScene->_dt);
+			if (it.first == GameObject::GO_ENEMY  && static_cast<Enemy*>(it.second)->StopToAttack == false)
+			{
+				static_cast<Enemy*>(it.second)->enemyMoveX += distBorderX / (theScene->m_worldWidth * 3 - 15.f) * (it.second->vel.x * theScene->_dt);
+			}
+			else if (it.first == GameObject::GO_PLAYER && static_cast<PlayerTroop*>(it.second)->StopToAttack == false)
+			{
+				static_cast<PlayerTroop*>(it.second)->playerMoveX += distBorderX / (theScene->m_worldWidth * 3 - 15.f) * (it.second->vel.x * theScene->_dt);
+			}
 		}
-		else if (it.first == GameObject::GO_PLAYER && static_cast<Enemy*>(it.second)->StopToAttack == false)
-		{
-			static_cast<PlayerTroop*>(it.second)->playerMoveX += distBorderX / (theScene->m_worldWidth * 3) * (it.second->vel.x * theScene->_dt);
-		}
-	}
+	
 }
 
 void MiniMap::RenderUI()

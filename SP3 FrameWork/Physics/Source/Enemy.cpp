@@ -15,7 +15,7 @@ Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) 
 		meshValue = SceneBase::GEO_SOLDIER;
 		scale.Set(5, 5, 5);
 		vel.Set(-10.f, 0.f, 0.f);
-		pos.Set((m_worldWidth * 3), m_worldHeight / 2, 1.f);
+		pos.Set((m_worldWidth * 3) -15.f, m_worldHeight / 2, 1.f);
 		enemyType = Enemy::E_SOLDIER;
 		hp = 100.f;
 		range = 1.f;
@@ -70,42 +70,43 @@ Enemy::~Enemy()
 void Enemy::update()
 {
 	//destroy enemy when it ran out of hp
+	
+		if (enemyType == ENEMY_TYPE::E_SOLDIER)
+		{
+			if (!StopToAttack)
+			{
+				pos += vel * theScene->_dt;
+			}
+		}
+		else if (enemyType == ENEMY_TYPE::E_ARCHER)
+		{
+			if (!StopToAttack)
+			{
+				pos += vel * theScene->_dt;
+			}
+		}
+		else if (enemyType == ENEMY_TYPE::E_WIZARD)
+		{
+			if (!StopToAttack)
+			{
+				pos += vel * theScene->_dt;
+			}
+		}
+		if (Attacked)
+		{
+			timer += theScene->_dt;
+			if (timer > attackcooldown)
+			{
+				Attacked = false;
+				timer = 0.0f;
+				cout << "RESET" << endl;
+			}
+		}
+		if (hp <= 0.f)
+		{
+			active = false;
+		}
 
-	if (enemyType == ENEMY_TYPE::E_SOLDIER)
-	{
-		if (!StopToAttack)
-		{
-			pos += vel * theScene->_dt;
-		}
-	}
-	else if (enemyType == ENEMY_TYPE::E_ARCHER)
-	{
-		if (!StopToAttack)
-		{
-			pos += vel * theScene->_dt;
-		}
-	}
-	else if (enemyType == ENEMY_TYPE::E_WIZARD)
-	{
-		if (!StopToAttack)
-		{
-			pos += vel * theScene->_dt;
-		}
-	}
-	if (Attacked)
-	{
-		timer += theScene->_dt;
-		if (timer > attackcooldown)
-		{
-			Attacked = false;
-			timer = 0.0f;
-			cout << "RESET" << endl;
-		}
-	}
-	if (hp <= 0.f)
-	{
-		active = false;
-	}
 	if (pos.x <= 0)
 	{
 		active = false;

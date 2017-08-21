@@ -11,9 +11,9 @@ AICastle::AICastle(GAMEOBJECT_TYPE typeValue, SceneBase * scene)
 	stateOfAI = AICastle::AI_ATTACK;
 	active = true;
 
-	meshValue = SceneBase::GEO_BRICK;
-	scale.Set(10, 10, 1); 
-	pos = Vector3(200, 50, 0);
+	meshValue = SceneBase::GEO_MINI_ENEMY_CASTLE;
+	scale.Set(80, 80, 1); 
+	pos = Vector3( (theScene->m_worldWidth * 3)- 15.f , 50.f, 1.f);
 
 	theAIweapon = new Cannon();
 	theAIweapon->Init();
@@ -41,35 +41,30 @@ void AICastle::update()
 	break;
 	}
 
-	for (auto & it : theScene->theFactory->g_FactoryMap)
-	{
-		if (it.first == GameObject::GO_PLAYER)
+		for (auto & it : theScene->theFactory->g_FactoryMap)
 		{
-		    float distanceX = (pos.x -it.second->pos.x );
-						
-			// starting firing projectile within castle range 
-			//and the projectile motion will be "PROJECTILE_MOTION" if the
-			// distance between enemy and castle is greater than 10
-			if ( abs(distanceX) < m_castleRange && abs(distanceX) > 10 && it.second->active == true)
+			if (it.first == GameObject::GO_PLAYER)
 			{
-				theAIweapon->castleAIDischarge(Vector3(200, 60, 0),distanceX - 50, theScene );
-			}
-			// change projectile motion to "LINEAR MOTION"  if the distance between
-			// enemy and castle is lesser than 10
-			else if (abs(distanceX) < 10 && it.second->active == true)
-			{
-				theAIweapon->castleAIDischarge(Vector3(200, 60, 0), it.second->pos , theScene);
-			}
-			else if (abs(distanceX) > m_castleRange || it.second->active == false)
-			{
+				float distanceX = (pos.x - it.second->pos.x);
 
+				// starting firing projectile within castle range 
+				//and the projectile motion will be "PROJECTILE_MOTION" if the
+				// distance between enemy and castle is greater than 10
+				if (abs(distanceX) < m_castleRange && abs(distanceX) > 10 && it.second->active == true)
+				{
+					theAIweapon->castleAIDischarge(Vector3(pos.x, 60, 0), distanceX - 50, theScene);
+				}
+				// change projectile motion to "LINEAR MOTION"  if the distance between
+				// enemy and castle is lesser than 10
+				else if (abs(distanceX) < 10 && it.second->active == true)
+				{
+					theAIweapon->castleAIDischarge(Vector3(pos.x, 60, 0), it.second->pos, theScene);
+				}
+				else if (abs(distanceX) > m_castleRange || it.second->active == false)
+				{
+
+				}
 			}
-		
 		}
-		
-
-	}
-
-	
-	theAIweapon->Update(theScene->_dt);
+		theAIweapon->Update(theScene->_dt);
 }

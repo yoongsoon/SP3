@@ -188,7 +188,8 @@ void CollisionManager::collisionResponse(GameObject * object1, GameObject * obje
 
 		}
 	}
-	else if (object1->type == GameObject::GO_BRICK)
+	//PLAYER PROJECTILE DAMAGE TO ENEMY TROOPS
+	else if (static_cast<Projectile*>(object1)->whoseProjectile == Projectile::PROJECTILE_WHOSE::PLAYER_PROJECTILE && object2->type == GameObject::GO_ENEMY)
 	{
 		if (object2->type == GameObject::GO_BRICK)
 		{
@@ -200,6 +201,14 @@ void CollisionManager::collisionResponse(GameObject * object1, GameObject * obje
 			else
 				++object2->pos.y;
 		}
+	}
+	// AI CASTLE PROJECTILE DAMAGE TO PLAYER TROOPS
+	else if (static_cast<Projectile*>(object1)->whoseProjectile == Projectile::PROJECTILE_WHOSE::ENEMY_PROJECTILE && object2->type == GameObject::GO_PLAYER)
+	{
+		float projectileDamage = static_cast<Projectile*>(object1)->m_damage;
+		object1->active = false;
+
+		static_cast<PlayerTroop*>(object2)->hp -= projectileDamage;
 	}
 	
 }

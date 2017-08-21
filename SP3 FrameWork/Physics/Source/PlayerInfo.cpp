@@ -222,6 +222,7 @@ bool PlayerInfo::DischargePPTEST(Vector3 position, Vector3 target, SceneBase *_s
 		return true;
 	}
 */
+
 	switch (m_iCurrentWeapon)
 	{
 	case 0:
