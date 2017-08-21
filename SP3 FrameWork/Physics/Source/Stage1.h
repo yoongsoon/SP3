@@ -20,6 +20,7 @@ public:
 	virtual void Render();
 	virtual void Exit();
 
+	//void CreatePlayerWeap();
 	void CreateEnemySoldier();
 	void CreateEnemyArcher();
 	void CreateEnemyWizard();
@@ -38,7 +39,7 @@ protected:
 	//switch weapons
 	Weapon_Info** weap_manager;
 	int curr_weapon = 0;
-	Weapon_Info* potato;
+	//Weapon_Info* potato;
 				
 	//Physics
 	float m_speed;
@@ -59,6 +60,9 @@ protected:
 	string weap1_cool;
 	string weap2_cool;
 	string weap3_cool;
+	bool weapon1 = true;
+	bool weapon2 = false;
+	bool weapon3 = false;
 private:
 	//TextEntity* textObj[3];
 };

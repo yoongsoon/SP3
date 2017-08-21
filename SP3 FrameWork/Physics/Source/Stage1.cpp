@@ -103,6 +103,7 @@ void Stage1::Init()
 	SpriteAnimation* wizard = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD]);
 	SpriteAnimation* archer = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER]);
 	SpriteAnimation* soldier = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER]);
+	SpriteAnimation* P_weapon_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_BOW_ARROW]);
 	if (wizard)
 	{
 		wizard->m_anim = new Animation();
@@ -117,6 +118,11 @@ void Stage1::Init()
 	{
 		soldier->m_anim = new Animation();
 		soldier->m_anim->Set(0, 15, 0, 1.0f, true);
+	}
+	if (P_weapon_Sprite)
+	{
+		P_weapon_Sprite->m_anim = new Animation();
+		P_weapon_Sprite->m_anim->Set(0, 15, 0, 1.0f, true);
 	}
 }
 
@@ -136,6 +142,11 @@ void Stage1::Update(double dt)
 		//curr_weapon = 0;
 		thePlayer->SetWeapon(0);
 		bow = true;
+
+		weapon1 = true;
+
+		weapon2 = false;
+		weapon3 = false;
 	}
 	else if (!Application::IsKeyPressed(VK_NUMPAD1) && bow)
 	{
@@ -147,6 +158,11 @@ void Stage1::Update(double dt)
 		//curr_weapon = 1;
 		thePlayer->SetWeapon(1);
 		bow = true;
+
+		weapon2 = true;
+
+		weapon1 = false;
+		weapon3 = false;
 	}
 	else if (!Application::IsKeyPressed(VK_NUMPAD2) && bow)
 	{
@@ -158,6 +174,11 @@ void Stage1::Update(double dt)
 		//curr_weapon = 2;
 		thePlayer->SetWeapon(2);
 		bow = true;
+
+		weapon3 = true;
+
+		weapon1 = false;
+		weapon2 = false;
 	}
 	else if (!Application::IsKeyPressed(VK_NUMPAD3) && bow)
 	{
@@ -350,6 +371,7 @@ void Stage1::Update(double dt)
 	SpriteAnimation* wizard = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD]);
 	SpriteAnimation* archer = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER]);
 	SpriteAnimation* soldier = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER]);
+	SpriteAnimation* P_weapon_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_BOW_ARROW]);
 	if (wizard)
 	{
 		wizard->Update(dt);
@@ -364,6 +386,11 @@ void Stage1::Update(double dt)
 	{
 		soldier->Update(dt);
 		soldier->m_anim->animActive = true;
+	}
+	if (P_weapon_Sprite)
+	{
+		P_weapon_Sprite->Update(dt);
+		P_weapon_Sprite->m_anim->animActive = true;
 	}
 	a = thePlayer->GetWeapon();
 	stringstream ss;
@@ -424,6 +451,47 @@ void Stage1::Render()
 	RenderTextOnScreen(meshList[GEO_TEXT], weap1_cool, Color(1, 0, 0), 5, 10, 15);
 	RenderTextOnScreen(meshList[GEO_TEXT], weap2_cool, Color(1, 0, 0), 5, 10, 13);
 	RenderTextOnScreen(meshList[GEO_TEXT], weap3_cool, Color(1, 0, 0), 5, 10, 11);
+
+	/*Need fixing*/
+	//NEED SWITCH ACCORDING TO PLAYER CURRENT WEAPON
+	if (weapon1)
+	{
+		//RenderMeshOnScreen(meshList[GEO_BOW_ARROW], 10.0f, 10.0f, 15.0f, 10.0f);
+		modelStack.PushMatrix();
+		modelStack.Translate(10.0f, 10.0f, 1.0f);
+		modelStack.Scale(15.0f, 15.0f, 1.0f);
+		RenderMesh(meshList[GEO_BOW_ARROW],false);
+		modelStack.PopMatrix();
+	}
+	if (weapon2)
+	{
+		//RenderMeshOnScreen(meshList[GEO_CANNON_BALLS], 10.0f, 10.0f, 15.0f, 10.0f);
+		modelStack.PushMatrix();
+		modelStack.Translate(10.0f, 10.0f, 1.0f);
+		modelStack.Scale(15.0f, 15.0f, 1.0f);
+		RenderMesh(meshList[GEO_CANNON_BALLS], false);
+		modelStack.PopMatrix();
+	}
+	if (weapon3)
+	{
+		//RenderMeshOnScreen(meshList[GEO_CATAPULT_ROCKS], 10.0f, 10.0f, 15.0f, 10.0f);
+		modelStack.PushMatrix();
+		modelStack.Translate(10.0f, 10.0f, 1.0f);
+		modelStack.Scale(15.0f, 15.0f, 1.0f);
+		RenderMesh(meshList[GEO_CATAPULT_ROCKS], false);
+		modelStack.PopMatrix();
+	}
+	modelStack.PushMatrix();
+	modelStack.Translate(20.0f, 40.0f, 1.0f);
+	modelStack.Scale(15.0f, 15.0f, 1.0f);
+	RenderMesh(meshList[GEO_P_BOW_ARROW], false);
+	modelStack.PopMatrix();
+	//RenderMeshOnScreen(meshList[GEO_P_BOW_ARROW], 20.0f, 20.0f, 15.0f, 10.0f);
+	/*
+	RenderMeshOnScreen(meshList[GEO_P_CANNON_BALLS], 10.0f, 10.0f, 15.0f, 10.0f);
+
+	RenderMeshOnScreen(meshList[GEO_P_CATAPULT_ROCKS], 10.0f, 10.0f, 15.0f, 10.0f);
+*/
 }
 
 void Stage1::Exit()
