@@ -11,6 +11,7 @@ public:
 
 	void update();
 
+	float m_hp;
 private:
 	int hitpoints;
 };

@@ -159,7 +159,8 @@ void CollisionManager::collisionResponse(GameObject * object1, GameObject * obje
 		Vector3 N = (object2->pos - object1->pos).Normalize();
 		object1->vel = u - (2 * u.Dot(N)) * N;
 	}
-	else if (object2->type == GameObject::GO_ENEMY || object2->type == GameObject::GO_PLAYER)
+	//PLAYER PROJECTILE DAMAGE TO ENEMY TROOPS
+	else if (static_cast<Projectile*>(object1)->whoseProjectile == Projectile::PROJECTILE_WHOSE::PLAYER_PROJECTILE && object2->type == GameObject::GO_ENEMY)
 	{
 		//store as projectile damage as temporary variable
 		float projectileDamage = static_cast<Projectile*>(object1)->m_damage;
@@ -168,6 +169,14 @@ void CollisionManager::collisionResponse(GameObject * object1, GameObject * obje
 		//deduct enemy hp  with projectile damage
 		static_cast<Enemy*>(object2)->hp -= projectileDamage;
 
+	}
+	// AI CASTLE PROJECTILE DAMAGE TO PLAYER TROOPS
+	else if (static_cast<Projectile*>(object1)->whoseProjectile == Projectile::PROJECTILE_WHOSE::ENEMY_PROJECTILE && object2->type == GameObject::GO_PLAYER)
+	{
+		float projectileDamage = static_cast<Projectile*>(object1)->m_damage;
+		object1->active = false;
+
+		static_cast<PlayerTroop*>(object2)->hp -= projectileDamage;
 	}
 	
 }

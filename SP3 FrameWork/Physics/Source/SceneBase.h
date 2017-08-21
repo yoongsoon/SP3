@@ -33,6 +33,7 @@ class SceneBase : public Scene
 	friend Castle;
 	friend BackGround;
 	friend MiniMap;
+	friend AICastle;
 
 	enum UNIFORM_TYPE
 	{
@@ -79,17 +80,32 @@ public:
 		GEO_SPHERE1,
 		GEO_SPHERE2,
 		GEO_SPHERE3,
-
-		GEO_MINI_ENEMY,
-		GEO_MINI_BACKGROUND,
 		GEO_SPRITE_FIRE,
+
+		GEO_TERRAIN,
+
+		GEO_PAUSE_MENU,
+		GEO_PAUSE_ARROW,
+
+		//MINIMAP 
+		GEO_MINI_ENEMY,
 		GEO_MINI_BORDER,
 		GEO_MINI_ALLIES,
 		GEO_MINI_PLAYER_CASTLE,
 		GEO_MINI_ENEMY_CASTLE,
 		NUM_GEOMETRY,
 	};
-public:
+
+	enum PAUSE_MENU
+	{
+		PAUSE_RESUME = 0,
+		PAUSE_RESTART,
+		PAUSE_MAINMENU,
+	};
+
+	PAUSE_MENU menuPause = PAUSE_RESUME;
+
+
 	SceneBase();
 	~SceneBase();
 
@@ -114,6 +130,8 @@ public:
 
 	Factory * theFactory;
 	MiniMap * theMiniMap;
+
+	static bool b_isPause;
 
 protected:
 	unsigned m_vertexArrayID;
@@ -140,11 +158,13 @@ protected:
 	GameObject * theGhostProj;
 	GameObject * theReleaseMouseGhostProj;
 	GameObject * theMouseGhostProj;
-	GameObject * theCastle;
 
 	double mouseX, mouseY;
 	float backGroundX = 40.f;
 	Mesh* meshList[NUM_GEOMETRY];
+
+	//Terrain
+	vector<unsigned char> m_heightMap;
 };
 
 #endif
