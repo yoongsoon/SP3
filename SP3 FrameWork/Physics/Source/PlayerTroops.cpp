@@ -15,7 +15,7 @@ PlayerTroop::PlayerTroop(GAMEOBJECT_TYPE GO_PLAYER, SceneBase * scene, PLAYER_TY
 		meshValue = SceneBase::GEO_SOLDIER;
 		scale.Set(5, 5, 5);
 		vel.Set(10.f, 0.f, 0.f);
-		pos.Set(0.f, m_worldHeight / 2, 1.f);
+		pos.Set(15.f, m_worldHeight / 2, 1.f);
 		playerType = PlayerTroop::P_SOLDIER;
 		hp = 100.f;
 		range = 1.f;
@@ -73,25 +73,26 @@ void PlayerTroop::update()
 	float m_worldHeight = 100.f;
 	float m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
 
-	if (!StopToAttack)
-	{
-		pos += vel * theScene->_dt;
-	}
-	if (Attacked)
-	{
-		timer += theScene->_dt;
-		if (timer > attackcooldown)
+		if (!StopToAttack)
 		{
-			Attacked = false;
-			timer = 0.0f;
-			cout << "player RESET" << endl;
+			pos += vel * theScene->_dt;
 		}
-	}
-	if (hp <= 0.f)
-	{
-		active = false;
-	}
-	if (pos.x <= 0 || pos.x > (m_worldWidth * 2))
+		if (Attacked)
+		{
+			timer += theScene->_dt;
+			if (timer > attackcooldown)
+			{
+				Attacked = false;
+				timer = 0.0f;
+				cout << "player RESET" << endl;
+			}
+		}
+		if (hp <= 0.f)
+		{
+			active = false;
+		}
+
+	if (pos.x <= 0 || pos.x > (m_worldWidth * 3))
 	{
 		active = false;
 	}

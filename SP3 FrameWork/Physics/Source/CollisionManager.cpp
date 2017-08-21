@@ -104,13 +104,27 @@ bool CollisionManager::checkCollision(GameObject * object1, GameObject * object2
 			}
 		}
 	}
-			// testing
-		
+	else if (object1->type == GameObject::GO_BRICK)
+	{
+		Vector3 lengthVec1, lengthVec2;
+		switch (object2->type)
+		{
+		case GameObject::GO_PLAYER:
+		case GameObject::GO_BRICK:
+			// NOTE: This code assumes the cube/quad/rectangular object cannot spin
+			object1->topLeft.Set(obj1pos.x - (obj1scale.x * 0.5f), obj1pos.y + (obj1scale.y * 0.5f), 0);
+			object1->topRight.Set(obj1pos.x + (obj1scale.x * 0.5f), obj1pos.y + (obj1scale.y * 0.5f), 0);
+			object1->bottomLeft.Set(obj1pos.x - (obj1scale.x * 0.5f), obj1pos.y - (obj1scale.y * 0.5f), 0);
+			object1->bottomRight.Set(obj1pos.x + (obj1scale.x * 0.5f), obj1pos.y - (obj1scale.y * 0.5f), 0);
 
-		//	//	
-		//}
-		//return false;
-
+			object2->topLeft.Set(obj2pos.x - (obj2scale.x * 0.5f), obj2pos.y + (obj2scale.y * 0.5f), 0);
+			object2->topRight.Set(obj2pos.x + (obj2scale.x * 0.5f), obj2pos.y + (obj2scale.y * 0.5f), 0);
+			object2->bottomLeft.Set(obj2pos.x - (obj2scale.x * 0.5f), obj2pos.y - (obj2scale.y * 0.5f), 0);
+			object2->bottomRight.Set(obj2pos.x + (obj2scale.x * 0.5f), obj2pos.y - (obj2scale.y * 0.5f), 0);
+			
+			return (abs(object1->topLeft.x - object2->topLeft.x) < obj1scale.x && abs(object1->topLeft.y - object2->topLeft.y) < obj1scale.y);
+		}
+	}
 		/*else if (object2->type == GameObject::GO_PILLAR) {
 			Vector3 p1 = object1->pos;
 			Vector3 p2 = object2->pos;
@@ -129,45 +143,72 @@ bool CollisionManager::checkCollision(GameObject * object1, GameObject * object2
 
 void CollisionManager::collisionResponse(GameObject * object1, GameObject * object2)
 {
-	if (object2->type == GameObject::GO_BALL) {
-		float m1 = object1->mass;
-		float m2 = object2->mass;
-		Vector3 u1 = object1->vel;
-		Vector3 u2 = object2->vel;
-		Vector3 N;
-		try
-		{
-			N = (object2->pos - object1->pos).Normalize();
+	float m1 = object1->mass;
+	float m2 = object2->mass;
+	Vector3 u1 = object1->vel;
+	Vector3 u2 = object2->vel;
+	Vector3 N;
+	if (object1->type == GameObject::GO_PROJECTILE)
+	{
+		if (object2->type == GameObject::GO_BALL) {
+			
+			try
+			{
+				N = (object2->pos - object1->pos).Normalize();
+			}
+			catch (DivideByZero e)
+			{
+
+			}
+			Vector3 u1Normal = u1.Dot(N) * N;
+			Vector3 u2Normal = u2.Dot(N) * N;
+
+			object1->vel = u1 + (2 * m2 / (m1 + m2)) * (u2Normal - u1Normal);
+			object2->vel = u2 + (2 * m1 / (m1 + m2)) * (u1Normal - u2Normal);
 		}
-		catch (DivideByZero e)
+		else if (object2->type == GameObject::GO_BRICK)
 		{
+			--object2->hitpoints;
+			object1->vel = -object1->vel;
+			//object1->vel = object1->vel - ((2 * object1->vel).Dot(object2->dir) *object2->dir);
+		}
+		else if (object2->type == GameObject::GO_PILLAR) {
+			Vector3 u = object1->vel;
+			Vector3 N = (object2->pos - object1->pos).Normalize();
+			object1->vel = u - (2 * u.Dot(N)) * N;
+		}
+		else if (object2->type == GameObject::GO_ENEMY || object2->type == GameObject::GO_PLAYER)
+		{
+			//store as projectile damage as temporary variable
+			float projectileDamage = static_cast<Projectile*>(object1)->m_damage;
+			object1->active = false;
+
+			//deduct enemy hp  with projectile damage
+			static_cast<Enemy*>(object2)->hp -= projectileDamage;
 
 		}
-		Vector3 u1Normal = u1.Dot(N) * N;
-		Vector3 u2Normal = u2.Dot(N) * N;
-
-		object1->vel = u1 + (2 * m2 / (m1 + m2)) * (u2Normal - u1Normal);
-		object2->vel = u2 + (2 * m1 / (m1 + m2)) * (u1Normal - u2Normal);
 	}
-	else if (object2->type == GameObject::GO_BRICK)
+	//PLAYER PROJECTILE DAMAGE TO ENEMY TROOPS
+	else if (static_cast<Projectile*>(object1)->whoseProjectile == Projectile::PROJECTILE_WHOSE::PLAYER_PROJECTILE && object2->type == GameObject::GO_ENEMY)
 	{
-		object1->vel *= -1;
-		//object1->vel = object1->vel - ((2 * object1->vel).Dot(object2->dir) *object2->dir);
+		if (object2->type == GameObject::GO_BRICK)
+		{
+			cout << "HIT" << endl;
+			object1->m_gEffect = false;
+			object2->m_gEffect = false;
+			if (object1->pos.y > object2->pos.y)
+				++object1->pos.y;
+			else
+				++object2->pos.y;
+		}
 	}
-	else if (object2->type == GameObject::GO_PILLAR) {
-		Vector3 u = object1->vel;
-		Vector3 N = (object2->pos - object1->pos).Normalize();
-		object1->vel = u - (2 * u.Dot(N)) * N;
-	}
-	else if (object2->type == GameObject::GO_ENEMY || object2->type == GameObject::GO_PLAYER)
+	// AI CASTLE PROJECTILE DAMAGE TO PLAYER TROOPS
+	else if (static_cast<Projectile*>(object1)->whoseProjectile == Projectile::PROJECTILE_WHOSE::ENEMY_PROJECTILE && object2->type == GameObject::GO_PLAYER)
 	{
-		//store as projectile damage as temporary variable
 		float projectileDamage = static_cast<Projectile*>(object1)->m_damage;
 		object1->active = false;
 
-		//deduct enemy hp  with projectile damage
-		static_cast<Enemy*>(object2)->hp -= projectileDamage;
-
+		static_cast<PlayerTroop*>(object2)->hp -= projectileDamage;
 	}
 	
 }
@@ -206,6 +247,24 @@ void CollisionManager::Update(float dt)
 				collisionResponse(goA, goB);
 			}
 
+		}
+	}
+	for (Mapping::iterator it = theScene->theFactory->g_FactoryMap.begin();
+		it != theScene->theFactory->g_FactoryMap.end(); it++)
+	{
+		for (Mapping::iterator it2 = theScene->theFactory->g_FactoryMap.begin();
+			it2 != theScene->theFactory->g_FactoryMap.end(); it2++)
+		{
+			if (it2->second->active == false || it == it2)
+				continue;
+
+			GameObject* goA = it->second;
+			GameObject* goB = it2->second;
+
+			if (checkCollision(goA, goB))
+			{
+				collisionResponse(goA, goB);
+			}
 		}
 	}
 }
