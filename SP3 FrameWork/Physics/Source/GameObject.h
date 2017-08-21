@@ -36,7 +36,7 @@ public:
 	float rotateX;
 	float rotateY;
 	float rotateZ; 
-
+	int hitpoints;
 	unsigned meshValue;
 
 	Vector3 m_force; // thrust force

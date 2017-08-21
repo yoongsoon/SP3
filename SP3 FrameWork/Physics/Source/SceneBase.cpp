@@ -139,7 +139,6 @@ void SceneBase::Init()
 	meshList[GEO_MINI_ENEMY_CASTLE] = MeshBuilder::GenerateQuad("mini_enemy_castle", Color(1.f, 1.f, 1.f), 1.f);
 	meshList[GEO_MINI_ENEMY_CASTLE]->textureID = LoadTGA("Image/miniEnemyCastle.tga");
 
-
 	bLightEnabled = false;
 }
 

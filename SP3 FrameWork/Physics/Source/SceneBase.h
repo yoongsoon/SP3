@@ -89,7 +89,17 @@ public:
 		GEO_MINI_ENEMY_CASTLE,
 		NUM_GEOMETRY,
 	};
-public:
+	enum SCENE_NUM
+	{
+		SC_START,
+		SC_01,
+		SC_02,
+		SC_03,
+		SC_04,
+		SC_05,
+		SC_END,
+	};
+
 	SceneBase();
 	~SceneBase();
 
@@ -119,6 +129,8 @@ protected:
 	unsigned m_vertexArrayID;
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
+	unsigned m_sceneID = 0;
+	int m_wallStackCounter;
 
 	Camera camera;
 	MS modelStack;

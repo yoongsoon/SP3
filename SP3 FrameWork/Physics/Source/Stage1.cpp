@@ -25,6 +25,8 @@ Stage1::~Stage1()
 void Stage1::Init()
 {
 	SceneBase::Init();
+	m_sceneID = SceneBase::SC_01;
+	m_wallStackCounter = 1;
 	ghost_exist = false;
 	release_ghost_exist = false;
 	M_ghost_exist = false;
@@ -72,8 +74,12 @@ void Stage1::Init()
 	theFactory->createGameObject(theMouseGhostProj);
 
 	// Initialize castle object
-	theCastle = new Castle(GameObject::GO_BRICK, this);
-	theFactory->createGameObject(theCastle);
+	for (m_wallStackCounter; m_wallStackCounter <= 6; ++m_wallStackCounter)
+	{
+		theCastle = new Castle(GameObject::GO_BRICK, this, m_wallStackCounter);
+		theFactory->createGameObject(theCastle);
+	}
+	
 
 	AICastle * theAICastle = new AICastle(GameObject::GO_AI_CASTLE, this);
 	theFactory->createGameObject(theAICastle);
@@ -290,7 +296,7 @@ void Stage1::Update(double dt)
 		//weap_manager[1]->Discharge(currentPos, theGhostProj->pos, tempObject1, this);
 		//thePlayer->DischargePPTEST(currentPos, theGhostProj->pos, tempObject, this);
 		//weap_manager[2]->Discharge(currentPos, theGhostProj->pos, tempObject2, this);
-		//theFactory->createGameObject(tempObject);
+		//theFactory->createGameObject(tempObject); 
 		//theFactory->createGameObject(tempObject1);
 		//theFactory->createGameObject(tempObject2);
 		//canPredict = true;
