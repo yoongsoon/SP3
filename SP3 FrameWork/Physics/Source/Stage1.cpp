@@ -111,12 +111,12 @@ void Stage1::Init()
 	if (archer)
 	{
 		archer->m_anim = new Animation();
-		archer->m_anim->Set(0, 15, 0, 1.0f, true);
+		archer->m_anim->Set(0, 3, 0, 1.0f, true);
 	}
 	if (soldier)
 	{
 		soldier->m_anim = new Animation();
-		soldier->m_anim->Set(0, 15, 0, 1.0f, true);
+		soldier->m_anim->Set(0, 5, 0, 1.0f, true);
 	}
 }
 
@@ -481,6 +481,9 @@ void Stage1::CreateFriendlySoldier()
 		theplayer->ReduceWalletAmount(tempPlayer->cost);
 		theFactory->createGameObject(go);
 		cout << "friend Soldier" << endl;
+		zaxis++;
+		cout << zaxis << endl;
+		cout << "whee" << endl;
 	}
 }
 
@@ -494,6 +497,9 @@ void Stage1::CreateFriendlyArcher()
 		theplayer->ReduceWalletAmount(tempPlayer->cost);
 		theFactory->createGameObject(go);
 		cout << "friend Archer" << endl;
+		zaxis++;
+		cout << zaxis << endl;
+		cout << "whee" << endl;
 	}
 }
 

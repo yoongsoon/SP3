@@ -111,6 +111,7 @@ public:
 	const float cooldownPressed = 0.5f;
 	float _elapsedTime = 0.f;
 	float _dt = 0.f;
+	float zaxis = 1.f;
 
 	Factory * theFactory;
 	MiniMap * theMiniMap;

@@ -15,12 +15,12 @@ struct Animation
 		this->animTime = _time;
 		this->animActive = _active;
 	}
-	int startFrame;
-	int endFrame;
-	int repeatCount;
-	float animTime;
-	bool ended;
-	bool animActive;
+	int startFrame;//first frame number = 0
+	int endFrame;//last frame number = 5
+	int repeatCount; // always 0 for some reason
+	float animTime;// always 1
+	bool ended;// always true
+	bool animActive;//if sprite is active
 };
 
 class SpriteAnimation : public Mesh 
@@ -36,4 +36,6 @@ public:
 	int m_currentFrame;
 	int m_playCount;
 	Animation *m_anim;
+	int dunrender = 99;
+	bool chance = false;
 };

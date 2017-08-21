@@ -33,33 +33,38 @@ void SpriteAnimation::Update(double dt)
 		return;
 	if (m_anim->animActive == false)
 		return;
-	//if (m_anim->animActive == true) // If animation happens
-	//{
-	m_currentTime += static_cast<float>(dt);
-	int numFrame = Math::Max(1, m_anim->endFrame - m_anim->startFrame + 1);
-	float frameTime = m_anim->animTime / numFrame;
-
-	m_currentFrame = Math::Min(m_anim->endFrame, m_anim->startFrame + static_cast<int>(m_currentTime / frameTime));
-	if (m_currentTime >= m_anim->animTime)
+	if (m_anim->animActive == true) // If animation happens
 	{
-		//Reset
-		if (m_anim->repeatCount == 0)
+		m_currentTime += static_cast<float>(dt); // from 0.0 to 1.0 resets at 5th frame
+		int numFrame = Math::Max(1, m_anim->endFrame - m_anim->startFrame + 1);//Number of total frames (6)
+		float frameTime = m_anim->animTime / numFrame; // always 1.6667
+	
+		m_currentFrame = Math::Min(m_anim->endFrame, m_anim->startFrame + static_cast<int>(m_currentTime / frameTime));//current frame always 1 to 5
+		//if (numFrame == 4)
+		//{
+		//	cout << m_currentFrame << endl;
+		//}
+		if (m_currentTime >= m_anim->animTime)//after all frame finish
 		{
-			m_anim->animActive = false;
-			m_currentTime = 0.0f;
-			m_currentFrame = m_anim->startFrame;
-			m_anim->ended = true;
-		}
-		if (m_anim->repeatCount >= 1)
-		{
-			m_currentTime = 0.0f;
-			m_currentFrame = m_anim->startFrame;
+			//Reset
+			if (m_anim->repeatCount == 0)// if end of all 5 frames
+			{
+					m_anim->animActive = false;
+					m_currentTime = 0.0f;
+					m_currentFrame = m_anim->startFrame;
+					m_anim->ended = true;
+			}
+			if (m_anim->repeatCount >= 1)
+			{
+				m_currentTime = 0.0f;
+				m_currentFrame = m_anim->startFrame;
+				if (numFrame == 6)
+				{
+					cout << "wee" << endl;
+				}
+			}
 		}
 	}
-	//cout << m_currentTime << endl;
-	//cout << numFrame << endl;
-	//cout << m_currentFrame << endl;
-	//}
 }
 
 void SpriteAnimation::Render()
@@ -82,13 +87,26 @@ void SpriteAnimation::Render()
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 
-	if (mode == DRAW_LINES)
-		glDrawElements(GL_LINES, indexSize, GL_UNSIGNED_INT, (void*)(m_currentFrame * 6 * sizeof(GLint)));
-	else if (mode == DRAW_TRIANGLE_STRIP)
-		glDrawElements(GL_TRIANGLE_STRIP, indexSize, GL_UNSIGNED_INT, (void*)(m_currentFrame * 6 * sizeof(GLint)));
-	else
-		glDrawElements(GL_TRIANGLES, indexSize, GL_UNSIGNED_INT, (void*)(m_currentFrame * 6 * sizeof(GLint)));
-
+	if (m_currentFrame != dunrender)
+	{
+		dunrender = m_currentFrame;
+		//chance = false;
+	}
+	if (m_currentFrame == dunrender) //&& !chance)
+	{
+		if (mode == DRAW_LINES)
+			glDrawElements(GL_LINES, indexSize, GL_UNSIGNED_INT, (void*)(m_currentFrame * 6 * sizeof(GLint)));
+		else if (mode == DRAW_TRIANGLE_STRIP)
+			glDrawElements(GL_TRIANGLE_STRIP, indexSize, GL_UNSIGNED_INT, (void*)(m_currentFrame * 6 * sizeof(GLint)));
+		else
+			glDrawElements(GL_TRIANGLES, indexSize, GL_UNSIGNED_INT, (void*)(m_currentFrame * 6 * sizeof(GLint)));
+		//chance = true;
+		//int numFrame = Math::Max(1, m_anim->endFrame - m_anim->startFrame + 1);
+		//if (numFrame == 6)
+		//{
+		//	cout << "create" << m_currentFrame << endl;
+		//}
+	}
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 	glDisableVertexAttribArray(2);

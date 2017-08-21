@@ -116,10 +116,10 @@ void SceneBase::Init()
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
 	meshList[GEO_BRICK] = MeshBuilder::GenerateCube("brick", Color(.5f, .5f, .5f), 1.f);
 	//meshList[GEO_BRICK]->textureID = LoadTGA("Image//castlebrick.tga");
-	meshList[GEO_SOLDIER] = MeshBuilder::GenerateSpriteAnimation("soldier", 4, 4, 1.0f);
-	meshList[GEO_SOLDIER]->textureID = LoadTGA("Image//fire.tga");
-	meshList[GEO_ARCHER] = MeshBuilder::GenerateSpriteAnimation("archer", 4, 4, 1.0f);
-	meshList[GEO_ARCHER]->textureID = LoadTGA("Image//fire.tga");
+	meshList[GEO_SOLDIER] = MeshBuilder::GenerateSpriteAnimation("soldier", 2, 3, 1.0f);
+	meshList[GEO_SOLDIER]->textureID = LoadTGA("Image//SoldierWalking.tga");
+	meshList[GEO_ARCHER] = MeshBuilder::GenerateSpriteAnimation("archer", 1, 4, 1.0f);
+	meshList[GEO_ARCHER]->textureID = LoadTGA("Image//ArcherWalking.tga");
 	meshList[GEO_WIZARD] = MeshBuilder::GenerateSpriteAnimation("wizard", 4, 4, 1.0f);
 	meshList[GEO_WIZARD]->textureID = LoadTGA("Image//fire.tga");
 	meshList[GEO_MINI_BACKGROUND] = MeshBuilder::GenerateQuad("BackGround", Color(1.f, 1.f, 1.f), 1.f);

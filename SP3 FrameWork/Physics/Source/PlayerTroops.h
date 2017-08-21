@@ -32,6 +32,6 @@ public:
 	PLAYER_TYPE playerType;
 	StopWatch m_timer;
 	float playerMoveX;
-
 private:
+	//float zaxis;
 };
