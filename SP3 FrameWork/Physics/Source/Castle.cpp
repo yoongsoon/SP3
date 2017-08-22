@@ -18,9 +18,9 @@ Castle::Castle(GAMEOBJECT_TYPE typeValue, SceneBase * scene, unsigned offset) :G
 		else if (typeValue == GameObject::GO_CASTLE)
 		{
 			hitpoints = 500.f;
-			pos.Set(15.f, 50.f, 1.f);
+			pos.Set(15.f, 50.f, 0.5f);
 			meshValue = theScene->GEO_MINI_PLAYER_CASTLE;
-			scale.Set(80.f, 80.f, 1.f);
+			scale.Set(30.f, 30.f, 1.f);
 		}
 		break;
 	}

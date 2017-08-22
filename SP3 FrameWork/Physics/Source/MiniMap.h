@@ -12,4 +12,5 @@ public:
 	 void Update();
 	 virtual void RenderUI();
 
+	 float arrowX = 0.f;
 };

@@ -18,6 +18,9 @@
 #include "AICastle.h"
 #include "MiniMap.h"
 #include "PlayerTroops.h"
+#include "UIManager.h"
+#include "PlayerInfo.h"
+#include "WeaponInfo.h"
 
 #include <vector>
 
@@ -34,6 +37,7 @@ class SceneBase : public Scene
 	friend BackGround;
 	friend MiniMap;
 	friend AICastle;
+	friend UIManager;
 
 	enum UNIFORM_TYPE
 	{
@@ -96,8 +100,10 @@ public:
 
 		GEO_PAUSE_MENU,
 		GEO_PAUSE_ARROW,
+		GEO_MAIN_MENU,
 
 		//MINIMAP 
+		GEO_MINI_ARROW,
 		GEO_MINI_ENEMY,
 		GEO_MINI_BORDER,
 		GEO_MINI_ALLIES,
@@ -117,14 +123,14 @@ public:
 		SC_END,
 	};
 
-	enum PAUSE_MENU
+	enum MENU_PAUSE
 	{
 		PAUSE_RESUME = 0,
 		PAUSE_RESTART,
 		PAUSE_MAINMENU,
 	};
 
-	PAUSE_MENU menuPause = PAUSE_RESUME;
+	MENU_PAUSE menuPause = PAUSE_RESUME;
 
 	SceneBase();
 	~SceneBase();
@@ -150,8 +156,17 @@ public:
 
 	Factory * theFactory;
 	MiniMap * theMiniMap;
+	UIManager * theUIManager;
+	PlayerInfo* thePlayer;
 
+	//bool for pause
 	static bool b_isPause;
+
+
+	//for text
+	bool weapon1 = true;
+	bool weapon2 = false;
+	bool weapon3 = false;
 
 protected:
 	unsigned m_vertexArrayID;

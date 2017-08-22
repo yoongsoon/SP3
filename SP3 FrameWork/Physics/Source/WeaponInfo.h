@@ -1,11 +1,13 @@
 #pragma once
 
-#include "SceneBase.h"
+
 #include "Vector3.h"
 #include "Projectile.h"
 #include "GameObject.h"
 //include where them projectile header???
 #include <list>
+
+class SceneBase;
 
 class Weapon_Info
 {
@@ -17,8 +19,19 @@ public:
 		TYPE_CATAPULT
 	};
 
+	enum FIRE_MODE
+	{
+		NORMAL_FIRE,
+		BURST_FIRE,
+	};
+
+	FIRE_MODE FireMode;
 	WEAPON_TYPE WeaponType;
 	Projectile::PROJECTILE_TYPE projectile_type;
+
+	void setFireMode(FIRE_MODE FireMode);
+	int bulletCount = 0;
+
 	Weapon_Info();
 	~Weapon_Info();
 	//virtual ~Weapon_Info();

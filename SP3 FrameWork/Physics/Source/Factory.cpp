@@ -103,7 +103,6 @@ void Factory::renderGameObject()
 
 Factory::Factory()
 {
-	en1 = new Enemy(GameObject::GO_ENEMY, theScene1,Enemy::E_SOLDIER);
 }
 
 Factory::~Factory()

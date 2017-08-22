@@ -32,6 +32,5 @@ public:
 	//Iterators
 	Mapping::iterator gameObjectIter;
 	Vectoring::iterator iteratorProject;
-	SceneBase * theScene1;
-	Enemy * en1;
+
 };

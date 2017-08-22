@@ -2,6 +2,11 @@
 #include "Projectile.h"
 #include "GameObject.h"
 
+void Weapon_Info::setFireMode(FIRE_MODE FireMode)
+{
+	this->FireMode = FireMode;
+}
+
 Weapon_Info::Weapon_Info()
 	:d_timeBetweenShots(0.5)
 	, d_elapsedTime(0.0)
@@ -11,6 +16,7 @@ Weapon_Info::Weapon_Info()
 	, d_Burst_elapsedTime(0.0)
 	, i_Burst_Fire_Rate(2)
 	, b_Burst_Fire(false)
+	, FireMode(NORMAL_FIRE)
 {
 
 	switch (WeaponType)
@@ -47,8 +53,8 @@ void Weapon_Info::Init(void)
 }
 void Weapon_Info::Update(const double dt)
 {
-	if(!b_Fire)
-	d_elapsedTime += dt;
+	if (!b_Fire)
+		d_elapsedTime += dt;
 
 	if (d_elapsedTime > d_timeBetweenShots)
 	{
@@ -152,7 +158,7 @@ void Weapon_Info::Discharge(Vector3 position, Vector3 target, SceneBase *_scene)
 		//CREATE PROJECTILE
 		//I NEEDDSSS PROJECTILE
 		//and player
-		
+
 		//needs get projectile type to change projectiles or maybe weapon type
 		Projectile * aProjectile = Create::createProjectile(projectile_type, GameObject::GO_PROJECTILE, _scene);
 		//Projectile * aProjectile = Create::createProjectile(Projectile::PROJECTILE_TYPE::ARROW_PROJECTILE, GameObject::GO_PROJECTILE, _scene);
