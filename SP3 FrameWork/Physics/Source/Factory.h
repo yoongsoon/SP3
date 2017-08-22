@@ -6,10 +6,12 @@
 #include <map>
 #include <vector>
 #include "Enemy.h"
+#include "Buildings.h"
  
 //multimap allow insertion of multiple times of the same key  unlike map
 typedef std::multimap<GameObject::GAMEOBJECT_TYPE, GameObject* > Mapping;
-typedef std::vector<Projectile*> Vectoring;
+typedef std::vector<Projectile*> ProjectileVector;
+typedef std::vector<Buildings*> BuildingsVector;
 
 class Factory
 {
@@ -23,14 +25,16 @@ public:
 
 	//Containers
 	Mapping g_FactoryMap;
-	Vectoring g_ProjectileVector;
-
+	ProjectileVector g_ProjectileVector;
+	BuildingsVector g_BuildingsVector;
 	//Constructors/Destructors
 	Factory();
 	~Factory();
 
 	//Iterators
 	Mapping::iterator gameObjectIter;
-	Vectoring::iterator iteratorProject;
+
+	ProjectileVector::iterator projectileIterator;
+	BuildingsVector::iterator buildingsIterator;
 
 };

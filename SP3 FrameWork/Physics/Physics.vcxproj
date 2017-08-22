@@ -162,7 +162,7 @@
     <ClCompile Include="Source\Cannon.cpp" />
     <ClCompile Include="Source\Catapult.cpp" />
     <ClCompile Include="Source\BackGround.cpp" />
-    <ClCompile Include="Source\Castle.cpp" />
+    <ClCompile Include="Source\Buildings.cpp" />
     <ClCompile Include="Source\CollisionManager.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\Factory.cpp" />
@@ -199,7 +199,7 @@
     <ClInclude Include="Source\Cannon.h" />
     <ClInclude Include="Source\Catapult.h" />
     <ClInclude Include="Source\BackGround.h" />
-    <ClInclude Include="Source\Castle.h" />
+    <ClInclude Include="Source\Buildings.h" />
     <ClInclude Include="Source\CollisionManager.h" />
     <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\Factory.h" />

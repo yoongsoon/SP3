@@ -7,10 +7,12 @@ using std::make_pair;
 void Factory::createGameObject(GameObject * value)
 {
 	// push every game object except projectile into the map container
-	if (value->type != GameObject::GO_PROJECTILE)
-		g_FactoryMap.insert(make_pair(value->type, value));
-	else   // push projectile into the vector container
+	if (value->type == GameObject::GO_PROJECTILE)
 		g_ProjectileVector.push_back(static_cast<Projectile*>(value));
+	else if (value->type == GameObject::GO_BRICK || value->type == GameObject::GO_CASTLE || value->type == GameObject::GO_AI_CASTLE)
+		g_BuildingsVector.push_back(static_cast<Buildings*>(value));
+	else   // push projectile into the vector container
+		g_FactoryMap.insert(make_pair(value->type, value));
 
 }
 
@@ -46,7 +48,7 @@ void Factory::updateGameObject()
 
 
 		// -------------------CODES TO DESRYOYED PROJECTILES------------------------------//
-		Vectoring::iterator  VecIt, VecEnd;
+		ProjectileVector::iterator  VecIt, VecEnd;
 		VecEnd = g_ProjectileVector.end();
 
 		for (VecIt = g_ProjectileVector.begin(); VecIt != VecEnd; VecIt++)
@@ -69,7 +71,29 @@ void Factory::updateGameObject()
 			}
 		}
 	
+		// -------------------CODES TO DESTROY BUILDINGS------------------------------//
+		BuildingsVector::iterator  VecIt2, VecEnd2;
+		VecEnd2 = g_BuildingsVector.end();
 
+		for (VecIt2 = g_BuildingsVector.begin(); VecIt2 != VecEnd2; ++VecIt2)
+		{
+			(*VecIt2)->update();
+		}
+
+		VecIt2 = g_BuildingsVector.begin();
+		while (VecIt2 != g_BuildingsVector.end())
+		{
+			if ((*VecIt2)->isDestroyed == true)
+			{
+				// Delete if done
+				VecIt2 = g_BuildingsVector.erase(VecIt2);
+			}
+			else
+			{
+				// Move on otherwise
+				++VecIt2;
+			}
+		}
 }
 
 
@@ -86,7 +110,7 @@ void Factory::renderGameObject()
 	}
 
 
-	Vectoring::iterator iter = g_ProjectileVector.begin();
+	ProjectileVector::iterator iter = g_ProjectileVector.begin();
 
 	for (iter; iter != g_ProjectileVector.end(); ++iter)
 	{
@@ -96,7 +120,15 @@ void Factory::renderGameObject()
 		}
 	}
 
+	BuildingsVector ::iterator iter2 = g_BuildingsVector.begin();
 
+	for (iter2; iter2 != g_BuildingsVector.end(); ++iter2)
+	{
+		if ((*iter2)->active)
+		{
+			(*iter2)->render();
+		}
+	}
 }
 
 
@@ -120,7 +152,7 @@ Factory::~Factory()
 	g_FactoryMap.clear();
 
 
-	Vectoring::iterator iter;
+	ProjectileVector::iterator iter;
 
 	for (iter = g_ProjectileVector.begin(); iter != g_ProjectileVector.end(); ++iter)
 	{
@@ -129,5 +161,15 @@ Factory::~Factory()
 	}
 
 	g_ProjectileVector.clear();
+
+	BuildingsVector::iterator iter2;
+
+	for (iter2 = g_BuildingsVector.begin(); iter2 != g_BuildingsVector.end(); ++iter2)
+	{
+		delete (*iter2);
+		(*iter) = NULL;
+	}
+
+	g_BuildingsVector.clear();
 }
 

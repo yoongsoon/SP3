@@ -73,15 +73,18 @@ void Stage1::Init()
 	theMouseGhostProj->active = true;
 	theFactory->createGameObject(theMouseGhostProj);
 
-	Castle * theCastle = new Castle(GameObject::GO_CASTLE, this, 0);
-	theFactory->createGameObject(theCastle);
-
-	// Initialize castle object
+	// BUILDINGS
 	for (m_wallStackCounter; m_wallStackCounter <= 6; ++m_wallStackCounter)
 	{
-		Castle * theWall = new Castle(GameObject::GO_BRICK, this, m_wallStackCounter);
+		Buildings * theWall = new Buildings(GameObject::GO_BRICK, this, m_wallStackCounter);
 		theFactory->createGameObject(theWall);
 	}
+	Buildings * theCastle = new Buildings(GameObject::GO_CASTLE, this, 0);
+	theFactory->createGameObject(theCastle);
+
+
+	// Initialize castle object
+	
 
 	AICastle * theAICastle = new AICastle(GameObject::GO_AI_CASTLE, this);
 	theAICastle->m_hp = 500.f;
@@ -121,12 +124,12 @@ void Stage1::Init()
 	if (archer)
 	{
 		archer->m_anim = new Animation();
-		archer->m_anim->Set(0, 15, 0, 1.0f, true);
+		archer->m_anim->Set(0, 3, 0, 1.0f, true);
 	}
 	if (soldier)
 	{
 		soldier->m_anim = new Animation();
-		soldier->m_anim->Set(0, 15, 0, 1.0f, true);
+		soldier->m_anim->Set(0, 5, 0, 1.0f, true);
 	}
 	if (P_weapon_Sprite)
 	{
@@ -148,7 +151,6 @@ void Stage1::Update(double dt)
 	m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
 
 
-	
 	if (b_isPause == false)
 	{
 		static bool bow = false;
@@ -485,6 +487,9 @@ void Stage1::CreateFriendlySoldier()
 		theplayer->ReduceWalletAmount(tempPlayer->cost);
 		theFactory->createGameObject(go);
 		cout << "friend Soldier" << endl;
+		zaxis++;
+		cout << zaxis << endl;
+		cout << "whee" << endl;
 	}
 }
 
@@ -498,6 +503,9 @@ void Stage1::CreateFriendlyArcher()
 		theplayer->ReduceWalletAmount(tempPlayer->cost);
 		theFactory->createGameObject(go);
 		cout << "friend Archer" << endl;
+		zaxis++;
+		cout << zaxis << endl;
+		cout << "whee" << endl;
 	}
 }
 

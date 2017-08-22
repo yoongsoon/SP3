@@ -10,12 +10,12 @@ PlayerTroop::PlayerTroop(GAMEOBJECT_TYPE GO_PLAYER, SceneBase * scene, PLAYER_TY
 	{
 		float m_worldHeight = 100.f;
 		float m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
-
+		//float zaxis = 1.f;
 		active = true;
 		meshValue = SceneBase::GEO_SOLDIER;
-		scale.Set(5, 5, 5);
+		scale.Set(10, 10, 1);
 		vel.Set(10.f, 0.f, 0.f);
-		pos.Set(15.f, m_worldHeight / 2, 1.f);
+		pos.Set(0.f, m_worldHeight / 2, theScene->zaxis);
 		playerType = PlayerTroop::P_SOLDIER;
 		hp = 100.f;
 		range = 1.f;
@@ -30,9 +30,9 @@ PlayerTroop::PlayerTroop(GAMEOBJECT_TYPE GO_PLAYER, SceneBase * scene, PLAYER_TY
 
 		active = true;
 		meshValue = SceneBase::GEO_ARCHER;
-		scale.Set(5, 5, 5);
+		scale.Set(10, 10, 1);
 		vel.Set(10.f, 0.f, 0.f);
-		pos.Set(0.f, m_worldHeight / 2, 1.f);
+		pos.Set(0.f, m_worldHeight / 2, theScene->zaxis);
 		playerType = PlayerTroop::P_ARCHER;
 		hp = 50.f;
 		range = 10.f;
@@ -101,11 +101,11 @@ void PlayerTroop::update()
 
 void PlayerTroop::render()
 {
-	glDisable(GL_DEPTH_TEST);
+	//glDisable(GL_DEPTH_TEST);
 	theScene->modelStack.PushMatrix();
 	theScene->modelStack.Translate(pos.x, pos.y, pos.z);
 	theScene->modelStack.Scale(scale.x, scale.y, scale.z);
 	theScene->RenderMesh(theScene->meshList[meshValue], false);
 	theScene->modelStack.PopMatrix();
-	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_DEPTH_TEST);
 }
