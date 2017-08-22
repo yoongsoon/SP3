@@ -13,7 +13,7 @@
 #include "Enemy.h"
 #include "GameObjectManager.h"
 #include "Projectile.h"
-#include "Castle.h"
+#include "Buildings.h"
 #include "BackGround.h"
 #include "AICastle.h"
 #include "MiniMap.h"
@@ -30,7 +30,7 @@ class SceneBase : public Scene
 	friend PlayerTroop;
 	friend GameObjectManager;
 	friend Projectile;
-	friend Castle;
+	friend Buildings;
 	friend BackGround;
 	friend MiniMap;
 	friend AICastle;

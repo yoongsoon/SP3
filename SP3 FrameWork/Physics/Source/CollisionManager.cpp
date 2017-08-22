@@ -121,8 +121,8 @@ bool CollisionManager::checkCollision(GameObject * object1, GameObject * object2
 			object2->topRight.Set(obj2pos.x + (obj2scale.x * 0.5f), obj2pos.y + (obj2scale.y * 0.5f), 0);
 			object2->bottomLeft.Set(obj2pos.x - (obj2scale.x * 0.5f), obj2pos.y - (obj2scale.y * 0.5f), 0);
 			object2->bottomRight.Set(obj2pos.x + (obj2scale.x * 0.5f), obj2pos.y - (obj2scale.y * 0.5f), 0);
-			
-			return (abs(object1->topLeft.x - object2->topLeft.x) < obj1scale.x && abs(object1->topLeft.y - object2->topLeft.y) < obj1scale.y);
+
+			return (object2->hitpoints > 0 && object1->hitpoints > 0 && (obj1pos - obj2pos).Length() < (obj1scale.y + obj2scale.y) * 0.5);
 		}
 	}
 		/*else if (object2->type == GameObject::GO_PILLAR) {
@@ -168,8 +168,9 @@ void CollisionManager::collisionResponse(GameObject * object1, GameObject * obje
 		}
 		else if (object2->type == GameObject::GO_BRICK)
 		{
-			--object2->hitpoints;
-			object1->vel = -object1->vel;
+			object2->hitpoints -= 10;
+			object1->active = false;
+			
 			//object1->vel = object1->vel - ((2 * object1->vel).Dot(object2->dir) *object2->dir);
 		}
 		else if (object2->type == GameObject::GO_PILLAR) {
@@ -188,19 +189,21 @@ void CollisionManager::collisionResponse(GameObject * object1, GameObject * obje
 
 		}
 	}
-	//PLAYER PROJECTILE DAMAGE TO ENEMY TROOPS
-	else if (static_cast<Projectile*>(object1)->whoseProjectile == Projectile::PROJECTILE_WHOSE::PLAYER_PROJECTILE && object2->type == GameObject::GO_ENEMY)
+	else if (object1->type == GameObject::GO_BRICK)
 	{
 		if (object2->type == GameObject::GO_BRICK)
 		{
-			cout << "HIT" << endl;
-			object1->m_gEffect = false;
-			object2->m_gEffect = false;
-			if (object1->pos.y > object2->pos.y)
-				++object1->pos.y;
-			else
-				++object2->pos.y;
+			object2->m_gEffect = object1->m_gEffect = false;
+			object2->pos.y += theScene->_dt;
 		}
+	}
+	//PLAYER PROJECTILE DAMAGE TO ENEMY TROOPS
+	else if (static_cast<Projectile*>(object1)->whoseProjectile == Projectile::PROJECTILE_WHOSE::PLAYER_PROJECTILE && object2->type == GameObject::GO_ENEMY)
+	{
+		float projectileDamage = static_cast<Projectile*>(object1)->m_damage;
+		object1->active = false;
+
+		static_cast<Enemy*>(object2)->hp -= projectileDamage;
 	}
 	// AI CASTLE PROJECTILE DAMAGE TO PLAYER TROOPS
 	else if (static_cast<Projectile*>(object1)->whoseProjectile == Projectile::PROJECTILE_WHOSE::ENEMY_PROJECTILE && object2->type == GameObject::GO_PLAYER)
@@ -217,7 +220,7 @@ void CollisionManager::collisionResponse(GameObject * object1, GameObject * obje
 void CollisionManager::Update(float dt)
 {
 // double for loop to compare projectile with other games object
-	for (Vectoring::iterator it = theScene->theFactory->g_ProjectileVector.begin(); it != theScene->theFactory->g_ProjectileVector.end();it++) 
+	for (ProjectileVector::iterator it = theScene->theFactory->g_ProjectileVector.begin(); it != theScene->theFactory->g_ProjectileVector.end();it++)
 	{
 		
 		if ((*it)->active == false)
@@ -249,16 +252,57 @@ void CollisionManager::Update(float dt)
 
 		}
 	}
-	for (Mapping::iterator it = theScene->theFactory->g_FactoryMap.begin();
-		it != theScene->theFactory->g_FactoryMap.end(); it++)
+	// Double loop to compare buildings with other object types
+	for (unsigned it = 0; it < theScene->theFactory->g_BuildingsVector.size(); ++it)
 	{
+		// Skip current element if it is not active
+		if (theScene->theFactory->g_BuildingsVector[it]->active == false)
+			continue;
+		for (ProjectileVector::iterator it2 = theScene->theFactory->g_ProjectileVector.begin(); it2 != theScene->theFactory->g_ProjectileVector.end(); ++it2)
+		{
+			if ((*it2)->active == false)
+				continue;
+			GameObject* goA = theScene->theFactory->g_BuildingsVector[it];
+			GameObject* goB = (*it2);
+
+			if ((*it2)->type != GameObject::GO_PROJECTILE)
+				continue;
+			else
+			{
+				goA = (*it2);
+				goB = theScene->theFactory->g_BuildingsVector[it];
+			}
+
+			if (checkCollision(goA, goB))
+			{
+				collisionResponse(goA, goB);
+			}
+		}
+
+		// Go through building object vector
+		for (unsigned it2 = it + 1; it2 < theScene->theFactory->g_BuildingsVector.size(); ++it2)
+		{
+			// Skip current element if it is not active
+			if (theScene->theFactory->g_BuildingsVector[it]->active == false || theScene->theFactory->g_BuildingsVector[it]->type != GameObject::GO_BRICK)
+				continue;
+
+			GameObject* goA = theScene->theFactory->g_BuildingsVector[it];
+			GameObject* goB = theScene->theFactory->g_BuildingsVector[it2];
+
+			if (checkCollision(goA, goB))
+			{
+				collisionResponse(goA, goB);
+			}
+		}
+		// Go through general object vector
 		for (Mapping::iterator it2 = theScene->theFactory->g_FactoryMap.begin();
 			it2 != theScene->theFactory->g_FactoryMap.end(); it2++)
 		{
-			if (it2->second->active == false || it == it2)
+			// Skip current element if it is not active || object is not a projectile
+			if (it2->second->active == false || it2->second->type != GameObject::GO_PROJECTILE)
 				continue;
 
-			GameObject* goA = it->second;
+			GameObject* goA = theScene->theFactory->g_BuildingsVector[it];
 			GameObject* goB = it2->second;
 
 			if (checkCollision(goA, goB))

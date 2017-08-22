@@ -65,9 +65,6 @@
     <ClCompile Include="Source\BackGround.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Castle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\CollisionManager.cpp">
       <Filter>Source Files\Collider</Filter>
     </ClCompile>
@@ -146,6 +143,9 @@
     <ClCompile Include="Source\LoadHmap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Buildings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -165,9 +165,6 @@
     </ClInclude>
     <ClInclude Include="Source\BackGround.h">
       <Filter>Header Files\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Castle.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\CollisionManager.h">
       <Filter>Header Files\Collider</Filter>
@@ -257,6 +254,9 @@
       <Filter>Source Files\SoundEngine</Filter>
     </ClInclude>
     <ClInclude Include="Source\LoadHmap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Buildings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

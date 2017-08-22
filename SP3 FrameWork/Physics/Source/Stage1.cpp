@@ -73,15 +73,18 @@ void Stage1::Init()
 	theMouseGhostProj->active = true;
 	theFactory->createGameObject(theMouseGhostProj);
 
-	Castle * theCastle = new Castle(GameObject::GO_CASTLE, this, 0);
-	theFactory->createGameObject(theCastle);
-
-	// Initialize castle object
+	// BUILDINGS
 	for (m_wallStackCounter; m_wallStackCounter <= 6; ++m_wallStackCounter)
 	{
-		Castle * theWall = new Castle(GameObject::GO_BRICK, this, m_wallStackCounter);
+		Buildings * theWall = new Buildings(GameObject::GO_BRICK, this, m_wallStackCounter);
 		theFactory->createGameObject(theWall);
 	}
+	Buildings * theCastle = new Buildings(GameObject::GO_CASTLE, this, 0);
+	theFactory->createGameObject(theCastle);
+
+
+	// Initialize castle object
+	
 
 	AICastle * theAICastle = new AICastle(GameObject::GO_AI_CASTLE, this);
 	theAICastle->m_hp = 500.f;
