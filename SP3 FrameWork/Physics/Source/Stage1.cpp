@@ -146,56 +146,6 @@ void Stage1::Update(double dt)
 	m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
 
 
-	static bool bow = false;
-	if (Application::IsKeyPressed(VK_NUMPAD1) && !bow)
-	{
-		//curr_weapon = 0;
-		thePlayer->SetWeapon(0);
-		bow = true;
-
-		weapon1 = true;
-
-		weapon2 = false;
-		weapon3 = false;
-	}
-	else if (!Application::IsKeyPressed(VK_NUMPAD1) && bow)
-	{
-		bow = false;
-	}
-//	static bool bow = false;
-	if (Application::IsKeyPressed(VK_NUMPAD2) && !bow)
-	{
-		//curr_weapon = 1;
-		thePlayer->SetWeapon(1);
-		bow = true;
-
-		weapon2 = true;
-
-		weapon1 = false;
-		weapon3 = false;
-	}
-	else if (!Application::IsKeyPressed(VK_NUMPAD2) && bow)
-	{
-		bow = false;
-	}
-//	static bool bow = false;
-	if (Application::IsKeyPressed(VK_NUMPAD3) && !bow)
-	{
-		//curr_weapon = 2;
-		thePlayer->SetWeapon(2);
-		bow = true;
-
-		weapon3 = true;
-
-		weapon1 = false;
-		weapon2 = false;
-	}
-	else if (!Application::IsKeyPressed(VK_NUMPAD3) && bow)
-	{
-		bow = false;
-	}
-	static bool onepress = false;
-	if (Application::IsKeyPressed('1') && !onepress)
 
 	if (Application::IsKeyPressed(VK_BACK))
 
