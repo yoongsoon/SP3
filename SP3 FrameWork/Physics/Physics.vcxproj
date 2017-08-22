@@ -162,7 +162,7 @@
     <ClCompile Include="Source\Cannon.cpp" />
     <ClCompile Include="Source\Catapult.cpp" />
     <ClCompile Include="Source\BackGround.cpp" />
-    <ClCompile Include="Source\Castle.cpp" />
+    <ClCompile Include="Source\Buildings.cpp" />
     <ClCompile Include="Source\CollisionManager.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\Factory.cpp" />
@@ -172,6 +172,7 @@
     <ClCompile Include="Source\LoadOBJ.cpp" />
     <ClCompile Include="Source\LoadTGA.cpp" />
     <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\MainMenu.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\MeshBuilder.cpp" />
     <ClCompile Include="Source\MiniMap.cpp" />
@@ -186,6 +187,7 @@
     <ClCompile Include="Source\SpriteAnimation.cpp" />
     <ClCompile Include="Source\Stage1.cpp" />
     <ClCompile Include="Source\Start_Scene.cpp" />
+    <ClCompile Include="Source\UIManager.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
     <ClCompile Include="Source\WeaponInfo.cpp" />
   </ItemGroup>
@@ -197,7 +199,7 @@
     <ClInclude Include="Source\Cannon.h" />
     <ClInclude Include="Source\Catapult.h" />
     <ClInclude Include="Source\BackGround.h" />
-    <ClInclude Include="Source\Castle.h" />
+    <ClInclude Include="Source\Buildings.h" />
     <ClInclude Include="Source\CollisionManager.h" />
     <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\Factory.h" />
@@ -207,6 +209,7 @@
     <ClInclude Include="Source\LoadHmap.h" />
     <ClInclude Include="Source\LoadOBJ.h" />
     <ClInclude Include="Source\LoadTGA.h" />
+    <ClInclude Include="Source\MainMenu.h" />
     <ClInclude Include="Source\Material.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\MeshBuilder.h" />
@@ -224,6 +227,7 @@
     <ClInclude Include="Source\SpriteAnimation.h" />
     <ClInclude Include="Source\Stage1.h" />
     <ClInclude Include="Source\Start_Scene.h" />
+    <ClInclude Include="Source\UIManager.h" />
     <ClInclude Include="Source\Utility.h" />
     <ClInclude Include="Source\Vertex.h" />
     <ClInclude Include="Source\WeaponInfo.h" />

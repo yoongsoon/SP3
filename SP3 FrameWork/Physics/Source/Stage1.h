@@ -1,11 +1,9 @@
 #pragma once
-#include "PlayerInfo.h"
 #include "GameObject.h"
 #include "SceneBase.h"
-#include "Enemy.h"
-#include "WeaponInfo.h"
 #include "PlayerTroops.h"
 #include "Player.h"
+
 class SceneManager;
 
 class Stage1 : public SceneBase
@@ -35,7 +33,6 @@ protected:
 	health
 	weapons
 	prjectile*/
-	PlayerInfo* thePlayer;
 	//switch weapons
 	Weapon_Info** weap_manager;
 	int curr_weapon = 0;
@@ -52,17 +49,7 @@ protected:
 	bool M_ghost_exist = false;
 	bool canPredict;
 
-	//for text
-	int a;
-	double e;
-	string player_weap_choice;
-	string currweap_cooldown;
-	string weap1_cool;
-	string weap2_cool;
-	string weap3_cool;
-	bool weapon1 = true;
-	bool weapon2 = false;
-	bool weapon3 = false;
+	
 private:
 	//TextEntity* textObj[3];
 };

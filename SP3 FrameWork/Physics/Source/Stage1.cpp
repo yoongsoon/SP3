@@ -73,15 +73,18 @@ void Stage1::Init()
 	theMouseGhostProj->active = true;
 	theFactory->createGameObject(theMouseGhostProj);
 
-	Castle * theCastle = new Castle(GameObject::GO_CASTLE, this, 0);
-	theFactory->createGameObject(theCastle);
-
-	// Initialize castle object
+	// BUILDINGS
 	for (m_wallStackCounter; m_wallStackCounter <= 6; ++m_wallStackCounter)
 	{
-		Castle * theWall = new Castle(GameObject::GO_BRICK, this, m_wallStackCounter);
+		Buildings * theWall = new Buildings(GameObject::GO_BRICK, this, m_wallStackCounter);
 		theFactory->createGameObject(theWall);
 	}
+	Buildings * theCastle = new Buildings(GameObject::GO_CASTLE, this, 0);
+	theFactory->createGameObject(theCastle);
+
+
+	// Initialize castle object
+	
 
 	AICastle * theAICastle = new AICastle(GameObject::GO_AI_CASTLE, this);
 	theAICastle->m_hp = 500.f;
@@ -136,6 +139,8 @@ void Stage1::Init()
 		P_Catapult_Sprite->m_anim = new Animation();
 		P_Catapult_Sprite->m_anim->Set(0, 10, 0, 1.0f, true);
 	}
+
+	theUIManager = new UIManager(this);
 }
 
 void Stage1::Update(double dt)
@@ -147,15 +152,6 @@ void Stage1::Update(double dt)
 	//Calculating aspect ratio ( 4:3)
 	m_worldHeight = 100.f;
 	m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
-
-
-
-	if (Application::IsKeyPressed(VK_BACK))
-
-	{
-		b_isPause = true;
-	}
-
 
 
 	if (b_isPause == false)
@@ -306,10 +302,7 @@ void Stage1::Update(double dt)
 
 			//Weapon_Info potato;
 			//potato.Get_OBJECT();
-
-
-		
-			//theGhostProj->active = false;
+			theGhostProj->active = false;
 			// add object into factory
 		}
 		//shows where mouse is(if need remove mouse cursor)
@@ -326,7 +319,6 @@ void Stage1::Update(double dt)
 			}
 			//canPredict = false;
 		}
-
 		// scrolling right
 		if (Application::IsKeyPressed(VK_RIGHT))
 		{
@@ -398,91 +390,17 @@ void Stage1::Update(double dt)
 			P_Catapult_Sprite->m_anim->animActive = true;
 		}
 	}
-	else
-	{
-		if (Application::IsKeyPressed(VK_UP) && pressDelay >= cooldownPressed)
-		{
-			if (menuPause == PAUSE_RESUME)
-			{
-				menuPause = PAUSE_MAINMENU;
-			}
-			else if (menuPause == PAUSE_MAINMENU)
-			{
-				menuPause = PAUSE_RESTART;
-			}
-			else
-			{
-				menuPause = PAUSE_RESUME;
-			}
-			pressDelay = 0.f;
-		}
-
-		if (Application::IsKeyPressed(VK_DOWN) && pressDelay >= cooldownPressed)
-		{
-			if (menuPause == PAUSE_RESUME)
-			{
-				menuPause = PAUSE_RESTART;
-			}
-			else if (menuPause == PAUSE_RESTART)
-			{
-				menuPause = PAUSE_MAINMENU;
-			}
-			else
-			{
-				menuPause = PAUSE_RESUME;
-			}
-			pressDelay = 0.f;
-		}
-
-		if (Application::IsKeyPressed(VK_RETURN) && pressDelay >= cooldownPressed)
-		{
-			if (menuPause == PAUSE_RESUME)
-			{
-				b_isPause = false;
-			}
-			else if (menuPause == PAUSE_RESTART)
-			{
-				Stage1::Init();
-				b_isPause = false;
-				SceneManager::getInstance()->SetActiveScene("Stage1");
-			}
-			else if (menuPause == PAUSE_MAINMENU)
-			{
-				
-			}
-			pressDelay = 0.f;
-		}
-	}
 
 
+	theUIManager->Update();
+	theUIManager->UpdateText();
 
 	/*TEXT STUFF*/
 	//std::ostringstream ss0;
 	//ss0.precision(5);
 	//ss0 << "NINJA X GTA";
 	//textObj[0]->SetText(ss0.str());
-	a = thePlayer->GetWeapon();
-	stringstream ss;
-	ss << a;
-	player_weap_choice = ss.str();
-	//player_weap_choice = string(intstr);
-	e = thePlayer->weap_manager[thePlayer->m_iCurrentWeapon]->Get_d_elapsedTime();
-	stringstream ss1;
-	ss1 << e;
-	currweap_cooldown = ss1.str();
 
-	e = thePlayer->weap_manager[0]->Get_d_elapsedTime();
-	stringstream ss2;
-	ss2 << e;
-	weap1_cool = ss2.str();
-	e = thePlayer->weap_manager[1]->Get_d_elapsedTime();
-	stringstream ss3;
-	ss3 << e;
-	weap2_cool = ss3.str();
-	e = thePlayer->weap_manager[2]->Get_d_elapsedTime();
-	stringstream ss4;
-	ss4 << e;
-	weap3_cool = ss4.str();
 }
 
 void Stage1::Render()
@@ -526,26 +444,7 @@ void Stage1::Render()
 
 	theMiniMap->RenderUI();
 
-	//Render background
-	if (b_isPause == true)
-	{
-		RenderMeshOnScreen(meshList[SceneBase::GEO_PAUSE_MENU], 80, 30, 120, 40);
-
-		switch (menuPause)
-		{
-		case PAUSE_RESUME:
-			RenderMeshOnScreen(meshList[SceneBase::GEO_PAUSE_ARROW], 60, 37, 10, 5);
-			break;
-		case PAUSE_RESTART:
-			RenderMeshOnScreen(meshList[SceneBase::GEO_PAUSE_ARROW], 60, 31, 10, 5);
-			break;
-		case PAUSE_MAINMENU:
-			RenderMeshOnScreen(meshList[SceneBase::GEO_PAUSE_ARROW], 60, 25, 10, 5);
-			break;
-		}
-	}
-
-
+	
 	//modelStack.PushMatrix();
 	//modelStack.Translate(100.f, 25.f, 2.f);
 	//modelStack.Scale(100.f, 50.f, 1.f);
@@ -553,54 +452,15 @@ void Stage1::Render()
 	//modelStack.PopMatrix();
 
 
-	//render choice of weapon
-	RenderTextOnScreen(meshList[GEO_TEXT], player_weap_choice, Color(1, 0, 0), 5, 10, 20);
-	RenderTextOnScreen(meshList[GEO_TEXT], currweap_cooldown, Color(1, 0, 0), 5, 10, 18);
+	theUIManager->Render();
+	theUIManager->RenderText();
 
-	RenderTextOnScreen(meshList[GEO_TEXT], weap1_cool, Color(1, 0, 0), 5, 10, 15);
-	RenderTextOnScreen(meshList[GEO_TEXT], weap2_cool, Color(1, 0, 0), 5, 10, 13);
-	RenderTextOnScreen(meshList[GEO_TEXT], weap3_cool, Color(1, 0, 0), 5, 10, 11);
-
-	/*Need fixing*/
-	//NEED SWITCH ACCORDING TO PLAYER CURRENT WEAPON
-	if (weapon1)
-	{
-		//RenderMeshOnScreen(meshList[GEO_BOW_ARROW], 10.0f, 10.0f, 15.0f, 10.0f);
-		modelStack.PushMatrix();
-		modelStack.Translate(10.0f, 10.0f, 1.0f);
-		modelStack.Scale(15.0f, 15.0f, 1.0f);
-		RenderMesh(meshList[GEO_BOW_ARROW],false);
-		modelStack.PopMatrix();
-	}
-	if (weapon2)
-	{
-		//RenderMeshOnScreen(meshList[GEO_CANNON_BALLS], 10.0f, 10.0f, 15.0f, 10.0f);
-		modelStack.PushMatrix();
-		modelStack.Translate(10.0f, 10.0f, 1.0f);
-		modelStack.Scale(15.0f, 15.0f, 1.0f);
-		RenderMesh(meshList[GEO_CANNON_BALLS], false);
-		modelStack.PopMatrix();
-	}
-	if (weapon3)
-	{
-		//RenderMeshOnScreen(meshList[GEO_CATAPULT_ROCKS], 10.0f, 10.0f, 15.0f, 10.0f);
-		modelStack.PushMatrix();
-		modelStack.Translate(10.0f, 10.0f, 1.0f);
-		modelStack.Scale(15.0f, 15.0f, 1.0f);
-		RenderMesh(meshList[GEO_CATAPULT_ROCKS], false);
-		modelStack.PopMatrix();
-	}
-	/*modelStack.PushMatrix();
+	modelStack.PushMatrix();
 	modelStack.Translate(20.0f, 40.0f, 1.0f);
 	modelStack.Scale(15.0f, 15.0f, 1.0f);
 	RenderMesh(meshList[GEO_P_BOW_ARROW], false);
-	modelStack.PopMatrix();*/
-	//RenderMeshOnScreen(meshList[GEO_P_BOW_ARROW], 20.0f, 20.0f, 15.0f, 10.0f);
-	/*
-	RenderMeshOnScreen(meshList[GEO_P_CANNON_BALLS], 10.0f, 10.0f, 15.0f, 10.0f);
-
-	RenderMeshOnScreen(meshList[GEO_P_CATAPULT_ROCKS], 10.0f, 10.0f, 15.0f, 10.0f);
-*/
+	modelStack.PopMatrix();
+	
 }
 
 void Stage1::Exit()

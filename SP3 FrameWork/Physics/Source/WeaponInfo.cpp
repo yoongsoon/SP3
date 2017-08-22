@@ -2,6 +2,11 @@
 #include "Projectile.h"
 #include "GameObject.h"
 
+void Weapon_Info::setFireMode(FIRE_MODE FireMode)
+{
+	this->FireMode = FireMode;
+}
+
 Weapon_Info::Weapon_Info()
 	:d_timeBetweenShots(0.5)
 	, d_elapsedTime(0.0)
@@ -13,6 +18,7 @@ Weapon_Info::Weapon_Info()
 	, b_Burst_Fire(false)
 	, i_bulletcount(0)
 	,i_maxbullet(3)
+	, FireMode(NORMAL_FIRE)
 {
 
 	switch (WeaponType)
@@ -197,7 +203,6 @@ void Weapon_Info::Discharge(Vector3 position, Vector3 target, SceneBase *_scene)
 			b_Burst_Fire = false;
 			b_Fire = false;
 		}
-		
 	}
 }
 

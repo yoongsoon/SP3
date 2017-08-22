@@ -148,6 +148,10 @@ void SceneBase::Init()
 	meshList[GEO_PAUSE_ARROW] = MeshBuilder::GenerateQuad("PauseArrow", Color(1.f, 1.f, 1.f), 1.f);
 	meshList[GEO_PAUSE_ARROW]->textureID = LoadTGA("Image/PauseArrow.tga");
 
+	//--------------------Main Menu--------------------------//
+	meshList[GEO_MAIN_MENU] = MeshBuilder::GenerateQuad("MainMenu", Color(1.f, 1.f, 1.f), 1.f);
+	meshList[GEO_MAIN_MENU]->textureID = LoadTGA("Image/menu.tga");
+
 
 	//-------------------Terrain-------------------------------//
 	meshList[GEO_TERRAIN] = MeshBuilder::GenerateTerrain("GEO_TERRAIN",
@@ -155,6 +159,8 @@ void SceneBase::Init()
 	meshList[GEO_TERRAIN]->textureID = LoadTGA("Image//castlebrick.tga");
 
 	//-------------------------------MINIMAP-------------------------------------//
+	meshList[GEO_MINI_ARROW] = MeshBuilder::GenerateQuad("miniArrow", Color(1.f, 1.f, 1.f), 1.f);
+	meshList[GEO_MINI_ARROW]->textureID = LoadTGA("Image/miniArrow.tga");
 	meshList[GEO_MINI_BORDER] = MeshBuilder::GenerateQuad("miniBorder", Color(1.f, 1.f, 1.f), 1.f);
 	meshList[GEO_MINI_BORDER]->textureID = LoadTGA("Image/mini_border.tga");
 	meshList[GEO_MINI_ENEMY] = MeshBuilder::GenerateQuad("miniEnemy", Color(1.f, 1.f, 1.f), 1.f);
