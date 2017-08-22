@@ -1,4 +1,5 @@
 #include "Factory.h"
+#include "SceneBase.h"
 
 using std::make_pair;
 
@@ -18,57 +19,56 @@ void Factory::createGameObject(GameObject * value)
 void Factory::updateGameObject()
 {
 	// -------------------CODES TO DESRYOYED GAMEOBJECTS------------------------------//
+		Mapping::iterator MapIt, MapEnd;
+		MapEnd = g_FactoryMap.end();
 
-	Mapping::iterator MapIt, MapEnd;
-	MapEnd = g_FactoryMap.end();
-
-	for (MapIt = g_FactoryMap.begin(); MapIt != MapEnd; MapIt++)
-	{
-		MapIt->second->update();
-	}
-
-	MapIt = g_FactoryMap.begin();
-	while (MapIt != g_FactoryMap.end())
-	{
-		if (MapIt->second->isDestroyed == true)
+		for (MapIt = g_FactoryMap.begin(); MapIt != MapEnd; MapIt++)
 		{
-			 //Delete if done
-			MapIt = g_FactoryMap.erase(MapIt);
-			break;
+			MapIt->second->update();
 		}
-		else
+
+		MapIt = g_FactoryMap.begin();
+		while (MapIt != g_FactoryMap.end())
 		{
-			// Move on otherwise
-			++MapIt;
+			if (MapIt->second->isDestroyed == true)
+			{
+				//Delete if done
+				MapIt = g_FactoryMap.erase(MapIt);
+				break;
+			}
+			else
+			{
+				// Move on otherwise
+				++MapIt;
+			}
 		}
-	}
 
 
 
-    // -------------------CODES TO DESRYOYED PROJECTILES------------------------------//
-	Vectoring::iterator  VecIt, VecEnd;
-	VecEnd = g_ProjectileVector.end();
+		// -------------------CODES TO DESRYOYED PROJECTILES------------------------------//
+		Vectoring::iterator  VecIt, VecEnd;
+		VecEnd = g_ProjectileVector.end();
 
-	for (VecIt = g_ProjectileVector.begin(); VecIt != VecEnd; VecIt++)
-	{
-		(*VecIt)->update();
-	}
-
-	VecIt = g_ProjectileVector.begin();
-	while (VecIt != g_ProjectileVector.end())
-	{
-		if ((*VecIt)->isDestroyed == true)
+		for (VecIt = g_ProjectileVector.begin(); VecIt != VecEnd; VecIt++)
 		{
-			// Delete if done
-			VecIt = g_ProjectileVector.erase(VecIt);
+			(*VecIt)->update();
 		}
-		else
-		{
-			// Move on otherwise
-			++VecIt;
-		}
-	}
 
+		VecIt = g_ProjectileVector.begin();
+		while (VecIt != g_ProjectileVector.end())
+		{
+			if ((*VecIt)->isDestroyed == true)
+			{
+				// Delete if done
+				VecIt = g_ProjectileVector.erase(VecIt);
+			}
+			else
+			{
+				// Move on otherwise
+				++VecIt;
+			}
+		}
+	
 
 }
 

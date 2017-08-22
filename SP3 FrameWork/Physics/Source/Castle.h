@@ -6,11 +6,11 @@
 class Castle : public GameObject
 {
 public:
-	Castle(GAMEOBJECT_TYPE typeValue, SceneBase * scene);
+	Castle(GAMEOBJECT_TYPE typeValue, SceneBase * scene, unsigned height);
 	virtual ~Castle();
 
 	void update();
 
 private:
-	int hitpoints;
+	float offset;
 };

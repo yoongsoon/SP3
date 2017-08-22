@@ -122,7 +122,6 @@ public:
 
 	bool colliding;
 
-
 private:
 	Vector3 defaultPosition, defaultTarget, defaultUp;
 	Vector3 position, target, up;

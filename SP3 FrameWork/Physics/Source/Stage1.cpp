@@ -25,6 +25,8 @@ Stage1::~Stage1()
 void Stage1::Init()
 {
 	SceneBase::Init();
+	m_sceneID = SceneBase::SC_01;
+	m_wallStackCounter = 1;
 	ghost_exist = false;
 	release_ghost_exist = false;
 	M_ghost_exist = false;
@@ -57,13 +59,13 @@ void Stage1::Init()
 	thePredictionLine = new GameObject*[10];
 	for (size_t i = 0; i < 10; i++)
 	{
-		thePredictionLine[i]=new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_PROJECTILE, this);
+		thePredictionLine[i] = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_PROJECTILE, this);
 		theFactory->createGameObject(thePredictionLine[i]);
 	}
 	//initialize ghosts
 	theGhostProj = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_PROJECTILE, this);
 	theFactory->createGameObject(theGhostProj);
-	
+
 	theReleaseMouseGhostProj = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_PROJECTILE, this);
 	theFactory->createGameObject(theReleaseMouseGhostProj);
 
@@ -71,11 +73,18 @@ void Stage1::Init()
 	theMouseGhostProj->active = true;
 	theFactory->createGameObject(theMouseGhostProj);
 
-	// Initialize castle object
-	theCastle = new Castle(GameObject::GO_BRICK, this);
+	Castle * theCastle = new Castle(GameObject::GO_CASTLE, this, 0);
 	theFactory->createGameObject(theCastle);
 
+	// Initialize castle object
+	for (m_wallStackCounter; m_wallStackCounter <= 6; ++m_wallStackCounter)
+	{
+		Castle * theWall = new Castle(GameObject::GO_BRICK, this, m_wallStackCounter);
+		theFactory->createGameObject(theWall);
+	}
+
 	AICastle * theAICastle = new AICastle(GameObject::GO_AI_CASTLE, this);
+	theAICastle->m_hp = 500.f;
 	theFactory->createGameObject(theAICastle);
 
 	BackGround * theBackGround = new BackGround(BackGround::BACK_GROUND_STAGE1, GameObject::GO_NONE, this);
@@ -103,6 +112,7 @@ void Stage1::Init()
 	SpriteAnimation* wizard = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD]);
 	SpriteAnimation* archer = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER]);
 	SpriteAnimation* soldier = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER]);
+	SpriteAnimation* P_weapon_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_BOW_ARROW]);
 	if (wizard)
 	{
 		wizard->m_anim = new Animation();
@@ -118,17 +128,23 @@ void Stage1::Init()
 		soldier->m_anim = new Animation();
 		soldier->m_anim->Set(0, 5, 0, 1.0f, true);
 	}
+	if (P_weapon_Sprite)
+	{
+		P_weapon_Sprite->m_anim = new Animation();
+		P_weapon_Sprite->m_anim->Set(0, 15, 0, 1.0f, true);
+	}
 }
 
 void Stage1::Update(double dt)
 {
 	_elapsedTime += (float)dt;
-	//pressDelay += (float)dt;
+	pressDelay += (float)dt;
 	_dt = (float)dt;
 
 	//Calculating aspect ratio ( 4:3)
 	m_worldHeight = 100.f;
 	m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
+
 
 	static bool bow = false;
 	if (Application::IsKeyPressed(VK_NUMPAD1) && !bow)
@@ -136,6 +152,11 @@ void Stage1::Update(double dt)
 		//curr_weapon = 0;
 		thePlayer->SetWeapon(0);
 		bow = true;
+
+		weapon1 = true;
+
+		weapon2 = false;
+		weapon3 = false;
 	}
 	else if (!Application::IsKeyPressed(VK_NUMPAD1) && bow)
 	{
@@ -147,6 +168,11 @@ void Stage1::Update(double dt)
 		//curr_weapon = 1;
 		thePlayer->SetWeapon(1);
 		bow = true;
+
+		weapon2 = true;
+
+		weapon1 = false;
+		weapon3 = false;
 	}
 	else if (!Application::IsKeyPressed(VK_NUMPAD2) && bow)
 	{
@@ -158,6 +184,11 @@ void Stage1::Update(double dt)
 		//curr_weapon = 2;
 		thePlayer->SetWeapon(2);
 		bow = true;
+
+		weapon3 = true;
+
+		weapon1 = false;
+		weapon2 = false;
 	}
 	else if (!Application::IsKeyPressed(VK_NUMPAD3) && bow)
 	{
@@ -165,212 +196,312 @@ void Stage1::Update(double dt)
 	}
 	static bool onepress = false;
 	if (Application::IsKeyPressed('1') && !onepress)
+
+	if (Application::IsKeyPressed(VK_BACK))
+
 	{
-		CreateEnemySoldier();
-		onepress = true;
-	}
-	else if (!Application::IsKeyPressed('1') && onepress)
-	{
-		onepress = false;
+		b_isPause = true;
 	}
 
-	static bool twopress = false;
-	if (Application::IsKeyPressed('2') && !twopress)
-	{
-		CreateEnemyArcher();
-		twopress = true;
-	}
-	else if (!Application::IsKeyPressed('2') && twopress)
-	{
-		twopress = false;
-	}
-	static bool threepress = false;
-	if (Application::IsKeyPressed('3') && !threepress)
-	{
-		CreateEnemyWizard();
-		threepress = true;
-	}
-	else if (!Application::IsKeyPressed('3') && threepress)
-	{
-		threepress = false;
-	}
 
-	static bool fourpress = false;
-	if (Application::IsKeyPressed('4') && !fourpress)
-	{
-		CreateFriendlySoldier();
-		fourpress = true;
-	}
-	else if (!Application::IsKeyPressed('4') && fourpress)
-	{
-		fourpress = false;
-	}
 
-	static bool fivepress = false;
-	if (Application::IsKeyPressed('5') && !fivepress)
+	if (b_isPause == false)
 	{
-		CreateFriendlyArcher();
-		fivepress = true;
-	}
-	else if (!Application::IsKeyPressed('5') && fivepress)
-	{
-		fivepress = false;
-	}
-	static bool sixpress = false;
-	if (Application::IsKeyPressed('6') && !sixpress)
-	{
-		CreateFriendlyWizard();
-		sixpress = true;
-	}
-	else if (!Application::IsKeyPressed('6') && sixpress)
-	{
-		sixpress = false;
-	}
+		static bool bow = false;
+		if (Application::IsKeyPressed(VK_NUMPAD1) && !bow)
+		{
+			//curr_weapon = 0;
+			thePlayer->SetWeapon(0);
+			bow = true;
 
-	//static bool spacepress = false;
-	//if (Application::IsKeyPressed(VK_SPACE) && !spacepress)
-	//{
-	//	CreateEnemySoldier();
-	//	spacepress = true;
-	//}
-	//else if (!Application::IsKeyPressed(VK_SPACE) && spacepress)
-	//{
-	//	spacepress = false;
-	//}
+			weapon1 = true;
 
-	//Mouse Section
+			weapon2 = false;
+			weapon3 = false;
+		}
+		else if (!Application::IsKeyPressed(VK_NUMPAD1) && bow)
+		{
+			bow = false;
+		}
+		//	static bool bow = false;
+		if (Application::IsKeyPressed(VK_NUMPAD2) && !bow)
+		{
+			//curr_weapon = 1;
+			thePlayer->SetWeapon(1);
+			bow = true;
 
-	//gets mouse position
-	Vector3 currentPos;
-	Application::GetCursorPos(&mouseX, &mouseY);
-	currentPos.x = (float)mouseX / Application::GetWindowWidth() * m_worldWidth;
-	currentPos.y = (Application::GetWindowHeight() - (float)mouseY) / Application::GetWindowHeight() * m_worldHeight;
-	
-	static bool bLButtonState = false;
-	//to only create ghosts balls ONCE not every update
-	if (!bLButtonState && Application::IsMousePressed(0))
-	{
-		bLButtonState = true;
+			weapon2 = true;
 
+			weapon1 = false;
+			weapon3 = false;
+		}
+		else if (!Application::IsKeyPressed(VK_NUMPAD2) && bow)
+		{
+			bow = false;
+		}
+		//	static bool bow = false;
+		if (Application::IsKeyPressed(VK_NUMPAD3) && !bow)
+		{
+			//curr_weapon = 2;
+			thePlayer->SetWeapon(2);
+			bow = true;
+
+			weapon3 = true;
+
+			weapon1 = false;
+			weapon2 = false;
+		}
+		else if (!Application::IsKeyPressed(VK_NUMPAD3) && bow)
+		{
+			bow = false;
+		}
+		static bool onepress = false;
+		if (Application::IsKeyPressed('1') && !onepress)
+		{
+			CreateEnemySoldier();
+			onepress = true;
+		}
+		else if (!Application::IsKeyPressed('1') && onepress)
+		{
+			onepress = false;
+		}
+
+		static bool twopress = false;
+		if (Application::IsKeyPressed('2') && !twopress)
+		{
+			CreateEnemyArcher();
+			twopress = true;
+		}
+		else if (!Application::IsKeyPressed('2') && twopress)
+		{
+			twopress = false;
+		}
+		static bool threepress = false;
+		if (Application::IsKeyPressed('3') && !threepress)
+		{
+			CreateEnemyWizard();
+			threepress = true;
+		}
+		else if (!Application::IsKeyPressed('3') && threepress)
+		{
+			threepress = false;
+		}
+
+		static bool fourpress = false;
+		if (Application::IsKeyPressed('4') && !fourpress)
+		{
+			CreateFriendlySoldier();
+			fourpress = true;
+		}
+		else if (!Application::IsKeyPressed('4') && fourpress)
+		{
+			fourpress = false;
+		}
+
+		static bool fivepress = false;
+		if (Application::IsKeyPressed('5') && !fivepress)
+		{
+			CreateFriendlyArcher();
+			fivepress = true;
+		}
+		else if (!Application::IsKeyPressed('5') && fivepress)
+		{
+			fivepress = false;
+		}
+		static bool sixpress = false;
+		if (Application::IsKeyPressed('6') && !sixpress)
+		{
+			CreateFriendlyWizard();
+			sixpress = true;
+		}
+		else if (!Application::IsKeyPressed('6') && sixpress)
+		{
+			sixpress = false;
+		}
+
+		//Mouse Section
+		Vector3 currentPos;
 		Application::GetCursorPos(&mouseX, &mouseY);
-		//places current mouse pos and fixes to the pos where mouse clicked
-		theGhostProj->pos = currentPos;// (float)mouseX / Application::GetWindowWidth() * m_worldWidth;
-	//	theGhostProj->pos.y = (Application::GetWindowHeight() - (float)mouseY) / Application::GetWindowHeight() * m_worldHeight;
-		theGhostProj->active = true;
-		//changes prev mouse ghost
-		theReleaseMouseGhostProj->active = false;
-	
+		currentPos.x = (float)mouseX / Application::GetWindowWidth() * m_worldWidth;
+		currentPos.y = (Application::GetWindowHeight() - (float)mouseY) / Application::GetWindowHeight() * m_worldHeight;
 
-	}
-	else if (bLButtonState && !Application::IsMousePressed(0))
-	{
-		bLButtonState = false;
-		//when mouseclick release it renders wwhere the mouse was released 
-		theReleaseMouseGhostProj->pos = currentPos;
-		theReleaseMouseGhostProj->active = true;
-	
-		//shoots projectile
-		thePlayer->DischargePPTEST(theGhostProj->pos, currentPos, this);
-	
-		//Weapon_Info potato;
-		//potato.Get_OBJECT();
+		static bool bLButtonState = false;
+		//to only create ghosts balls ONCE not every update
+		if (!bLButtonState && Application::IsMousePressed(0))
+		{
+			bLButtonState = true;
+
+			Application::GetCursorPos(&mouseX, &mouseY);
+			//places current mouse pos and fixes to the pos where mouse clicked
+			theGhostProj->pos = currentPos;// (float)mouseX / Application::GetWindowWidth() * m_worldWidth;
+										   //	theGhostProj->pos.y = (Application::GetWindowHeight() - (float)mouseY) / Application::GetWindowHeight() * m_worldHeight;
+			theGhostProj->active = true;
+			//changes prev mouse ghost
+			theReleaseMouseGhostProj->active = false;
+
+
+		}
+		else if (bLButtonState && !Application::IsMousePressed(0))
+		{
+			bLButtonState = false;
+			//when mouseclick release it renders wwhere the mouse was released 
+			theReleaseMouseGhostProj->pos = currentPos;
+			theReleaseMouseGhostProj->active = true;
+
+			//shoots projectile
+			thePlayer->DischargePPTEST(theGhostProj->pos, currentPos, this);
+
+			//Weapon_Info potato;
+			//potato.Get_OBJECT();
+
 
 		
-		//info to shoot bullet
-		//potato->Discharge(theGhostProj->pos, currentPos, this);
-		//GameObject *tempObject = new  Projectile(Projectile::ARROW_PROJECTILE, GameObject::GO_PROJECTILE , this);
-		//GameObject *tempObject1 = new  Projectile(Projectile::CANNON_BALL_PROJECTILE, GameObject::GO_PROJECTILE, this);
-		//GameObject *tempObject2 = new  Projectile(Projectile::ROCK_PROJECTILE, GameObject::GO_PROJECTILE, this);
-		////info to shoot bullet
-		//tempObject->pos = theGhostProj->pos;
-		//tempObject1->pos = theGhostProj->pos;
-		//tempObject2->pos = theGhostProj->pos;
-		//weap_manager[0]->Discharge(currentPos, theGhostProj->pos,tempObject, this);
-		//thePlayer->DischargePPTEST(currentPos, theGhostProj->pos, tempObject, this);
-		//weap_manager[1]->Discharge(currentPos, theGhostProj->pos, tempObject1, this);
-		//thePlayer->DischargePPTEST(currentPos, theGhostProj->pos, tempObject, this);
-		//weap_manager[2]->Discharge(currentPos, theGhostProj->pos, tempObject2, this);
-		//theFactory->createGameObject(tempObject);
-		//theFactory->createGameObject(tempObject1);
-		//theFactory->createGameObject(tempObject2);
-		//canPredict = true;
-		theGhostProj->active = false;
-	// add object into factory
-	}
-	//shows where mouse is(if need remove mouse cursor)
-	theMouseGhostProj->pos = currentPos;
-	//prediction line when hold leftclick
-	if (bLButtonState)
-	{
-		for (size_t i = 0; i < 10; i++)
-		{
-			double tline = i * 0.10;
-			thePredictionLine[i]->pos.y = (((theGhostProj->pos.y) + ((theGhostProj->pos.y - theMouseGhostProj->pos.y) * tline)) + ((-9.8 *(tline * tline)) / 2));
-			thePredictionLine[i]->pos.x = (theGhostProj->pos.x) + ((theGhostProj->pos.x - theMouseGhostProj->pos.x) * tline);
-			thePredictionLine[i]->active = true;
+			theGhostProj->active = false;
+			// add object into factory
 		}
-		//canPredict = false;
+		//shows where mouse is(if need remove mouse cursor)
+		theMouseGhostProj->pos = currentPos;
+		//prediction line when hold leftclick
+		if (bLButtonState)
+		{
+			for (size_t i = 0; i < 10; i++)
+			{
+				double tline = i * 0.10;
+				thePredictionLine[i]->pos.y = (((theGhostProj->pos.y) + ((theGhostProj->pos.y - theMouseGhostProj->pos.y) * tline)) + ((-9.8 *(tline * tline)) / 2));
+				thePredictionLine[i]->pos.x = (theGhostProj->pos.x) + ((theGhostProj->pos.x - theMouseGhostProj->pos.x) * tline);
+				thePredictionLine[i]->active = true;
+			}
+			//canPredict = false;
+		}
+
+		// scrolling right
+		if (Application::IsKeyPressed(VK_RIGHT))
+		{
+			//theMouseGhostProj->pos.x += _dt * 50;
+			camera.position.x += _dt * 80;
+			camera.target.x += _dt * 80;
+		}
+		// scrolling left
+		if (Application::IsKeyPressed(VK_LEFT))
+		{
+			//theMouseGhostProj->pos.x -= _dt * 50;
+			camera.position.x -= _dt * 80;
+			camera.target.x -= _dt * 80;
+		}
+		theMouseGhostProj->active = true;
+
+		//clamp camera position and target between World X coordinate 0 and m_world *2
+		camera.position.x = Math::Clamp(camera.position.x, 0.f, m_worldWidth * 2);
+		camera.target.x = Math::Clamp(camera.target.x, 0.f, m_worldWidth * 2);
+
+		//Update all Game Objects
+		theFactory->updateGameObject();
+
+		// Update collisions
+		theCollider->Update(dt);
+
+		gom->update();
+		//player units
+		theplayer->update();
+		//playerinfo
+		thePlayer->Update(dt);
+
+		theMiniMap->Update();
+
+		SpriteAnimation* wizard = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD]);
+		SpriteAnimation* archer = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER]);
+		SpriteAnimation* soldier = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER]);
+		SpriteAnimation* P_weapon_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_BOW_ARROW]);
+		if (wizard)
+		{
+			wizard->Update(dt);
+			wizard->m_anim->animActive = true;
+		}
+		if (archer)
+		{
+			archer->Update(dt);
+			archer->m_anim->animActive = true;
+		}
+		if (soldier)
+		{
+			soldier->Update(dt);
+			soldier->m_anim->animActive = true;
+		}
+		if (P_weapon_Sprite)
+		{
+			P_weapon_Sprite->Update(dt);
+			P_weapon_Sprite->m_anim->animActive = true;
+		}
 	}
-	//parralax scrolling right
-	if (Application::IsKeyPressed(VK_RIGHT) )
+	else
 	{
-		//theMouseGhostProj->pos.x += _dt * 50;
-		camera.position.x += _dt * 50;
-		camera.target.x += _dt * 50;
+		if (Application::IsKeyPressed(VK_UP) && pressDelay >= cooldownPressed)
+		{
+			if (menuPause == PAUSE_RESUME)
+			{
+				menuPause = PAUSE_MAINMENU;
+			}
+			else if (menuPause == PAUSE_MAINMENU)
+			{
+				menuPause = PAUSE_RESTART;
+			}
+			else
+			{
+				menuPause = PAUSE_RESUME;
+			}
+			pressDelay = 0.f;
+		}
+
+		if (Application::IsKeyPressed(VK_DOWN) && pressDelay >= cooldownPressed)
+		{
+			if (menuPause == PAUSE_RESUME)
+			{
+				menuPause = PAUSE_RESTART;
+			}
+			else if (menuPause == PAUSE_RESTART)
+			{
+				menuPause = PAUSE_MAINMENU;
+			}
+			else
+			{
+				menuPause = PAUSE_RESUME;
+			}
+			pressDelay = 0.f;
+		}
+
+		if (Application::IsKeyPressed(VK_RETURN) && pressDelay >= cooldownPressed)
+		{
+			if (menuPause == PAUSE_RESUME)
+			{
+				b_isPause = false;
+			}
+			else if (menuPause == PAUSE_RESTART)
+			{
+				Stage1::Init();
+				b_isPause = false;
+				SceneManager::getInstance()->SetActiveScene("Stage1");
+			}
+			else if (menuPause == PAUSE_MAINMENU)
+			{
+				
+			}
+			pressDelay = 0.f;
+		}
 	}
-	//parralax scrolling left
-	if (Application::IsKeyPressed(VK_LEFT) )
-	{
-		//theMouseGhostProj->pos.x -= _dt * 50;
-		camera.position.x -= _dt * 50;
-		camera.target.x -= _dt * 50;
-	}
-	theMouseGhostProj->active = true;
-	 //clamp camera position and target between World X coordinate 0 and m_world *2
-	camera.position.x = Math::Clamp(camera.position.x, 0.f, m_worldWidth * 2);
-	camera.target.x = Math::Clamp(camera.target.x, 0.f, m_worldWidth * 2);
 
-	//Update all Game Objects
-	theFactory->updateGameObject();
-	// Update collisions
-	theCollider->Update(dt);
 
-	gom->update();
-	//player units
-	theplayer->update();
-	//playerinfo
-	thePlayer->Update(dt);
 
-	theMiniMap->Update();
 	/*TEXT STUFF*/
 	//std::ostringstream ss0;
 	//ss0.precision(5);
 	//ss0 << "NINJA X GTA";
 	//textObj[0]->SetText(ss0.str());
-	SpriteAnimation* wizard = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD]);
-	SpriteAnimation* archer = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER]);
-	SpriteAnimation* soldier = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER]);
-	if (wizard)
-	{
-		wizard->Update(dt);
-		wizard->m_anim->animActive = true;
-	}
-	if (archer)
-	{
-		archer->Update(dt);
-		archer->m_anim->animActive = true;
-	}
-	if (soldier)
-	{
-		soldier->Update(dt);
-		soldier->m_anim->animActive = true;
-	}
 	a = thePlayer->GetWeapon();
 	stringstream ss;
 	ss << a;
 	player_weap_choice = ss.str();
 	//player_weap_choice = string(intstr);
-	e= thePlayer->weap_manager[thePlayer->m_iCurrentWeapon]->Get_d_elapsedTime();
+	e = thePlayer->weap_manager[thePlayer->m_iCurrentWeapon]->Get_d_elapsedTime();
 	stringstream ss1;
 	ss1 << e;
 	currweap_cooldown = ss1.str();
@@ -395,7 +526,7 @@ void Stage1::Render()
 
 	// Projection matrix : Orthographic Projection
 	Mtx44 projection;
-	projection.SetToOrtho(0, m_worldWidth , 0, m_worldHeight , -10, 10);
+	projection.SetToOrtho(0, m_worldWidth, 0, m_worldHeight, -10, 10);
 	projectionStack.LoadMatrix(projection);
 
 	// Camera matrix
@@ -407,14 +538,38 @@ void Stage1::Render()
 	);
 	// Model matrix : an identity matrix (model will be at the origin)
 	modelStack.LoadIdentity();
-	
-	//////Render background
-	//RenderMeshOnScreen(meshList[SceneBase::GEO_BACKGROUND], 80, 30, 80, 60);
+
 
 	//Render the all Game Objects
 	theFactory->renderGameObject();
-	
+
 	theMiniMap->RenderUI();
+
+	//Render background
+	if (b_isPause == true)
+	{
+		RenderMeshOnScreen(meshList[SceneBase::GEO_PAUSE_MENU], 80, 30, 120, 40);
+
+		switch (menuPause)
+		{
+		case PAUSE_RESUME:
+			RenderMeshOnScreen(meshList[SceneBase::GEO_PAUSE_ARROW], 60, 37, 10, 5);
+			break;
+		case PAUSE_RESTART:
+			RenderMeshOnScreen(meshList[SceneBase::GEO_PAUSE_ARROW], 60, 31, 10, 5);
+			break;
+		case PAUSE_MAINMENU:
+			RenderMeshOnScreen(meshList[SceneBase::GEO_PAUSE_ARROW], 60, 25, 10, 5);
+			break;
+		}
+	}
+
+
+	//modelStack.PushMatrix();
+	//modelStack.Translate(100.f, 25.f, 2.f);
+	//modelStack.Scale(100.f, 50.f, 1.f);
+	//RenderMesh(meshList[GEO_TERRAIN], false);
+	//modelStack.PopMatrix();
 
 
 	//render choice of weapon
@@ -424,6 +579,47 @@ void Stage1::Render()
 	RenderTextOnScreen(meshList[GEO_TEXT], weap1_cool, Color(1, 0, 0), 5, 10, 15);
 	RenderTextOnScreen(meshList[GEO_TEXT], weap2_cool, Color(1, 0, 0), 5, 10, 13);
 	RenderTextOnScreen(meshList[GEO_TEXT], weap3_cool, Color(1, 0, 0), 5, 10, 11);
+
+	/*Need fixing*/
+	//NEED SWITCH ACCORDING TO PLAYER CURRENT WEAPON
+	if (weapon1)
+	{
+		//RenderMeshOnScreen(meshList[GEO_BOW_ARROW], 10.0f, 10.0f, 15.0f, 10.0f);
+		modelStack.PushMatrix();
+		modelStack.Translate(10.0f, 10.0f, 1.0f);
+		modelStack.Scale(15.0f, 15.0f, 1.0f);
+		RenderMesh(meshList[GEO_BOW_ARROW],false);
+		modelStack.PopMatrix();
+	}
+	if (weapon2)
+	{
+		//RenderMeshOnScreen(meshList[GEO_CANNON_BALLS], 10.0f, 10.0f, 15.0f, 10.0f);
+		modelStack.PushMatrix();
+		modelStack.Translate(10.0f, 10.0f, 1.0f);
+		modelStack.Scale(15.0f, 15.0f, 1.0f);
+		RenderMesh(meshList[GEO_CANNON_BALLS], false);
+		modelStack.PopMatrix();
+	}
+	if (weapon3)
+	{
+		//RenderMeshOnScreen(meshList[GEO_CATAPULT_ROCKS], 10.0f, 10.0f, 15.0f, 10.0f);
+		modelStack.PushMatrix();
+		modelStack.Translate(10.0f, 10.0f, 1.0f);
+		modelStack.Scale(15.0f, 15.0f, 1.0f);
+		RenderMesh(meshList[GEO_CATAPULT_ROCKS], false);
+		modelStack.PopMatrix();
+	}
+	modelStack.PushMatrix();
+	modelStack.Translate(20.0f, 40.0f, 1.0f);
+	modelStack.Scale(15.0f, 15.0f, 1.0f);
+	RenderMesh(meshList[GEO_P_BOW_ARROW], false);
+	modelStack.PopMatrix();
+	//RenderMeshOnScreen(meshList[GEO_P_BOW_ARROW], 20.0f, 20.0f, 15.0f, 10.0f);
+	/*
+	RenderMeshOnScreen(meshList[GEO_P_CANNON_BALLS], 10.0f, 10.0f, 15.0f, 10.0f);
+
+	RenderMeshOnScreen(meshList[GEO_P_CATAPULT_ROCKS], 10.0f, 10.0f, 15.0f, 10.0f);
+*/
 }
 
 void Stage1::Exit()

@@ -23,9 +23,15 @@ public:
 		PROJECTILE_MOTION,
 	};
 
+	enum PROJECTILE_WHOSE
+	{
+		PLAYER_PROJECTILE,
+		ENEMY_PROJECTILE,
+	};
 
 	PROJECTILE_TYPE typeOfProjectile;
 	MOTION_TYPE typeOfMotion;
+	PROJECTILE_WHOSE whoseProjectile;
 
     // Constructor / Destructor
 	Projectile(PROJECTILE_TYPE _typeofProjectile, GAMEOBJECT_TYPE typeValue, SceneBase * scene);

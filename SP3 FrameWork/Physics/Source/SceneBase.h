@@ -33,6 +33,7 @@ class SceneBase : public Scene
 	friend Castle;
 	friend BackGround;
 	friend MiniMap;
+	friend AICastle;
 
 	enum UNIFORM_TYPE
 	{
@@ -80,16 +81,51 @@ public:
 		GEO_SPHERE2,
 		GEO_SPHERE3,
 
-		GEO_MINI_ENEMY,
-		GEO_MINI_BACKGROUND,
+		//player weapon sprite
+		GEO_P_BOW_ARROW,
+		GEO_P_CANNON_BALLS,
+		GEO_P_CATAPULT_ROCKS,
+		//weapon display UI
+		GEO_BOW_ARROW,
+		GEO_CANNON_BALLS,
+		GEO_CATAPULT_ROCKS,
+
 		GEO_SPRITE_FIRE,
+
+		GEO_TERRAIN,
+
+		GEO_PAUSE_MENU,
+		GEO_PAUSE_ARROW,
+
+		//MINIMAP 
+		GEO_MINI_ENEMY,
 		GEO_MINI_BORDER,
 		GEO_MINI_ALLIES,
 		GEO_MINI_PLAYER_CASTLE,
 		GEO_MINI_ENEMY_CASTLE,
 		NUM_GEOMETRY,
 	};
-public:
+
+	enum SCENE_NUM
+	{
+		SC_START,
+		SC_01,
+		SC_02,
+		SC_03,
+		SC_04,
+		SC_05,
+		SC_END,
+	};
+
+	enum PAUSE_MENU
+	{
+		PAUSE_RESUME = 0,
+		PAUSE_RESTART,
+		PAUSE_MAINMENU,
+	};
+
+	PAUSE_MENU menuPause = PAUSE_RESUME;
+
 	SceneBase();
 	~SceneBase();
 
@@ -116,10 +152,14 @@ public:
 	Factory * theFactory;
 	MiniMap * theMiniMap;
 
+	static bool b_isPause;
+
 protected:
 	unsigned m_vertexArrayID;
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
+	unsigned m_sceneID = 0;
+	int m_wallStackCounter;
 
 	Camera camera;
 	MS modelStack;
@@ -141,11 +181,13 @@ protected:
 	GameObject * theGhostProj;
 	GameObject * theReleaseMouseGhostProj;
 	GameObject * theMouseGhostProj;
-	GameObject * theCastle;
 
 	double mouseX, mouseY;
 	float backGroundX = 40.f;
 	Mesh* meshList[NUM_GEOMETRY];
+
+	//Terrain
+	vector<unsigned char> m_heightMap;
 };
 
 #endif

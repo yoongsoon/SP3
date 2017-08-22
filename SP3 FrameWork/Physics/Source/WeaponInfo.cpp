@@ -157,6 +157,7 @@ void Weapon_Info::Discharge(Vector3 position, Vector3 target, SceneBase *_scene)
 		Projectile * aProjectile = Create::createProjectile(projectile_type, GameObject::GO_PROJECTILE, _scene);
 		//Projectile * aProjectile = Create::createProjectile(Projectile::PROJECTILE_TYPE::ARROW_PROJECTILE, GameObject::GO_PROJECTILE, _scene);
 		aProjectile->typeOfMotion = Projectile::PROJECTILE_MOTION;
+		aProjectile->whoseProjectile = Projectile::PROJECTILE_WHOSE::PLAYER_PROJECTILE;
 		aProjectile->pos = position;
 		aProjectile->vel = position - target;
 		aProjectile->scale.Set(3, 3, 3);
@@ -173,6 +174,7 @@ void Weapon_Info::castleAIDischarge(Vector3 position, float range, SceneBase * _
 	{
 		Projectile * aProjectile = Create::createProjectile(Projectile::PROJECTILE_TYPE::ARROW_PROJECTILE, GameObject::GO_PROJECTILE, _scene);
 		aProjectile->typeOfMotion = Projectile::MOTION_TYPE::PROJECTILE_MOTION;
+		aProjectile->whoseProjectile = Projectile::PROJECTILE_WHOSE::ENEMY_PROJECTILE;
 		aProjectile->pos = position;
 		aProjectile->setInitVel(range);
 		aProjectile->scale.Set(3, 3, 3);
@@ -188,6 +190,7 @@ void Weapon_Info::castleAIDischarge(Vector3 position, Vector3 target, SceneBase 
 	{
 		Projectile * aProjectile = Create::createProjectile(Projectile::PROJECTILE_TYPE::ARROW_PROJECTILE, GameObject::GO_PROJECTILE, _scene);
 		aProjectile->typeOfMotion = Projectile::MOTION_TYPE::LINEAR_MOTION;
+		aProjectile->whoseProjectile = Projectile::PROJECTILE_WHOSE::ENEMY_PROJECTILE;
 		aProjectile->pos = position;
 		aProjectile->vel = target - aProjectile->pos;
 		aProjectile->scale.Set(3, 3, 3);

@@ -36,7 +36,7 @@ public:
 	float rotateX;
 	float rotateY;
 	float rotateZ; 
-
+	int hitpoints;
 	unsigned meshValue;
 
 	Vector3 m_force; // thrust force
@@ -57,9 +57,6 @@ public:
 
 	 //a bool to check whether the object should be deleted
 	 bool isDestroyed;
-
-
-
 
 };
 

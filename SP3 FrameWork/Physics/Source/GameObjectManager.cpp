@@ -65,11 +65,11 @@ void GameObjectManager::Enemy_Enemy_Collision()
 				{
 					if (archer_attacked == true && soldier_attacked == true)
 					{
-						if ( CSoundEngine::getInstance()->isSoundAdded == false)
+						if (CSoundEngine::getInstance()->isSoundAdded == false)
 						{
 							CSoundEngine::getInstance()->AddSound("Combat", "Sound//combat.ogg");
-							 CSoundEngine::getInstance()->isSoundAdded = true;
-							 CSoundEngine::getInstance()->PlayASound("Combat", false, false);
+							CSoundEngine::getInstance()->isSoundAdded = true;
+							CSoundEngine::getInstance()->PlayASound("Combat", false, false);
 						}
 					}
 				}
@@ -175,7 +175,24 @@ void GameObjectManager::Enemy_Enemy_Collision()
 				//------------------------------------------------------------------------------------------------------------------------------------------------------------------
 								//}
 			}
-		}
+			else if (it->first == GameObject::GO_CASTLE && it2->first == GameObject::GO_ENEMY
+				|| it->first == GameObject::GO_ENEMY && it2->first == GameObject::GO_CASTLE)
+			{
+				/*Vector3 p1 = it->second->pos;
+				Vector3 p2 = it2->second->pos;
+				float r1 = it->second->scale.x;
+				float r2 = it2->second->scale.x;
 
+				if (  (p1-p2).LengthSquared() <	(r1 + r2)   * (r1 + r2))
+				{
+
+				}*/
+			}
+			else if (it->first == GameObject::GO_AI_CASTLE && it2->first == GameObject::GO_PLAYER
+				|| it->first == GameObject::GO_PLAYER && it2->first == GameObject::GO_AI_CASTLE)
+			{
+
+			}
+		}
 	}
 }
