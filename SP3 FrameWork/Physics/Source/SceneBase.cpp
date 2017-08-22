@@ -115,11 +115,11 @@ void SceneBase::Init()
 	//Player weapon Sprite
 	meshList[GEO_P_BOW_ARROW] = MeshBuilder::GenerateSpriteAnimation("P_bow_arrow",2,6, 1.0f);
 	meshList[GEO_P_BOW_ARROW]->textureID = LoadTGA("Image//P_Bow_and_Arrows_SPRITE.tga");
-	/*meshList[GEO_CANNON_BALLS] = MeshBuilder::GenerateQuad("dis_Cannon_balls", Color(1, 1, 1), 1.f);
-	meshList[GEO_CANNON_BALLS]->textureID = LoadTGA("Image//d_Cannon_balls.tga");
-	meshList[GEO_CATAPULT_ROCKS] = MeshBuilder::GenerateQuad("dis_Catapult_Rocks", Color(1, 1, 1), 1.f);
-	meshList[GEO_CATAPULT_ROCKS]->textureID = LoadTGA("Image//d_Catapult_Rocks.tga");
-*/
+	meshList[GEO_P_CANNON_BALLS] = MeshBuilder::GenerateSpriteAnimation("P_cannon_balls", 2,6, 1.f);
+	meshList[GEO_P_CANNON_BALLS]->textureID = LoadTGA("Image//P_Bow_and_Arrows_SPRITE.tga");
+	meshList[GEO_P_CATAPULT_ROCKS] = MeshBuilder::GenerateSpriteAnimation("P_catapult_rocks", 2,5, 1.f);
+	meshList[GEO_P_CATAPULT_ROCKS]->textureID = LoadTGA("Image//P_Catapult_Rocks_SPRITE.tga");
+
 	//Displays
 	meshList[GEO_BOW_ARROW] = MeshBuilder::GenerateQuad("dis_bow_arrow", Color(1, 1, 1),1.f);
 	meshList[GEO_BOW_ARROW]->textureID = LoadTGA("Image//d_Bow_and_Arrows.tga");

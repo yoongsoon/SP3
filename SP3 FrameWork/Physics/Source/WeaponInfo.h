@@ -119,5 +119,11 @@ protected:
 	//Flag if burst firing is done/available
 	bool b_Burst_Fire;
 	//std::list</*Projectile*/>bullets;
+	int i_bulletcount;
+	int i_maxbullet;
 
+	Vector3 pin_position;
+	Vector3 pin_target;
+	SceneBase *pin_scene;
+	float pin_range;
 };

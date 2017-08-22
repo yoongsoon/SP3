@@ -11,6 +11,8 @@ Weapon_Info::Weapon_Info()
 	, d_Burst_elapsedTime(0.0)
 	, i_Burst_Fire_Rate(2)
 	, b_Burst_Fire(false)
+	, i_bulletcount(0)
+	,i_maxbullet(3)
 {
 
 	switch (WeaponType)
@@ -44,15 +46,39 @@ void Weapon_Info::Init(void)
 	d_Burst_elapsedTime = 0.0;
 	i_Burst_Fire_Rate = 2;
 	b_Burst_Fire = true;
+
+	i_bulletcount = 0;
+	i_maxbullet = 3;
 }
 void Weapon_Info::Update(const double dt)
 {
-	if(!b_Fire)
-	d_elapsedTime += dt;
-
+	if (!b_Fire && b_Burst_Fire)
+	{
+		d_elapsedTime += dt;
+		
+	}
 	if (d_elapsedTime > d_timeBetweenShots)
 	{
 		b_Fire = true;
+		d_elapsedTime = 0.0;
+	}
+
+
+	if (!b_Burst_Fire)
+	{
+		d_Burst_elapsedTime += dt;
+	}
+	if (d_Burst_elapsedTime > d_Burst_timeBetweenShots)
+	{
+		b_Fire = true;
+		b_Burst_Fire = true;
+		d_Burst_elapsedTime = 0.0;
+		Discharge(pin_position, pin_target, pin_scene);
+	}
+	if (i_bulletcount>=i_maxbullet)
+	{
+		i_bulletcount = 0;
+		b_Burst_Fire = true;
 		d_elapsedTime = 0.0;
 	}
 }
@@ -144,27 +170,34 @@ void Weapon_Info::Discharge(Vector3 position, Vector3 target, GameObject * objec
 		b_Fire = false;
 	}
 }
-
+//player discharge
 void Weapon_Info::Discharge(Vector3 position, Vector3 target, SceneBase *_scene)
 {
 	if (b_Fire)
 	{
-		//CREATE PROJECTILE
-		//I NEEDDSSS PROJECTILE
-		//and player
+		//
+		if (b_Burst_Fire)
+		{
+			pin_position = position;
+			pin_target = target;
+			pin_scene = _scene;
+			//
+			//needs get projectile type to change projectiles or maybe weapon type
+			Projectile * aProjectile = Create::createProjectile(projectile_type, GameObject::GO_PROJECTILE, _scene);
+			//Projectile * aProjectile = Create::createProjectile(Projectile::PROJECTILE_TYPE::ARROW_PROJECTILE, GameObject::GO_PROJECTILE, _scene);
+			aProjectile->typeOfMotion = Projectile::PROJECTILE_MOTION;
+			aProjectile->whoseProjectile = Projectile::PROJECTILE_WHOSE::PLAYER_PROJECTILE;
+			aProjectile->pos = Vector3(15,10,0);
+			aProjectile->vel = position - target;
+			aProjectile->scale.Set(3, 3, 3);
+			//aProjectile->mass = 3;
+			aProjectile->active = true;
+			//
+			i_bulletcount++;
+			b_Burst_Fire = false;
+			b_Fire = false;
+		}
 		
-		//needs get projectile type to change projectiles or maybe weapon type
-		Projectile * aProjectile = Create::createProjectile(projectile_type, GameObject::GO_PROJECTILE, _scene);
-		//Projectile * aProjectile = Create::createProjectile(Projectile::PROJECTILE_TYPE::ARROW_PROJECTILE, GameObject::GO_PROJECTILE, _scene);
-		aProjectile->typeOfMotion = Projectile::PROJECTILE_MOTION;
-		aProjectile->whoseProjectile = Projectile::PROJECTILE_WHOSE::PLAYER_PROJECTILE;
-		aProjectile->pos = position;
-		aProjectile->vel = position - target;
-		aProjectile->scale.Set(3, 3, 3);
-		//aProjectile->mass = 3;
-		aProjectile->active = true;
-		/*	b_Fire = false;*/
-		b_Fire = false;
 	}
 }
 
@@ -172,15 +205,28 @@ void Weapon_Info::castleAIDischarge(Vector3 position, float range, SceneBase * _
 {
 	if (b_Fire)
 	{
-		Projectile * aProjectile = Create::createProjectile(Projectile::PROJECTILE_TYPE::ARROW_PROJECTILE, GameObject::GO_PROJECTILE, _scene);
-		aProjectile->typeOfMotion = Projectile::MOTION_TYPE::PROJECTILE_MOTION;
-		aProjectile->whoseProjectile = Projectile::PROJECTILE_WHOSE::ENEMY_PROJECTILE;
-		aProjectile->pos = position;
-		aProjectile->setInitVel(range);
-		aProjectile->scale.Set(3, 3, 3);
-		aProjectile->mass = 3;
-		aProjectile->active = true;
-		b_Fire = false;
+		////
+		//if (b_Burst_Fire)
+		//{
+		//	pin_position = position;
+		//	//pin_target = target;
+		//	pin_range = range;
+		//	pin_scene = _scene;
+			Projectile * aProjectile = Create::createProjectile(Projectile::PROJECTILE_TYPE::ARROW_PROJECTILE, GameObject::GO_PROJECTILE, _scene);
+			aProjectile->typeOfMotion = Projectile::MOTION_TYPE::PROJECTILE_MOTION;
+			aProjectile->whoseProjectile = Projectile::PROJECTILE_WHOSE::ENEMY_PROJECTILE;
+			aProjectile->pos = position;
+			aProjectile->setInitVel(range);
+			aProjectile->scale.Set(3, 3, 3);
+			aProjectile->mass = 3;
+			aProjectile->active = true;
+			b_Fire = false;
+			//
+			/*i_bulletcount++;
+			b_Burst_Fire = false;
+			b_Fire = false;
+		}*/
+
 	}
 }
 
@@ -188,15 +234,25 @@ void Weapon_Info::castleAIDischarge(Vector3 position, Vector3 target, SceneBase 
 {
 	if (b_Fire)
 	{
-		Projectile * aProjectile = Create::createProjectile(Projectile::PROJECTILE_TYPE::ARROW_PROJECTILE, GameObject::GO_PROJECTILE, _scene);
-		aProjectile->typeOfMotion = Projectile::MOTION_TYPE::LINEAR_MOTION;
-		aProjectile->whoseProjectile = Projectile::PROJECTILE_WHOSE::ENEMY_PROJECTILE;
-		aProjectile->pos = position;
-		aProjectile->vel = target - aProjectile->pos;
-		aProjectile->scale.Set(3, 3, 3);
-		//aProjectile->mass = 3;
-		aProjectile->active = true;
-		b_Fire = false;
+
+		/*if (b_Burst_Fire)
+		{
+			pin_position = position;
+			pin_target = target;
+			pin_scene = _scene;*/
+			Projectile * aProjectile = Create::createProjectile(Projectile::PROJECTILE_TYPE::ARROW_PROJECTILE, GameObject::GO_PROJECTILE, _scene);
+			aProjectile->typeOfMotion = Projectile::MOTION_TYPE::LINEAR_MOTION;
+			aProjectile->whoseProjectile = Projectile::PROJECTILE_WHOSE::ENEMY_PROJECTILE;
+			aProjectile->pos = position;
+			aProjectile->vel = target - position;
+			aProjectile->scale.Set(3, 3, 3);
+			//aProjectile->mass = 3;
+			aProjectile->active = true;
+		//	b_Fire = false;
+		/*	i_bulletcount++;
+			b_Burst_Fire = false;
+			b_Fire = false;
+		}*/
 	}
 
 }
