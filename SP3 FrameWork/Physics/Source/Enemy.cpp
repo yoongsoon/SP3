@@ -14,7 +14,7 @@ Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) 
 		active = true;
 		meshValue = SceneBase::GEO_SOLDIER;
 		scale.Set(5, 5, 5);
-		vel.Set(-10.f, 0.f, 0.f);
+		vel.Set(-30.f, 0.f, 0.f);
 		pos.Set((m_worldWidth * 3) -15.f, m_worldHeight / 2, 1.f);
 		enemyType = Enemy::E_SOLDIER;
 		hp = 100.f;
@@ -76,6 +76,11 @@ void Enemy::update()
 			if (!StopToAttack)
 			{
 				pos += vel * theScene->_dt;
+				meshValue = SceneBase::GEO_SOLDIER;
+			}
+			else
+			{
+				meshValue = SceneBase::GEO_SOLDIER_ATTACK;
 			}
 		}
 		else if (enemyType == ENEMY_TYPE::E_ARCHER)
@@ -83,6 +88,11 @@ void Enemy::update()
 			if (!StopToAttack)
 			{
 				pos += vel * theScene->_dt;
+				meshValue = SceneBase::GEO_ARCHER;
+			}
+			else
+			{
+				meshValue = SceneBase::GEO_ARCHER_ATTACK;
 			}
 		}
 		else if (enemyType == ENEMY_TYPE::E_WIZARD)
@@ -111,7 +121,6 @@ void Enemy::update()
 	{
 		active = false;
 	}
-	
 }
 
 void Enemy::render()
