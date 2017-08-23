@@ -88,14 +88,6 @@ void FileConfiguration::saveFile(string _fileName)
 				outPutFile << endl;
 				outPutFile << endl;
 			}
-			else if (it.first == GameObject::GO_CASTLE)
-			{
-				if (it.second->type == )
-				{
-
-				}
-			}
-
 		}
 
 	}
