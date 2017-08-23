@@ -33,25 +33,18 @@ bool CollisionManager::checkCollision(GameObject * object1, GameObject * object2
 	Vector3 relativeVel = object1->vel - object2->vel;
 	float rotateAngle;
 
-	if (object1->type == GameObject::GO_PROJECTILE)
+	if (object1->type == GameObject::GO_P_PROJECTILE)
 	{
 		switch (object2->type)
 		{
-			// obj2 = ball
-		/*case GameObject::GO_PROJECTILE:
-			return (relativeVel.Dot(relativePos1) < 0 && (relativePos1).LengthSquared() <= (obj1scale.x + obj2scale.x) * (obj1scale.x + obj2scale.x));
-			break;*/
-			// obj2 = wall
-		//case GameObject::GO_ENEMY:
-		case GameObject::GO_PLAYER:
-		case GameObject::GO_BRICK:
-			//rotateAngle = 
-
+		case GameObject::GO_P_BRICK:
+			return false;
+		case GameObject::GO_AI_BRICK:
 			object2->topLeft.Set(obj2pos.x - (obj2scale.x * 0.5f), obj2pos.y + (obj2scale.y * 0.5f), 0);
 			object2->topRight.Set(obj2pos.x + (obj2scale.x * 0.5f), obj2pos.y + (obj2scale.y * 0.5f), 0);
 			object2->bottomLeft.Set(obj2pos.x - (obj2scale.x * 0.5f), obj2pos.y - (obj2scale.y * 0.5f), 0);
 			object2->bottomRight.Set(obj2pos.x + (obj2scale.x * 0.5f), obj2pos.y - (obj2scale.y * 0.5f), 0);
-			//cout << obj2Normal << endl;
+			
 			// Check if object1 is relatively close to object2 in terms of Y-axis
 			if (obj1pos.y <= object2->topLeft.y && obj1pos.y >= object2->bottomRight.y)
 			{
@@ -104,13 +97,13 @@ bool CollisionManager::checkCollision(GameObject * object1, GameObject * object2
 			}
 		}
 	}
-	else if (object1->type == GameObject::GO_BRICK)
+	else if (object1->type == GameObject::GO_P_BRICK)
 	{
 		Vector3 lengthVec1, lengthVec2;
 		switch (object2->type)
 		{
 		case GameObject::GO_PLAYER:
-		case GameObject::GO_BRICK:
+		case GameObject::GO_P_BRICK:
 			// NOTE: This code assumes the cube/quad/rectangular object cannot spin
 			object1->topLeft.Set(obj1pos.x - (obj1scale.x * 0.5f), obj1pos.y + (obj1scale.y * 0.5f), 0);
 			object1->topRight.Set(obj1pos.x + (obj1scale.x * 0.5f), obj1pos.y + (obj1scale.y * 0.5f), 0);
@@ -148,7 +141,7 @@ void CollisionManager::collisionResponse(GameObject * object1, GameObject * obje
 	Vector3 u1 = object1->vel;
 	Vector3 u2 = object2->vel;
 	Vector3 N;
-	if (object1->type == GameObject::GO_PROJECTILE)
+	if (object1->type == GameObject::GO_P_PROJECTILE)
 	{
 		if (object2->type == GameObject::GO_BALL) {
 			
@@ -166,7 +159,7 @@ void CollisionManager::collisionResponse(GameObject * object1, GameObject * obje
 			object1->vel = u1 + (2 * m2 / (m1 + m2)) * (u2Normal - u1Normal);
 			object2->vel = u2 + (2 * m1 / (m1 + m2)) * (u1Normal - u2Normal);
 		}
-		else if (object2->type == GameObject::GO_BRICK)
+		else if (object2->type == GameObject::GO_P_BRICK)
 		{
 			object2->hitpoints -= 10;
 			object1->active = false;
@@ -189,9 +182,9 @@ void CollisionManager::collisionResponse(GameObject * object1, GameObject * obje
 
 		}
 	}
-	else if (object1->type == GameObject::GO_BRICK)
+	else if (object1->type == GameObject::GO_P_BRICK)
 	{
-		if (object2->type == GameObject::GO_BRICK)
+		if (object2->type == GameObject::GO_P_BRICK)
 		{
 			object2->m_gEffect = object1->m_gEffect = false;
 			object2->pos.y += theScene->_dt;
@@ -237,9 +230,9 @@ void CollisionManager::Update(float dt)
 			GameObject* goB = it2->second;
 
 			//check projectile collision with other game object
-			if ((*it)->type != GameObject::GO_PROJECTILE)
+			if ((*it)->type != GameObject::GO_P_PROJECTILE)
 			{
-				if (it2->second->type != GameObject::GO_PROJECTILE)
+				if (it2->second->type != GameObject::GO_P_PROJECTILE)
 					continue;
 				goA = it2->second;
 				goB = (*it);
@@ -265,7 +258,7 @@ void CollisionManager::Update(float dt)
 			GameObject* goA = theScene->theFactory->g_BuildingsVector[it];
 			GameObject* goB = (*it2);
 
-			if ((*it2)->type != GameObject::GO_PROJECTILE)
+			if ((*it2)->type != GameObject::GO_P_PROJECTILE)
 				continue;
 			else
 			{
@@ -283,7 +276,7 @@ void CollisionManager::Update(float dt)
 		for (unsigned it2 = it + 1; it2 < theScene->theFactory->g_BuildingsVector.size(); ++it2)
 		{
 			// Skip current element if it is not active
-			if (theScene->theFactory->g_BuildingsVector[it]->active == false || theScene->theFactory->g_BuildingsVector[it]->type != GameObject::GO_BRICK)
+			if (theScene->theFactory->g_BuildingsVector[it]->active == false || theScene->theFactory->g_BuildingsVector[it]->type != GameObject::GO_P_BRICK)
 				continue;
 
 			GameObject* goA = theScene->theFactory->g_BuildingsVector[it];
@@ -299,7 +292,7 @@ void CollisionManager::Update(float dt)
 			it2 != theScene->theFactory->g_FactoryMap.end(); it2++)
 		{
 			// Skip current element if it is not active || object is not a projectile
-			if (it2->second->active == false || it2->second->type != GameObject::GO_PROJECTILE)
+			if (it2->second->active == false || it2->second->type != GameObject::GO_P_PROJECTILE)
 				continue;
 
 			GameObject* goA = theScene->theFactory->g_BuildingsVector[it];

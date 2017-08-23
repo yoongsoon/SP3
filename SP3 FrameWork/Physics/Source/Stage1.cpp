@@ -59,27 +59,27 @@ void Stage1::Init()
 	thePredictionLine = new GameObject*[10];
 	for (size_t i = 0; i < 10; i++)
 	{
-		thePredictionLine[i] = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_PROJECTILE, this);
+		thePredictionLine[i] = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_P_PROJECTILE, this);
 		theFactory->createGameObject(thePredictionLine[i]);
 	}
 	//initialize ghosts
-	theGhostProj = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_PROJECTILE, this);
+	theGhostProj = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_P_PROJECTILE, this);
 	theFactory->createGameObject(theGhostProj);
 
-	theReleaseMouseGhostProj = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_PROJECTILE, this);
+	theReleaseMouseGhostProj = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_P_PROJECTILE, this);
 	theFactory->createGameObject(theReleaseMouseGhostProj);
 
-	theMouseGhostProj = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_PROJECTILE, this);
+	theMouseGhostProj = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_P_PROJECTILE, this);
 	theMouseGhostProj->active = true;
 	theFactory->createGameObject(theMouseGhostProj);
 
 	// BUILDINGS
 	for (m_wallStackCounter; m_wallStackCounter <= 6; ++m_wallStackCounter)
 	{
-		Buildings * theWall = new Buildings(GameObject::GO_BRICK, this, m_wallStackCounter);
+		Buildings * theWall = new Buildings(GameObject::GO_P_BRICK, this, m_wallStackCounter);
 		theFactory->createGameObject(theWall);
 	}
-	Buildings * theCastle = new Buildings(GameObject::GO_CASTLE, this, 0);
+	Buildings * theCastle = new Buildings(GameObject::GO_P_CASTLE, this, 0);
 	theFactory->createGameObject(theCastle);
 
 

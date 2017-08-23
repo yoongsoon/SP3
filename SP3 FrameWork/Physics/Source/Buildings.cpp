@@ -8,7 +8,7 @@ Buildings::Buildings(GAMEOBJECT_TYPE typeValue, SceneBase * scene, unsigned offs
 	switch (theScene->m_sceneID)
 	{
 	case SceneBase::SC_01:
-		if (typeValue == GameObject::GO_BRICK)
+		if (typeValue == GameObject::GO_P_BRICK)
 		{
 			hitpoints = 10;
 			meshValue = theScene->GEO_BRICK;
@@ -16,7 +16,7 @@ Buildings::Buildings(GAMEOBJECT_TYPE typeValue, SceneBase * scene, unsigned offs
 			dir.Set(0, 1, 0);
 			scale.Set(12, 4, 1);
 		}
-		else if (typeValue == GameObject::GO_CASTLE)
+		else if (typeValue == GameObject::GO_P_CASTLE)
 		{
 			hitpoints = 500.f;
 			pos.Set(15.f, 35.f, 1.f);
@@ -34,7 +34,7 @@ Buildings::~Buildings()
 
 void Buildings::update()
 {
-	if (type == GameObject::GO_BRICK)
+	if (type == GameObject::GO_P_BRICK || type == GameObject::GO_AI_BRICK)
 	{
 		if (m_gEffect)
 		{
