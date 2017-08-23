@@ -4,6 +4,7 @@
 #include <string>
 #include <sstream>
 #include <fstream>
+#include <iomanip>
 
 using std::string;
 using std::getline;
@@ -12,25 +13,26 @@ using std::endl;
 using std::ifstream;
 using std::ofstream;
 using std::istringstream;
+using std::setprecision;
+
 
 #include "Vector3.h"
-#include "Singleton.h"
 
 class SceneBase;
 
-class FileConfiguration : public Singleton<FileConfiguration>
+class FileConfiguration
 {
-	friend Singleton<FileConfiguration>;
 public:
+	FileConfiguration(SceneBase * scene);
+	~FileConfiguration();
+
+
 	//file configuration
 	void loadFile(string _fileName);
 	void saveFile(string _fileName);
 
+	double Token2Double(string token);
 	Vector3 Token2Vector(string token);
-
-protected:
-	FileConfiguration();
-	~FileConfiguration();
 
 	SceneBase * _scene;
 
