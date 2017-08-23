@@ -161,6 +161,8 @@ void Stage1::Init()
 	}
 
 	theUIManager = new UIManager(this);
+
+	 theFile = new FileConfiguration(this);
 }
 
 void Stage1::Update(double dt)
@@ -172,6 +174,18 @@ void Stage1::Update(double dt)
 	//Calculating aspect ratio ( 4:3)
 	m_worldHeight = 100.f;
 	m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
+
+	if (Application::IsKeyPressed('K') && pressDelay >= cooldownPressed)
+	{
+		theFile->saveFile("Data.txt");
+		pressDelay = 0.f;
+	}
+	if (Application::IsKeyPressed('L') && pressDelay >= cooldownPressed)
+	{
+		theFile->loadFile("Data.txt");
+		pressDelay = 0.f;
+	}
+
 
 
 	if (b_isPause == false)

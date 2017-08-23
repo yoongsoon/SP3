@@ -23,6 +23,7 @@
 #include "WeaponInfo.h"
 #include "Player.h"
 #include "PlayerTroops.h"
+#include "FileConfiguration.h"
 
 #include <vector>
 
@@ -165,6 +166,7 @@ public:
 	UIManager * theUIManager;
 	PlayerInfo* thePlayer;
 	Player *theplayer;
+	FileConfiguration * theFile;
 
 	//bool for pause
 	static bool b_isPause;
