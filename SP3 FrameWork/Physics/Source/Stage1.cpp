@@ -105,26 +105,42 @@ void Stage1::Init()
 
 	SpriteAnimation* wizard = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD]);
 	SpriteAnimation* archer = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER]);
+	SpriteAnimation* archerattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER_ATTACK]);
 	SpriteAnimation* soldier = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER]);
+	SpriteAnimation* soldierattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER_ATTACK]);
+	//SpriteAnimation* P_weapon_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_BOW_ARROW]);
 	SpriteAnimation* P_Bow_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_BOW_ARROW]);
 	SpriteAnimation* P_Cannon_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CANNON_BALLS]);
 	SpriteAnimation* P_Catapult_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CATAPULT_ROCKS]);
+
 	if (wizard)
 	{
 		wizard->m_anim = new Animation();
-		wizard->m_anim->Set(0, 15, 0, 1.0f, true);
+		wizard->m_anim->Set(0, 5, 0, 1.0f, true);
 	}
 	if (archer)
 	{
 		archer->m_anim = new Animation();
 		archer->m_anim->Set(0, 3, 0, 1.0f, true);
 	}
+	if (archerattack)
+	{
+		archerattack->m_anim = new Animation();
+		archerattack->m_anim->Set(0, 2, 0, 1.0f, true);
+	}
 	if (soldier)
 	{
 		soldier->m_anim = new Animation();
 		soldier->m_anim->Set(0, 5, 0, 1.0f, true);
 	}
+	if (soldierattack)
+	{
+		soldierattack->m_anim = new Animation();
+		soldierattack->m_anim->Set(0, 4, 0, 1.0f, true);
+	}
+	//if (P_weapon_Sprite)
 	if (P_Bow_Sprite)
+
 	{
 		P_Bow_Sprite->m_anim = new Animation();
 		P_Bow_Sprite->m_anim->Set(0, 12, 0, 1.0f, true);
@@ -355,10 +371,14 @@ void Stage1::Update(double dt)
 
 		SpriteAnimation* wizard = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD]);
 		SpriteAnimation* archer = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER]);
+		SpriteAnimation* archerattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER_ATTACK]);
 		SpriteAnimation* soldier = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER]);
+		SpriteAnimation* soldierattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER_ATTACK]);
+		//SpriteAnimation* P_weapon_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_BOW_ARROW]);
 		SpriteAnimation* P_Bow_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_BOW_ARROW]);
 		SpriteAnimation* P_Cannon_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CANNON_BALLS]);
 		SpriteAnimation* P_Catapult_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CATAPULT_ROCKS]);
+
 		if (wizard)
 		{
 			wizard->Update(dt);
@@ -369,11 +389,22 @@ void Stage1::Update(double dt)
 			archer->Update(dt);
 			archer->m_anim->animActive = true;
 		}
+		if (archerattack)
+		{
+			archerattack->Update(dt);
+			archerattack->m_anim->animActive = true;
+		}
 		if (soldier)
 		{
 			soldier->Update(dt);
 			soldier->m_anim->animActive = true;
 		}
+		if (soldierattack)
+		{
+			soldierattack->Update(dt);
+			soldierattack->m_anim->animActive = true;
+		}
+		//if (P_weapon_Sprite)
 		if (P_Bow_Sprite)
 		{
 			P_Bow_Sprite->Update(dt);

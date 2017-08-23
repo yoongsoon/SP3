@@ -76,8 +76,11 @@ public:
 		GEO_CUBE,
 		GEO_CIRCLE,
 		GEO_SOLDIER,
+		GEO_SOLDIER_ATTACK,
 		GEO_ARCHER,
+		GEO_ARCHER_ATTACK,
 		GEO_WIZARD,
+		GEO_WIZARD_ATTACK,
 		GEO_BACKGROUND,
 		GEO_BRICK,
 		//for different projectile colours
