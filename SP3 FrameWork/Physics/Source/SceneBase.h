@@ -21,6 +21,8 @@
 #include "UIManager.h"
 #include "PlayerInfo.h"
 #include "WeaponInfo.h"
+#include "Player.h"
+#include "PlayerTroops.h"
 
 #include <vector>
 
@@ -159,6 +161,7 @@ public:
 	MiniMap * theMiniMap;
 	UIManager * theUIManager;
 	PlayerInfo* thePlayer;
+	Player *theplayer;
 
 	//bool for pause
 	static bool b_isPause;

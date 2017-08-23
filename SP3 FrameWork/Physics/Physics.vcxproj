@@ -166,6 +166,7 @@
     <ClCompile Include="Source\CollisionManager.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\Factory.cpp" />
+    <ClCompile Include="Source\FileConfiguration.cpp" />
     <ClCompile Include="Source\GameObjectManager.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\LoadHmap.cpp" />
@@ -203,6 +204,7 @@
     <ClInclude Include="Source\CollisionManager.h" />
     <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\Factory.h" />
+    <ClInclude Include="Source\FileConfiguration.h" />
     <ClInclude Include="Source\GameObjectManager.h" />
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\Light.h" />

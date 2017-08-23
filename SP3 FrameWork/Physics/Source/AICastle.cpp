@@ -13,8 +13,9 @@ AICastle::AICastle(GAMEOBJECT_TYPE typeValue, SceneBase * scene)
 	m_DefaultHp = m_hp;
 
 	meshValue = SceneBase::GEO_MINI_ENEMY_CASTLE;
-	scale.Set(30, 30, 1); 
-	pos = Vector3( (theScene->m_worldWidth * 3)- 15.f , 50.f, 1.f);
+	scale.Set(30, 30, 1);
+	pos = Vector3((theScene->m_worldWidth * 3) - 15.f, 50.f, 1.f);
+	m_hp = 500.f;
 
 	theAIweapon = new Cannon();
 	theAIweapon->Init();
@@ -54,7 +55,7 @@ void AICastle::update()
 				//// if hp goes below 25 %
 				//if (m_hp < (m_DefaultHp * 0.25))
 				//{
-				//	theAIweapon->setFireMode(Weapon_Info::BURST_FIRE);
+				//	theAIweapon->Discharge
 				//}
 
 				// starting firing projectile within castle range 

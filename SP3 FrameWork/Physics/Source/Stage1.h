@@ -1,8 +1,6 @@
 #pragma once
 #include "GameObject.h"
 #include "SceneBase.h"
-#include "PlayerTroops.h"
-#include "Player.h"
 
 class SceneManager;
 
@@ -40,9 +38,8 @@ protected:
 				
 	//Physics
 	float m_speed;
-	Player *theplayer;
 	Enemy *enemy;
-	SceneBase * scenebase;
+	//SceneBase * scenebase;
 
 	bool ghost_exist = false;
 	bool release_ghost_exist = false;

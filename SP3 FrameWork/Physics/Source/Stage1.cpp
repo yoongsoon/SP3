@@ -47,12 +47,13 @@ void Stage1::Init()
 	CSoundEngine::getInstance()->PlayASound("BackGround Music", true, false);
 	CSoundEngine::getInstance()->theCurrentSound->setVolume(0.4f);
 
-	//MiniMap
-	theMiniMap = new MiniMap(GameObject::GO_NONE, this);
 
 	//initialise the factory class
 	// MUST BE FIRST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	theFactory = new Factory();
+
+	//MiniMap
+	theMiniMap = new MiniMap(GameObject::GO_MINI_MAP, this);
 
 	theCollider = new CollisionManager(this);
 	//intialise ghost projectile prediction
@@ -87,7 +88,6 @@ void Stage1::Init()
 	
 
 	AICastle * theAICastle = new AICastle(GameObject::GO_AI_CASTLE, this);
-	theAICastle->m_hp = 500.f;
 	theFactory->createGameObject(theAICastle);
 
 	BackGround * theBackGround = new BackGround(BackGround::BACK_GROUND_STAGE1, GameObject::GO_NONE, this);
@@ -97,7 +97,7 @@ void Stage1::Init()
 	theplayer->setScene(this);
 	gom = new GameObjectManager(this);
 
-	scenebase = new SceneBase();
+	/*scenebase = new SceneBase();*/
 	
 	//player itself
 	thePlayer = new PlayerInfo();

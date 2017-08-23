@@ -111,28 +111,6 @@ void Projectile::update()
 	}
 }
 
-//
-//Projectile* Create::Projectile(const std::string& _meshName,
-//	const Vector3& _position,
-//	const Vector3& _direction,
-//	const float m_fLifetime,
-//	const float m_fSpeed,
-//	Projectile* _source)
-//{
-//	Mesh* modelMesh = MeshBuilder::GetInstance()->GetMesh(_meshName);
-//	if (modelMesh == nullptr)
-//		return nullptr;
-//
-//	Projectile* result = new Projectile(modelMesh);
-//	result->Set(_position, _direction, m_fLifetime, m_fSpeed);
-//	result->SetStatus(true);
-//	result->SetCollider(true);
-//	result->SetSource(_source);
-//	EntityManager::GetInstance()->AddEntity(result);
-//
-//	return result;
-//}
-
 Projectile * Create::createProjectile(Projectile::PROJECTILE_TYPE _typeofProjectile, GameObject::GAMEOBJECT_TYPE typevalue, SceneBase * scene)
 {
 	// initialse projectile pointer
