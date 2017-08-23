@@ -32,6 +32,7 @@ void Stage1::Init()
 	M_ghost_exist = false;
 	canPredict = true;
 	weap_manager = NULL;
+	P_rotation = 1.f;
 	//Physics code here
 	m_speed = 1.f;
 
@@ -47,47 +48,51 @@ void Stage1::Init()
 	CSoundEngine::getInstance()->PlayASound("BackGround Music", true, false);
 	CSoundEngine::getInstance()->theCurrentSound->setVolume(0.4f);
 
-	//MiniMap
-	theMiniMap = new MiniMap(GameObject::GO_NONE, this);
 
 	//initialise the factory class
 	// MUST BE FIRST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	theFactory = new Factory();
+
+	//MiniMap
+	theMiniMap = new MiniMap(GameObject::GO_MINI_MAP, this);
 
 	theCollider = new CollisionManager(this);
 	//intialise ghost projectile prediction
 	thePredictionLine = new GameObject*[10];
 	for (size_t i = 0; i < 10; i++)
 	{
-		thePredictionLine[i] = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_PROJECTILE, this);
+		thePredictionLine[i] = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_P_PROJECTILE, this);
 		theFactory->createGameObject(thePredictionLine[i]);
 	}
 	//initialize ghosts
-	theGhostProj = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_PROJECTILE, this);
+	theGhostProj = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_P_PROJECTILE, this);
 	theFactory->createGameObject(theGhostProj);
 
-	theReleaseMouseGhostProj = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_PROJECTILE, this);
+	theReleaseMouseGhostProj = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_P_PROJECTILE, this);
 	theFactory->createGameObject(theReleaseMouseGhostProj);
 
-	theMouseGhostProj = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_PROJECTILE, this);
+	theMouseGhostProj = new Projectile(Projectile::GHOST_PROJECTILE, GameObject::GO_P_PROJECTILE, this);
 	theMouseGhostProj->active = true;
 	theFactory->createGameObject(theMouseGhostProj);
 
 	// BUILDINGS
 	for (m_wallStackCounter; m_wallStackCounter <= 6; ++m_wallStackCounter)
 	{
-		Buildings * theWall = new Buildings(GameObject::GO_BRICK, this, m_wallStackCounter);
+		Buildings * theWall = new Buildings(GameObject::GO_P_BRICK, this, m_wallStackCounter);
 		theFactory->createGameObject(theWall);
 	}
-	Buildings * theCastle = new Buildings(GameObject::GO_CASTLE, this, 0);
+	Buildings * theCastle = new Buildings(GameObject::GO_P_CASTLE, this, 0);
 	theFactory->createGameObject(theCastle);
 
 
 	// Initialize castle object
 	
-
+	for (m_wallStackCounter; m_wallStackCounter <= 6; ++m_wallStackCounter)
+	{
+		Buildings * theWall = new Buildings(GameObject::GO_AI_BRICK, this, m_wallStackCounter);
+		theFactory->createGameObject(theWall);
+	}
 	AICastle * theAICastle = new AICastle(GameObject::GO_AI_CASTLE, this);
-	theAICastle->m_hp = 500.f;
 	theFactory->createGameObject(theAICastle);
 
 	BackGround * theBackGround = new BackGround(BackGround::BACK_GROUND_STAGE1, GameObject::GO_NONE, this);
@@ -97,7 +102,7 @@ void Stage1::Init()
 	theplayer->setScene(this);
 	gom = new GameObjectManager(this);
 
-	scenebase = new SceneBase();
+	/*scenebase = new SceneBase();*/
 	
 	//player itself
 	thePlayer = new PlayerInfo();
@@ -111,7 +116,7 @@ void Stage1::Init()
 	SpriteAnimation* soldierattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER_ATTACK]);
 	//SpriteAnimation* P_weapon_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_BOW_ARROW]);
 	SpriteAnimation* P_Bow_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_BOW_ARROW]);
-	SpriteAnimation* P_Cannon_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CANNON_BALLS]);
+//	SpriteAnimation* P_Cannon_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CANNON_BALLS]);
 	SpriteAnimation* P_Catapult_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CATAPULT_ROCKS]);
 
 	if (wizard)
@@ -151,11 +156,11 @@ void Stage1::Init()
 		P_Bow_Sprite->m_anim = new Animation();
 		P_Bow_Sprite->m_anim->Set(0, 12, 0, 1.0f, true);
 	}
-	if (P_Cannon_Sprite)
-	{
-		P_Cannon_Sprite->m_anim = new Animation();
-		P_Cannon_Sprite->m_anim->Set(0, 15, 0, 1.0f, true);
-	}
+//	if (P_Cannon_Sprite)
+//	{
+//		P_Cannon_Sprite->m_anim = new Animation();
+//		P_Cannon_Sprite->m_anim->Set(0, 15, 0, 1.0f, true);
+//	}
 	if (P_Catapult_Sprite)
 	{
 		P_Catapult_Sprite->m_anim = new Animation();
@@ -163,6 +168,8 @@ void Stage1::Init()
 	}
 
 	theUIManager = new UIManager(this);
+
+	 theFile = new FileConfiguration(this);
 }
 
 void Stage1::Update(double dt)
@@ -174,6 +181,18 @@ void Stage1::Update(double dt)
 	//Calculating aspect ratio ( 4:3)
 	m_worldHeight = 100.f;
 	m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
+
+	if (Application::IsKeyPressed('K') && pressDelay >= cooldownPressed)
+	{
+		theFile->saveFile("Data.txt");
+		pressDelay = 0.f;
+	}
+	if (Application::IsKeyPressed('L') && pressDelay >= cooldownPressed)
+	{
+		theFile->loadFile("Data.txt");
+		pressDelay = 0.f;
+	}
+
 
 
 	if (b_isPause == false)
@@ -324,7 +343,7 @@ void Stage1::Update(double dt)
 
 			//Weapon_Info potato;
 			//potato.Get_OBJECT();
-			theGhostProj->active = false;
+			//theGhostProj->active = false;
 			// add object into factory
 		}
 		//shows where mouse is(if need remove mouse cursor)
@@ -335,12 +354,20 @@ void Stage1::Update(double dt)
 			for (size_t i = 0; i < 10; i++)
 			{
 				double tline = i * 0.10;
-				thePredictionLine[i]->pos.y = (((10) + ((theGhostProj->pos.y - theMouseGhostProj->pos.y) * tline)) + ((-9.8 *(tline * tline)) / 2));
-				thePredictionLine[i]->pos.x = (15) + ((theGhostProj->pos.x - theMouseGhostProj->pos.x) * tline);
+				thePredictionLine[i]->pos.y = (((50) + ((theGhostProj->pos.y - theMouseGhostProj->pos.y) * tline)) + ((-9.8 *(tline * tline)) / 2));
+				thePredictionLine[i]->pos.x = (20) + ((theGhostProj->pos.x - theMouseGhostProj->pos.x) * tline);
+				thePredictionLine[i]->pos.z = 5.0f;
 				thePredictionLine[i]->active = true;
 			}
 			//canPredict = false;
+			P_rotation = Math::RadianToDegree(atan2f(theGhostProj->pos.y - theMouseGhostProj->pos.y, theGhostProj->pos.x - theMouseGhostProj->pos.x));
+
 		}
+		else
+		{
+			P_rotation = 1;
+		}
+
 		// scrolling right
 		if (Application::IsKeyPressed(VK_RIGHT))
 		{
@@ -363,7 +390,7 @@ void Stage1::Update(double dt)
 
 		//Update all Game Objects
 		theFactory->updateGameObject();
-
+		cout << "proj: " << theFactory->g_ProjectileVector.size() << endl;
 		// Update collisions
 		theCollider->Update(dt);
 
@@ -383,7 +410,7 @@ void Stage1::Update(double dt)
 		SpriteAnimation* soldierattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER_ATTACK]);
 		//SpriteAnimation* P_weapon_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_BOW_ARROW]);
 		SpriteAnimation* P_Bow_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_BOW_ARROW]);
-		SpriteAnimation* P_Cannon_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CANNON_BALLS]);
+		//SpriteAnimation* P_Cannon_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CANNON_BALLS]);
 		SpriteAnimation* P_Catapult_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CATAPULT_ROCKS]);
 
 		if (wizard)
@@ -422,18 +449,19 @@ void Stage1::Update(double dt)
 			P_Bow_Sprite->Update(dt);
 			P_Bow_Sprite->m_anim->animActive = true;
 		}
-		if (P_Cannon_Sprite)
-		{
-			P_Cannon_Sprite->Update(dt);
-			P_Cannon_Sprite->m_anim->animActive = true;
-		}
+	//	if (P_Cannon_Sprite)
+	//	{
+	//		P_Cannon_Sprite->Update(dt);
+	//		P_Cannon_Sprite->m_anim->animActive = true;
+	//	}
 		if (P_Catapult_Sprite)
 		{
 			P_Catapult_Sprite->Update(dt);
 			P_Catapult_Sprite->m_anim->animActive = true;
 		}
 	}
-
+	
+	//P_rotation = Math::RadianToDegree(atan2f(theGhostProj->pos.y - theReleaseMouseGhostProj->pos.y, theGhostProj->pos.x - theReleaseMouseGhostProj->pos.x));
 
 	theUIManager->Update();
 	theUIManager->UpdateText();
@@ -465,23 +493,7 @@ void Stage1::Render()
 	// Model matrix : an identity matrix (model will be at the origin)
 	modelStack.LoadIdentity();
 
-	modelStack.PushMatrix();
-	modelStack.Translate(20.0f, 80.0f, 1.0f);
-	modelStack.Scale(15.0f, 15.0f, 1.0f);
-	RenderMesh(meshList[GEO_P_CANNON_BALLS], false);
-	modelStack.PopMatrix();
 
-	modelStack.PushMatrix();
-	modelStack.Translate(20.0f, 20.0f, 1.0f);
-	modelStack.Scale(15.0f, 15.0f, 1.0f);
-	RenderMesh(meshList[GEO_P_CATAPULT_ROCKS], false);
-	modelStack.PopMatrix();
-
-	modelStack.PushMatrix();
-	modelStack.Translate(20.0f, 40.0f, 1.0f);
-	modelStack.Scale(15.0f, 15.0f, 1.0f);
-	RenderMesh(meshList[GEO_P_BOW_ARROW], false);
-	modelStack.PopMatrix();
 	//Render the all Game Objects
 	theFactory->renderGameObject();
 
@@ -498,11 +510,44 @@ void Stage1::Render()
 	theUIManager->Render();
 	theUIManager->RenderText();
 
+	//RenderMeshOnScreen(meshList[GEO_P_CANNON], 30.0f, 80.0f, 15.0f, 15.0f);
+
+	//rendering problem
 	modelStack.PushMatrix();
-	modelStack.Translate(20.0f, 40.0f, 1.0f);
+	modelStack.Translate(30.0f, 40.0f, 5.0f);
+	//modelStack.Rotate(P_rotation, 0, 0, 1);
+	modelStack.Scale(15.0f, 15.0f, 1.0f);
+	//RenderMesh(meshList[GEO_P_CANNON], false);
+	RenderMesh(meshList[GEO_P_CANNON_STAND], false);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(20.0f, 40.0f, 4.0f);
+	modelStack.Rotate(P_rotation, 0, 0, 1);
+	modelStack.Scale(15.0f, 15.0f, 1.0f);
+	RenderMesh(meshList[GEO_P_CANNON], false);
+	//RenderMesh(meshList[GEO_P_CANNON_STAND], false);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(20.0f, 30.0f, 5.0f);
+	//modelStack.Rotate(P_rotation, 0, 0, 1);
+	modelStack.Scale(15.0f, 15.0f, 1.0f);
+	RenderMesh(meshList[GEO_P_CATAPULT_ROCKS], false);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(20.0f, 50.0f, 5.0f);
+	modelStack.Rotate(P_rotation, 0, 0, 1);
 	modelStack.Scale(15.0f, 15.0f, 1.0f);
 	RenderMesh(meshList[GEO_P_BOW_ARROW], false);
 	modelStack.PopMatrix();
+
+	/*modelStack.PushMatrix();
+	modelStack.Translate(20.0f, 40.0f, 1.0f);
+	modelStack.Scale(15.0f, 15.0f, 1.0f);
+	RenderMesh(meshList[GEO_P_BOW_ARROW], false);
+	modelStack.PopMatrix();*/
 	
 }
 

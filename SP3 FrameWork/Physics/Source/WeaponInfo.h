@@ -30,8 +30,7 @@ public:
 	Projectile::PROJECTILE_TYPE projectile_type;
 
 	void setFireMode(FIRE_MODE FireMode);
-	int bulletCount = 0;
-
+	
 	Weapon_Info();
 	~Weapon_Info();
 	//virtual ~Weapon_Info();
@@ -52,24 +51,29 @@ public:
 	void Set_Fire_Rate(int);
 	void Set_b_Fire(bool);
 
-	void Set_d_Burst_timeBetweenShots(double);
-	void Set_d_Burst_elapsedTime(double);
-	void Set_Burst_Fire_Rate(int);
-	void Set_b_Burst_Fire(bool);
-	
-
-//_________________BURST_____FIRE_______________________________
-
 	double Get_d_timeBetweenShots();
 	double Get_d_elapsedTime();
 	int Get_Fire_Rate();
 	bool Get_b_Fire();
+	
+
+//_________________BURST_____FIRE_______________________________
+
+
+
+	void Set_d_Burst_timeBetweenShots(double);
+	void Set_d_Burst_elapsedTime(double);
+	void Set_Burst_Fire_Rate(int);
+	void Set_b_Burst_Fire(bool);
 
 	double Get_d_Burst_timeBetweenShots();
 	double Get_d_Burst_elapsedTime();
 	int Get_Burst_Fire_Rate();
 	bool Get_b_Burst_Fire();
 
+	//number of bullets to shoot(burstfire)
+	void Set_Max_BulletCount(int b);
+	int Get_Max_BulletCount();
 	//GameObject Get_OBJECT();
 
 	//void Discharge(Vector3 position,Vector3 target,)
@@ -138,5 +142,10 @@ protected:
 	Vector3 pin_position;
 	Vector3 pin_target;
 	SceneBase *pin_scene;
-	float pin_range;
+	//float pin_range;
+
+	Vector3 pin_AIposition;
+	Vector3 pin_AItarget;
+	SceneBase *pin_AIscene;
+	float pin_AIrange;
 };

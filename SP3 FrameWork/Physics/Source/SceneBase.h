@@ -21,6 +21,9 @@
 #include "UIManager.h"
 #include "PlayerInfo.h"
 #include "WeaponInfo.h"
+#include "Player.h"
+#include "PlayerTroops.h"
+#include "FileConfiguration.h"
 
 #include <vector>
 
@@ -88,9 +91,13 @@ public:
 		GEO_SPHERE2,
 		GEO_SPHERE3,
 
+		GEO_ARROW,
+		GEO_CBALL,
+		GEO_ROCK,
 		//player weapon sprite
 		GEO_P_BOW_ARROW,
-		GEO_P_CANNON_BALLS,
+		GEO_P_CANNON,
+		GEO_P_CANNON_STAND,
 		GEO_P_CATAPULT_ROCKS,
 		//weapon display UI
 		GEO_BOW_ARROW,
@@ -162,6 +169,8 @@ public:
 	MiniMap * theMiniMap;
 	UIManager * theUIManager;
 	PlayerInfo* thePlayer;
+	Player *theplayer;
+	FileConfiguration * theFile;
 
 	//bool for pause
 	static bool b_isPause;
@@ -188,6 +197,7 @@ protected:
 
 	float fps;
 
+	float P_rotation = 0;
 	//--------------------------------PHYSIC CODES---------------------------------------------------//
 	float m_worldWidth;
 	float m_worldHeight;

@@ -1,0 +1,20 @@
+GameObjectValue:5
+Enemy Type:0
+Position:[ 238.105, 50, 1 ]
+Hp:100
+Timer:0
+B_StopAttack:0
+B_Attacked:0
+EnemyMoveX:-22.8927
+
+
+GameObjectValue:6
+Player Type:0
+Position:[ 72.7671, 50, 1 ]
+Hp:100
+Timer:0
+B_StopAttack:0
+B_Attacked:0
+PlayerMoveX:11.3403
+
+

@@ -148,9 +148,12 @@
     </ClCompile>
     <ClCompile Include="Source\MainMenu.cpp">
       <Filter>Source Files\Scene</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="Source\Buildings.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FileConfiguration.cpp">
+      <Filter>Source Files\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -267,9 +270,12 @@
     </ClInclude>
     <ClInclude Include="Source\MainMenu.h">
       <Filter>Header Files\Scene</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="Source\Buildings.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FileConfiguration.h">
+      <Filter>Header Files\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

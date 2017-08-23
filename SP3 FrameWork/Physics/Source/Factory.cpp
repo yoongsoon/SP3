@@ -7,9 +7,9 @@ using std::make_pair;
 void Factory::createGameObject(GameObject * value)
 {
 	// push every game object except projectile into the map container
-	if (value->type == GameObject::GO_PROJECTILE)
+	if (value->type == GameObject::GO_P_PROJECTILE || value->type == GameObject::GO_AI_PROJECTILE)
 		g_ProjectileVector.push_back(static_cast<Projectile*>(value));
-	else if (value->type == GameObject::GO_BRICK || value->type == GameObject::GO_CASTLE || value->type == GameObject::GO_AI_CASTLE)
+	else if (value->type == GameObject::GO_P_BRICK || value->type == GameObject::GO_AI_BRICK || value->type == GameObject::GO_P_CASTLE || value->type == GameObject::GO_AI_CASTLE)
 		g_BuildingsVector.push_back(static_cast<Buildings*>(value));
 	else   // push projectile into the vector container
 		g_FactoryMap.insert(make_pair(value->type, value));

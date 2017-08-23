@@ -21,5 +21,5 @@ void Bow::Init(void)
 	d_Burst_elapsedTime = 0.0;
 	b_Burst_Fire = true;
 
-	i_maxbullet = 5;
+	i_maxbullet = 2;
 }

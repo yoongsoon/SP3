@@ -112,12 +112,22 @@ void SceneBase::Init()
 	meshList[GEO_SPHERE2] = MeshBuilder::GenerateSphere("sphere2", Color(0, 1, 1), 10, 10, 1.f);
 	meshList[GEO_SPHERE3] = MeshBuilder::GenerateSphere("sphere3", Color(1, 0, 1), 10, 10, 1.f);
 
+	meshList[GEO_CBALL] = MeshBuilder::GenerateQuad("Projectile_Cannon", Color(1, 1, 1), 1.f);
+	meshList[GEO_CBALL]->textureID = LoadTGA("Image//BALL.tga");
+	meshList[GEO_ARROW] = MeshBuilder::GenerateQuad("Projectile_Bow", Color(1, 1, 1), 1.f);
+	meshList[GEO_ARROW]->textureID = LoadTGA("Image//ARROW.tga");
+	meshList[GEO_ROCK] = MeshBuilder::GenerateQuad("Projectile_Catapult", Color(1, 1, 1), 1.f);
+	meshList[GEO_ROCK]->textureID = LoadTGA("Image//ROCK.tga");
+
 	//Player weapon Sprite
 	meshList[GEO_P_BOW_ARROW] = MeshBuilder::GenerateSpriteAnimation("P_bow_arrow",2,6, 1.0f);
 	meshList[GEO_P_BOW_ARROW]->textureID = LoadTGA("Image//P_Bow_and_Arrows_SPRITE.tga");
-	meshList[GEO_P_CANNON_BALLS] = MeshBuilder::GenerateSpriteAnimation("P_cannon_balls", 2,6, 1.f);
-	meshList[GEO_P_CANNON_BALLS]->textureID = LoadTGA("Image//P_Bow_and_Arrows_SPRITE.tga");
-	meshList[GEO_P_CATAPULT_ROCKS] = MeshBuilder::GenerateSpriteAnimation("P_catapult_rocks", 2,5, 1.f);
+	meshList[GEO_P_CANNON] = MeshBuilder::GenerateQuad("P_cannon", Color(1, 1, 1), 1.f);
+	meshList[GEO_P_CANNON]->textureID = LoadTGA("Image//P_Cannon_ONLY.tga");
+	meshList[GEO_P_CANNON_STAND] = MeshBuilder::GenerateQuad("P_cannon_stand", Color(1, 1, 1), 1.f);
+	meshList[GEO_P_CANNON_STAND]->textureID = LoadTGA("Image//P_Cannon_Stand.tga");
+
+	meshList[GEO_P_CATAPULT_ROCKS] = MeshBuilder::GenerateSpriteAnimation("P_catapult_rocks", 2,5, 1.0f);
 	meshList[GEO_P_CATAPULT_ROCKS]->textureID = LoadTGA("Image//P_Catapult_Rocks_SPRITE.tga");
 
 	//Displays
@@ -131,8 +141,6 @@ void SceneBase::Init()
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//ExportedFont2.tga");
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
-	meshList[GEO_BRICK] = MeshBuilder::GenerateCube("brick", Color(.5f, .5f, .5f), 1.f);
-	//meshList[GEO_BRICK]->textureID = LoadTGA("Image//castlebrick.tga");
 	meshList[GEO_SOLDIER] = MeshBuilder::GenerateSpriteAnimation("soldier", 2, 3, 1.0f);
 	meshList[GEO_SOLDIER]->textureID = LoadTGA("Image//SoldierWalking.tga");
 	meshList[GEO_SOLDIER_ATTACK] = MeshBuilder::GenerateSpriteAnimation("soldier", 1, 5, 1.0f);
