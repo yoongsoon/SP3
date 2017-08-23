@@ -30,14 +30,22 @@ void UIManager::UpdateText()
 	stringstream ss2;
 	ss2 << e;
 	weap1_cool = ss2.str();
+
 	e = theScene->thePlayer->weap_manager[1]->Get_d_elapsedTime();
 	stringstream ss3;
 	ss3 << e;
 	weap2_cool = ss3.str();
+
 	e = theScene->thePlayer->weap_manager[2]->Get_d_elapsedTime();
 	stringstream ss4;
 	ss4 << e;
 	weap3_cool = ss4.str();
+
+	e = theScene->P_rotation;
+	//e = theScene->
+	stringstream ss5;
+	ss5 << e;
+	P_Rot = ss5.str();
 }
 
 void UIManager::Update()
@@ -157,5 +165,6 @@ void UIManager::RenderText()
 	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], weap1_cool, Color(1, 0, 0), 5, 10, 15);
 	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], weap2_cool, Color(1, 0, 0), 5, 10, 13);
 	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], weap3_cool, Color(1, 0, 0), 5, 10, 11);
+	//theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], P_Rotation, Color(1, 0, 0), 5, 10, 11);
 
 }

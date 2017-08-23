@@ -1,8 +1,9 @@
 #pragma once
 
 #include "GameObject.h"
+#include "WeaponInfo.h"
 
-class Cannon;
+//class Cannon;
 
 class AICastle : public GameObject
 {
@@ -39,6 +40,11 @@ public:
 	// default Hp
 	float m_DefaultHp;
 
-	Cannon * theAIweapon;
-
+	//use weapon info is better
+	//Cannon * theAIweapon;
+	Weapon_Info * theAIweapon;
+	//use this if AI has more than 1 weapon on castle vv (refer to player info weapon manager)
+	//Weapon_Info**AIweapons;
+	//int totanumberAIweapons;
+	//int currAIweapon
 };

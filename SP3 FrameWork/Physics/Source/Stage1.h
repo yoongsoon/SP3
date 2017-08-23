@@ -49,7 +49,7 @@ protected:
 	bool M_ghost_exist = false;
 	bool canPredict;
 
-	
+	//float P_Rotation;
 private:
 	//TextEntity* textObj[3];
 };

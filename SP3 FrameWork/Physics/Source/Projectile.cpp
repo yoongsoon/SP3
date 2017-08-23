@@ -10,23 +10,24 @@ Projectile::Projectile(PROJECTILE_TYPE _typeofProjectile, GAMEOBJECT_TYPE typeVa
 	meshValue = SceneBase::GEO_CIRCLE;
 	typeOfProjectile = _typeofProjectile;
   
+	pos.z = 5;
 	switch (typeOfProjectile)
 	{
 	case ARROW_PROJECTILE:
 	{
-		meshValue = SceneBase::GEO_SPHERE1;
+		meshValue = SceneBase::GEO_ARROW;
 		m_damage = 10.f;
 	}
 	break;
 	case ROCK_PROJECTILE:
 	{
-		meshValue = SceneBase::GEO_SPHERE2;
+		meshValue = SceneBase::GEO_ROCK;
 		m_damage = 20.f;
 	}
 	break;
 	case CANNON_BALL_PROJECTILE:
 	{
-		meshValue = SceneBase::GEO_SPHERE3;
+		meshValue = SceneBase::GEO_CBALL;
 		m_damage = 30.f;
 	}
 	break;
