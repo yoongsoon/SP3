@@ -31,7 +31,8 @@ void MiniMap::Update()
 				static_cast<PlayerTroop*>(it.second)->playerMoveX += distBorderX / (theScene->m_worldWidth * 3 - 15.f) * (it.second->vel.x * theScene->_dt);
 			}
 		}
-	
+
+		arrowX = 60.f / (theScene->m_worldWidth* 3) * ( theScene->camera.position.x + 50.f);
 }
 
 void MiniMap::RenderUI()
@@ -55,15 +56,16 @@ void MiniMap::RenderUI()
 		}
 		else if (it.first == GameObject::GO_BRICK)
 		{
-			theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_MINI_PLAYER_CASTLE], pos.x - 35.f , pos.y, scale.x - 40.f, scale.y);
+			theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_MINI_PLAYER_CASTLE], pos.x - 37.f , pos.y, scale.x - 50.f, scale.y - 5.f);
 		}
 		else if (it.first == GameObject::GO_AI_CASTLE)
 		{
-			theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_MINI_ENEMY_CASTLE], pos.x + 35.f, pos.y , scale.x - 40.f, scale.y);
+			theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_MINI_ENEMY_CASTLE], pos.x + 37.f, pos.y , scale.x - 50.f, scale.y - 5.f);
 		}
 	}
 
 
+	theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_MINI_ARROW], 50.f + arrowX , pos.y + 2.f, 10.f , 2.5f);
 	theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_MINI_BORDER], pos.x, pos.y, scale.x + 5.f, scale.y);
 
 

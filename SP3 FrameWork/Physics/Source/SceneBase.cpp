@@ -115,11 +115,11 @@ void SceneBase::Init()
 	//Player weapon Sprite
 	meshList[GEO_P_BOW_ARROW] = MeshBuilder::GenerateSpriteAnimation("P_bow_arrow",2,6, 1.0f);
 	meshList[GEO_P_BOW_ARROW]->textureID = LoadTGA("Image//P_Bow_and_Arrows_SPRITE.tga");
-	/*meshList[GEO_CANNON_BALLS] = MeshBuilder::GenerateQuad("dis_Cannon_balls", Color(1, 1, 1), 1.f);
-	meshList[GEO_CANNON_BALLS]->textureID = LoadTGA("Image//d_Cannon_balls.tga");
-	meshList[GEO_CATAPULT_ROCKS] = MeshBuilder::GenerateQuad("dis_Catapult_Rocks", Color(1, 1, 1), 1.f);
-	meshList[GEO_CATAPULT_ROCKS]->textureID = LoadTGA("Image//d_Catapult_Rocks.tga");
-*/
+	meshList[GEO_P_CANNON_BALLS] = MeshBuilder::GenerateSpriteAnimation("P_cannon_balls", 2,6, 1.f);
+	meshList[GEO_P_CANNON_BALLS]->textureID = LoadTGA("Image//P_Bow_and_Arrows_SPRITE.tga");
+	meshList[GEO_P_CATAPULT_ROCKS] = MeshBuilder::GenerateSpriteAnimation("P_catapult_rocks", 2,5, 1.f);
+	meshList[GEO_P_CATAPULT_ROCKS]->textureID = LoadTGA("Image//P_Catapult_Rocks_SPRITE.tga");
+
 	//Displays
 	meshList[GEO_BOW_ARROW] = MeshBuilder::GenerateQuad("dis_bow_arrow", Color(1, 1, 1),1.f);
 	meshList[GEO_BOW_ARROW]->textureID = LoadTGA("Image//d_Bow_and_Arrows.tga");
@@ -152,6 +152,10 @@ void SceneBase::Init()
 	meshList[GEO_PAUSE_ARROW] = MeshBuilder::GenerateQuad("PauseArrow", Color(1.f, 1.f, 1.f), 1.f);
 	meshList[GEO_PAUSE_ARROW]->textureID = LoadTGA("Image/PauseArrow.tga");
 
+	//--------------------Main Menu--------------------------//
+	meshList[GEO_MAIN_MENU] = MeshBuilder::GenerateQuad("MainMenu", Color(1.f, 1.f, 1.f), 1.f);
+	meshList[GEO_MAIN_MENU]->textureID = LoadTGA("Image/menu.tga");
+
 
 	//-------------------Terrain-------------------------------//
 	meshList[GEO_TERRAIN] = MeshBuilder::GenerateTerrain("GEO_TERRAIN",
@@ -159,6 +163,8 @@ void SceneBase::Init()
 	meshList[GEO_TERRAIN]->textureID = LoadTGA("Image//castlebrick.tga");
 
 	//-------------------------------MINIMAP-------------------------------------//
+	meshList[GEO_MINI_ARROW] = MeshBuilder::GenerateQuad("miniArrow", Color(1.f, 1.f, 1.f), 1.f);
+	meshList[GEO_MINI_ARROW]->textureID = LoadTGA("Image/miniArrow.tga");
 	meshList[GEO_MINI_BORDER] = MeshBuilder::GenerateQuad("miniBorder", Color(1.f, 1.f, 1.f), 1.f);
 	meshList[GEO_MINI_BORDER]->textureID = LoadTGA("Image/mini_border.tga");
 	meshList[GEO_MINI_ENEMY] = MeshBuilder::GenerateQuad("miniEnemy", Color(1.f, 1.f, 1.f), 1.f);

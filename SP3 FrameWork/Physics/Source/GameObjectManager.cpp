@@ -34,7 +34,24 @@ void GameObjectManager::Enemy_Enemy_Collision()
 			if (it == it2)
 				continue;
 
-			if (it->first == GameObject::GO_PLAYER && it2->first == GameObject::GO_ENEMY || it->first == GameObject::GO_ENEMY && it2->first == GameObject::GO_PLAYER)
+
+			//-----------CODES TO ENSURE it.second IS ALWAYS OF GO_ENEMY TYPE-------------//
+			GameObject* goA = it->second;
+			GameObject* goB = it2->second;
+
+			//check projectile collision with other game object
+			if (it->first != GameObject::GO_ENEMY)
+			{
+				if (it2->first != GameObject::GO_ENEMY)
+					continue;
+
+				//swap
+				goA = it2->second;
+				goB = it->second;
+			}
+
+
+			if (it2->first == GameObject::GO_PLAYER)
 			{
 				//if (static_cast <Enemy *>(it->second)->enemyType == Enemy::E_ARCHER && static_cast <Enemy *>(it2->second)->enemyType == Enemy::E_SOLDIER)
 				//{
@@ -175,24 +192,9 @@ void GameObjectManager::Enemy_Enemy_Collision()
 				//------------------------------------------------------------------------------------------------------------------------------------------------------------------
 								//}
 			}
-			else if (it->first == GameObject::GO_CASTLE && it2->first == GameObject::GO_ENEMY
-				|| it->first == GameObject::GO_ENEMY && it2->first == GameObject::GO_CASTLE)
-			{
-				/*Vector3 p1 = it->second->pos;
-				Vector3 p2 = it2->second->pos;
-				float r1 = it->second->scale.x;
-				float r2 = it2->second->scale.x;
 
-				if (  (p1-p2).LengthSquared() <	(r1 + r2)   * (r1 + r2))
-				{
 
-				}*/
-			}
-			else if (it->first == GameObject::GO_AI_CASTLE && it2->first == GameObject::GO_PLAYER
-				|| it->first == GameObject::GO_PLAYER && it2->first == GameObject::GO_AI_CASTLE)
-			{
 
-			}
 		}
 	}
 }

@@ -16,4 +16,10 @@ void Bow::Init(void)
 	d_timeBetweenShots = 1;
 	d_elapsedTime = 0.0;
 	b_Fire = true;
+
+	d_Burst_timeBetweenShots = 0.1;
+	d_Burst_elapsedTime = 0.0;
+	b_Burst_Fire = true;
+
+	i_maxbullet = 5;
 }
