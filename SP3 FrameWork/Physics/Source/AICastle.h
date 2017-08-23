@@ -36,7 +36,6 @@ public:
 	float m_coolDownTime;
 	// bool to see whether the castle should fire
 	bool b_isAttack;
-	float m_hp;
 	// default Hp
 	float m_DefaultHp;
 

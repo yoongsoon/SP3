@@ -1,9 +1,11 @@
 #include "Player.h"
+#include "SceneBase.h"
 
 Player::Player()
 {
 	cashamount = 10.f;
 	wallet = 200.f;
+	maxWallet = wallet;
 	enemycashamount = 10.f;
 	enemywallet = 200.f;
 }
@@ -32,6 +34,11 @@ float Player::ReturnWallet()
 float Player::ReturnEnemyWallet()
 {
 	return enemywallet;
+}
+
+float Player::ReturnMaxWallet()
+{
+	return maxWallet;
 }
 
 void Player::ReduceWalletAmount(float amount)

@@ -1,6 +1,9 @@
 #pragma once
-#include "SceneBase.h"
+
 #include"GameObject.h"
+
+class SceneBase;
+
 class Player
 {
 public:
@@ -11,10 +14,12 @@ public:
 	void update();
 	float ReturnWallet();
 	float ReturnEnemyWallet();
+	float ReturnMaxWallet();
 	void ReduceWalletAmount(float amount);
 	void ReduceEnemyWalletAmount(float amount);
 private:
 	float wallet;
+	float maxWallet;
 	float cashamount;
 
 	float enemywallet;
