@@ -104,6 +104,7 @@ void Stage1::Init()
 	thePlayer->Init();
 
 	SpriteAnimation* wizard = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD]);
+	SpriteAnimation* wizardattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD_ATTACK]);
 	SpriteAnimation* archer = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER]);
 	SpriteAnimation* archerattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER_ATTACK]);
 	SpriteAnimation* soldier = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER]);
@@ -117,6 +118,11 @@ void Stage1::Init()
 	{
 		wizard->m_anim = new Animation();
 		wizard->m_anim->Set(0, 5, 0, 1.0f, true);
+	}
+	if (wizardattack)
+	{
+		wizardattack->m_anim = new Animation();
+		wizardattack->m_anim->Set(0, 8, 0, 1.0f, true);
 	}
 	if (archer)
 	{
@@ -370,6 +376,7 @@ void Stage1::Update(double dt)
 		theMiniMap->Update();
 
 		SpriteAnimation* wizard = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD]);
+		SpriteAnimation* wizardattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD_ATTACK]);
 		SpriteAnimation* archer = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER]);
 		SpriteAnimation* archerattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER_ATTACK]);
 		SpriteAnimation* soldier = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER]);
@@ -383,6 +390,11 @@ void Stage1::Update(double dt)
 		{
 			wizard->Update(dt);
 			wizard->m_anim->animActive = true;
+		}
+		if (wizardattack)
+		{
+			wizardattack->Update(dt);
+			wizardattack->m_anim->animActive = true;
 		}
 		if (archer)
 		{

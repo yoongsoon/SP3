@@ -30,9 +30,9 @@ PlayerTroop::PlayerTroop(GAMEOBJECT_TYPE GO_PLAYER, SceneBase * scene, PLAYER_TY
 
 		active = true;
 		meshValue = SceneBase::GEO_ARCHER;
-		scale.Set(10, 10, 1);
+		scale.Set(20, 15, 1);
 		vel.Set(10.f, 0.f, 0.f);
-		pos.Set(0.f, m_worldHeight / 2, theScene->zaxis);
+		pos.Set(0.f, (m_worldHeight / 2) + 2, theScene->zaxis);
 		playerType = PlayerTroop::P_ARCHER;
 		hp = 50.f;
 		range = 10.f;
@@ -101,6 +101,11 @@ void PlayerTroop::update()
 		if (!StopToAttack)
 		{
 			pos += vel * theScene->_dt;
+			meshValue = SceneBase::GEO_WIZARD;
+		}
+		else
+		{
+			meshValue = SceneBase::GEO_WIZARD_ATTACK;
 		}
 	}
 		if (Attacked)
