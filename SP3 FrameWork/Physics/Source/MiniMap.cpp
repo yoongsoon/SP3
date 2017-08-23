@@ -54,13 +54,18 @@ void MiniMap::RenderUI()
 		{
 			theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_MINI_ALLIES], pos.x - 30.f + static_cast<PlayerTroop*>(it.second)->playerMoveX , pos.y - 2.f, scale.x - 20.f, scale.y);
 		}
-		else if (it.first == GameObject::GO_BRICK)
+	}
+	for (auto & it : theScene->theFactory->g_BuildingsVector)
+	{
+		if (it->active == false)
+			continue;
+		else if (it->type == GameObject::GO_P_CASTLE)
 		{
-			theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_MINI_PLAYER_CASTLE], pos.x - 37.f , pos.y, scale.x - 50.f, scale.y - 5.f);
+			theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_MINI_PLAYER_CASTLE], pos.x - 37.f, pos.y, scale.x - 50.f, scale.y - 5.f);
 		}
-		else if (it.first == GameObject::GO_AI_CASTLE)
+		else if (it->type == GameObject::GO_AI_CASTLE)
 		{
-			theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_MINI_ENEMY_CASTLE], pos.x + 37.f, pos.y , scale.x - 50.f, scale.y - 5.f);
+			theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_MINI_ENEMY_CASTLE], pos.x + 37.f, pos.y, scale.x - 50.f, scale.y - 5.f);
 		}
 	}
 

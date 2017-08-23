@@ -47,9 +47,9 @@ PlayerTroop::PlayerTroop(GAMEOBJECT_TYPE GO_PLAYER, SceneBase * scene, PLAYER_TY
 
 		active = true;
 		meshValue = SceneBase::GEO_WIZARD;
-		scale.Set(5, 5, 5);
+		scale.Set(10, 10, 10);
 		vel.Set(10.f, 0.f, 0.f);
-		pos.Set(0.f, m_worldHeight / 2, 1.f);
+		pos.Set(0.f, m_worldHeight / 2, theScene->zaxis);
 		playerType = PlayerTroop::P_WIZARD;
 		hp = 70.f;
 		range = 10.f;
@@ -72,11 +72,37 @@ void PlayerTroop::update()
 	//destroy PlayerTroop when it ran out of hp
 	float m_worldHeight = 100.f;
 	float m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
-
+	if (playerType == P_SOLDIER)
+	{
+		if (!StopToAttack)
+		{
+			pos += vel * theScene->_dt;
+			meshValue = SceneBase::GEO_SOLDIER;
+		}
+		else
+		{
+			meshValue = SceneBase::GEO_SOLDIER_ATTACK;
+		}
+	}
+	else if (playerType == P_ARCHER)
+	{
+		if (!StopToAttack)
+		{
+			pos += vel * theScene->_dt;
+			meshValue = SceneBase::GEO_ARCHER;
+		}
+		else
+		{
+			meshValue = SceneBase::GEO_ARCHER_ATTACK;
+		}
+	}
+	else if (playerType == P_WIZARD)
+	{
 		if (!StopToAttack)
 		{
 			pos += vel * theScene->_dt;
 		}
+	}
 		if (Attacked)
 		{
 			timer += theScene->_dt;

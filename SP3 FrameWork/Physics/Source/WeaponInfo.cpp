@@ -189,7 +189,7 @@ void Weapon_Info::Discharge(Vector3 position, Vector3 target, SceneBase *_scene)
 			pin_scene = _scene;
 			//
 			//needs get projectile type to change projectiles or maybe weapon type
-			Projectile * aProjectile = Create::createProjectile(projectile_type, GameObject::GO_PROJECTILE, _scene);
+			Projectile * aProjectile = Create::createProjectile(projectile_type, GameObject::GO_P_PROJECTILE, _scene);
 			//Projectile * aProjectile = Create::createProjectile(Projectile::PROJECTILE_TYPE::ARROW_PROJECTILE, GameObject::GO_PROJECTILE, _scene);
 			aProjectile->typeOfMotion = Projectile::PROJECTILE_MOTION;
 			aProjectile->whoseProjectile = Projectile::PROJECTILE_WHOSE::PLAYER_PROJECTILE;
@@ -217,7 +217,7 @@ void Weapon_Info::castleAIDischarge(Vector3 position, float range, SceneBase * _
 		//	//pin_target = target;
 		//	pin_range = range;
 		//	pin_scene = _scene;
-			Projectile * aProjectile = Create::createProjectile(Projectile::PROJECTILE_TYPE::ARROW_PROJECTILE, GameObject::GO_PROJECTILE, _scene);
+			Projectile * aProjectile = Create::createProjectile(Projectile::PROJECTILE_TYPE::ARROW_PROJECTILE, GameObject::GO_AI_PROJECTILE, _scene);
 			aProjectile->typeOfMotion = Projectile::MOTION_TYPE::PROJECTILE_MOTION;
 			aProjectile->whoseProjectile = Projectile::PROJECTILE_WHOSE::ENEMY_PROJECTILE;
 			aProjectile->pos = position;
@@ -245,7 +245,7 @@ void Weapon_Info::castleAIDischarge(Vector3 position, Vector3 target, SceneBase 
 			pin_position = position;
 			pin_target = target;
 			pin_scene = _scene;*/
-			Projectile * aProjectile = Create::createProjectile(Projectile::PROJECTILE_TYPE::ARROW_PROJECTILE, GameObject::GO_PROJECTILE, _scene);
+			Projectile * aProjectile = Create::createProjectile(Projectile::PROJECTILE_TYPE::ARROW_PROJECTILE, GameObject::GO_AI_PROJECTILE, _scene);
 			aProjectile->typeOfMotion = Projectile::MOTION_TYPE::LINEAR_MOTION;
 			aProjectile->whoseProjectile = Projectile::PROJECTILE_WHOSE::ENEMY_PROJECTILE;
 			aProjectile->pos = position;
