@@ -15,7 +15,8 @@ AICastle::AICastle(GAMEOBJECT_TYPE typeValue, SceneBase * scene)
 
 	meshValue = SceneBase::GEO_MINI_ENEMY_CASTLE;
 	scale.Set(30, 30, 1);
-	pos = Vector3((theScene->m_worldWidth * 3) - 15.f, 35.f, 1.f);
+	/*pos = Vector3((theScene->m_worldWidth * 3) - 15.f, 35.f, 1.f);*/
+	pos = Vector3((theScene->m_worldWidth * 3) - 15.f, 33.f, 1.f);
 	hitpoints = 500.f;
 
 	theAIweapon = new Cannon();

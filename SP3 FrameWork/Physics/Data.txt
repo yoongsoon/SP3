@@ -20,4 +20,3 @@ B_StopAttack:1
 B_Attacked:1
 PlayerMoveX:14.3174
 
-

@@ -38,8 +38,9 @@ public:
 	Vector3 Token2Vector(string token);
 
 	SceneBase * _scene;
-
 	int currentStage;
 	static bool b_isLoadLevel;
+
+protected:
 
 };

@@ -9,13 +9,15 @@ bool FileConfiguration::b_isLoadLevel = false;
 void FileConfiguration::loadFile(string _fileName)
 {
 	ifstream myLoadFile;
+	ifstream scoreFile;
 	string eachLine;
 
 	//Game Objects----------
 	unsigned  tempType; // enum for GameObject type
 	Vector3 tempPos; // GameObject position
 	float tempHp; // GameObject Hp
-
+	unsigned tempScore; // GameScore
+	bool scoreLoaded = false;
 	//Enemy  and player Troop variables 
 	unsigned tempTroopType;
 	float tempTimer;
@@ -27,6 +29,7 @@ void FileConfiguration::loadFile(string _fileName)
 	//Buildings-----------
 	float tempHitPoint;
 	int tempGravity;
+
 
 	// count the number of lines 
 	int counter = 0;
@@ -47,189 +50,212 @@ void FileConfiguration::loadFile(string _fileName)
 		else
 		{
 			cout << "Load  Successfully" << endl;
-			while (getline(myLoadFile, eachLine))
+			if (_fileName == "scorefile.txt")
 			{
-				//store content of eachLine into ss
-				istringstream ss(eachLine);
-				string aToken = "";
 
-				if (!eachLine.empty())
-					counter++;
-
-				// copy contents of ss into aToken until '=' is reached
-				while (getline(ss, aToken, ':'))
+				while (getline(myLoadFile, eachLine))
 				{
-					string theTag = aToken;
-					getline(ss, aToken, ':');
 
-				   //don't count  the line with Stage No
-					if (theTag == "Stage No")
-						counter--;
+					//store content of eachLine into ss
+					istringstream ss(eachLine);
+					string aToken = "";
+					while (getline(ss, aToken, '\n'))
+					{
+						cout << aToken << endl;
+						tempScore = stoi(aToken);
+						_scene->m_highScore = tempScore;
+					}
+				}
+			}
+			else
+			{
 
+				while (getline(myLoadFile, eachLine))
+				{
+					//store content of eachLine into ss
+					istringstream ss(eachLine);
+					string aToken = "";
 
-					//------- ENUM---------------//
-					if (theTag == "GameObjectValue")
-					{
-						tempType = stoi(aToken);
-					}
-					else if (theTag == "Enemy Type")
-					{
-						tempTroopType = stoi(aToken);
-					}
-					else if (theTag == "Player Type")
-					{
-						tempTroopType = stoi(aToken);
-					}
+					if (!eachLine.empty())
+						counter++;
 
-					//--------Vector3--------------//
-					else if (theTag == "Position")
+					// copy contents of ss into aToken until '=' is reached
+					while (getline(ss, aToken, ':'))
 					{
-						tempPos = Token2Vector(aToken);
-					}
+						string theTag = aToken;
+						getline(ss, aToken, ':');
 
-					// --------FLOAT----------------//
-					else if (theTag == "Hp")
-					{
-						tempHp = stof(aToken);
-					}
-					else if (theTag == "Timer")
-					{
-						tempTimer = stof(aToken);
-					}
-					else if (theTag == "HitPoints")
-					{
-						tempHitPoint = stof(aToken);
-					}
-					else if (theTag == "PlayerMoveX")
-					{
-						tempPlayerMoveX = stof(aToken);
-					}
-					else if (theTag == "EnemyMoveX")
-					{
-						tempEnemyMoveX = stof(aToken);
-					}
+						//don't count  the line with Stage No
+						if (theTag == "Stage No")
+							counter--;
 
 
-					//--------Bool-------------//
-					else if (theTag == "B_StopAttack")
-					{
-						tempStopAttack = stoi(aToken);
-					}
-					else if (theTag == "B_Attacked")
-					{
-						tempAttacked = stoi(aToken);
-					}
-					else if (theTag == "B_Gravity")
-					{
-						tempGravity = stoi(aToken);
-					}
-
-					if (counter > 7)
-					{
-
-						switch (tempType)
+						//------- ENUM---------------//
+						if (theTag == "GameObjectValue")
 						{
-						case 5:
-						{
-							Enemy * theEnemy;
-
-							if (tempTroopType == 0)
-							{
-								theEnemy = new Enemy(GameObject::GO_ENEMY, _scene, Enemy::E_SOLDIER);
-							}
-							else if (tempTroopType == 1)
-							{
-								theEnemy = new Enemy(GameObject::GO_ENEMY, _scene, Enemy::E_ARCHER);
-							}
-							else if (tempTroopType == 2)
-							{
-								theEnemy = new Enemy(GameObject::GO_ENEMY, _scene, Enemy::E_WIZARD);
-							}
-							theEnemy->pos.Set(tempPos.x, tempPos.y, tempPos.z);
-							theEnemy->hp = tempHp;
-							theEnemy->timer = tempTimer;
-							if (tempStopAttack == 0)
-							{
-								theEnemy->StopToAttack = false;
-							}
-							else
-							{
-								theEnemy->StopToAttack = true;
-							}
-							if (tempAttacked == 0)
-							{
-								theEnemy->Attacked = false;
-							}
-							else
-							{
-								theEnemy->Attacked = true;
-							}
-
-							theEnemy->enemyMoveX = tempEnemyMoveX;
-							_scene->theFactory->createGameObject(theEnemy);
+							tempType = stoi(aToken);
 						}
-						break;
-						case 6:
+						else if (theTag == "Enemy Type")
 						{
-							PlayerTroop * theTroop;
-
-							if (tempTroopType == 0)
-							{
-								theTroop = new PlayerTroop(GameObject::GO_PLAYER, _scene, PlayerTroop::P_SOLDIER);
-							}
-							else if (tempTroopType == 1)
-							{
-								theTroop = new PlayerTroop(GameObject::GO_PLAYER, _scene, PlayerTroop::P_ARCHER);
-							}
-							else if (tempTroopType == 2)
-							{
-								theTroop = new PlayerTroop(GameObject::GO_PLAYER, _scene, PlayerTroop::P_WIZARD);
-							}
-							theTroop->pos.Set(tempPos.x, tempPos.y, tempPos.z);
-							theTroop->hp = tempHp;
-							theTroop->timer = tempTimer;
-							if (tempStopAttack == 0)
-							{
-								theTroop->StopToAttack = false;
-							}
-							else
-							{
-								theTroop->StopToAttack = true;
-							}
-							if (tempAttacked == 0)
-							{
-								theTroop->Attacked = false;
-							}
-							else
-							{
-								theTroop->Attacked = true;
-							}
-							theTroop->playerMoveX = tempPlayerMoveX;
-							_scene->theFactory->createGameObject(theTroop);
+							tempTroopType = stoi(aToken);
 						}
-						break;
-						// 9 -  player brick
-						// 11 - player castle
-						// 14 - AI castle
-						case 9:
-						case 11:
-						case 14:
+						else if (theTag == "Player Type")
+						{
+							tempTroopType = stoi(aToken);
+						}
+
+						//--------Vector3--------------//
+						else if (theTag == "Position")
+						{
+							tempPos = Token2Vector(aToken);
+						}
+
+						// --------FLOAT----------------//
+						else if (theTag == "Hp")
+						{
+							tempHp = stof(aToken);
+						}
+						else if (theTag == "Timer")
+						{
+							tempTimer = stof(aToken);
+						}
+						else if (theTag == "HitPoints")
+						{
+							tempHitPoint = stof(aToken);
+						}
+						else if (theTag == "PlayerMoveX")
+						{
+							tempPlayerMoveX = stof(aToken);
+						}
+						else if (theTag == "EnemyMoveX")
+						{
+							tempEnemyMoveX = stof(aToken);
+						}
+
+
+						//--------Bool-------------//
+						else if (theTag == "B_StopAttack")
+						{
+							tempStopAttack = stoi(aToken);
+						}
+						else if (theTag == "B_Attacked")
+						{
+							tempAttacked = stoi(aToken);
+						}
+						else if (theTag == "B_Gravity")
+						{
+							tempGravity = stoi(aToken);
+						}
+
+						if (counter > 7)
 						{
 
-						}
-						break;
+							switch (tempType)
+							{
+							case 5:
+							{
+								Enemy * theEnemy;
 
+								if (tempTroopType == 0)
+								{
+									theEnemy = new Enemy(GameObject::GO_ENEMY, _scene, Enemy::E_SOLDIER);
+								}
+								else if (tempTroopType == 1)
+								{
+									theEnemy = new Enemy(GameObject::GO_ENEMY, _scene, Enemy::E_ARCHER);
+								}
+								else if (tempTroopType == 2)
+								{
+									theEnemy = new Enemy(GameObject::GO_ENEMY, _scene, Enemy::E_WIZARD);
+								}
+								theEnemy->pos.Set(tempPos.x, tempPos.y, tempPos.z);
+								theEnemy->hp = tempHp;
+								theEnemy->timer = tempTimer;
+								if (tempStopAttack == 0)
+								{
+									theEnemy->StopToAttack = false;
+								}
+								else
+								{
+									theEnemy->StopToAttack = true;
+								}
+								if (tempAttacked == 0)
+								{
+									theEnemy->Attacked = false;
+								}
+								else
+								{
+									theEnemy->Attacked = true;
+								}
+
+								theEnemy->enemyMoveX = tempEnemyMoveX;
+								_scene->theFactory->createGameObject(theEnemy);
+							}
+							break;
+							case 6:
+							{
+								PlayerTroop * theTroop;
+
+								if (tempTroopType == 0)
+								{
+									theTroop = new PlayerTroop(GameObject::GO_PLAYER, _scene, PlayerTroop::P_SOLDIER);
+								}
+								else if (tempTroopType == 1)
+								{
+									theTroop = new PlayerTroop(GameObject::GO_PLAYER, _scene, PlayerTroop::P_ARCHER);
+								}
+								else if (tempTroopType == 2)
+								{
+									theTroop = new PlayerTroop(GameObject::GO_PLAYER, _scene, PlayerTroop::P_WIZARD);
+								}
+								theTroop->pos.Set(tempPos.x, tempPos.y, tempPos.z);
+								theTroop->hp = tempHp;
+								theTroop->timer = tempTimer;
+								if (tempStopAttack == 0)
+								{
+									theTroop->StopToAttack = false;
+								}
+								else
+								{
+									theTroop->StopToAttack = true;
+								}
+								if (tempAttacked == 0)
+								{
+									theTroop->Attacked = false;
+								}
+								else
+								{
+									theTroop->Attacked = true;
+								}
+								theTroop->playerMoveX = tempPlayerMoveX;
+								_scene->theFactory->createGameObject(theTroop);
+							}
+							break;
+							// 9 -  player brick
+							// 11 - player castle
+							// 14 - AI castle
+							case 9:
+							case 11:
+							case 14:
+							{
+
+							}
+							break;
+
+							}
+							counter = 0;
 						}
-						counter = 0;
+
 					}
-
 				}
 			}
 		}
-	}
 
+	}
 	myLoadFile.close();
 }
+
+
 
 void FileConfiguration::saveFile(string _fileName)
 {
@@ -283,15 +309,13 @@ void FileConfiguration::saveFile(string _fileName)
 		}
 
 		/*	for (auto & it : _scene->theFactory->g_BuildingsVector)
-			{
-				outPutFile << "GameObjectValue:" << it->type << endl;
-				outPutFile << "HitPoints:" << it->hitpoints << endl;
-				outPutFile << "B_Gravity:" << it->m_gEffect << endl;
-				outPutFile << endl;
-				outPutFile << endl;
-			}*/
-
-
+		{
+		outPutFile << "GameObjectValue:" << it->type << endl;
+		outPutFile << "HitPoints:" << it->hitpoints << endl;
+		outPutFile << "B_Gravity:" << it->m_gEffect << endl;
+		outPutFile << endl;
+		outPutFile << endl;
+		}*/
 
 	}
 	outPutFile.close();
@@ -333,7 +357,7 @@ void FileConfiguration::loadLevel(string _fileName)
 
 					if (theTag == "Stage No")
 					{
-						currentStage= stoi(aToken);
+						currentStage = stoi(aToken);
 					}
 
 				}

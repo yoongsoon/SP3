@@ -42,11 +42,23 @@ void UIManager::UpdateText()
 	ss4 << e;
 	weap3_cool = ss4.str();
 
-	e = theScene->P_rotation;
-	//e = theScene->
 	stringstream ss5;
-	ss5 << e;
-	P_Rot = ss5.str();
+	ss5 << "Score:";
+	score_text = ss5.str();
+
+	e = theScene->m_levelScore;
+	stringstream ss6;
+	ss6 << e;
+	score_counter = ss6.str();
+
+	stringstream ss7;
+	ss7 << "Hi-Score:";
+	highscore_text = ss7.str();
+
+	e = theScene->m_highScore;
+	stringstream ss8;
+	ss8 << e;
+	highscore_counter = ss8.str();
 }
 
 void UIManager::Update()
@@ -188,8 +200,12 @@ void UIManager::RenderText()
 	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], weap1_cool, Color(1, 0, 0), 5, 10, 15);
 	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], weap2_cool, Color(1, 0, 0), 5, 10, 13);
 	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], weap3_cool, Color(1, 0, 0), 5, 10, 11);
-	//theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], P_Rotation, Color(1, 0, 0), 5, 10, 11);
 
+	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], score_text, Color(1, 1, 0), 3, 3, 56);
+	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], score_counter, Color(1, 1, 0), 3, 3, 54);
+
+	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], highscore_text, Color(1, 1, 0), 3, 3, 52);
+	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], highscore_counter, Color(1, 1, 0), 3, 3, 50);
 
 	std::ostringstream ss;
 	ss.precision(3);

@@ -26,5 +26,8 @@ private:
 	string weap1_cool;
 	string weap2_cool;
 	string weap3_cool;
-	string P_Rot;//ate
+	string score_text;
+	string score_counter;
+	string highscore_text;
+	string highscore_counter;
 };
