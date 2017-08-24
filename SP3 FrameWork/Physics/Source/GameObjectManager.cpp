@@ -199,7 +199,7 @@ void GameObjectManager::Enemy_Enemy_Collision()
 		{
 
 			//check projectile collision with other game object
-			if ((*it2)->type != GameObject::GO_P_CASTLE)
+			if ((*it2)->type != GameObject::GO_P_CASTLE && (*it2)->type != GameObject::GO_P_BRICK)
 			{
 				continue;
 			}
@@ -226,7 +226,7 @@ void GameObjectManager::Enemy_Enemy_Collision()
 
 				if ((archer_position > castle_position) && ((archer_position - archer_range - archer_scale - castle_position) < 1.f) && archer_active)//collision for castle(for if archer is on left side)
 				{
-					if (castle_active)//if castle is active
+					if (castle_active && castle_hp > 0)//if castle is active
 					{
 						if (!archer_attacked)//if archer has not attacked
 						{
@@ -245,7 +245,7 @@ void GameObjectManager::Enemy_Enemy_Collision()
 				}
 				else if ((archer_position < castle_position) && ((archer_position + archer_range + archer_scale - castle_position) > 1.f) && archer_active)//collision for castle(for if archer is on right side)
 				{
-					if (castle_active)//if castle is active
+					if (castle_active && castle_hp > 0)//if castle is active
 					{
 						if (!archer_attacked)//if archer has not attacked
 						{
@@ -267,7 +267,10 @@ void GameObjectManager::Enemy_Enemy_Collision()
 				(*it2)->hitpoints = castle_hp;
 				(*it2)->active = castle_active;
 
-				cout << "castle " << castle_hp << endl;
+				if ((*it2)->type == GameObject::GO_P_CASTLE)
+				{
+					cout << "castle " << castle_hp << endl;
+				}
 				//cout << "archer" << archer_position << endl;
 				static_cast <Enemy *>(it->second)->pos.x = archer_position;
 				static_cast <Enemy *>(it->second)->range = archer_range;

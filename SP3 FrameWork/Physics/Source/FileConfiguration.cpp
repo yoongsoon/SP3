@@ -13,6 +13,7 @@ void FileConfiguration::loadFile(string _fileName)
 	unsigned  tempType; // enum for GameObject type
 	Vector3 tempPos; // GameObject position
 	float tempHp; // GameObject Hp
+	unsigned score; // GameScore
 
 	//Enemy  and player Troop variables 
 	unsigned tempTroopType;
@@ -62,7 +63,11 @@ void FileConfiguration::loadFile(string _fileName)
 
 
 					//------- ENUM---------------//
-					if (theTag == "GameObjectValue")
+					if (theTag == "HighScore")
+					{
+						tempType = stoi(aToken);
+					}
+					else if (theTag == "GameObjectValue")
 					{
 						tempType = stoi(aToken);
 					}
@@ -118,7 +123,7 @@ void FileConfiguration::loadFile(string _fileName)
 						tempGravity = stoi(aToken);
 					}
 
-					if (counter > 7)
+					if (counter > 8)
 					{
 
 						switch (tempType)
@@ -188,6 +193,7 @@ void FileConfiguration::loadFile(string _fileName)
 void FileConfiguration::saveFile(string _fileName)
 {
 	ofstream outPutFile;
+	bool ScoreSaved = false;
 	outPutFile.open(_fileName.c_str());
 
 	if (!outPutFile.is_open())
@@ -197,6 +203,7 @@ void FileConfiguration::saveFile(string _fileName)
 	else
 	{
 		cout << "Saved file successfully" << endl;
+		//outPutFile << "HighScore:" << 
 		for (auto & it : _scene->theFactory->g_FactoryMap)
 		{
 			if (it.second->active == false)

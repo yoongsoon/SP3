@@ -187,6 +187,8 @@ protected:
 	unsigned m_parameters[U_TOTAL];
 	unsigned m_sceneID = 0;
 	int m_wallStackCounter;
+	int m_highScore;
+	int m_levelScore;
 
 	Camera camera;
 	MS modelStack;

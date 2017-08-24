@@ -83,5 +83,11 @@ void AICastle::update()
 				}
 			}
 		}
+		//Duel
+		if (hitpoints < 0)
+		{
+			hitpoints = 0;
+			active = false;
+		}
 		theAIweapon->Update(theScene->_dt);
 }

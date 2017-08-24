@@ -35,6 +35,7 @@ void Stage1::Init()
 	P_rotation = 1.f;
 	//Physics code here
 	m_speed = 1.f;
+	m_levelScore = 10000;
 
 	Math::InitRNG();
 
@@ -83,9 +84,6 @@ void Stage1::Init()
 	}
 	Buildings * theCastle = new Buildings(GameObject::GO_P_CASTLE, this, 0);
 	theFactory->createGameObject(theCastle);
-
-
-	// Initialize castle object
 	
 	for (m_wallStackCounter; m_wallStackCounter <= 6; ++m_wallStackCounter)
 	{
@@ -390,7 +388,6 @@ void Stage1::Update(double dt)
 
 		//Update all Game Objects
 		theFactory->updateGameObject();
-		//cout << "proj: " << theFactory->g_ProjectileVector.size() << endl;
 		// Update collisions
 		theCollider->Update(dt);
 
