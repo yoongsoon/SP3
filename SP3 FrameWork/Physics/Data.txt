@@ -1,20 +1,30 @@
 GameObjectValue:5
 Enemy Type:0
-Position:[ 238.105, 50, 1 ]
-Hp:100
-Timer:0
-B_StopAttack:0
-B_Attacked:0
-EnemyMoveX:-22.8927
+Position:[ 216.457, 50, 1 ]
+Hp:60
+Timer:2.21042
+B_StopAttack:1
+B_Attacked:1
+EnemyMoveX:-26.1871
 
 
 GameObjectValue:6
-Player Type:0
-Position:[ 72.7671, 50, 1 ]
-Hp:100
-Timer:0
-B_StopAttack:0
-B_Attacked:0
-PlayerMoveX:11.3403
+Player Type:1
+Position:[ 199.659, 52, 5 ]
+Hp:50
+Timer:1.47855
+B_StopAttack:1
+B_Attacked:1
+PlayerMoveX:31.0893
+
+
+GameObjectValue:6
+Player Type:2
+Position:[ 209.694, 50, 5 ]
+Hp:35
+Timer:0.527285
+B_StopAttack:1
+B_Attacked:1
+PlayerMoveX:32.6525
 
 
