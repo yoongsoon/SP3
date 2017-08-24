@@ -17,5 +17,7 @@ public:
 
 	BackGround(BACKGROUND_TYPE  _backGroundType , GAMEOBJECT_TYPE typeValue, SceneBase * scene);
 	virtual ~BackGround();
+
+	virtual void update();
 	
 };

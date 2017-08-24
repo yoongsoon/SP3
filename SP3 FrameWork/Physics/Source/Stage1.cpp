@@ -169,7 +169,15 @@ void Stage1::Init()
 
 	theUIManager = new UIManager(this);
 
-	 theFile = new FileConfiguration(this);
+	//Init scene
+	theFile->setScene(this);
+
+	// if the load function is called , then load file
+	if(FileConfiguration::b_isLoadLevel == true)
+	theFile->loadFile("Data.txt");
+
+	 //Scene 1
+	 sceneNumber = SC_01;
 }
 
 void Stage1::Update(double dt)
@@ -390,7 +398,6 @@ void Stage1::Update(double dt)
 
 		//Update all Game Objects
 		theFactory->updateGameObject();
-		cout << "proj: " << theFactory->g_ProjectileVector.size() << endl;
 		// Update collisions
 		theCollider->Update(dt);
 

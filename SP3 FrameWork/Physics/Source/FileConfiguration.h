@@ -23,17 +23,23 @@ class SceneBase;
 class FileConfiguration
 {
 public:
-	FileConfiguration(SceneBase * scene);
+	FileConfiguration();
 	~FileConfiguration();
 
+	void setScene(SceneBase * scene);
 
 	//file configuration
 	void loadFile(string _fileName);
 	void saveFile(string _fileName);
+	void loadLevel(string _fileName);
+
 
 	double Token2Double(string token);
 	Vector3 Token2Vector(string token);
 
 	SceneBase * _scene;
+
+	int currentStage;
+	static bool b_isLoadLevel;
 
 };
