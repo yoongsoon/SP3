@@ -192,9 +192,13 @@ void Stage1::Update(double dt)
 	}
 
 
-
-	if (b_isPause == false)
+	
+	if( (b_isPause == false) && (b_isWon==false))
 	{
+		CSoundEngine::getInstance()->theCurrentSound->setIsPaused(false);
+
+		//CSoundEngine::getInstance()->PauseSounds("BackGround Music");
+		
 		static bool bow = false;
 		if (Application::IsKeyPressed(VK_NUMPAD1) && !bow)
 		{
@@ -458,17 +462,15 @@ void Stage1::Update(double dt)
 			P_Catapult_Sprite->m_anim->animActive = true;
 		}
 	}
+	else
+	{
+		CSoundEngine::getInstance()->theCurrentSound->setIsPaused();
+	}
+
 	
-	//P_rotation = Math::RadianToDegree(atan2f(theGhostProj->pos.y - theReleaseMouseGhostProj->pos.y, theGhostProj->pos.x - theReleaseMouseGhostProj->pos.x));
 
 	theUIManager->Update();
 	theUIManager->UpdateText();
-
-	/*TEXT STUFF*/
-	//std::ostringstream ss0;
-	//ss0.precision(5);
-	//ss0 << "NINJA X GTA";
-	//textObj[0]->SetText(ss0.str());
 
 }
 

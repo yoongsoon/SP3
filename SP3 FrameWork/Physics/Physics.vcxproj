@@ -164,6 +164,7 @@
     <ClCompile Include="Source\BackGround.cpp" />
     <ClCompile Include="Source\Buildings.cpp" />
     <ClCompile Include="Source\CollisionManager.cpp" />
+    <ClCompile Include="Source\Credits_Menu.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\Factory.cpp" />
     <ClCompile Include="Source\FileConfiguration.cpp" />
@@ -202,6 +203,7 @@
     <ClInclude Include="Source\BackGround.h" />
     <ClInclude Include="Source\Buildings.h" />
     <ClInclude Include="Source\CollisionManager.h" />
+    <ClInclude Include="Source\Credits_Menu.h" />
     <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\Factory.h" />
     <ClInclude Include="Source\FileConfiguration.h" />

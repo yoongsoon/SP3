@@ -34,6 +34,8 @@ public:
 	// Play a sound from this map   
 	void PlayASound(const std::string& _soundIndex , bool _loop, bool _pause);
 
+	void PauseSounds(const std::string& _soundIndex);
+
 	bool isSoundAdded = false;
 
 	ISound * theCurrentSound;

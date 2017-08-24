@@ -55,7 +55,10 @@ void UIManager::Update()
 	{
 		theScene->b_isPause = true;
 	}
-
+	if (Application::IsKeyPressed('O'))
+	{
+		theScene->b_isWon = true;
+	}
 	if (theScene->b_isPause == true)
 	{
 		if (Application::IsKeyPressed(VK_UP) && theScene->pressDelay >= theScene->cooldownPressed)
@@ -111,6 +114,53 @@ void UIManager::Update()
 			theScene->pressDelay = 0.f;
 		}
 	}
+	if (theScene->b_isWon == true)
+	{
+		if (Application::IsKeyPressed(VK_UP) && theScene->pressDelay >= theScene->cooldownPressed)
+		{
+			if (theScene->menuWin == SceneBase::WIN_CONTINUE)
+			{
+				theScene->menuWin = SceneBase::WIN_RESTART;
+			}
+			else if (theScene->menuWin == SceneBase::WIN_RESTART)
+			{
+				theScene->menuWin = SceneBase::WIN_CONTINUE;
+			}
+			theScene->pressDelay = 0.f;
+		}
+
+		if (Application::IsKeyPressed(VK_DOWN) && theScene->pressDelay >= theScene->cooldownPressed)
+		{
+
+			if (theScene->menuWin == SceneBase::WIN_CONTINUE)
+			{
+				theScene->menuWin = SceneBase::WIN_RESTART;
+			}
+			else if (theScene->menuWin == SceneBase::WIN_RESTART)
+			{
+				theScene->menuWin = SceneBase::WIN_CONTINUE;
+			}
+			theScene->pressDelay = 0.f;
+		}
+
+		if (Application::IsKeyPressed(VK_RETURN) && theScene->pressDelay >= theScene->cooldownPressed)
+		{
+			if (theScene->menuWin == SceneBase::WIN_CONTINUE)
+			{
+				theScene->b_isWon = false;
+				SceneManager::getInstance()->SetActiveScene("Credits");
+			}
+			else if (theScene->menuWin == SceneBase::WIN_RESTART)
+			{
+				theScene->Init();
+				theScene->b_isPause = false;
+				theScene->b_isWon = false;
+				SceneManager::getInstance()->SetActiveScene("Stage1");
+			}
+			theScene->pressDelay = 0.f;
+		}
+
+	}
 }
 
 void UIManager::Render()
@@ -153,6 +203,23 @@ void UIManager::Render()
 		case SceneBase::PAUSE_MAINMENU:
 			theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_PAUSE_ARROW], 60, 25, 10, 5);
 			break;
+		}
+	}
+	if (theScene->b_isWon == true)
+	{
+		theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_WIN_MENU], 80, 30, 120, 40);
+
+		switch (theScene->menuWin)
+		{
+		case SceneBase::WIN_CONTINUE:
+			theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_PAUSE_ARROW], 52, 21, 10, 5);
+			break;
+		case SceneBase::WIN_RESTART:
+			theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_PAUSE_ARROW], 57, 15, 10, 5);
+			break;
+	/*	case SceneBase::PAUSE_MAINMENU:
+			theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_PAUSE_ARROW], 60, 25, 10, 5);
+			break;*/
 		}
 	}
 }

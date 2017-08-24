@@ -108,9 +108,11 @@ public:
 
 		GEO_TERRAIN,
 
+		GEO_WIN_MENU,
 		GEO_PAUSE_MENU,
 		GEO_PAUSE_ARROW,
 		GEO_MAIN_MENU,
+		GEO_CREDITS,
 
 		//MINIMAP 
 		GEO_MINI_ARROW,
@@ -139,7 +141,13 @@ public:
 		PAUSE_RESTART,
 		PAUSE_MAINMENU,
 	};
+	enum MENU_WIN
+	{
+		WIN_CONTINUE = 0,
+		WIN_RESTART,
+	};
 
+	MENU_WIN menuWin = WIN_CONTINUE;
 	MENU_PAUSE menuPause = PAUSE_RESUME;
 
 	SceneBase();
@@ -174,7 +182,7 @@ public:
 
 	//bool for pause
 	static bool b_isPause;
-
+	static bool b_isWon;
 
 	//for text
 	bool weapon1 = true;
@@ -200,6 +208,7 @@ protected:
 	float fps;
 
 	float P_rotation = 0;
+
 	//--------------------------------PHYSIC CODES---------------------------------------------------//
 	float m_worldWidth;
 	float m_worldHeight;

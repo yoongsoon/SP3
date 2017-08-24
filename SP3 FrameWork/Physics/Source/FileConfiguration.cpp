@@ -203,7 +203,7 @@ void FileConfiguration::saveFile(string _fileName)
 	else
 	{
 		cout << "Saved file successfully" << endl;
-		outPutFile << "HighScore:" << 
+	//	outPutFile << "HighScore:" << 
 		for (auto & it : _scene->theFactory->g_FactoryMap)
 		{
 			if (it.second->active == false)
