@@ -6,8 +6,9 @@
 MiniMap::MiniMap(GAMEOBJECT_TYPE typeValue, SceneBase * scene)
 	:GameObject(typeValue, scene)
 {
-	pos.Set(theScene->m_worldWidth / 2 + 12.5f, theScene->m_worldHeight - 45.f, 0.f);
+	pos.Set(133.f/ 2 + 12.5f,  55.f, 0.f);
 	scale.Set(60.f, 10.f, 1.f);
+
 
 }
 
@@ -52,7 +53,8 @@ void MiniMap::RenderUI()
 		}
 		else if (it.first == GameObject::GO_PLAYER )
 		{
-			theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_MINI_ALLIES], pos.x - 30.f + static_cast<PlayerTroop*>(it.second)->playerMoveX , pos.y - 2.f, scale.x - 20.f, scale.y);
+			theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_MINI_ALLIES], pos.x - 30.f + static_cast<PlayerTroop*>(it.second)->playerMoveX
+				, pos.y - 2.f, scale.x - 20.f, scale.y);
 		}
 	}
 	for (auto & it : theScene->theFactory->g_BuildingsVector)

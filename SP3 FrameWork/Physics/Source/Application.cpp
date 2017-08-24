@@ -17,6 +17,7 @@ GLFWwindow* m_window;
 const unsigned char FPS = 60; // FPS of this game
 const unsigned int frameTime = 1000 / FPS; // time for each frame
 int m_width, m_height;
+bool Application::b_isResize = false;
 
 //Define an error callback
 static void error_callback(int error, const char* description)
@@ -38,6 +39,8 @@ void resize_callback(GLFWwindow* window, int w, int h)
 	m_width = w;
 	m_height = h;
 	glViewport(0, 0, w, h);
+	
+	Application::b_isResize = true;
 }
 
 bool Application::IsKeyPressed(unsigned short key)

@@ -155,7 +155,11 @@
     <ClCompile Include="Source\FileConfiguration.cpp">
       <Filter>Source Files\GameObject</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Source\Credits_Menu.cpp">
+=======
+    <ClCompile Include="Source\LoseScene.cpp">
+>>>>>>> 3a6cc2eaf3395bf795a3d416d61b5a727b87ab8d
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
   </ItemGroup>
@@ -280,7 +284,11 @@
     <ClInclude Include="Source\FileConfiguration.h">
       <Filter>Header Files\GameObject</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Source\Credits_Menu.h">
+=======
+    <ClInclude Include="Source\LoseScene.h">
+>>>>>>> 3a6cc2eaf3395bf795a3d416d61b5a727b87ab8d
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
   </ItemGroup>

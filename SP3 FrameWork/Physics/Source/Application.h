@@ -21,6 +21,8 @@ public:
 	static int GetWindowWidth();
 	static int GetWindowHeight();
 
+	static bool b_isResize;
+
 private:
 	Application();
 	~Application();

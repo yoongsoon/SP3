@@ -107,12 +107,18 @@ public:
 		GEO_SPRITE_FIRE,
 
 		GEO_TERRAIN,
+		//Selection
+		GEO_SELECT_WARRIOR,
+		GEO_SELECT_ARCHER,
+		GEO_SELECT_WIZARD,
+
 
 		GEO_WIN_MENU,
 		GEO_PAUSE_MENU,
 		GEO_PAUSE_ARROW,
 		GEO_MAIN_MENU,
 		GEO_CREDITS,
+		GEO_LOSE_SCENE,
 
 		//MINIMAP 
 		GEO_MINI_ARROW,
@@ -139,6 +145,7 @@ public:
 	{
 		PAUSE_RESUME = 0,
 		PAUSE_RESTART,
+		PAUSE_SAVE,
 		PAUSE_MAINMENU,
 	};
 	enum MENU_WIN
@@ -149,6 +156,7 @@ public:
 
 	MENU_WIN menuWin = WIN_CONTINUE;
 	MENU_PAUSE menuPause = PAUSE_RESUME;
+	SCENE_NUM  sceneNumber = SC_START;
 
 	SceneBase();
 	~SceneBase();
@@ -189,14 +197,16 @@ public:
 	bool weapon2 = false;
 	bool weapon3 = false;
 
+	int m_highScore;
+	int m_levelScore;
+
 protected:
 	unsigned m_vertexArrayID;
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
 	unsigned m_sceneID = 0;
 	int m_wallStackCounter;
-	int m_highScore;
-	int m_levelScore;
+	
 
 	Camera camera;
 	MS modelStack;

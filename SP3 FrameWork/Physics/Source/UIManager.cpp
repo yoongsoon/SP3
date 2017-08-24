@@ -42,11 +42,23 @@ void UIManager::UpdateText()
 	ss4 << e;
 	weap3_cool = ss4.str();
 
-	e = theScene->P_rotation;
-	//e = theScene->
 	stringstream ss5;
-	ss5 << e;
-	P_Rot = ss5.str();
+	ss5 << "Score:";
+	score_text = ss5.str();
+
+	e = theScene->m_levelScore;
+	stringstream ss6;
+	ss6 << e;
+	score_counter = ss6.str();
+
+	stringstream ss7;
+	ss7 << "Hi-Score:";
+	highscore_text = ss7.str();
+
+	e = theScene->m_highScore;
+	stringstream ss8;
+	ss8 << e;
+	highscore_counter = ss8.str();
 }
 
 void UIManager::Update()
@@ -69,6 +81,10 @@ void UIManager::Update()
 			}
 			else if (theScene->menuPause == SceneBase::PAUSE_MAINMENU)
 			{
+				theScene->menuPause = SceneBase::PAUSE_SAVE;
+			}
+			else if (theScene->menuPause == SceneBase::PAUSE_SAVE)
+			{
 				theScene->menuPause = SceneBase::PAUSE_RESTART;
 			}
 			else
@@ -86,7 +102,11 @@ void UIManager::Update()
 			}
 			else if (theScene->menuPause == SceneBase::PAUSE_RESTART)
 			{
-				theScene->menuPause = SceneBase::PAUSE_MAINMENU;
+				theScene->menuPause = SceneBase::PAUSE_SAVE;
+			}
+			else if (theScene->menuPause == SceneBase::PAUSE_SAVE)
+			{
+				theScene->menuPause = SceneBase::PAUSE_MAINMENU;;
 			}
 			else
 			{
@@ -106,6 +126,10 @@ void UIManager::Update()
 				theScene->Init();
 				theScene->b_isPause = false;
 				SceneManager::getInstance()->SetActiveScene("Stage1");
+			}
+			else if (theScene->menuPause == SceneBase::PAUSE_SAVE)
+			{
+				theScene->theFile->saveFile("Data.txt");
 			}
 			else if (theScene->menuPause == SceneBase::PAUSE_MAINMENU)
 			{
@@ -185,6 +209,13 @@ void UIManager::Render()
 	}
 	theScene->modelStack.PopMatrix();
 
+
+	theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_SELECT_WARRIOR], 60, 6, 20, 10);
+	theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_SELECT_ARCHER], 80, 6, 20, 10);
+	theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_SELECT_WIZARD], 100, 6, 20, 10);
+
+
+
 	//-------------------------------------Pause Menu---------------------------------------------------//
 
 	//Render background
@@ -195,13 +226,16 @@ void UIManager::Render()
 		switch (theScene->menuPause)
 		{
 		case SceneBase::PAUSE_RESUME:
-			theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_PAUSE_ARROW], 60, 37, 10, 5);
+			theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_PAUSE_ARROW], 60, 40, 10, 5);
 			break;
 		case SceneBase::PAUSE_RESTART:
-			theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_PAUSE_ARROW], 60, 31, 10, 5);
+			theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_PAUSE_ARROW], 60, 34, 10, 5);
+			break;
+		case SceneBase::PAUSE_SAVE:
+			theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_PAUSE_ARROW], 60, 26, 10, 5);
 			break;
 		case SceneBase::PAUSE_MAINMENU:
-			theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_PAUSE_ARROW], 60, 25, 10, 5);
+			theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_PAUSE_ARROW], 60, 20, 10, 5);
 			break;
 		}
 	}
@@ -233,8 +267,12 @@ void UIManager::RenderText()
 	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], weap1_cool, Color(1, 0, 0), 5, 10, 15);
 	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], weap2_cool, Color(1, 0, 0), 5, 10, 13);
 	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], weap3_cool, Color(1, 0, 0), 5, 10, 11);
-	//theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], P_Rotation, Color(1, 0, 0), 5, 10, 11);
 
+	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], score_text, Color(1, 1, 0), 3, 3, 56);
+	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], score_counter, Color(1, 1, 0), 3, 3, 54);
+
+	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], highscore_text, Color(1, 1, 0), 3, 3, 52);
+	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], highscore_counter, Color(1, 1, 0), 3, 3, 50);
 
 	std::ostringstream ss;
 	ss.precision(3);
