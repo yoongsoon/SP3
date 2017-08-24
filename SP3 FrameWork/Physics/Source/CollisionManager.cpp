@@ -236,10 +236,8 @@ void CollisionManager::collisionResponse(GameObject * object1, GameObject * obje
 	{
 		if (object2->type == GameObject::GO_P_BRICK)
 		{
-			//object2->m_gEffect = object1->m_gEffect = false;
-			object2->pos.y += theScene->_dt * 4.f;
-			if (object2->m_gEffect == false)
-				cout << "falsed" << endl;
+			object2->canFall = false;
+			object2->pos.y -= object2->vel.y;
 		}
 	}
 	//PLAYER PROJECTILE DAMAGE TO ENEMY TROOPS

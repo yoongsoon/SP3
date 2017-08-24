@@ -35,5 +35,6 @@ public:
 	Vector3 Token2Vector(string token);
 
 	SceneBase * _scene;
+protected:
 
 };

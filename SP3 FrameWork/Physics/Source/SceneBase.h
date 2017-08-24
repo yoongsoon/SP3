@@ -181,14 +181,16 @@ public:
 	bool weapon2 = false;
 	bool weapon3 = false;
 
+	int m_highScore;
+	int m_levelScore;
+
 protected:
 	unsigned m_vertexArrayID;
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
 	unsigned m_sceneID = 0;
 	int m_wallStackCounter;
-	int m_highScore;
-	int m_levelScore;
+	
 
 	Camera camera;
 	MS modelStack;

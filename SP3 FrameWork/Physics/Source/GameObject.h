@@ -36,6 +36,7 @@ public:
 	Vector3 topLeft, topRight, bottomLeft, bottomRight;
 	bool active;
 	bool m_gEffect;
+	bool canFall;
 	float mass;
 	float rotateX;
 	float rotateY;

@@ -25,6 +25,8 @@ Stage1::~Stage1()
 void Stage1::Init()
 {
 	SceneBase::Init();
+	theFile = new FileConfiguration(this);
+	
 	m_sceneID = SceneBase::SC_01;
 	m_wallStackCounter = 1;
 	ghost_exist = false;
@@ -36,6 +38,8 @@ void Stage1::Init()
 	//Physics code here
 	m_speed = 1.f;
 	m_levelScore = 10000;
+	m_highScore = 0; 
+	//theFile->loadFile("scorefile.txt");
 
 	Math::InitRNG();
 
@@ -167,7 +171,7 @@ void Stage1::Init()
 
 	theUIManager = new UIManager(this);
 
-	 theFile = new FileConfiguration(this);
+	
 }
 
 void Stage1::Update(double dt)
@@ -175,18 +179,23 @@ void Stage1::Update(double dt)
 	_elapsedTime += (float)dt;
 	pressDelay += (float)dt;
 	_dt = (float)dt;
+	m_levelScore -= (float)dt * 0.5f;
 
 	//Calculating aspect ratio ( 4:3)
 	m_worldHeight = 100.f;
 	m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
-
+	
 	if (Application::IsKeyPressed('K') && pressDelay >= cooldownPressed)
 	{
+		if (m_levelScore > m_highScore)
+			m_highScore = m_levelScore;
+		theFile->saveFile("scorefile.txt");
 		theFile->saveFile("Data.txt");
 		pressDelay = 0.f;
 	}
 	if (Application::IsKeyPressed('L') && pressDelay >= cooldownPressed)
 	{
+		theFile->loadFile("scorefile.txt");
 		theFile->loadFile("Data.txt");
 		pressDelay = 0.f;
 	}

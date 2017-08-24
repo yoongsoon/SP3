@@ -20,4 +20,6 @@ public:
 
 private:
 	float offset;
+	bool isPressed = false;
+	bool canFall = false;
 };
