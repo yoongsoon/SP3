@@ -34,9 +34,13 @@ public:
 	Vector3 vel;
 	Vector3 scale;
 	Vector3 topLeft, topRight, bottomLeft, bottomRight;
+	Vector3 wallPos;
+	bool m_canFall;
 	bool active;
 	bool m_gEffect;
-	bool canFall;
+
+	std::string debugTag = "";
+
 	float mass;
 	float rotateX;
 	float rotateY;

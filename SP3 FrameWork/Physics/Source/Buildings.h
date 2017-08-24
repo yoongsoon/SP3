@@ -18,8 +18,8 @@ public:
 	};
 	void update();
 
-private:
-	float offset;
+protected:
+	float initOffset;
+	float fallOffset;
 	bool isPressed = false;
-	bool canFall = false;
 };
