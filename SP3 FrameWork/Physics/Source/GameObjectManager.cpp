@@ -58,7 +58,7 @@ void GameObjectManager::Enemy_Enemy_Collision()
 
 //----------------------------------------------Enemy vs Player Units Collision----------------------------------------------------------------------------------------------------------------
 
-					//Soldier is actually refering to player
+				//Soldier is actually refering to player
 				float soldier_position = static_cast <Enemy *>(it2->second)->pos.x;
 				float soldier_range = static_cast <Enemy *>(it2->second)->range;
 				float soldier_scale = static_cast <Enemy *>(it2->second)->scale.x;
@@ -194,7 +194,91 @@ void GameObjectManager::Enemy_Enemy_Collision()
 			}
 
 
+		}
+		for (auto it2 = theScene->theFactory->g_BuildingsVector.begin(); it2 != theScene->theFactory->g_BuildingsVector.end(); it2++)
+		{
 
+			//check projectile collision with other game object
+			if ((*it2)->type != GameObject::GO_P_CASTLE)
+			{
+				continue;
+			}
+
+
+			if (it->first == GameObject::GO_ENEMY)
+			{
+				//----------------------------------------------Enemy vs Player Units Collision----------------------------------------------------------------------------------------------------------------
+
+				//Soldier is actually refering to player
+				float castle_position = (*it2)->pos.x;
+				float castle_scale = (*it2)->scale.x;
+				float castle_hp = (*it2)->hitpoints;
+				bool castle_active = (*it2)->active;
+				//Archer is refering to enemy
+				float archer_position = static_cast <Enemy *>(it->second)->pos.x;
+				float archer_range = static_cast <Enemy *>(it->second)->range;
+				float archer_scale = static_cast <Enemy *>(it->second)->scale.x;
+				float archer_hp = static_cast <Enemy *>(it->second)->hp;
+				float archer_damage = static_cast <Enemy *>(it->second)->damage;
+				bool archer_attacked = static_cast <Enemy *>(it->second)->Attacked;
+				bool archer_stoptoattack = static_cast <Enemy *>(it->second)->StopToAttack;
+				bool archer_active = static_cast <Enemy *>(it->second)->active;
+
+				if ((archer_position > castle_position) && ((archer_position - archer_range - archer_scale - castle_position) < 1.f) && archer_active)//collision for castle(for if archer is on left side)
+				{
+					if (castle_active)//if castle is active
+					{
+						if (!archer_attacked)//if archer has not attacked
+						{
+							castle_hp -= archer_damage; //castle hp - archer damage (attack)
+							archer_attacked = true;//start attack cooldown
+							cout << "castle " << castle_hp << endl;
+						}
+						archer_stoptoattack = true;//archer stop moving to attack
+					}
+					else // if castle not active
+					{
+						CSoundEngine::getInstance()->isSoundAdded = false;
+						CSoundEngine::getInstance()->theCurrentSound->stop();
+						archer_stoptoattack = false;//archer move after enemy died
+					}
+				}
+				else if ((archer_position < castle_position) && ((archer_position + archer_range + archer_scale - castle_position) > 1.f) && archer_active)//collision for castle(for if archer is on right side)
+				{
+					if (castle_active)//if castle is active
+					{
+						if (!archer_attacked)//if archer has not attacked
+						{
+							castle_hp -= archer_damage; //castle hp - archer damage (attack)
+							archer_attacked = true;//start attack cooldown
+							cout << "castle " << castle_hp << endl;
+						}
+						archer_stoptoattack = true;//archer stop moving to attack
+					}
+					else // if castle not active
+					{
+						CSoundEngine::getInstance()->isSoundAdded = false;
+						CSoundEngine::getInstance()->theCurrentSound->stop();
+						archer_stoptoattack = false;//archer move after enemy died
+					}
+				}
+				(*it2)->pos.x = castle_position;
+				(*it2)->scale.x = castle_scale;
+				(*it2)->hitpoints = castle_hp;
+				(*it2)->active = castle_active;
+
+				cout << "castle " << castle_hp << endl;
+				//cout << "archer" << archer_position << endl;
+				static_cast <Enemy *>(it->second)->pos.x = archer_position;
+				static_cast <Enemy *>(it->second)->range = archer_range;
+				static_cast <Enemy *>(it->second)->scale.x = archer_scale;
+				static_cast <Enemy *>(it->second)->hp = archer_hp;
+				static_cast <Enemy *>(it->second)->damage = archer_damage;
+				static_cast <Enemy *>(it->second)->Attacked = archer_attacked;
+				static_cast <Enemy *>(it->second)->StopToAttack = archer_stoptoattack;
+				static_cast <Enemy *>(it->second)->active = archer_active;
+			}
 		}
 	}
+
 }

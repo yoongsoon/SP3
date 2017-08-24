@@ -390,7 +390,7 @@ void Stage1::Update(double dt)
 
 		//Update all Game Objects
 		theFactory->updateGameObject();
-		cout << "proj: " << theFactory->g_ProjectileVector.size() << endl;
+		//cout << "proj: " << theFactory->g_ProjectileVector.size() << endl;
 		// Update collisions
 		theCollider->Update(dt);
 
