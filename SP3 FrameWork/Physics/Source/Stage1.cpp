@@ -27,7 +27,6 @@ void Stage1::Init()
 	SceneBase::Init();
 	
 	m_sceneID = SceneBase::SC_01;
-	m_wallStackCounter = 1;
 	ghost_exist = false;
 	release_ghost_exist = false;
 	M_ghost_exist = false;
@@ -79,22 +78,27 @@ void Stage1::Init()
 	theMouseGhostProj->active = true;
 	theFactory->createGameObject(theMouseGhostProj);
 
-	// BUILDINGS
-	for (m_wallStackCounter; m_wallStackCounter <= 6; ++m_wallStackCounter)
+
+	// if there is a previous load data , DON"T reinitialise the buildings
+	if (FileConfiguration::b_isLoadLevel == false)
 	{
-		Buildings * theWall = new Buildings(GameObject::GO_P_BRICK, this, m_wallStackCounter);
-		theFactory->createGameObject(theWall);
+		// BUILDINGS
+		for (int m_wallStackCounter = 1; m_wallStackCounter <= 6; ++m_wallStackCounter)
+		{
+			Buildings * theWall = new Buildings(GameObject::GO_P_BRICK, this, m_wallStackCounter);
+			theFactory->createGameObject(theWall);
+		}
+		Buildings * theCastle = new Buildings(GameObject::GO_P_CASTLE, this, 0);
+		theFactory->createGameObject(theCastle);
+
+		for (int m_wallStackCounter = 1; m_wallStackCounter <= 6; ++m_wallStackCounter)
+		{
+			Buildings * theWall = new Buildings(GameObject::GO_AI_BRICK, this, m_wallStackCounter);
+			theFactory->createGameObject(theWall);
+		}
+		AICastle * theAICastle = new AICastle(GameObject::GO_AI_CASTLE, this);
+		theFactory->createGameObject(theAICastle);
 	}
-	Buildings * theCastle = new Buildings(GameObject::GO_P_CASTLE, this, 0);
-	theFactory->createGameObject(theCastle);
-	m_wallStackCounter = 1;
-	for (m_wallStackCounter; m_wallStackCounter <= 6; ++m_wallStackCounter)
-	{
-		Buildings * theWall = new Buildings(GameObject::GO_AI_BRICK, this, m_wallStackCounter);
-		theFactory->createGameObject(theWall);
-	}
-	AICastle * theAICastle = new AICastle(GameObject::GO_AI_CASTLE, this);
-	theFactory->createGameObject(theAICastle);
 
 	BackGround * theBackGround = new BackGround(BackGround::BACK_GROUND_STAGE1, GameObject::GO_NONE, this);
 	theFactory->createGameObject(theBackGround);
@@ -179,9 +183,9 @@ void Stage1::Init()
 	theFile->loadFile("Data.txt");
 
 	 //Scene 1
-	 sceneNumber = SC_01;
-
-	
+	sceneNumber = SC_01;
+	//static variable use for switching scene in lose scene
+	stageNo = 1;
 }
 
 void Stage1::Update(double dt)
@@ -300,6 +304,37 @@ void Stage1::Update(double dt)
 		}
 
 		static bool fourpress = false;
+		if (Application::IsMousePressed(1) && !fourpress)
+		{
+			// 48.5 middle x position of the soldier image
+			if (currentPos.x >= 42.5f && currentPos.x <= 56.5f
+				&& currentPos.y >= 3.0f && currentPos.y <= 18.0f)
+			{
+				CreateFriendlySoldier();
+				fourpress = true;
+			}
+			// 68.5 middle x position of the arhcer image
+			else if (currentPos.x >= 59.5f && currentPos.x <= 73.5f
+				&& currentPos.y >= 3.0f && currentPos.y <= 18.0f)
+			{
+				CreateFriendlyArcher();
+				fourpress = true;
+			}
+			// 88.5 middle x position of the wizard image
+			else if (currentPos.x >= 76.5f && currentPos.x <= 90.0f
+				&& currentPos.y >= 3.0f && currentPos.y <= 18.0f)
+			{
+				CreateFriendlyWizard();
+				fourpress = true;
+			}
+
+		}
+		else if (!Application::IsMousePressed(1) && fourpress)
+		{
+			fourpress = false;
+		}
+
+	/*	static bool fourpress = false;
 		if (Application::IsKeyPressed('4') && !fourpress)
 		{
 			CreateFriendlySoldier();
@@ -329,10 +364,9 @@ void Stage1::Update(double dt)
 		else if (!Application::IsKeyPressed('6') && sixpress)
 		{
 			sixpress = false;
-		}
+		}*/
 
 		//Mouse Section
-		Vector3 currentPos;
 		Application::GetCursorPos(&mouseX, &mouseY);
 		currentPos.x = (float)mouseX / Application::GetWindowWidth() * m_worldWidth;
 		currentPos.y = (Application::GetWindowHeight() - (float)mouseY) / Application::GetWindowHeight() * m_worldHeight;
@@ -572,6 +606,7 @@ void Stage1::Render()
 
 void Stage1::Exit()
 {
+	CSoundEngine::getInstance()->Exit();
 	SceneBase::Exit();
 }
 

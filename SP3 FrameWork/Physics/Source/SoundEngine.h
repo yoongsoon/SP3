@@ -40,6 +40,8 @@ public:
 
 	ISound * theCurrentSound;
 
+	//Exit the sound
+	void Exit();
 
 };
 

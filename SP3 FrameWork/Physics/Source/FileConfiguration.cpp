@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include "PlayerTroops.h"
 #include "Buildings.h"
+#include "AICastle.h"
 
 bool FileConfiguration::b_isLoadLevel = false;
 
@@ -28,8 +29,9 @@ void FileConfiguration::loadFile(string _fileName)
 
 	//Buildings-----------
 	float tempHitPoint;
-	int tempGravity;
-
+	int tempCanFall;
+	unsigned tempWallStackCounter;
+	Vector3 tempWallPos;
 
 	// count the number of lines 
 	int counter = 0;
@@ -82,15 +84,9 @@ void FileConfiguration::loadFile(string _fileName)
 						string theTag = aToken;
 						getline(ss, aToken, ':');
 
-						//don't count  the line with Stage No and score
-						if (theTag == "Stage No" || theTag == "Score")
+						//don't count  the line with Stage No
+						if (theTag == "Stage No")
 							counter--;
-
-						if (theTag == "Score")
-						{
-							tempScore = stoi(aToken);
-							_scene->m_highScore = tempScore;
-						}
 
 
 						//------- ENUM---------------//
@@ -112,6 +108,11 @@ void FileConfiguration::loadFile(string _fileName)
 						{
 							tempPos = Token2Vector(aToken);
 						}
+						else if (theTag == "Wall Pos")
+						{
+							tempWallPos = Token2Vector(aToken);
+						}
+
 
 						// --------FLOAT----------------//
 						else if (theTag == "Hp")
@@ -145,12 +146,20 @@ void FileConfiguration::loadFile(string _fileName)
 						{
 							tempAttacked = stoi(aToken);
 						}
-						else if (theTag == "B_Gravity")
+						else if (theTag == "B_CanFall")
 						{
-							tempGravity = stoi(aToken);
+							tempCanFall = stoi(aToken);
 						}
 
-						if (counter > 7)
+						// -----------int ---------------
+						else if (theTag == "WallStackCounter")
+						{
+							tempWallStackCounter = stoi(aToken);
+						}
+
+
+						// ----------------- 8 lines  for enemy and player----------------------//
+						if (counter > 7 && (tempType == 5 || tempType == 6))
 						{
 
 							switch (tempType)
@@ -198,7 +207,7 @@ void FileConfiguration::loadFile(string _fileName)
 							case 6:
 							{
 								PlayerTroop * theTroop;
-
+								
 								if (tempTroopType == 0)
 								{
 									theTroop = new PlayerTroop(GameObject::GO_PLAYER, _scene, PlayerTroop::P_SOLDIER);
@@ -234,28 +243,86 @@ void FileConfiguration::loadFile(string _fileName)
 								_scene->theFactory->createGameObject(theTroop);
 							}
 							break;
-							// 9 -  player brick
-							// 11 - player castle
-							// 14 - AI castle
-							case 9:
-							case 11:
-							case 14:
-							{
-
-							}
-							break;
-
 							}
 							counter = 0;
 						}
 
+						// ----------------- 6 lines  for  player brick and AI brick----------------------//
+						else if (counter > 5 && (tempType == 9 || tempType == 10))
+						{
+
+							switch (tempType)
+							{
+							case 9:
+							{
+								Buildings * thePlayerBrick = new Buildings(GameObject::GO_P_BRICK, _scene, tempWallStackCounter);
+								thePlayerBrick->hitpoints = tempHitPoint;
+								thePlayerBrick->pos = tempPos;
+								thePlayerBrick->wallPos = tempWallPos;
+								if (tempCanFall == 0)
+								{
+									thePlayerBrick->m_canFall = false;
+								}
+								else
+								{
+									thePlayerBrick->m_canFall = true;
+								}
+								_scene->theFactory->createGameObject(thePlayerBrick);
+							}
+							break;
+							case 10:
+							{
+								Buildings * theAIBrick = new Buildings(GameObject::GO_AI_BRICK, _scene, tempWallStackCounter);
+								theAIBrick->hitpoints = tempHitPoint;
+								theAIBrick->pos = tempPos;
+								theAIBrick->wallPos = tempWallPos;
+								if (tempCanFall == 0)
+								{
+									theAIBrick->m_canFall = false;
+								}
+								else
+								{
+									theAIBrick->m_canFall = true;
+								}
+								_scene->theFactory->createGameObject(theAIBrick);
+							}
+							break;
+							}
+
+							counter = 0;
+						}
+						// ----------------- 2 lines  for  player castle and AI castle ----------------------//
+						else if (counter > 2 && (tempType == 11 || tempType == 14))
+						{
+
+							// 11 - player castle
+							// 14 - AI castle
+							switch (tempType)
+							{
+							case 11:
+							{
+								Buildings * thePlayerCastle = new Buildings(GameObject::GO_P_CASTLE, _scene, tempWallStackCounter);
+								thePlayerCastle->hitpoints = tempHitPoint;
+								_scene->theFactory->createGameObject(thePlayerCastle);
+							}
+							break;
+							case 14:
+							{
+								AICastle * theAIcastle = new AICastle(GameObject::GO_AI_CASTLE, _scene);
+								theAIcastle->hitpoints = tempHitPoint;
+								_scene->theFactory->createGameObject(theAIcastle);
+							}
+							break;
+							}
+
+						}
 					}
 				}
 			}
 		}
 
 	}
-	
+
 	myLoadFile.close();
 }
 
@@ -321,14 +388,26 @@ void FileConfiguration::saveFile(string _fileName)
 				}
 			}
 
-			/*	for (auto & it : _scene->theFactory->g_BuildingsVector)
+			for (auto & it : _scene->theFactory->g_BuildingsVector)
 			{
-			outPutFile << "GameObjectValue:" << it->type << endl;
-			outPutFile << "HitPoints:" << it->hitpoints << endl;
-			outPutFile << "B_Gravity:" << it->m_gEffect << endl;
-			outPutFile << endl;
-			outPutFile << endl;
-			}*/
+				if (it->active == false)
+					continue;
+
+				outPutFile << "GameObjectValue:" << it->type << endl;
+				outPutFile << "HitPoints:" << it->hitpoints << endl;
+				// only store m_canFall for player and enemy brick
+				if (it->type == GameObject::GO_P_BRICK || it->type == GameObject::GO_AI_BRICK)
+				{
+					outPutFile << "B_CanFall:" << it->m_canFall << endl;
+					outPutFile << "Position:" << it->pos << endl;
+					outPutFile << "Wall Pos:" << it->wallPos << endl;
+				}
+				// only store wallcounter for  player brick and enemy brick and player castle
+				if (it->type != GameObject::GO_AI_CASTLE)
+					outPutFile << "WallStackCounter:" << it->getInitialOffset() << endl;
+				outPutFile << endl;
+				outPutFile << endl;
+			}
 		}
 
 	}

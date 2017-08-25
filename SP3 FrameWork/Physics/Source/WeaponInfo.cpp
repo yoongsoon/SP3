@@ -1,6 +1,7 @@
 #include "WeaponInfo.h"
 #include "Projectile.h"
 #include "GameObject.h"
+#include "SoundEngine.h"
 
 void Weapon_Info::setFireMode(FIRE_MODE FireMode)
 {
@@ -247,6 +248,9 @@ void Weapon_Info::castleAIDischarge(Vector3 position, float range, SceneBase * _
 		//
 		if (b_Burst_Fire)
 		{
+			CSoundEngine::getInstance()->AddSound("Cannon", "Sound//Cannon.ogg");
+			CSoundEngine::getInstance()->PlayASound("Cannon", false, false);
+
 			pin_AIposition = position;
 			//pin_target = target;
 			pin_AIrange = range;
@@ -276,6 +280,10 @@ void Weapon_Info::castleAIDischarge(Vector3 position, Vector3 target, SceneBase 
 
 		if (b_Burst_Fire)
 		{
+
+			CSoundEngine::getInstance()->AddSound("Cannon", "Sound//Cannon.ogg");
+			CSoundEngine::getInstance()->PlayASound("Cannon", false, false);
+
 			pin_AIposition = position;
 			pin_AItarget = target;
 			pin_AIscene = _scene;

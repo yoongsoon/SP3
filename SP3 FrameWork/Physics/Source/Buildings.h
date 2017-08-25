@@ -18,6 +18,9 @@ public:
 	};
 	void update();
 
+	// need this function to save initialOffset in the data.txt
+	float getInitialOffset() { return initOffset; }
+
 protected:
 	float initOffset;
 	float fallOffset;

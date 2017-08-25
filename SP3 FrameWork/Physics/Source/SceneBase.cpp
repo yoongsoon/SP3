@@ -10,6 +10,8 @@
 
 bool SceneBase::b_isPause = false;
 bool SceneBase::b_isWon= false;
+int SceneBase::stageNo = 0;
+
 
 SceneBase::SceneBase()
 {

@@ -1,6 +1,7 @@
 #include "Buildings.h"
 #include "SceneBase.h"
 #include "Application.h"
+#include "SceneManager.h"
 
 Buildings::Buildings(GAMEOBJECT_TYPE typeValue, SceneBase * scene, unsigned offset) :GameObject(typeValue, scene)
 {
@@ -114,7 +115,10 @@ void Buildings::update()
 		
 
 	if (pos.y < 0 - scale.y)
+	{
 		active = false;
+		SceneManager::getInstance()->SetActiveScene("LoseScene");
+	}
 
 	pos += vel;
 }

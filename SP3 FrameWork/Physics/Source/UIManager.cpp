@@ -213,8 +213,7 @@ void UIManager::Render()
 	theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_SELECT_WARRIOR], 60, 6, 20, 10);
 	theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_SELECT_ARCHER], 80, 6, 20, 10);
 	theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_SELECT_WIZARD], 100, 6, 20, 10);
-
-
+	//cout << theScene->currentPos << endl;
 
 	//-------------------------------------Pause Menu---------------------------------------------------//
 

@@ -21,6 +21,7 @@ CSoundEngine::~CSoundEngine()
 		delete theSoundEngine;
 		theSoundEngine = NULL;
 	}
+
 }
 
 // Init this class and it will create the Sound Engine
@@ -130,4 +131,10 @@ void CSoundEngine::PauseSounds(const std::string & _soundIndex)
 		// name of sound found in map , whether to loop the sound , whether to pause the sound
 		theSoundEngine->setAllSoundsPaused();
 	}
+}
+
+void CSoundEngine::Exit()
+{
+	theCurrentSound->drop();
+	theSoundEngine->drop();
 }

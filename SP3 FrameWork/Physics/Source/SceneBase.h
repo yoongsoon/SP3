@@ -157,6 +157,7 @@ public:
 	MENU_WIN menuWin = WIN_CONTINUE;
 	MENU_PAUSE menuPause = PAUSE_RESUME;
 	SCENE_NUM  sceneNumber = SC_START;
+	static int stageNo;
 
 	SceneBase();
 	~SceneBase();
@@ -200,12 +201,13 @@ public:
 	int m_highScore;
 	int m_levelScore;
 
+	// current position of mouse based on world coordinate
+	Vector3 currentPos = Vector3(0.f, 0.f, 0.f);
 protected:
 	unsigned m_vertexArrayID;
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
 	unsigned m_sceneID = 0;
-	int m_wallStackCounter;
 	
 
 	Camera camera;

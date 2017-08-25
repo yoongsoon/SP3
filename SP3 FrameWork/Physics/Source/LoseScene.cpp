@@ -34,7 +34,7 @@ void LoseScene::Update(double dt)
 		{
 			// restart the scene according to scene number
 			// if scene number is 1 restart stage 1
-			switch (sceneNumber)
+			switch (stageNo)
 			{
 			case 1:
 				SceneManager::getInstance()->SetActiveScene("Stage1");
