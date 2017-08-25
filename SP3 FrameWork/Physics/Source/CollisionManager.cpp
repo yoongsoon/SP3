@@ -164,9 +164,9 @@ bool CollisionManager::checkCollision(GameObject * object1, GameObject * object2
 			object2->bottomRight.Set(obj2pos.x + (obj2scale.x * 0.5f), obj2pos.y - (obj2scale.y * 0.5f), 0);
 
 			if (object1->debugTag == "2ndone")
-				cout << "is1 " << object1->pos << endl;
+				//cout << "is1 " << object1->pos << endl;
 			if (object2->debugTag == "2ndone")
-				cout << "is2 " << object1->pos << endl;
+			    //cout << "is2 " << object1->pos << endl;
 
 			return (!object1->m_canFall && !object2->m_canFall && object2->hitpoints > 0 && object1->hitpoints > 0 && (obj1pos - obj2pos).Length() < (obj1scale.y + obj2scale.y) * 0.5);
 		}

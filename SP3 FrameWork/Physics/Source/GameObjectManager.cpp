@@ -269,7 +269,7 @@ void GameObjectManager::Enemy_Enemy_Collision()
 
 				if ((*it2)->type == GameObject::GO_P_CASTLE)
 				{
-					cout << "castle " << castle_hp << endl;
+					//cout << "castle " << castle_hp << endl;
 				}
 				//cout << "archer" << archer_position << endl;
 				static_cast <Enemy *>(it->second)->pos.x = archer_position;

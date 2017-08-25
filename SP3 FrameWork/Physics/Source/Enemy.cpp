@@ -13,9 +13,9 @@ Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) 
 
 		active = true;
 		meshValue = SceneBase::GEO_SOLDIER;
-		scale.Set(5, 5, 5);
+		scale.Set(5, 5, 1);
 		vel.Set(-30.f, 0.f, 0.f);
-		pos.Set((m_worldWidth * 3) -15.f, m_worldHeight / 2, 1.f);
+		pos.Set((m_worldWidth * 3) -15.f, m_worldHeight / 2, theScene->zaxis);
 		enemyType = Enemy::E_SOLDIER;
 		hp = 100.f;
 		range = 1.f;
@@ -30,9 +30,9 @@ Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) 
 
 		active = true;
 		meshValue = SceneBase::GEO_ARCHER;
-		scale.Set(5, 5, 5);
+		scale.Set(5, 5, 1);
 		vel.Set(-10.f, 0.f, 0.f);
-		pos.Set((m_worldWidth * 3), m_worldHeight / 2, 1.f);
+		pos.Set((m_worldWidth * 3), m_worldHeight / 2, theScene->zaxis);
 		enemyType = Enemy::E_ARCHER;
 		hp = 50.f;
 		range = 10.f;
@@ -47,9 +47,9 @@ Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) 
 
 		active = true;
 		meshValue = SceneBase::GEO_WIZARD;
-		scale.Set(5, 5, 5);
+		scale.Set(5, 5, 1);
 		vel.Set(-10.f, 0.f, 0.f);
-		pos.Set((m_worldWidth * 3), m_worldHeight / 2, 1.f);
+		pos.Set((m_worldWidth * 3), m_worldHeight / 2, theScene->zaxis);
 		enemyType = Enemy::E_WIZARD;
 		hp = 70.f;
 		range = 10.f;

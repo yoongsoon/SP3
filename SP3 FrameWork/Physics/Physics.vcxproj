@@ -170,6 +170,7 @@
     <ClCompile Include="Source\FileConfiguration.cpp" />
     <ClCompile Include="Source\GameObjectManager.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
+    <ClCompile Include="Source\HealthBar.cpp" />
     <ClCompile Include="Source\LoadHmap.cpp" />
     <ClCompile Include="Source\LoadOBJ.cpp" />
     <ClCompile Include="Source\LoadTGA.cpp" />
@@ -210,6 +211,7 @@
     <ClInclude Include="Source\FileConfiguration.h" />
     <ClInclude Include="Source\GameObjectManager.h" />
     <ClInclude Include="Source\GameObject.h" />
+    <ClInclude Include="Source\HealthBar.h" />
     <ClInclude Include="Source\Light.h" />
     <ClInclude Include="Source\LoadHmap.h" />
     <ClInclude Include="Source\LoadOBJ.h" />

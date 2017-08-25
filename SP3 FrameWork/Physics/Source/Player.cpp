@@ -4,7 +4,7 @@
 Player::Player()
 {
 	cashamount = 10.f;
-	wallet = 200.f;
+	wallet = 20000.f;
 	maxWallet = wallet;
 	enemycashamount = 10.f;
 	enemywallet = 200.f;

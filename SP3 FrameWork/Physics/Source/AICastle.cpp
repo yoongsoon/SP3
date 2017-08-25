@@ -61,7 +61,7 @@ void AICastle::update()
 
 				float distanceX = (pos.x - it.second->pos.x);
 
-				it.second->pos.z = 5;
+				//it.second->pos.z = 5;
 				// if hp goes below 25 %
 				if (hitpoints < (m_DefaultHp * 0.25))
 				{
@@ -81,12 +81,16 @@ void AICastle::update()
 				if (abs(distanceX) < m_castleRange && abs(distanceX) > 10 )
 				{
 					theAIweapon->castleAIDischarge(Vector3(pos.x, 60, 5), distanceX - 50, theScene);
+					CSoundEngine::getInstance()->AddSound("BackGround Music", "Sound//Crossroads.ogg");
+					CSoundEngine::getInstance()->PlayASound("BackGround Music", true, false);
 				}
 				// change projectile motion to "LINEAR MOTION"  if the distance between
 				// enemy and castle is lesser than 10
 				else if (abs(distanceX) < 10 )
 				{
 					theAIweapon->castleAIDischarge(Vector3(pos.x, 60, 5), it.second->pos, theScene);
+					CSoundEngine::getInstance()->AddSound("BackGround Music", "Sound//Crossroads.ogg");
+					CSoundEngine::getInstance()->PlayASound("BackGround Music", true, false);
 				}
 			}
 		}

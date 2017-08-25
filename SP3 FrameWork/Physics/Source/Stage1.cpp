@@ -119,7 +119,7 @@ void Stage1::Init()
 	SpriteAnimation* P_Bow_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_BOW_ARROW]);
 //	SpriteAnimation* P_Cannon_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CANNON_BALLS]);
 	SpriteAnimation* P_Catapult_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CATAPULT_ROCKS]);
-
+	//Sprite Animation init
 	if (wizard)
 	{
 		wizard->m_anim = new Animation();
@@ -169,7 +169,6 @@ void Stage1::Init()
 	}
 
 	theUIManager = new UIManager(this);
-
 
 	//Init scene
 	theFile->setScene(this);
@@ -422,48 +421,59 @@ void Stage1::Update(double dt)
 		thePlayer->Update(dt);
 
 		theMiniMap->Update();
-
-		SpriteAnimation* wizard = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD]);
-		SpriteAnimation* wizardattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD_ATTACK]);
-		SpriteAnimation* archer = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER]);
-		SpriteAnimation* archerattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER_ATTACK]);
-		SpriteAnimation* soldier = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER]);
-		SpriteAnimation* soldierattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER_ATTACK]);
+		SpriteAnimation** sprite = new SpriteAnimation*[6];
+		sprite[0] = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD]);
+		sprite[1] = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD_ATTACK]);
+		sprite[2] = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER]);
+		sprite[3] = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER_ATTACK]);
+		sprite[4] = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER]);
+		sprite[5] = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER_ATTACK]);
+		//SpriteAnimation* wizard = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD]);
+		//SpriteAnimation* wizardattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD_ATTACK]);
+		//SpriteAnimation* archer = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER]);
+		//SpriteAnimation* archerattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER_ATTACK]);
+		//SpriteAnimation* soldier = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER]);
+		//SpriteAnimation* soldierattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER_ATTACK]);
 		//SpriteAnimation* P_weapon_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_BOW_ARROW]);
 		SpriteAnimation* P_Bow_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_BOW_ARROW]);
 		//SpriteAnimation* P_Cannon_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CANNON_BALLS]);
 		SpriteAnimation* P_Catapult_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CATAPULT_ROCKS]);
-
-		if (wizard)
+		//Sprite Animation update
+		for (int a = 0; a < 6; a++)
 		{
-			wizard->Update(dt);
-			wizard->m_anim->animActive = true;
+			sprite[a]->Update(dt);
+			sprite[a]->m_anim->animActive = true;
 		}
-		if (wizardattack)
-		{
-			wizardattack->Update(dt);
-			wizardattack->m_anim->animActive = true;
-		}
-		if (archer)
-		{
-			archer->Update(dt);
-			archer->m_anim->animActive = true;
-		}
-		if (archerattack)
-		{
-			archerattack->Update(dt);
-			archerattack->m_anim->animActive = true;
-		}
-		if (soldier)
-		{
-			soldier->Update(dt);
-			soldier->m_anim->animActive = true;
-		}
-		if (soldierattack)
-		{
-			soldierattack->Update(dt);
-			soldierattack->m_anim->animActive = true;
-		}
+		//if (wizard)
+		//{
+		//	wizard->Update(dt);
+		//	wizard->m_anim->animActive = true;
+		//}
+		//if (wizardattack)
+		//{
+		//	wizardattack->Update(dt);
+		//	wizardattack->m_anim->animActive = true;
+		//}
+		//if (archer)
+		//{
+		//	archer->Update(dt);
+		//	archer->m_anim->animActive = true;
+		//}
+		//if (archerattack)
+		//{
+		//	archerattack->Update(dt);
+		//	archerattack->m_anim->animActive = true;
+		//}
+		//if (soldier)
+		//{
+		//	soldier->Update(dt);
+		//	soldier->m_anim->animActive = true;
+		//}
+		//if (soldierattack)
+		//{
+		//	soldierattack->Update(dt);
+		//	soldierattack->m_anim->animActive = true;
+		//}
 		//if (P_weapon_Sprite)
 		if (P_Bow_Sprite)
 		{
@@ -577,85 +587,91 @@ void Stage1::Exit()
 
 void Stage1::CreateEnemySoldier()
 {
-	GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_SOLDIER);
+	//GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_SOLDIER);
 	Enemy * tempEnemy = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_SOLDIER);
 	cout << theplayer->ReturnEnemyWallet() << endl;
 	if (theplayer->ReturnEnemyWallet() > tempEnemy->cost)
 	{
 		theplayer->ReduceEnemyWalletAmount(tempEnemy->cost);
-		theFactory->createGameObject(go);
+		theFactory->createGameObject(tempEnemy);
 		cout << "Soldier" << endl;
+		zaxis += 0.001f;
+		cout << zaxis << endl;
 	}
-	delete tempEnemy;
+	//delete tempEnemy;
 }
 
 void Stage1::CreateEnemyArcher()
 {
-	GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_ARCHER);
+	//GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_ARCHER);
 	Enemy * tempEnemy = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_ARCHER);
 	cout << theplayer->ReturnEnemyWallet() << endl;
 	if (theplayer->ReturnEnemyWallet() > tempEnemy->cost)
 	{
 		theplayer->ReduceEnemyWalletAmount(tempEnemy->cost);
-		theFactory->createGameObject(go);
+		theFactory->createGameObject(tempEnemy);
 		cout << "Archer" << endl;
+		zaxis += 0.001f;
+		cout << zaxis << endl;
 	}
 }
 
 void Stage1::CreateEnemyWizard()
 {
-	GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_WIZARD);
+	//GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_WIZARD);
 	Enemy * tempEnemy = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_WIZARD);
 	cout << theplayer->ReturnEnemyWallet() << endl;
 	if (theplayer->ReturnEnemyWallet() > tempEnemy->cost)
 	{
 		theplayer->ReduceEnemyWalletAmount(tempEnemy->cost);
-		theFactory->createGameObject(go);
+		theFactory->createGameObject(tempEnemy);
 		cout << "Wizard" << endl;
+		zaxis += 0.001f;
+		cout << zaxis << endl;
 	}
 }
 
 void Stage1::CreateFriendlySoldier()
 {
-	GameObject *go = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_SOLDIER);
+	//GameObject *go = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_SOLDIER);
 	PlayerTroop * tempPlayer = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_SOLDIER);
 	cout << theplayer->ReturnWallet() << endl;
 	if (theplayer->ReturnWallet() > tempPlayer->cost)
 	{
 		theplayer->ReduceWalletAmount(tempPlayer->cost);
-		theFactory->createGameObject(go);
+		theFactory->createGameObject(tempPlayer);
 		cout << "friend Soldier" << endl;
-		zaxis++;
+		zaxis += 0.001f;
 		cout << zaxis << endl;
-		cout << "whee" << endl;
 	}
 }
 
 void Stage1::CreateFriendlyArcher()
 {
-	GameObject *go = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_ARCHER);
+	//GameObject *go = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_ARCHER);
 	PlayerTroop * tempPlayer = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_ARCHER);
 	cout << theplayer->ReturnWallet() << endl;
 	if (theplayer->ReturnWallet() > tempPlayer->cost)
 	{
 		theplayer->ReduceWalletAmount(tempPlayer->cost);
-		theFactory->createGameObject(go);
+		theFactory->createGameObject(tempPlayer);
 		cout << "friend Archer" << endl;
-		zaxis++;
+		zaxis += 0.001f;
 		cout << zaxis << endl;
-		cout << "whee" << endl;
 	}
 }
 
 void Stage1::CreateFriendlyWizard()
 {
-	GameObject *go = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_WIZARD);
+	//GameObject *go = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_WIZARD);
 	PlayerTroop * tempPlayer = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_WIZARD);
 	cout << theplayer->ReturnWallet() << endl;
 	if (theplayer->ReturnWallet() > tempPlayer->cost)
 	{
 		theplayer->ReduceWalletAmount(tempPlayer->cost);
-		theFactory->createGameObject(go);
+		theFactory->createGameObject(tempPlayer);
 		cout << "friend Wizard" << endl;
+		zaxis += 0.001f;
+		cout << zaxis << endl;
 	}
 }

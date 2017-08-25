@@ -15,7 +15,6 @@ using std::ofstream;
 using std::istringstream;
 using std::setprecision;
 
-
 #include "Vector3.h"
 
 class SceneBase;
@@ -40,7 +39,6 @@ public:
 	SceneBase * _scene;
 	int currentStage;
 	static bool b_isLoadLevel;
-
 protected:
 
 };
