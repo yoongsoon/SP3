@@ -218,7 +218,7 @@ protected:
 	float fps;
 
 	float P_rotation = 0;
-
+	float Projectile_to_rotate_test = 0;
 	//--------------------------------PHYSIC CODES---------------------------------------------------//
 	float m_worldWidth;
 	float m_worldHeight;

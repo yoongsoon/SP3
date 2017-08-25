@@ -68,7 +68,7 @@ void Weapon_Info::Update(const double dt)
 		b_Fire = true;
 		d_elapsedTime = 0.0;
 	}
-
+	
 
 	if (!b_Burst_Fire)
 	{
@@ -226,6 +226,7 @@ void Weapon_Info::Discharge(Vector3 position, Vector3 target, SceneBase *_scene)
 			aProjectile->whoseProjectile = Projectile::PROJECTILE_WHOSE::PLAYER_PROJECTILE;
 			//where projectile shoots from
 			aProjectile->pos = Vector3(20,50,5);
+			aProjectile->rotateZ = Math::RadianToDegree(atan2f(position.y - target.y, position.x - target.x));
 			//aProjectile->pos = position;
 			//aProjectile->pos.z = 5;
 			aProjectile->vel = position - target;
