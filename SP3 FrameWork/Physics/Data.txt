@@ -1,22 +1,3 @@
 Stage No:1
 
 
-GameObjectValue:5
-Enemy Type:0
-Position:[ 98.6794, 50, 1 ]
-Hp:90
-Timer:0.223608
-B_StopAttack:1
-B_Attacked:1
-EnemyMoveX:-44.5421
-
-
-GameObjectValue:6
-Player Type:0
-Position:[ 92.0402, 50, 5 ]
-Hp:90
-Timer:0.325616
-B_StopAttack:1
-B_Attacked:1
-PlayerMoveX:14.3174
-

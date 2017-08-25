@@ -30,7 +30,30 @@ void LoseScene::Update(double dt)
 
 	if (Application::IsKeyPressed(VK_RETURN) && pressDelay >= cooldownPressed)
 	{
-
+		if (sceneLost == RESTART_LOSE)
+		{
+			// restart the scene according to scene number
+			// if scene number is 1 restart stage 1
+			switch (sceneNumber)
+			{
+			case 1:
+				SceneManager::getInstance()->SetActiveScene("Stage1");
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			}
+		}
+		else if (sceneLost == MAIN_MENU_LOSE)
+		{
+			SceneManager::getInstance()->SetActiveScene("MainMenu");
+		}
+		else if (sceneLost == QUIT_LOSE)
+		{
+			exit(0);
+		}
+		
 
 
 		pressDelay = 0.f;
@@ -103,17 +126,17 @@ void LoseScene::Render()
 	{
 	case RESTART_LOSE:
 	{
-
+		RenderMeshOnScreen(meshList[SceneBase::GEO_PAUSE_ARROW], 48, 38, 10, 10);
 	}
 	break;
 	case MAIN_MENU_LOSE:
 	{
-
+		RenderMeshOnScreen(meshList[SceneBase::GEO_PAUSE_ARROW], 48, 24, 10, 10);
 	}
 	break;
 	case QUIT_LOSE:
 	{
-
+		RenderMeshOnScreen(meshList[SceneBase::GEO_PAUSE_ARROW], 48, 10, 10, 10);
 	}
 	break;
 	}

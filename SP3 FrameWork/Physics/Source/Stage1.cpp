@@ -200,6 +200,7 @@ void Stage1::Update(double dt)
 		if (m_levelScore > m_highScore)
 			m_highScore = m_levelScore;
 		theFile->saveFile("scorefile.txt");
+
 		theFile->saveFile("Data.txt");
 		pressDelay = 0.f;
 	}

@@ -49,10 +49,8 @@ void FileConfiguration::loadFile(string _fileName)
 		}
 		else
 		{
-			cout << "Load  Successfully" << endl;
 			if (_fileName == "scorefile.txt")
 			{
-
 				while (getline(myLoadFile, eachLine))
 				{
 
@@ -69,7 +67,6 @@ void FileConfiguration::loadFile(string _fileName)
 			}
 			else
 			{
-
 				while (getline(myLoadFile, eachLine))
 				{
 					//store content of eachLine into ss
@@ -85,9 +82,15 @@ void FileConfiguration::loadFile(string _fileName)
 						string theTag = aToken;
 						getline(ss, aToken, ':');
 
-						//don't count  the line with Stage No
-						if (theTag == "Stage No")
+						//don't count  the line with Stage No and score
+						if (theTag == "Stage No" || theTag == "Score")
 							counter--;
+
+						if (theTag == "Score")
+						{
+							tempScore = stoi(aToken);
+							_scene->m_highScore = tempScore;
+						}
 
 
 						//------- ENUM---------------//
@@ -252,6 +255,7 @@ void FileConfiguration::loadFile(string _fileName)
 		}
 
 	}
+	
 	myLoadFile.close();
 }
 
@@ -270,52 +274,60 @@ void FileConfiguration::saveFile(string _fileName)
 	{
 		cout << "Saved file successfully" << endl;
 
-		//Save the current Stage
-		outPutFile << "Stage No:" << _scene->sceneNumber << endl;
-		outPutFile << endl;
-		outPutFile << endl;
-
-		for (auto & it : _scene->theFactory->g_FactoryMap)
+		if (_fileName == "scorefile.txt")
 		{
-			if (it.second->active == false)
-				continue;
-
-			if (it.first == GameObject::GO_ENEMY)
-			{
-				outPutFile << "GameObjectValue:" << it.first << endl;
-				outPutFile << "Enemy Type:" << static_cast<Enemy*>(it.second)->enemyType << endl;
-				outPutFile << "Position:" << it.second->pos << endl;
-				outPutFile << "Hp:" << static_cast<Enemy*>(it.second)->hp << endl;
-				outPutFile << "Timer:" << static_cast<Enemy*>(it.second)->timer << endl;
-				outPutFile << "B_StopAttack:" << static_cast<Enemy*>(it.second)->StopToAttack << endl;
-				outPutFile << "B_Attacked:" << static_cast<Enemy*>(it.second)->Attacked << endl;
-				outPutFile << "EnemyMoveX:" << static_cast<Enemy*>(it.second)->enemyMoveX << endl;
-				outPutFile << endl;
-				outPutFile << endl;
-			}
-			else if (it.first == GameObject::GO_PLAYER)
-			{
-				outPutFile << "GameObjectValue:" << it.first << endl;
-				outPutFile << "Player Type:" << static_cast<PlayerTroop*>(it.second)->playerType << endl;
-				outPutFile << "Position:" << it.second->pos << endl;
-				outPutFile << "Hp:" << static_cast<PlayerTroop*>(it.second)->hp << endl;
-				outPutFile << "Timer:" << static_cast<PlayerTroop*>(it.second)->timer << endl;
-				outPutFile << "B_StopAttack:" << static_cast<PlayerTroop*>(it.second)->StopToAttack << endl;
-				outPutFile << "B_Attacked:" << static_cast<PlayerTroop*>(it.second)->Attacked << endl;
-				outPutFile << "PlayerMoveX:" << static_cast<PlayerTroop*>(it.second)->playerMoveX << endl;
-				outPutFile << endl;
-				outPutFile << endl;
-			}
+			outPutFile << _scene->m_highScore << endl;
 		}
-
-		/*	for (auto & it : _scene->theFactory->g_BuildingsVector)
+		else
 		{
-		outPutFile << "GameObjectValue:" << it->type << endl;
-		outPutFile << "HitPoints:" << it->hitpoints << endl;
-		outPutFile << "B_Gravity:" << it->m_gEffect << endl;
-		outPutFile << endl;
-		outPutFile << endl;
-		}*/
+			//Save the current Stage
+			outPutFile << "Stage No:" << _scene->sceneNumber << endl;
+			outPutFile << endl;
+			outPutFile << endl;
+
+
+			for (auto & it : _scene->theFactory->g_FactoryMap)
+			{
+				if (it.second->active == false)
+					continue;
+
+				if (it.first == GameObject::GO_ENEMY)
+				{
+					outPutFile << "GameObjectValue:" << it.first << endl;
+					outPutFile << "Enemy Type:" << static_cast<Enemy*>(it.second)->enemyType << endl;
+					outPutFile << "Position:" << it.second->pos << endl;
+					outPutFile << "Hp:" << static_cast<Enemy*>(it.second)->hp << endl;
+					outPutFile << "Timer:" << static_cast<Enemy*>(it.second)->timer << endl;
+					outPutFile << "B_StopAttack:" << static_cast<Enemy*>(it.second)->StopToAttack << endl;
+					outPutFile << "B_Attacked:" << static_cast<Enemy*>(it.second)->Attacked << endl;
+					outPutFile << "EnemyMoveX:" << static_cast<Enemy*>(it.second)->enemyMoveX << endl;
+					outPutFile << endl;
+					outPutFile << endl;
+				}
+				else if (it.first == GameObject::GO_PLAYER)
+				{
+					outPutFile << "GameObjectValue:" << it.first << endl;
+					outPutFile << "Player Type:" << static_cast<PlayerTroop*>(it.second)->playerType << endl;
+					outPutFile << "Position:" << it.second->pos << endl;
+					outPutFile << "Hp:" << static_cast<PlayerTroop*>(it.second)->hp << endl;
+					outPutFile << "Timer:" << static_cast<PlayerTroop*>(it.second)->timer << endl;
+					outPutFile << "B_StopAttack:" << static_cast<PlayerTroop*>(it.second)->StopToAttack << endl;
+					outPutFile << "B_Attacked:" << static_cast<PlayerTroop*>(it.second)->Attacked << endl;
+					outPutFile << "PlayerMoveX:" << static_cast<PlayerTroop*>(it.second)->playerMoveX << endl;
+					outPutFile << endl;
+					outPutFile << endl;
+				}
+			}
+
+			/*	for (auto & it : _scene->theFactory->g_BuildingsVector)
+			{
+			outPutFile << "GameObjectValue:" << it->type << endl;
+			outPutFile << "HitPoints:" << it->hitpoints << endl;
+			outPutFile << "B_Gravity:" << it->m_gEffect << endl;
+			outPutFile << endl;
+			outPutFile << endl;
+			}*/
+		}
 
 	}
 	outPutFile.close();
