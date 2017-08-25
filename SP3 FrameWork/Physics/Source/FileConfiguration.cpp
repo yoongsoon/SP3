@@ -49,24 +49,24 @@ void FileConfiguration::loadFile(string _fileName)
 		}
 		else
 		{
-			if (_fileName == "scorefile.txt")
-			{
-				while (getline(myLoadFile, eachLine))
-				{
+			//if (_fileName == "scorefile.txt")
+			//{
+			//	while (getline(myLoadFile, eachLine))
+			//	{
 
-					//store content of eachLine into ss
-					istringstream ss(eachLine);
-					string aToken = "";
-					while (getline(ss, aToken, '\n'))
-					{
-						cout << aToken << endl;
-						tempScore = stoi(aToken);
-						_scene->m_highScore = tempScore;
-					}
-				}
-			}
-			else
-			{
+			//		//store content of eachLine into ss
+			//		istringstream ss(eachLine);
+			//		string aToken = "";
+			//		while (getline(ss, aToken, '\n'))
+			//		{
+			//			cout << aToken << endl;
+			//			tempScore = stoi(aToken);
+			//			_scene->m_highScore = tempScore;
+			//		}
+			//	}
+			//}
+			//else
+			//{
 				while (getline(myLoadFile, eachLine))
 				{
 					//store content of eachLine into ss
@@ -83,10 +83,10 @@ void FileConfiguration::loadFile(string _fileName)
 						getline(ss, aToken, ':');
 
 						//don't count  the line with Stage No and score
-						if (theTag == "Stage No" || theTag == "Score")
+						if (theTag == "Stage No" || theTag == "Highscore")
 							counter--;
 
-						if (theTag == "Score")
+						if (theTag == "Highscore")
 						{
 							tempScore = stoi(aToken);
 							_scene->m_highScore = tempScore;
@@ -251,7 +251,7 @@ void FileConfiguration::loadFile(string _fileName)
 
 					}
 				}
-			}
+			//}
 		}
 
 	}
@@ -273,16 +273,14 @@ void FileConfiguration::saveFile(string _fileName)
 	else
 	{
 		cout << "Saved file successfully" << endl;
-		//outPutFile << "HighScore:" << 
-		//for (auto & it : _scene->theFactory->g_FactoryMap)
-
-		if (_fileName == "scorefile.txt")
+		/*if (_fileName == "scorefile.txt")
 		{
-			outPutFile << _scene->m_highScore << endl;
+			
 		}
 		else
-		{
+		{*/
 			//Save the current Stage
+			outPutFile << "Highscore:" << _scene->m_highScore << endl;
 			outPutFile << "Stage No:" << _scene->sceneNumber << endl;
 			outPutFile << endl;
 			outPutFile << endl;
@@ -331,7 +329,7 @@ void FileConfiguration::saveFile(string _fileName)
 			}*/
 		}
 
-	}
+	//}
 	outPutFile.close();
 
 }

@@ -1,3 +1,54 @@
+Highscore:9515
 Stage No:1
+
+
+GameObjectValue:5
+Enemy Type:2
+Position:[ 323.478, 50, 1 ]
+Hp:70
+Timer:0
+B_StopAttack:0
+B_Attacked:0
+EnemyMoveX:-11.9256
+
+
+GameObjectValue:6
+Player Type:0
+Position:[ 75.843, 50, 5 ]
+Hp:100
+Timer:0
+B_StopAttack:0
+B_Attacked:0
+PlayerMoveX:11.8197
+
+
+GameObjectValue:6
+Player Type:0
+Position:[ 72.9527, 50, 5 ]
+Hp:100
+Timer:0
+B_StopAttack:0
+B_Attacked:0
+PlayerMoveX:11.3692
+
+
+GameObjectValue:6
+Player Type:0
+Position:[ 69.5369, 50, 5 ]
+Hp:100
+Timer:0
+B_StopAttack:0
+B_Attacked:0
+PlayerMoveX:10.8369
+
+
+GameObjectValue:6
+Player Type:0
+Position:[ 66.6467, 50, 5 ]
+Hp:100
+Timer:0
+B_StopAttack:0
+B_Attacked:0
+PlayerMoveX:10.3865
 
 
