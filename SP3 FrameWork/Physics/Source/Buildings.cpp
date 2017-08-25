@@ -14,15 +14,13 @@ Buildings::Buildings(GAMEOBJECT_TYPE typeValue, SceneBase * scene, unsigned offs
 		case GameObject::GO_P_BRICK:
 			hitpoints = 10;
 			meshValue = theScene->GEO_BRICK;
-			pos.Set(50, 60/* + scale.y + (offset * 10)*/, 1);
-			wallPos.Set(pos.x, 20 + (scale.y) * initOffset, pos.z);
+			pos.Set(50, 60 + scale.y + (offset * 10), 1);
 			dir.Set(0, 1, 0);
 			scale.Set(12, 4, 1);
 			m_canFall = true;
-			if (offset == 1)
-				debugTag = "thisone";
-			else if (offset == 2)
-				debugTag = "2ndone";
+			m_groundLevel = theScene->m_worldHeight * 0.1f;
+			debugTag = "pWall";
+			debugTag += to_string(offset);
 			break;
 		case GameObject::GO_P_CASTLE:
 			hitpoints = 500.f;
@@ -30,14 +28,17 @@ Buildings::Buildings(GAMEOBJECT_TYPE typeValue, SceneBase * scene, unsigned offs
 			pos.Set(15.f, 33.f, 1.f);
 			scale.Set(30.f, 30.f, 1.f);
 			m_canFall = false;
+			debugTag = "pCastle";
 			break;
 		case GameObject::GO_AI_BRICK:
 			hitpoints = 10;
 			meshValue = theScene->GEO_BRICK;
-			pos.Set((theScene->m_worldWidth * 3) - 50.f, 40 + scale.y + (offset * 10), 1);
+			pos.Set((theScene->m_worldWidth * 3) - 50.f, 60 + scale.y + (offset * 10), 1);
 			dir.Set(0, 1, 0);
 			scale.Set(12, 4, 1);
 			m_canFall = true;
+			debugTag = "aiWall";
+			debugTag += to_string(offset);
 			break;
 		case GameObject::GO_AI_CASTLE:
 			hitpoints = 500.f;
@@ -45,6 +46,7 @@ Buildings::Buildings(GAMEOBJECT_TYPE typeValue, SceneBase * scene, unsigned offs
 			meshValue = theScene->GEO_MINI_ENEMY_CASTLE;
 			scale.Set(30.f, 30.f, 1.f);
 			m_canFall = false;
+			debugTag = "aiCastle";
 			break;
 		}
 	}
@@ -57,63 +59,29 @@ Buildings::~Buildings()
 
 void Buildings::update()
 {
-//<<<<<<< HEAD
-//
-//	if (type == GameObject::GO_P_BRICK || type == GameObject::GO_AI_BRICK|| type == GameObject::GO_P_CASTLE)
-//	{
-//		if (m_gEffect)
-//		{
-//			if (type != GameObject::GO_P_CASTLE)
-//			{
-//				vel.y += m_gravity * theScene->_dt * 0.02f;
-//			}
-//			else if (hitpoints < 0)
-//			{
-//				hitpoints = 0;
-//				vel.y += m_gravity * theScene->_dt * 0.02f;
-//			}
-//		}
-//		else
-//			vel.y = 0;
-//
-//		if (m_gEffect && pos.y <= 20 && hitpoints > 0)
-//		{
-//			m_gEffect = false;
-//		}
-//
-//		Mtx44 rotation;
-//
-//=======
-	if (Application::IsKeyPressed('O') && !isPressed && debugTag == "thisone")
-	{
-		isPressed = true;
-		hitpoints = 0;
-	}
-	if (Application::IsKeyPressed('P'))
-		isPressed = false;
-
+	// Ensures object is affected by gravity if can fall
 	if (m_canFall)
-		vel.y += m_gravity * theScene->_dt * 0.04f;
+		vel.y += m_gravity * theScene->_dt * 0.1f;
 	else
 		vel.y = 0;
 	
 	if (type == GameObject::GO_P_BRICK || type == GameObject::GO_AI_BRICK)
 	{
-		if (pos.y > wallPos.y)
+		if (pos.y - scale.y * 0.5f > m_groundLevel)
 			m_canFall = true;
 		else
 			m_canFall = false;
 	}
-
+	
 	// Cause buildings to fall out of screen
 	if (hitpoints <= 0 && active)
 	{
 		m_canFall = true;
-		wallPos.y -= scale.y;
+		m_groundLevel = -scale.y - 1;
 	}
 		
 
-	if (pos.y < 0 - scale.y)
+	if (pos.y < -scale.y)
 		active = false;
 
 	pos += vel;

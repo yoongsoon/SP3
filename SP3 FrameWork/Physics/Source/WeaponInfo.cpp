@@ -68,7 +68,7 @@ void Weapon_Info::Update(const double dt)
 		b_Fire = true;
 		d_elapsedTime = 0.0;
 	}
-
+	
 
 	if (!b_Burst_Fire)
 	{
@@ -201,7 +201,7 @@ void Weapon_Info::Discharge(Vector3 position, Vector3 target, GameObject * objec
 
 		object->pos = position;
 		object->vel = object->pos - target;
-		object->scale.Set(3, 3, 3);
+		object->scale.Set(3, 3, 1);
 		//object->mass = 35;
 		object->active = true;
 		b_Fire = false;
@@ -226,10 +226,11 @@ void Weapon_Info::Discharge(Vector3 position, Vector3 target, SceneBase *_scene)
 			aProjectile->whoseProjectile = Projectile::PROJECTILE_WHOSE::PLAYER_PROJECTILE;
 			//where projectile shoots from
 			aProjectile->pos = Vector3(20,50,5);
+			aProjectile->rotateZ = Math::RadianToDegree(atan2f(position.y - target.y, position.x - target.x));
 			//aProjectile->pos = position;
 			//aProjectile->pos.z = 5;
 			aProjectile->vel = position - target;
-			aProjectile->scale.Set(3, 3, 3);
+			aProjectile->scale.Set(3, 3, 1);
 			//aProjectile->mass = 3;
 			aProjectile->active = true;
 			//

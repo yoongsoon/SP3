@@ -117,6 +117,7 @@ public:
 		GEO_PAUSE_MENU,
 		GEO_PAUSE_ARROW,
 		GEO_MAIN_MENU,
+		GEO_SCORESCENE,
 		GEO_CREDITS,
 		GEO_LOSE_SCENE,
 
@@ -220,7 +221,7 @@ protected:
 	float fps;
 
 	float P_rotation = 0;
-
+	float Projectile_to_rotate_test = 0;
 	//--------------------------------PHYSIC CODES---------------------------------------------------//
 	float m_worldWidth;
 	float m_worldHeight;
