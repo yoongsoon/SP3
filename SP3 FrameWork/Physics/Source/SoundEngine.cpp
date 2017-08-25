@@ -120,3 +120,14 @@ void  CSoundEngine::PlayASound(const std::string& _soundIndex, bool _loop, bool 
 		theCurrentSound =theSoundEngine->play2D(aSound.c_str(), _loop, _pause ,true);
 	}
 }
+
+void CSoundEngine::PauseSounds(const std::string & _soundIndex)
+{
+	std::string aSound = GetSound(_soundIndex);
+	if (theSoundEngine->isCurrentlyPlaying(aSound.c_str()))
+	{
+		// Play a sound 
+		// name of sound found in map , whether to loop the sound , whether to pause the sound
+		theSoundEngine->setAllSoundsPaused();
+	}
+}

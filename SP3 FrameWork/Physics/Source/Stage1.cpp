@@ -25,6 +25,7 @@ Stage1::~Stage1()
 void Stage1::Init()
 {
 	SceneBase::Init();
+	
 	m_sceneID = SceneBase::SC_01;
 	m_wallStackCounter = 1;
 	ghost_exist = false;
@@ -36,6 +37,8 @@ void Stage1::Init()
 	//Physics code here
 	m_speed = 1.f;
 	m_levelScore = 10000;
+	m_highScore = 0; 
+	//theFile->loadFile("scorefile.txt");
 
 	Math::InitRNG();
 
@@ -84,7 +87,7 @@ void Stage1::Init()
 	}
 	Buildings * theCastle = new Buildings(GameObject::GO_P_CASTLE, this, 0);
 	theFactory->createGameObject(theCastle);
-	
+	m_wallStackCounter = 1;
 	for (m_wallStackCounter; m_wallStackCounter <= 6; ++m_wallStackCounter)
 	{
 		Buildings * theWall = new Buildings(GameObject::GO_AI_BRICK, this, m_wallStackCounter);
@@ -167,7 +170,18 @@ void Stage1::Init()
 
 	theUIManager = new UIManager(this);
 
-	 theFile = new FileConfiguration(this);
+
+	//Init scene
+	theFile->setScene(this);
+
+	// if the load function is called , then load file
+	if(FileConfiguration::b_isLoadLevel == true)
+	theFile->loadFile("Data.txt");
+
+	 //Scene 1
+	 sceneNumber = SC_01;
+
+	
 }
 
 void Stage1::Update(double dt)
@@ -175,26 +189,36 @@ void Stage1::Update(double dt)
 	_elapsedTime += (float)dt;
 	pressDelay += (float)dt;
 	_dt = (float)dt;
+	m_levelScore -= (float)dt * 0.5f;
 
 	//Calculating aspect ratio ( 4:3)
 	m_worldHeight = 100.f;
 	m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
-
+	
 	if (Application::IsKeyPressed('K') && pressDelay >= cooldownPressed)
 	{
+		if (m_levelScore > m_highScore)
+			m_highScore = m_levelScore;
+		theFile->saveFile("scorefile.txt");
+
 		theFile->saveFile("Data.txt");
 		pressDelay = 0.f;
 	}
 	if (Application::IsKeyPressed('L') && pressDelay >= cooldownPressed)
 	{
+		theFile->loadFile("scorefile.txt");
 		theFile->loadFile("Data.txt");
 		pressDelay = 0.f;
 	}
 
 
-
-	if (b_isPause == false)
+	
+	if( (b_isPause == false) && (b_isWon==false))
 	{
+		CSoundEngine::getInstance()->theCurrentSound->setIsPaused(false);
+
+		//CSoundEngine::getInstance()->PauseSounds("BackGround Music");
+		
 		static bool bow = false;
 		if (Application::IsKeyPressed(VK_NUMPAD1) && !bow)
 		{
@@ -457,17 +481,15 @@ void Stage1::Update(double dt)
 			P_Catapult_Sprite->m_anim->animActive = true;
 		}
 	}
+	else
+	{
+		CSoundEngine::getInstance()->theCurrentSound->setIsPaused();
+	}
+
 	
-	//P_rotation = Math::RadianToDegree(atan2f(theGhostProj->pos.y - theReleaseMouseGhostProj->pos.y, theGhostProj->pos.x - theReleaseMouseGhostProj->pos.x));
 
 	theUIManager->Update();
 	theUIManager->UpdateText();
-
-	/*TEXT STUFF*/
-	//std::ostringstream ss0;
-	//ss0.precision(5);
-	//ss0 << "NINJA X GTA";
-	//textObj[0]->SetText(ss0.str());
 
 }
 

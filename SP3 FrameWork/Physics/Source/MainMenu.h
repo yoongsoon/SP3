@@ -10,6 +10,7 @@ public:
 	enum MENU_MAIN
 	{
 		START_MENU,
+		LOAD_MENU,
 		HIGHSCORE_MENU,
 		QUIT_MENU,
 	};

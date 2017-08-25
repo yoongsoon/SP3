@@ -1,6 +1,7 @@
 #include "AICastle.h"
 #include "Projectile.h"
 #include "Cannon.h"
+#include "Application.h"
 //#include "Bow.h"
 AICastle::AICastle(GAMEOBJECT_TYPE typeValue, SceneBase * scene)
 	:GameObject(typeValue, scene)
@@ -14,7 +15,8 @@ AICastle::AICastle(GAMEOBJECT_TYPE typeValue, SceneBase * scene)
 
 	meshValue = SceneBase::GEO_MINI_ENEMY_CASTLE;
 	scale.Set(30, 30, 1);
-	pos = Vector3((theScene->m_worldWidth * 3) - 15.f, 50.f, 1.f);
+	/*pos = Vector3((theScene->m_worldWidth * 3) - 15.f, 35.f, 1.f);*/
+	pos = Vector3((theScene->m_worldWidth * 3) - 15.f, 33.f, 1.f);
 	hitpoints = 500.f;
 
 	theAIweapon = new Cannon();
@@ -44,6 +46,11 @@ void AICastle::update()
 	}
 	break;
 	}
+	
+	// update the pos when resizing the screen
+	if(Application::b_isResize)
+		pos = Vector3((theScene->m_worldWidth * 3) - 15.f, 35.f, 1.f);
+
 
 		for (auto & it : theScene->theFactory->g_FactoryMap)
 		{

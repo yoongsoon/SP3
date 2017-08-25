@@ -28,11 +28,28 @@ void MainMenu::Update(double dt)
 	pressDelay += (float)dt;
 
 
-	if (Application::IsKeyPressed(VK_RETURN))
+	if (Application::IsKeyPressed(VK_RETURN) && pressDelay >= cooldownPressed)
 	{
 		if (menuMain == START_MENU)
 		{
 			SceneManager::getInstance()->SetActiveScene("Stage1");
+		}
+		else if (menuMain == LOAD_MENU)
+		{
+			// load the level 
+			theFile->loadLevel("Data.txt");
+
+			// set the stage according to the level
+			switch (theFile->currentStage)
+			{
+			case 1:
+				SceneManager::getInstance()->SetActiveScene("Stage1");
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			}
 		}
 		else if (menuMain == HIGHSCORE_MENU)
 		{
@@ -41,6 +58,8 @@ void MainMenu::Update(double dt)
 		{
 			exit(0);
 		}
+
+		pressDelay = 0.f;
 	}
 
 
@@ -56,6 +75,10 @@ void MainMenu::Update(double dt)
 		}
 		else if (menuMain == HIGHSCORE_MENU)
 		{
+			menuMain = LOAD_MENU;
+		}
+		else if (menuMain == LOAD_MENU)
+		{
 			menuMain = START_MENU;
 		}
 
@@ -66,6 +89,10 @@ void MainMenu::Update(double dt)
 	if (Application::IsKeyPressed(VK_DOWN) && pressDelay >= cooldownPressed)
 	{
 		if (menuMain == START_MENU)
+		{
+			menuMain = LOAD_MENU;
+		}
+		else if (menuMain == LOAD_MENU)
 		{
 			menuMain = HIGHSCORE_MENU;
 		}
@@ -108,6 +135,11 @@ void MainMenu::Render()
 	switch (menuMain)
 	{
 	case START_MENU:
+	{
+		RenderMeshOnScreen(meshList[SceneBase::GEO_PAUSE_ARROW], 90, 40, 10, 10);
+	}
+	break;
+	case LOAD_MENU:
 	{
 		RenderMeshOnScreen(meshList[SceneBase::GEO_PAUSE_ARROW], 90, 30, 10, 10);
 	}

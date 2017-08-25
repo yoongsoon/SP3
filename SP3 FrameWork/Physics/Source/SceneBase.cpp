@@ -9,6 +9,7 @@
 #include "LoadTGA.h"
 
 bool SceneBase::b_isPause = false;
+bool SceneBase::b_isWon= false;
 
 SceneBase::SceneBase()
 {
@@ -157,14 +158,32 @@ void SceneBase::Init()
 	meshList[GEO_BRICK]->textureID = LoadTGA("Image//castlebrick.tga");
 	meshList[GEO_BACKGROUND] = MeshBuilder::GenerateQuad("BackGround", Color(1.f, 1.f, 1.f), 1.f);
 	meshList[GEO_BACKGROUND]->textureID = LoadTGA("Image/BackGround.tga");
+
+	meshList[GEO_WIN_MENU] = MeshBuilder::GenerateQuad("WinMenu", Color(1.f, 1.f, 1.f), 1.f);
+	meshList[GEO_WIN_MENU]->textureID = LoadTGA("Image/Menu_Win.tga");
 	meshList[GEO_PAUSE_MENU] = MeshBuilder::GenerateQuad("PauseMenu", Color(1.f, 1.f, 1.f), 1.f);
 	meshList[GEO_PAUSE_MENU]->textureID = LoadTGA("Image/PauseMenu.tga");
 	meshList[GEO_PAUSE_ARROW] = MeshBuilder::GenerateQuad("PauseArrow", Color(1.f, 1.f, 1.f), 1.f);
 	meshList[GEO_PAUSE_ARROW]->textureID = LoadTGA("Image/PauseArrow.tga");
 
+	meshList[GEO_SELECT_WARRIOR] = MeshBuilder::GenerateQuad("selectWarrior", Color(1.f, 1.f, 1.f), 1.f);
+	meshList[GEO_SELECT_WARRIOR]->textureID = LoadTGA("Image/WarriorSelection.tga");
+	meshList[GEO_SELECT_ARCHER]  = MeshBuilder::GenerateQuad("selectArcher", Color(1.f, 1.f, 1.f), 1.f);
+	meshList[GEO_SELECT_ARCHER]->textureID = LoadTGA("Image/ArcherSelection.tga");
+	meshList[GEO_SELECT_WIZARD] = MeshBuilder::GenerateQuad("selectWizard", Color(1.f, 1.f, 1.f), 1.f);
+	meshList[GEO_SELECT_WIZARD]->textureID = LoadTGA("Image/WizardSelection.tga");
+
+
 	//--------------------Main Menu--------------------------//
 	meshList[GEO_MAIN_MENU] = MeshBuilder::GenerateQuad("MainMenu", Color(1.f, 1.f, 1.f), 1.f);
 	meshList[GEO_MAIN_MENU]->textureID = LoadTGA("Image/menu.tga");
+	//------------------Lose Scene----------------------------//
+	meshList[GEO_LOSE_SCENE] = MeshBuilder::GenerateQuad("LoseScene", Color(1.f, 1.f, 1.f), 1.f);
+	meshList[GEO_LOSE_SCENE]->textureID = LoadTGA("Image/LoseScene.tga");
+
+	//-------------------CREDITS--------------------------//
+	meshList[GEO_CREDITS] = MeshBuilder::GenerateQuad("Credits_Menu", Color(1.f, 1.f, 1.f), 1.f);
+	meshList[GEO_CREDITS]->textureID = LoadTGA("Image/Credits.tga");
 
 
 	//-------------------Terrain-------------------------------//
@@ -187,6 +206,8 @@ void SceneBase::Init()
 	meshList[GEO_MINI_ENEMY_CASTLE]->textureID = LoadTGA("Image/miniEnemyCastle.tga");
 
 	bLightEnabled = false;
+
+	theFile = new FileConfiguration();
 }
 
 void SceneBase::Update(double dt)

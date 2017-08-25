@@ -147,13 +147,11 @@ bool CollisionManager::checkCollision(GameObject * object1, GameObject * object2
 				&& radialPosToTarget.Dot(object1->vel) > 0);
 		}
 	}
-	else if (object1->type == GameObject::GO_P_BRICK || object1->type == GameObject::GO_AI_BRICK)
+	else if (object1->type == GameObject::GO_P_BRICK)
 	{
-		Vector3 lengthVec1, lengthVec2;
 		switch (object2->type)
 		{
 		case GameObject::GO_P_BRICK:
-		case GameObject::GO_AI_BRICK:
 			// NOTE: This code assumes the cube/quad/rectangular object cannot spin
 			object1->topLeft.Set(obj1pos.x - (obj1scale.x * 0.5f), obj1pos.y + (obj1scale.y * 0.5f), 0);
 			object1->topRight.Set(obj1pos.x + (obj1scale.x * 0.5f), obj1pos.y + (obj1scale.y * 0.5f), 0);
@@ -165,6 +163,30 @@ bool CollisionManager::checkCollision(GameObject * object1, GameObject * object2
 			object2->bottomLeft.Set(obj2pos.x - (obj2scale.x * 0.5f), obj2pos.y - (obj2scale.y * 0.5f), 0);
 			object2->bottomRight.Set(obj2pos.x + (obj2scale.x * 0.5f), obj2pos.y - (obj2scale.y * 0.5f), 0);
 
+			if (object1->debugTag == "2ndone")
+				cout << "is1 " << object1->pos << endl;
+			if (object2->debugTag == "2ndone")
+				cout << "is2 " << object1->pos << endl;
+
+			return (!object1->m_canFall && !object2->m_canFall && object2->hitpoints > 0 && object1->hitpoints > 0 && (obj1pos - obj2pos).Length() < (obj1scale.y + obj2scale.y) * 0.5);
+		}
+	}
+	else if (object1->type == GameObject::GO_AI_BRICK)
+	{
+		switch (object2->type)
+		{
+		case GameObject::GO_AI_BRICK:
+			// NOTE: This code assumes the cube/quad/rectangular object cannot spin
+			object1->topLeft.Set(obj1pos.x - (obj1scale.x * 0.5f), obj1pos.y + (obj1scale.y * 0.5f), 0);
+			object1->topRight.Set(obj1pos.x + (obj1scale.x * 0.5f), obj1pos.y + (obj1scale.y * 0.5f), 0);
+			object1->bottomLeft.Set(obj1pos.x - (obj1scale.x * 0.5f), obj1pos.y - (obj1scale.y * 0.5f), 0);
+			object1->bottomRight.Set(obj1pos.x + (obj1scale.x * 0.5f), obj1pos.y - (obj1scale.y * 0.5f), 0);
+
+			object2->topLeft.Set(obj2pos.x - (obj2scale.x * 0.5f), obj2pos.y + (obj2scale.y * 0.5f), 0);
+			object2->topRight.Set(obj2pos.x + (obj2scale.x * 0.5f), obj2pos.y + (obj2scale.y * 0.5f), 0);
+			object2->bottomLeft.Set(obj2pos.x - (obj2scale.x * 0.5f), obj2pos.y - (obj2scale.y * 0.5f), 0);
+			object2->bottomRight.Set(obj2pos.x + (obj2scale.x * 0.5f), obj2pos.y - (obj2scale.y * 0.5f), 0);
+			
 			return (object2->hitpoints > 0 && object1->hitpoints > 0 && (obj1pos - obj2pos).Length() < (obj1scale.y + obj2scale.y) * 0.5);
 		}
 	}
@@ -201,7 +223,7 @@ void CollisionManager::collisionResponse(GameObject * object1, GameObject * obje
 			}
 			catch (DivideByZero e)
 			{
-
+				return;
 			}
 			Vector3 u1Normal = u1.Dot(N) * N;
 			Vector3 u2Normal = u2.Dot(N) * N;
@@ -236,10 +258,16 @@ void CollisionManager::collisionResponse(GameObject * object1, GameObject * obje
 	{
 		if (object2->type == GameObject::GO_P_BRICK)
 		{
-			//object2->m_gEffect = object1->m_gEffect = false;
-			object2->pos.y += theScene->_dt * 4.f;
-			if (object2->m_gEffect == false)
-				cout << "falsed" << endl;
+			object2->wallPos.y += object1->scale.y;
+			object2->pos.y += theScene->_dt;
+		}
+	}
+	else if ( object1->type == GameObject::GO_AI_BRICK)
+	{
+		if (object1->type == GameObject::GO_AI_BRICK)
+		{
+			object2->wallPos.y += object1->scale.y;
+			object2->pos.y += theScene->_dt;
 		}
 	}
 	//PLAYER PROJECTILE DAMAGE TO ENEMY TROOPS
@@ -328,7 +356,7 @@ void CollisionManager::Update(float dt)
 		for (unsigned it2 = it + 1; it2 < theScene->theFactory->g_BuildingsVector.size(); ++it2)
 		{
 			// Skip current element if it is not active
-			if (theScene->theFactory->g_BuildingsVector[it]->active == false || theScene->theFactory->g_BuildingsVector[it]->type != GameObject::GO_P_BRICK)
+			if (theScene->theFactory->g_BuildingsVector[it]->active == false || theScene->theFactory->g_BuildingsVector[it]->type != GameObject::GO_P_BRICK && theScene->theFactory->g_BuildingsVector[it]->type != GameObject::GO_AI_BRICK)
 				continue;
 
 			GameObject* goA = theScene->theFactory->g_BuildingsVector[it];
