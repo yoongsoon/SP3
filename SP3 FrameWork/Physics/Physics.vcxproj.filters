@@ -159,7 +159,14 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\LoseScene.cpp">
+<<<<<<< HEAD
       <Filter>Source Files\Scene</Filter>
+=======
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\HealthBar.cpp">
+      <Filter>Source Files\UI</Filter>
+>>>>>>> 5cd1ad0ea85efd76777a7199027596ee330df78c
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -287,7 +294,14 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\LoseScene.h">
+<<<<<<< HEAD
       <Filter>Header Files\Scene</Filter>
+=======
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\HealthBar.h">
+      <Filter>Header Files\UI</Filter>
+>>>>>>> 5cd1ad0ea85efd76777a7199027596ee330df78c
     </ClInclude>
   </ItemGroup>
 </Project>

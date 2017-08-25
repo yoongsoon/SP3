@@ -53,6 +53,7 @@ void MainMenu::Update(double dt)
 		}
 		else if (menuMain == HIGHSCORE_MENU)
 		{
+			SceneManager::getInstance()->SetActiveScene("ScoreScene");
 		}
 		else if (menuMain == QUIT_MENU)
 		{

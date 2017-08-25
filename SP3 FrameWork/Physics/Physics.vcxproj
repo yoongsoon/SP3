@@ -170,6 +170,7 @@
     <ClCompile Include="Source\FileConfiguration.cpp" />
     <ClCompile Include="Source\GameObjectManager.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
+    <ClCompile Include="Source\HealthBar.cpp" />
     <ClCompile Include="Source\LoadHmap.cpp" />
     <ClCompile Include="Source\LoadOBJ.cpp" />
     <ClCompile Include="Source\LoadTGA.cpp" />
@@ -185,6 +186,7 @@
     <ClCompile Include="Source\Projectile.cpp" />
     <ClCompile Include="Source\SceneBase.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
+    <ClCompile Include="Source\Score_Scene.cpp" />
     <ClCompile Include="Source\shader.cpp" />
     <ClCompile Include="Source\SoundEngine.cpp" />
     <ClCompile Include="Source\SpriteAnimation.cpp" />
@@ -210,6 +212,7 @@
     <ClInclude Include="Source\FileConfiguration.h" />
     <ClInclude Include="Source\GameObjectManager.h" />
     <ClInclude Include="Source\GameObject.h" />
+    <ClInclude Include="Source\HealthBar.h" />
     <ClInclude Include="Source\Light.h" />
     <ClInclude Include="Source\LoadHmap.h" />
     <ClInclude Include="Source\LoadOBJ.h" />
@@ -227,6 +230,7 @@
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneBase.h" />
     <ClInclude Include="Source\SceneManager.h" />
+    <ClInclude Include="Source\Score_Scene.h" />
     <ClInclude Include="Source\shader.hpp" />
     <ClInclude Include="Source\Singleton.h" />
     <ClInclude Include="Source\SoundEngine.h" />

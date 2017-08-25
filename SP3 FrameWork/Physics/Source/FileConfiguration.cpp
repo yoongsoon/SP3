@@ -31,7 +31,7 @@ void FileConfiguration::loadFile(string _fileName)
 	float tempHitPoint;
 	int tempCanFall;
 	unsigned tempWallStackCounter;
-	Vector3 tempWallPos;
+	float tempGroundLevel;
 
 	// count the number of lines 
 	int counter = 0;
@@ -51,24 +51,24 @@ void FileConfiguration::loadFile(string _fileName)
 		}
 		else
 		{
-			if (_fileName == "scorefile.txt")
-			{
-				while (getline(myLoadFile, eachLine))
-				{
+			//if (_fileName == "scorefile.txt")
+			//{
+			//	while (getline(myLoadFile, eachLine))
+			//	{
 
-					//store content of eachLine into ss
-					istringstream ss(eachLine);
-					string aToken = "";
-					while (getline(ss, aToken, '\n'))
-					{
-						cout << aToken << endl;
-						tempScore = stoi(aToken);
-						_scene->m_highScore = tempScore;
-					}
-				}
-			}
-			else
-			{
+			//		//store content of eachLine into ss
+			//		istringstream ss(eachLine);
+			//		string aToken = "";
+			//		while (getline(ss, aToken, '\n'))
+			//		{
+			//			cout << aToken << endl;
+			//			tempScore = stoi(aToken);
+			//			_scene->m_highScore = tempScore;
+			//		}
+			//	}
+			//}
+			//else
+			//{
 				while (getline(myLoadFile, eachLine))
 				{
 					//store content of eachLine into ss
@@ -84,9 +84,16 @@ void FileConfiguration::loadFile(string _fileName)
 						string theTag = aToken;
 						getline(ss, aToken, ':');
 
-						//don't count  the line with Stage No
-						if (theTag == "Stage No")
+					
+						//don't count  the line with Stage No and score
+						if (theTag == "Stage No" || theTag == "Highscore")
 							counter--;
+
+						if (theTag == "Highscore")
+						{
+							tempScore = stoi(aToken);
+							_scene->m_highScore = tempScore;
+						}
 
 
 						//------- ENUM---------------//
@@ -108,10 +115,7 @@ void FileConfiguration::loadFile(string _fileName)
 						{
 							tempPos = Token2Vector(aToken);
 						}
-						else if (theTag == "Wall Pos")
-						{
-							tempWallPos = Token2Vector(aToken);
-						}
+					
 
 
 						// --------FLOAT----------------//
@@ -134,6 +138,10 @@ void FileConfiguration::loadFile(string _fileName)
 						else if (theTag == "EnemyMoveX")
 						{
 							tempEnemyMoveX = stof(aToken);
+						}
+						else if (theTag == "GroundLevel")
+						{
+							tempGroundLevel = stof(aToken);
 						}
 
 
@@ -258,7 +266,7 @@ void FileConfiguration::loadFile(string _fileName)
 								Buildings * thePlayerBrick = new Buildings(GameObject::GO_P_BRICK, _scene, tempWallStackCounter);
 								thePlayerBrick->hitpoints = tempHitPoint;
 								thePlayerBrick->pos = tempPos;
-								thePlayerBrick->wallPos = tempWallPos;
+								thePlayerBrick->m_groundLevel = tempGroundLevel;
 								if (tempCanFall == 0)
 								{
 									thePlayerBrick->m_canFall = false;
@@ -275,7 +283,7 @@ void FileConfiguration::loadFile(string _fileName)
 								Buildings * theAIBrick = new Buildings(GameObject::GO_AI_BRICK, _scene, tempWallStackCounter);
 								theAIBrick->hitpoints = tempHitPoint;
 								theAIBrick->pos = tempPos;
-								theAIBrick->wallPos = tempWallPos;
+								theAIBrick->m_groundLevel = tempGroundLevel;
 								if (tempCanFall == 0)
 								{
 									theAIBrick->m_canFall = false;
@@ -318,7 +326,7 @@ void FileConfiguration::loadFile(string _fileName)
 						}
 					}
 				}
-			}
+			//}
 		}
 
 	}
@@ -340,16 +348,14 @@ void FileConfiguration::saveFile(string _fileName)
 	else
 	{
 		cout << "Saved file successfully" << endl;
-		//outPutFile << "HighScore:" << 
-		//for (auto & it : _scene->theFactory->g_FactoryMap)
-
-		if (_fileName == "scorefile.txt")
+		/*if (_fileName == "scorefile.txt")
 		{
-			outPutFile << _scene->m_highScore << endl;
+			
 		}
 		else
-		{
+		{*/
 			//Save the current Stage
+			outPutFile << "Highscore:" << _scene->m_highScore << endl;
 			outPutFile << "Stage No:" << _scene->sceneNumber << endl;
 			outPutFile << endl;
 			outPutFile << endl;
@@ -400,7 +406,7 @@ void FileConfiguration::saveFile(string _fileName)
 				{
 					outPutFile << "B_CanFall:" << it->m_canFall << endl;
 					outPutFile << "Position:" << it->pos << endl;
-					outPutFile << "Wall Pos:" << it->wallPos << endl;
+					outPutFile << "GroundLevel:" << it->m_groundLevel << endl;
 				}
 				// only store wallcounter for  player brick and enemy brick and player castle
 				if (it->type != GameObject::GO_AI_CASTLE)
@@ -410,7 +416,7 @@ void FileConfiguration::saveFile(string _fileName)
 			}
 		}
 
-	}
+	//}
 	outPutFile.close();
 
 }

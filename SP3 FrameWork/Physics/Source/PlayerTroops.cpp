@@ -78,6 +78,7 @@ void PlayerTroop::update()
 		{
 			pos += vel * theScene->_dt;
 			meshValue = SceneBase::GEO_SOLDIER;
+			//cout << pos.z << endl;
 		}
 		else
 		{

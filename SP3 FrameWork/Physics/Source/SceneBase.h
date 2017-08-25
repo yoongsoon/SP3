@@ -117,6 +117,7 @@ public:
 		GEO_PAUSE_MENU,
 		GEO_PAUSE_ARROW,
 		GEO_MAIN_MENU,
+		GEO_SCORESCENE,
 		GEO_CREDITS,
 		GEO_LOSE_SCENE,
 
@@ -127,6 +128,8 @@ public:
 		GEO_MINI_ALLIES,
 		GEO_MINI_PLAYER_CASTLE,
 		GEO_MINI_ENEMY_CASTLE,
+		//Achipi Baru
+		GEO_HEALTH_BAR,
 		NUM_GEOMETRY,
 	};
 
@@ -169,7 +172,7 @@ public:
 
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
-	 void RenderMesh(Mesh *mesh, bool enableLight);
+	void RenderMesh(Mesh *mesh, bool enableLight);
 
 	void RenderMeshOnScreen(Mesh* mesh, float x, float y, float sizeX, float sizeY);
 	void RenderMeshOnScreen(Mesh* mesh, float x, float y, float sizeX, float sizeY, float rotateX, float rotateY);
@@ -220,7 +223,7 @@ protected:
 	float fps;
 
 	float P_rotation = 0;
-
+	float Projectile_to_rotate_test = 0;
 	//--------------------------------PHYSIC CODES---------------------------------------------------//
 	float m_worldWidth;
 	float m_worldHeight;

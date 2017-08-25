@@ -6,6 +6,7 @@
 
 #include "Application.h"
 #include "SoundEngine.h"
+#include "SceneBase.h" //newly added
 //#include "MouseController.h"
 //#include "KeyboardController.h"
 //#include "Mtx44.h"
@@ -30,7 +31,7 @@ PlayerInfo::PlayerInfo(void)
 	, health(100)
 	, colliding(false)
 {
-
+	RyanFireLord = new SceneBase();
 }
 
 PlayerInfo::~PlayerInfo(void)
@@ -61,12 +62,12 @@ PlayerInfo::~PlayerInfo(void)
 void PlayerInfo::Init(void)
 {
 	// Set the default values
-	defaultPosition.Set(0, 0, 10);
+	defaultPosition.Set(0, 0, RyanFireLord->zaxis);
 	defaultTarget.Set(0, 0, 0);
 	defaultUp.Set(0, 1, 0);
 
 	// Set the current values
-	position.Set(0, 0, 10);
+	position.Set(0, 0, RyanFireLord->zaxis);
 	target.Set(0, 0, 0);
 	up.Set(0, 1, 0);
 
@@ -87,7 +88,8 @@ void PlayerInfo::Init(void)
 	weap_manager[1]->Init();
 	weap_manager[2] = new Catapult();
 	weap_manager[2]->Init();
-
+	
+	cout << RyanFireLord->zaxis << endl;
 }
 
 

@@ -163,12 +163,16 @@ bool CollisionManager::checkCollision(GameObject * object1, GameObject * object2
 			object2->bottomLeft.Set(obj2pos.x - (obj2scale.x * 0.5f), obj2pos.y - (obj2scale.y * 0.5f), 0);
 			object2->bottomRight.Set(obj2pos.x + (obj2scale.x * 0.5f), obj2pos.y - (obj2scale.y * 0.5f), 0);
 
+
 		/*	if (object1->debugTag == "2ndone")
 				cout << "is1 " << object1->pos << endl;
 			if (object2->debugTag == "2ndone")
 				cout << "is2 " << object1->pos << endl;
 */
 			return (!object1->m_canFall && !object2->m_canFall && object2->hitpoints > 0 && object1->hitpoints > 0 && (obj1pos - obj2pos).Length() < (obj1scale.y + obj2scale.y) * 0.5);
+
+			return ((obj1pos - obj2pos).Length() <= (obj1scale.y + obj2scale.y) * 0.5);
+
 		}
 	}
 	else if (object1->type == GameObject::GO_AI_BRICK)
@@ -187,22 +191,10 @@ bool CollisionManager::checkCollision(GameObject * object1, GameObject * object2
 			object2->bottomLeft.Set(obj2pos.x - (obj2scale.x * 0.5f), obj2pos.y - (obj2scale.y * 0.5f), 0);
 			object2->bottomRight.Set(obj2pos.x + (obj2scale.x * 0.5f), obj2pos.y - (obj2scale.y * 0.5f), 0);
 			
-			return (object2->hitpoints > 0 && object1->hitpoints > 0 && (obj1pos - obj2pos).Length() < (obj1scale.y + obj2scale.y) * 0.5);
+			return ((obj1pos - obj2pos).Length() <= (obj1scale.y + obj2scale.y) * 0.5);
 		}
 	}
-		/*else if (object2->type == GameObject::GO_PILLAR) {
-			Vector3 p1 = object1->pos;
-			Vector3 p2 = object2->pos;
-			float r1 = object1->scale.x;
-			float r2 = object2->scale.x;
-			Vector3 u = object1->vel;
-
-			Vector3 dist = object1->pos - object2->pos;
-
-			Vector3 rel = object1->vel - object2->vel;
-
-			return (rel.Dot(dist) < 0 && (p2 - p1).LengthSquared() < (r1 + r2) * (r1 + r2))
-				&& ((p2 - p1).Dot(u) > 0);*/
+		
 	return false;
 }
 
@@ -254,21 +246,11 @@ void CollisionManager::collisionResponse(GameObject * object1, GameObject * obje
 
 		}
 	}
-	else if (object1->type == GameObject::GO_P_BRICK)
+	else if (object1->type == GameObject::GO_P_BRICK && object2->type == GameObject::GO_P_BRICK 
+		|| object1->type == GameObject::GO_AI_BRICK && object2->type == GameObject::GO_AI_BRICK)
 	{
-		if (object2->type == GameObject::GO_P_BRICK)
-		{
-			object2->wallPos.y += object1->scale.y;
-			object2->pos.y += theScene->_dt;
-		}
-	}
-	else if ( object1->type == GameObject::GO_AI_BRICK)
-	{
-		if (object1->type == GameObject::GO_AI_BRICK)
-		{
-			object2->wallPos.y += object1->scale.y;
-			object2->pos.y += theScene->_dt;
-		}
+		object1->m_canFall = false;
+		object1->pos += object1->dir * theScene->_dt;
 	}
 	//PLAYER PROJECTILE DAMAGE TO ENEMY TROOPS
 	else if (static_cast<Projectile*>(object1)->whoseProjectile == Projectile::PROJECTILE_WHOSE::PLAYER_PROJECTILE && object2->type == GameObject::GO_ENEMY)
@@ -361,7 +343,13 @@ void CollisionManager::Update(float dt)
 
 			GameObject* goA = theScene->theFactory->g_BuildingsVector[it];
 			GameObject* goB = theScene->theFactory->g_BuildingsVector[it2];
-
+			
+			// Ensure goA is always on top
+			if (goB->type == GameObject::GO_P_BRICK && goA->type == GameObject::GO_P_BRICK && goA->pos.y < goB->pos.y)
+			{
+				goA = theScene->theFactory->g_BuildingsVector[it2];
+				goB = theScene->theFactory->g_BuildingsVector[it];
+			}
 			if (checkCollision(goA, goB))
 			{
 				collisionResponse(goA, goB);
@@ -385,3 +373,16 @@ void CollisionManager::Update(float dt)
 		}
 	}
 }
+/*else if (object2->type == GameObject::GO_PILLAR) {
+Vector3 p1 = object1->pos;
+Vector3 p2 = object2->pos;
+float r1 = object1->scale.x;
+float r2 = object2->scale.x;
+Vector3 u = object1->vel;
+
+Vector3 dist = object1->pos - object2->pos;
+
+Vector3 rel = object1->vel - object2->vel;
+
+return (rel.Dot(dist) < 0 && (p2 - p1).LengthSquared() < (r1 + r2) * (r1 + r2))
+&& ((p2 - p1).Dot(u) > 0);*/

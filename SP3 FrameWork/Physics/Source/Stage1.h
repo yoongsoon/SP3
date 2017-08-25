@@ -45,7 +45,7 @@ protected:
 	bool release_ghost_exist = false;
 	bool M_ghost_exist = false;
 	bool canPredict;
-
+	bool fire = false;
 	//float P_Rotation;
 private:
 	//TextEntity* textObj[3];

@@ -14,6 +14,8 @@
 #include <sstream>
 using namespace std;
 
+class SceneBase;
+
 class PlayerInfo
 {
 protected:
@@ -64,7 +66,6 @@ public:
 	Vector3 GetTarget(void) const;
 	// Get Up
 	Vector3 GetUp(void) const;
-
 	//// Update
 	void Update(double dt = 0.0333f);
 
@@ -132,5 +133,5 @@ private:
 	double m_dAcceleration;
 
 	double m_dElapsedTime;
-
+	SceneBase *RyanFireLord;
 };

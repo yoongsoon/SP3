@@ -83,6 +83,7 @@ void Projectile::update()
 			vel.y += m_gravity *theScene->_dt;
 
 		pos += vel * theScene->_dt;
+		rotateZ = Math::RadianToDegree(atan2(vel.y, vel.x));
 	}
 	break;
 	case LINEAR_MOTION:

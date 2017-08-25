@@ -33,6 +33,7 @@ void Stage1::Init()
 	canPredict = true;
 	weap_manager = NULL;
 	P_rotation = 1.f;
+	Projectile_to_rotate_test = 1.f;
 	//Physics code here
 	m_speed = 1.f;
 	m_levelScore = 10000;
@@ -119,11 +120,10 @@ void Stage1::Init()
 	SpriteAnimation* archerattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER_ATTACK]);
 	SpriteAnimation* soldier = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER]);
 	SpriteAnimation* soldierattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER_ATTACK]);
-	//SpriteAnimation* P_weapon_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_BOW_ARROW]);
 	SpriteAnimation* P_Bow_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_BOW_ARROW]);
 //	SpriteAnimation* P_Cannon_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CANNON_BALLS]);
 	SpriteAnimation* P_Catapult_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CATAPULT_ROCKS]);
-
+	//Sprite Animation init
 	if (wizard)
 	{
 		wizard->m_anim = new Animation();
@@ -154,13 +154,11 @@ void Stage1::Init()
 		soldierattack->m_anim = new Animation();
 		soldierattack->m_anim->Set(0, 4, 0, 1.0f, true);
 	}
-	//if (P_weapon_Sprite)
-	if (P_Bow_Sprite)
-
-	{
+	//if (P_Bow_Sprite)
+	//{
 		P_Bow_Sprite->m_anim = new Animation();
 		P_Bow_Sprite->m_anim->Set(0, 12, 0, 1.0f, true);
-	}
+	//}
 //	if (P_Cannon_Sprite)
 //	{
 //		P_Cannon_Sprite->m_anim = new Animation();
@@ -173,7 +171,6 @@ void Stage1::Init()
 	}
 
 	theUIManager = new UIManager(this);
-
 
 	//Init scene
 	theFile->setScene(this);
@@ -203,14 +200,14 @@ void Stage1::Update(double dt)
 	{
 		if (m_levelScore > m_highScore)
 			m_highScore = m_levelScore;
-		theFile->saveFile("scorefile.txt");
+		//theFile->saveFile("scorefile.txt");
 
 		theFile->saveFile("Data.txt");
 		pressDelay = 0.f;
 	}
 	if (Application::IsKeyPressed('L') && pressDelay >= cooldownPressed)
 	{
-		theFile->loadFile("scorefile.txt");
+		//theFile->loadFile("scorefile.txt");
 		theFile->loadFile("Data.txt");
 		pressDelay = 0.f;
 	}
@@ -239,7 +236,6 @@ void Stage1::Update(double dt)
 		{
 			bow = false;
 		}
-		//	static bool bow = false;
 		if (Application::IsKeyPressed(VK_NUMPAD2) && !bow)
 		{
 			//curr_weapon = 1;
@@ -255,7 +251,6 @@ void Stage1::Update(double dt)
 		{
 			bow = false;
 		}
-		//	static bool bow = false;
 		if (Application::IsKeyPressed(VK_NUMPAD3) && !bow)
 		{
 			//curr_weapon = 2;
@@ -396,11 +391,7 @@ void Stage1::Update(double dt)
 
 			//shoots projectile
 			thePlayer->DischargePPTEST(theGhostProj->pos, currentPos, this);
-
-			//Weapon_Info potato;
-			//potato.Get_OBJECT();
-			//theGhostProj->active = false;
-			// add object into factory
+			fire = true;
 		}
 		//shows where mouse is(if need remove mouse cursor)
 		theMouseGhostProj->pos = currentPos;
@@ -413,17 +404,17 @@ void Stage1::Update(double dt)
 				thePredictionLine[i]->pos.y = (((50) + ((theGhostProj->pos.y - theMouseGhostProj->pos.y) * tline)) + ((-9.8 *(tline * tline)) / 2));
 				thePredictionLine[i]->pos.x = (20) + ((theGhostProj->pos.x - theMouseGhostProj->pos.x) * tline);
 				thePredictionLine[i]->pos.z = 5.0f;
+				thePredictionLine[i]->scale = Vector3((i + 1)*0.1, (i + 1)*0.1, (i + 1)*0.1);
 				thePredictionLine[i]->active = true;
 			}
-			//canPredict = false;
 			P_rotation = Math::RadianToDegree(atan2f(theGhostProj->pos.y - theMouseGhostProj->pos.y, theGhostProj->pos.x - theMouseGhostProj->pos.x));
-
 		}
 		else
 		{
-			P_rotation = 1;
+			//90 points up+
+			P_rotation = 0;
+			//-90 points down
 		}
-
 		// scrolling right
 		if (Application::IsKeyPressed(VK_RIGHT))
 		{
@@ -457,62 +448,134 @@ void Stage1::Update(double dt)
 
 		theMiniMap->Update();
 
-		SpriteAnimation* wizard = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD]);
-		SpriteAnimation* wizardattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD_ATTACK]);
-		SpriteAnimation* archer = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER]);
-		SpriteAnimation* archerattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER_ATTACK]);
-		SpriteAnimation* soldier = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER]);
-		SpriteAnimation* soldierattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER_ATTACK]);
+		SpriteAnimation** sprite = new SpriteAnimation*[6];
+		sprite[0] = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD]);
+		sprite[1] = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD_ATTACK]);
+		sprite[2] = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER]);
+		sprite[3] = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER_ATTACK]);
+		sprite[4] = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER]);
+		sprite[5] = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER_ATTACK]);
+		//SpriteAnimation* wizard = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD]);
+		//SpriteAnimation* wizardattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD_ATTACK]);
+		//SpriteAnimation* archer = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER]);
+		//SpriteAnimation* archerattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER_ATTACK]);
+		//SpriteAnimation* soldier = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER]);
+		//SpriteAnimation* soldierattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER_ATTACK]);
 		//SpriteAnimation* P_weapon_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_BOW_ARROW]);
 		SpriteAnimation* P_Bow_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_BOW_ARROW]);
 		//SpriteAnimation* P_Cannon_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CANNON_BALLS]);
 		SpriteAnimation* P_Catapult_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CATAPULT_ROCKS]);
-
-		if (wizard)
+		//Sprite Animation update
+		for (int a = 0; a < 6; a++)
 		{
-			wizard->Update(dt);
-			wizard->m_anim->animActive = true;
+			sprite[a]->Update(dt);
+			sprite[a]->m_anim->animActive = true;
 		}
-		if (wizardattack)
-		{
-			wizardattack->Update(dt);
-			wizardattack->m_anim->animActive = true;
-		}
-		if (archer)
-		{
-			archer->Update(dt);
-			archer->m_anim->animActive = true;
-		}
-		if (archerattack)
-		{
-			archerattack->Update(dt);
-			archerattack->m_anim->animActive = true;
-		}
-		if (soldier)
-		{
-			soldier->Update(dt);
-			soldier->m_anim->animActive = true;
-		}
-		if (soldierattack)
-		{
-			soldierattack->Update(dt);
-			soldierattack->m_anim->animActive = true;
-		}
+		//if (wizard)
+		//{
+		//	wizard->Update(dt);
+		//	wizard->m_anim->animActive = true;
+		//}
+		//if (wizardattack)
+		//{
+		//	wizardattack->Update(dt);
+		//	wizardattack->m_anim->animActive = true;
+		//}
+		//if (archer)
+		//{
+		//	archer->Update(dt);
+		//	archer->m_anim->animActive = true;
+		//}
+		//if (archerattack)
+		//{
+		//	archerattack->Update(dt);
+		//	archerattack->m_anim->animActive = true;
+		//}
+		//if (soldier)
+		//{
+		//	soldier->Update(dt);
+		//	soldier->m_anim->animActive = true;
+		//}
+		//if (soldierattack)
+		//{
+		//	soldierattack->Update(dt);
+		//	soldierattack->m_anim->animActive = true;
+		//}
 		//if (P_weapon_Sprite)
-		if (P_Bow_Sprite)
+
+		double result = sqrt(((theGhostProj->pos.x - theMouseGhostProj->pos.x)*(theGhostProj->pos.x - theMouseGhostProj->pos.x)) + ((theGhostProj->pos.y - theMouseGhostProj->pos.y)*(theGhostProj->pos.y - theMouseGhostProj->pos.y)));
+
+		if (!bLButtonState)
 		{
-			P_Bow_Sprite->Update(dt);
-			P_Bow_Sprite->m_anim->animActive = true;
+			P_Bow_Sprite->m_currentFrame = 0;
 		}
+		else if( (bLButtonState)&&(result>50))
+		{
+			P_Bow_Sprite->m_currentFrame = 11;
+		}
+		else if ((bLButtonState) && (result>45))
+		{
+			P_Bow_Sprite->m_currentFrame = 10;
+		}
+		else if ((bLButtonState) && (result>40))
+		{
+			P_Bow_Sprite->m_currentFrame = 9;
+		}
+		else if ((bLButtonState) && (result>35))
+		{
+		P_Bow_Sprite->m_currentFrame = 8;
+		}
+		else if ((bLButtonState) && (result>30))
+		{
+		P_Bow_Sprite->m_currentFrame = 7;
+		}
+		else if ((bLButtonState) && (result>25))
+		{
+			P_Bow_Sprite->m_currentFrame = 6;
+		}
+		else if ((bLButtonState) && (result>20))
+		{
+			P_Bow_Sprite->m_currentFrame = 5;
+		}
+		else if ((bLButtonState) && (result>15))
+		{
+			P_Bow_Sprite->m_currentFrame = 4;
+		}
+		else if ((bLButtonState) && (result>10))
+		{
+			P_Bow_Sprite->m_currentFrame = 3;
+		}
+		else if ((bLButtonState) && (result>5))
+		{
+			P_Bow_Sprite->m_currentFrame = 2;
+		}
+		else if ((bLButtonState) && (result>1))
+		{
+			P_Bow_Sprite->m_currentFrame = 1;
+		}
+		P_Bow_Sprite->m_anim->animActive = true;
+	
+		cout << result << endl;
+		//if (P_Bow_Sprite)
+		//{
+		//	P_Bow_Sprite->Update(dt);
+		//	P_Bow_Sprite->m_anim->animActive = true;
+		//}
 	//	if (P_Cannon_Sprite)
 	//	{
 	//		P_Cannon_Sprite->Update(dt);
 	//		P_Cannon_Sprite->m_anim->animActive = true;
 	//	}
-		if (P_Catapult_Sprite)
+		if (fire)
 		{
 			P_Catapult_Sprite->Update(dt);
 			P_Catapult_Sprite->m_anim->animActive = true;
+			
+		}
+		else if ((fire)&& (P_Catapult_Sprite->m_currentFrame == 9))
+		{
+			fire = false;
+			P_Catapult_Sprite->m_anim->animActive = false;
 		}
 	}
 	else
@@ -563,45 +626,51 @@ void Stage1::Render()
 	theUIManager->Render();
 	theUIManager->RenderText();
 
-	//RenderMeshOnScreen(meshList[GEO_P_CANNON], 30.0f, 80.0f, 15.0f, 15.0f);
 
 	//rendering problem
-	modelStack.PushMatrix();
-	modelStack.Translate(30.0f, 40.0f, 5.0f);
-	//modelStack.Rotate(P_rotation, 0, 0, 1);
-	modelStack.Scale(15.0f, 15.0f, 1.0f);
-	//RenderMesh(meshList[GEO_P_CANNON], false);
-	RenderMesh(meshList[GEO_P_CANNON_STAND], false);
-	modelStack.PopMatrix();
+	if (weapon2)
+	{
 
-	modelStack.PushMatrix();
-	modelStack.Translate(20.0f, 40.0f, 4.0f);
-	modelStack.Rotate(P_rotation, 0, 0, 1);
-	modelStack.Scale(15.0f, 15.0f, 1.0f);
-	RenderMesh(meshList[GEO_P_CANNON], false);
-	//RenderMesh(meshList[GEO_P_CANNON_STAND], false);
-	modelStack.PopMatrix();
 
-	modelStack.PushMatrix();
-	modelStack.Translate(20.0f, 30.0f, 5.0f);
-	//modelStack.Rotate(P_rotation, 0, 0, 1);
-	modelStack.Scale(15.0f, 15.0f, 1.0f);
-	RenderMesh(meshList[GEO_P_CATAPULT_ROCKS], false);
-	modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(30.0f, 40.0f, 5.0f);
+		//modelStack.Rotate(P_rotation, 0, 0, 1);
+		modelStack.Scale(15.0f, 15.0f, 1.0f);
+		//RenderMesh(meshList[GEO_P_CANNON], false);
+		RenderMesh(meshList[GEO_P_CANNON_STAND], false);
+		modelStack.PopMatrix();
 
-	modelStack.PushMatrix();
-	modelStack.Translate(20.0f, 50.0f, 5.0f);
-	modelStack.Rotate(P_rotation, 0, 0, 1);
-	modelStack.Scale(15.0f, 15.0f, 1.0f);
-	RenderMesh(meshList[GEO_P_BOW_ARROW], false);
-	modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(20.0f, 50.0f, 5.0f);
+		modelStack.Rotate(P_rotation, 0, 0, 1);
+		modelStack.Scale(15.0f, 15.0f, 1.0f);
+		RenderMesh(meshList[GEO_P_CANNON], false);
+		//RenderMesh(meshList[GEO_P_CANNON_STAND], false);
+		modelStack.PopMatrix();
+	}
+	if (weapon3)
+	{
 
-	/*modelStack.PushMatrix();
-	modelStack.Translate(20.0f, 40.0f, 1.0f);
-	modelStack.Scale(15.0f, 15.0f, 1.0f);
-	RenderMesh(meshList[GEO_P_BOW_ARROW], false);
-	modelStack.PopMatrix();*/
-	
+
+		modelStack.PushMatrix();
+		modelStack.Translate(17.0f, 47.0f, 5.0f);
+		//modelStack.Rotate(P_rotation, 0, 0, 1);
+		modelStack.Scale(15.0f, 15.0f, 1.0f);
+		RenderMesh(meshList[GEO_P_CATAPULT_ROCKS], false);
+		modelStack.PopMatrix();
+	}
+	if (weapon1)
+	{
+
+
+		modelStack.PushMatrix();
+		modelStack.Translate(20.0f, 50.0f, 5.0f);
+		modelStack.Rotate(P_rotation, 0, 0, 1);
+		//modelStack.Rotate(Projectile_to_rotate_test, 0, 0, 1);
+		modelStack.Scale(15.0f, 15.0f, 1.0f);
+		RenderMesh(meshList[GEO_P_BOW_ARROW], false);
+		modelStack.PopMatrix();
+	}
 }
 
 void Stage1::Exit()
@@ -612,85 +681,91 @@ void Stage1::Exit()
 
 void Stage1::CreateEnemySoldier()
 {
-	GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_SOLDIER);
+	//GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_SOLDIER);
 	Enemy * tempEnemy = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_SOLDIER);
 	cout << theplayer->ReturnEnemyWallet() << endl;
 	if (theplayer->ReturnEnemyWallet() > tempEnemy->cost)
 	{
 		theplayer->ReduceEnemyWalletAmount(tempEnemy->cost);
-		theFactory->createGameObject(go);
+		theFactory->createGameObject(tempEnemy);
 		cout << "Soldier" << endl;
+		zaxis += 0.001f;
+		cout << zaxis << endl;
 	}
-	delete tempEnemy;
+	//delete tempEnemy;
 }
 
 void Stage1::CreateEnemyArcher()
 {
-	GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_ARCHER);
+	//GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_ARCHER);
 	Enemy * tempEnemy = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_ARCHER);
 	cout << theplayer->ReturnEnemyWallet() << endl;
 	if (theplayer->ReturnEnemyWallet() > tempEnemy->cost)
 	{
 		theplayer->ReduceEnemyWalletAmount(tempEnemy->cost);
-		theFactory->createGameObject(go);
+		theFactory->createGameObject(tempEnemy);
 		cout << "Archer" << endl;
+		zaxis += 0.001f;
+		cout << zaxis << endl;
 	}
 }
 
 void Stage1::CreateEnemyWizard()
 {
-	GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_WIZARD);
+	//GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_WIZARD);
 	Enemy * tempEnemy = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_WIZARD);
 	cout << theplayer->ReturnEnemyWallet() << endl;
 	if (theplayer->ReturnEnemyWallet() > tempEnemy->cost)
 	{
 		theplayer->ReduceEnemyWalletAmount(tempEnemy->cost);
-		theFactory->createGameObject(go);
+		theFactory->createGameObject(tempEnemy);
 		cout << "Wizard" << endl;
+		zaxis += 0.001f;
+		cout << zaxis << endl;
 	}
 }
 
 void Stage1::CreateFriendlySoldier()
 {
-	GameObject *go = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_SOLDIER);
+	//GameObject *go = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_SOLDIER);
 	PlayerTroop * tempPlayer = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_SOLDIER);
 	cout << theplayer->ReturnWallet() << endl;
 	if (theplayer->ReturnWallet() > tempPlayer->cost)
 	{
 		theplayer->ReduceWalletAmount(tempPlayer->cost);
-		theFactory->createGameObject(go);
+		theFactory->createGameObject(tempPlayer);
 		cout << "friend Soldier" << endl;
-		zaxis++;
+		zaxis += 0.001f;
 		cout << zaxis << endl;
-		cout << "whee" << endl;
 	}
 }
 
 void Stage1::CreateFriendlyArcher()
 {
-	GameObject *go = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_ARCHER);
+	//GameObject *go = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_ARCHER);
 	PlayerTroop * tempPlayer = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_ARCHER);
 	cout << theplayer->ReturnWallet() << endl;
 	if (theplayer->ReturnWallet() > tempPlayer->cost)
 	{
 		theplayer->ReduceWalletAmount(tempPlayer->cost);
-		theFactory->createGameObject(go);
+		theFactory->createGameObject(tempPlayer);
 		cout << "friend Archer" << endl;
-		zaxis++;
+		zaxis += 0.001f;
 		cout << zaxis << endl;
-		cout << "whee" << endl;
 	}
 }
 
 void Stage1::CreateFriendlyWizard()
 {
-	GameObject *go = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_WIZARD);
+	//GameObject *go = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_WIZARD);
 	PlayerTroop * tempPlayer = new PlayerTroop(GameObject::GO_PLAYER, this, PlayerTroop::P_WIZARD);
 	cout << theplayer->ReturnWallet() << endl;
 	if (theplayer->ReturnWallet() > tempPlayer->cost)
 	{
 		theplayer->ReduceWalletAmount(tempPlayer->cost);
-		theFactory->createGameObject(go);
+		theFactory->createGameObject(tempPlayer);
 		cout << "friend Wizard" << endl;
+		zaxis += 0.001f;
+		cout << zaxis << endl;
 	}
 }

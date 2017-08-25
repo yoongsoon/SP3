@@ -27,6 +27,7 @@ public:
 		GO_FIRE,
 		GO_AI_CASTLE,
 		GO_MINI_MAP,
+		GO_HEALTH_BAR,
 		GO_TOTAL, //must be last
 	};
 	GAMEOBJECT_TYPE type;
@@ -34,13 +35,13 @@ public:
 	Vector3 vel;
 	Vector3 scale;
 	Vector3 topLeft, topRight, bottomLeft, bottomRight;
-	Vector3 wallPos;
 	bool m_canFall;
 	bool active;
 	bool m_gEffect;
 
 	std::string debugTag = "";
 
+	float m_groundLevel;
 	float mass;
 	float rotateX;
 	float rotateY;
