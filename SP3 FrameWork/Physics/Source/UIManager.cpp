@@ -17,48 +17,81 @@ UIManager::~UIManager()
 
 void UIManager::UpdateText()
 {
-	a = theScene->thePlayer->GetWeapon();
-	stringstream ss;
-	ss << a;
-	player_weap_choice = ss.str();
+	
 	//player_weap_choice = string(intstr);
-	e = theScene->thePlayer->weap_manager[theScene->thePlayer->m_iCurrentWeapon]->Get_d_elapsedTime();
-	stringstream ss1;
-	ss1 << e;
-	currweap_cooldown = ss1.str();
 
-	e = theScene->thePlayer->weap_manager[0]->Get_d_elapsedTime();
-	stringstream ss2;
-	ss2 << e;
-	weap1_cool = ss2.str();
+	if (theScene->sceneNumber == SceneBase::SC_01)
+	{
+		a = theScene->thePlayer->GetWeapon();
+		stringstream ss;
+		ss << a;
+		player_weap_choice = ss.str();
 
-	e = theScene->thePlayer->weap_manager[1]->Get_d_elapsedTime();
-	stringstream ss3;
-	ss3 << e;
-	weap2_cool = ss3.str();
+		e = theScene->thePlayer->weap_manager[theScene->thePlayer->m_iCurrentWeapon]->Get_d_elapsedTime();
+		stringstream ss1;
+		ss1 << e;
+		currweap_cooldown = ss1.str();
 
-	e = theScene->thePlayer->weap_manager[2]->Get_d_elapsedTime();
-	stringstream ss4;
-	ss4 << e;
-	weap3_cool = ss4.str();
+		e = theScene->thePlayer->weap_manager[0]->Get_d_elapsedTime();
+		stringstream ss2;
+		ss2 << e;
+		weap1_cool = ss2.str();
 
-	stringstream ss5;
-	ss5 << "Score:";
-	score_text = ss5.str();
+		e = theScene->thePlayer->weap_manager[1]->Get_d_elapsedTime();
+		stringstream ss3;
+		ss3 << e;
+		weap2_cool = ss3.str();
 
-	e = theScene->m_levelScore;
-	stringstream ss6;
-	ss6 << e;
-	score_counter = ss6.str();
+		e = theScene->thePlayer->weap_manager[2]->Get_d_elapsedTime();
+		stringstream ss4;
+		ss4 << e;
+		weap3_cool = ss4.str();
 
-	stringstream ss7;
-	ss7 << "Hi-Score:";
-	highscore_text = ss7.str();
+		stringstream ss5;
+		ss5 << "Score:";
+		score_text = ss5.str();
 
-	e = theScene->m_highScore;
-	stringstream ss8;
-	ss8 << e;
-	highscore_counter = ss8.str();
+		e = theScene->m_levelScore;
+		stringstream ss6;
+		ss6 << e;
+		score_counter = ss6.str();
+
+		stringstream ss7;
+		ss7 << "Hi-Score:";
+		highscore_text = ss7.str();
+
+		e = theScene->m_highScore[0];
+		stringstream ss8;
+		ss8 << e;
+		highscore_counter = ss8.str();
+	}
+	else if (theScene->sceneNumber == SceneBase::SC_SCORE)
+	{
+		e = theScene->m_highScore[0];
+		stringstream ss1;
+		ss1 << e;
+		arr_highscore[0] = ss1.str();
+
+		e = theScene->m_highScore[1];
+		stringstream ss2;
+		ss2 << e;
+		arr_highscore[1] = ss2.str();
+
+		e = theScene->m_highScore[2];
+		stringstream ss3;
+		ss3 << e;
+		arr_highscore[2] = ss3.str();
+
+		e = theScene->m_highScore[3];
+		stringstream ss4;
+		ss4 << e;
+		arr_highscore[3] = ss4.str();
+
+		e = theScene->m_highScore[4];
+		stringstream ss5;
+		ss5 << e;
+		arr_highscore[4] = ss5.str();
+	}
 }
 
 void UIManager::Update()
@@ -260,30 +293,36 @@ void UIManager::Render()
 void UIManager::RenderText()
 {
 	//--------------------------------------------------Text---------------------------------------------------------//
-	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], player_weap_choice, Color(1, 0, 0), 5, 10, 20);
-	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], currweap_cooldown, Color(1, 0, 0), 5, 10, 18);
+	if (theScene->sceneNumber == SceneBase::SC_01)
+	{
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], player_weap_choice, Color(1, 0, 0), 5, 10, 20);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], currweap_cooldown, Color(1, 0, 0), 5, 10, 18);
 
-	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], weap1_cool, Color(1, 0, 0), 5, 10, 15);
-	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], weap2_cool, Color(1, 0, 0), 5, 10, 13);
-	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], weap3_cool, Color(1, 0, 0), 5, 10, 11);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], weap1_cool, Color(1, 0, 0), 5, 10, 15);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], weap2_cool, Color(1, 0, 0), 5, 10, 13);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], weap3_cool, Color(1, 0, 0), 5, 10, 11);
 
-	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], score_text, Color(1, 1, 0), 3, 3, 56);
-	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], score_counter, Color(1, 1, 0), 3, 3, 54);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], score_text, Color(1, 1, 0), 3, 3, 56);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], score_counter, Color(1, 1, 0), 3, 3, 54);
 
-	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], highscore_text, Color(1, 1, 0), 3, 3, 52);
-	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], highscore_counter, Color(1, 1, 0), 3, 3, 50);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], highscore_text, Color(1, 1, 0), 3, 3, 52);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], highscore_counter, Color(1, 1, 0), 3, 3, 50);
 
-	std::ostringstream ss;
-	ss.precision(3);
-	ss << theScene->theplayer->ReturnWallet();
-	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 60, 55);
+		std::ostringstream ss;
+		ss.precision(3);
+		ss << theScene->theplayer->ReturnWallet();
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 60, 55);
 
-	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], "/", Color(0, 1, 0), 3, 69, 55);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], "/", Color(0, 1, 0), 3, 69, 55);
 
 
-	std::ostringstream ss1;
-	ss1.precision(3);
-	ss1 << theScene->theplayer->ReturnMaxWallet();
-	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], ss1.str(), Color(0, 1, 0), 3, 72, 55);
-
+		std::ostringstream ss1;
+		ss1.precision(3);
+		ss1 << theScene->theplayer->ReturnMaxWallet();
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], ss1.str(), Color(0, 1, 0), 3, 72, 55);
+	}
+	else if (theScene->sceneNumber == SceneBase::SC_SCORE)
+	{
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], arr_highscore[0], Color(1, 1, 1), 10, 3, 50);
+	}
 }

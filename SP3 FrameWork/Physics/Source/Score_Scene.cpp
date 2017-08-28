@@ -17,7 +17,11 @@ Score_Scene::~Score_Scene()
 void Score_Scene::Init()
 {
 	SceneBase::Init();
-
+	theUIManager = new UIManager(this);
+	sceneNumber = SceneBase::SC_SCORE;
+	for (int i = 0; i < 5; ++i)
+		m_highScore[i] = 0;
+	
 	//Physics code here
 	m_speed = 1.f;
 
@@ -32,8 +36,8 @@ void Score_Scene::Init()
 		SceneManager::getInstance()->SetActiveScene("MainMenu");
 
 	}
-
-
+	theFile->setScene(this);
+	theFile->loadScoreFromFile("Data.txt");
 }
 
 void Score_Scene::Update(double dt)
@@ -44,6 +48,8 @@ void Score_Scene::Update(double dt)
 	//Calculating aspect ratio
 	m_worldHeight = 100.f;
 	m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
+
+	theUIManager->UpdateText();
 }
 
 void Score_Scene::Render()
@@ -64,7 +70,8 @@ void Score_Scene::Render()
 	);
 	// Model matrix : an identity matrix (model will be at the origin)
 	modelStack.LoadIdentity();
-	RenderMeshOnScreen(meshList[GEO_CREDITS], 80, 30, 160, 60);
+	RenderMeshOnScreen(meshList[GEO_SCORESCENE], 80, 30, 160, 60);
+	theUIManager->RenderText();
 }
 
 void Score_Scene::Exit()

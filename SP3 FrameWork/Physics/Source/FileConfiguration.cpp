@@ -69,271 +69,362 @@ void FileConfiguration::loadFile(string _fileName)
 			//}
 			//else
 			//{
-				while (getline(myLoadFile, eachLine))
+			while (getline(myLoadFile, eachLine))
+			{
+				//store content of eachLine into ss
+				istringstream ss(eachLine);
+				string aToken = "";
+
+				if (!eachLine.empty())
+					counter++;
+
+				// copy contents of ss into aToken until '=' is reached
+				while (getline(ss, aToken, ':'))
 				{
-					//store content of eachLine into ss
-					istringstream ss(eachLine);
-					string aToken = "";
+					string theTag = aToken;
+					getline(ss, aToken, ':');
 
-					if (!eachLine.empty())
-						counter++;
 
-					// copy contents of ss into aToken until '=' is reached
-					while (getline(ss, aToken, ':'))
+					//don't count  the line with Stage No and score
+					if (theTag == "Stage No" || theTag == "Highscore1" || theTag == "Highscore2" || theTag == "Highscore3" || theTag == "Highscore4" || theTag == "Highscore5")
+						counter--;
+
+					if (theTag == "Highscore1")
 					{
-						string theTag = aToken;
-						getline(ss, aToken, ':');
+						tempScore = stoi(aToken);
+						_scene->m_highScore[0] = tempScore;
+					}
+					if (theTag == "Highscore2")
+					{
+						tempScore = stoi(aToken);
+						_scene->m_highScore[1] = tempScore;
+					}
+					if (theTag == "Highscore3")
+					{
+						tempScore = stoi(aToken);
+						_scene->m_highScore[2] = tempScore;
+					}
+					if (theTag == "Highscore4")
+					{
+						tempScore = stoi(aToken);
+						_scene->m_highScore[3] = tempScore;
+					}
+					if (theTag == "Highscore5")
+					{
+						tempScore = stoi(aToken);
+						_scene->m_highScore[4] = tempScore;
+					}
 
-					
-						//don't count  the line with Stage No and score
-						if (theTag == "Stage No" || theTag == "Highscore")
-							counter--;
+					//------- ENUM---------------//
+					if (theTag == "GameObjectValue")
+					{
+						tempType = stoi(aToken);
+					}
+					else if (theTag == "Enemy Type")
+					{
+						tempTroopType = stoi(aToken);
+					}
+					else if (theTag == "Player Type")
+					{
+						tempTroopType = stoi(aToken);
+					}
 
-						if (theTag == "Highscore")
-						{
-							tempScore = stoi(aToken);
-							_scene->m_highScore = tempScore;
-						}
-
-
-						//------- ENUM---------------//
-						if (theTag == "GameObjectValue")
-						{
-							tempType = stoi(aToken);
-						}
-						else if (theTag == "Enemy Type")
-						{
-							tempTroopType = stoi(aToken);
-						}
-						else if (theTag == "Player Type")
-						{
-							tempTroopType = stoi(aToken);
-						}
-
-						//--------Vector3--------------//
-						else if (theTag == "Position")
-						{
-							tempPos = Token2Vector(aToken);
-						}
-					
-
-
-						// --------FLOAT----------------//
-						else if (theTag == "Hp")
-						{
-							tempHp = stof(aToken);
-						}
-						else if (theTag == "Timer")
-						{
-							tempTimer = stof(aToken);
-						}
-						else if (theTag == "HitPoints")
-						{
-							tempHitPoint = stof(aToken);
-						}
-						else if (theTag == "PlayerMoveX")
-						{
-							tempPlayerMoveX = stof(aToken);
-						}
-						else if (theTag == "EnemyMoveX")
-						{
-							tempEnemyMoveX = stof(aToken);
-						}
-						else if (theTag == "GroundLevel")
-						{
-							tempGroundLevel = stof(aToken);
-						}
+					//--------Vector3--------------//
+					else if (theTag == "Position")
+					{
+						tempPos = Token2Vector(aToken);
+					}
 
 
-						//--------Bool-------------//
-						else if (theTag == "B_StopAttack")
-						{
-							tempStopAttack = stoi(aToken);
-						}
-						else if (theTag == "B_Attacked")
-						{
-							tempAttacked = stoi(aToken);
-						}
-						else if (theTag == "B_CanFall")
-						{
-							tempCanFall = stoi(aToken);
-						}
 
-						// -----------int ---------------
-						else if (theTag == "WallStackCounter")
+					// --------FLOAT----------------//
+					else if (theTag == "Hp")
+					{
+						tempHp = stof(aToken);
+					}
+					else if (theTag == "Timer")
+					{
+						tempTimer = stof(aToken);
+					}
+					else if (theTag == "HitPoints")
+					{
+						tempHitPoint = stof(aToken);
+					}
+					else if (theTag == "PlayerMoveX")
+					{
+						tempPlayerMoveX = stof(aToken);
+					}
+					else if (theTag == "EnemyMoveX")
+					{
+						tempEnemyMoveX = stof(aToken);
+					}
+					else if (theTag == "GroundLevel")
+					{
+						tempGroundLevel = stof(aToken);
+					}
+
+
+					//--------Bool-------------//
+					else if (theTag == "B_StopAttack")
+					{
+						tempStopAttack = stoi(aToken);
+					}
+					else if (theTag == "B_Attacked")
+					{
+						tempAttacked = stoi(aToken);
+					}
+					else if (theTag == "B_CanFall")
+					{
+						tempCanFall = stoi(aToken);
+					}
+
+					// -----------int ---------------
+					else if (theTag == "WallStackCounter")
+					{
+						tempWallStackCounter = stoi(aToken);
+					}
+
+
+					// ----------------- 8 lines  for enemy and player----------------------//
+					if (counter > 7 && (tempType == 5 || tempType == 6))
+					{
+
+						switch (tempType)
 						{
-							tempWallStackCounter = stoi(aToken);
-						}
-
-
-						// ----------------- 8 lines  for enemy and player----------------------//
-						if (counter > 7 && (tempType == 5 || tempType == 6))
+						case 5:
 						{
+							Enemy * theEnemy;
 
-							switch (tempType)
+							if (tempTroopType == 0)
 							{
-							case 5:
-							{
-								Enemy * theEnemy;
-
-								if (tempTroopType == 0)
-								{
-									theEnemy = new Enemy(GameObject::GO_ENEMY, _scene, Enemy::E_SOLDIER);
-								}
-								else if (tempTroopType == 1)
-								{
-									theEnemy = new Enemy(GameObject::GO_ENEMY, _scene, Enemy::E_ARCHER);
-								}
-								else if (tempTroopType == 2)
-								{
-									theEnemy = new Enemy(GameObject::GO_ENEMY, _scene, Enemy::E_WIZARD);
-								}
-								theEnemy->pos.Set(tempPos.x, tempPos.y, tempPos.z);
-								theEnemy->hp = tempHp;
-								theEnemy->timer = tempTimer;
-								if (tempStopAttack == 0)
-								{
-									theEnemy->StopToAttack = false;
-								}
-								else
-								{
-									theEnemy->StopToAttack = true;
-								}
-								if (tempAttacked == 0)
-								{
-									theEnemy->Attacked = false;
-								}
-								else
-								{
-									theEnemy->Attacked = true;
-								}
-
-								theEnemy->enemyMoveX = tempEnemyMoveX;
-								_scene->theFactory->createGameObject(theEnemy);
+								theEnemy = new Enemy(GameObject::GO_ENEMY, _scene, Enemy::E_SOLDIER);
 							}
-							break;
-							case 6:
+							else if (tempTroopType == 1)
 							{
-								PlayerTroop * theTroop;
-								
-								if (tempTroopType == 0)
-								{
-									theTroop = new PlayerTroop(GameObject::GO_PLAYER, _scene, PlayerTroop::P_SOLDIER);
-								}
-								else if (tempTroopType == 1)
-								{
-									theTroop = new PlayerTroop(GameObject::GO_PLAYER, _scene, PlayerTroop::P_ARCHER);
-								}
-								else if (tempTroopType == 2)
-								{
-									theTroop = new PlayerTroop(GameObject::GO_PLAYER, _scene, PlayerTroop::P_WIZARD);
-								}
-								theTroop->pos.Set(tempPos.x, tempPos.y, tempPos.z);
-								theTroop->hp = tempHp;
-								theTroop->timer = tempTimer;
-								if (tempStopAttack == 0)
-								{
-									theTroop->StopToAttack = false;
-								}
-								else
-								{
-									theTroop->StopToAttack = true;
-								}
-								if (tempAttacked == 0)
-								{
-									theTroop->Attacked = false;
-								}
-								else
-								{
-									theTroop->Attacked = true;
-								}
-								theTroop->playerMoveX = tempPlayerMoveX;
-								_scene->theFactory->createGameObject(theTroop);
+								theEnemy = new Enemy(GameObject::GO_ENEMY, _scene, Enemy::E_ARCHER);
 							}
-							break;
-							}
-							counter = 0;
-						}
-
-						// ----------------- 6 lines  for  player brick and AI brick----------------------//
-						else if (counter > 5 && (tempType == 9 || tempType == 10))
-						{
-
-							switch (tempType)
+							else if (tempTroopType == 2)
 							{
-							case 9:
-							{
-								Buildings * thePlayerBrick = new Buildings(GameObject::GO_P_BRICK, _scene, tempWallStackCounter);
-								thePlayerBrick->hitpoints = tempHitPoint;
-								thePlayerBrick->pos = tempPos;
-								thePlayerBrick->m_groundLevel = tempGroundLevel;
-								if (tempCanFall == 0)
-								{
-									thePlayerBrick->m_canFall = false;
-								}
-								else
-								{
-									thePlayerBrick->m_canFall = true;
-								}
-								_scene->theFactory->createGameObject(thePlayerBrick);
+								theEnemy = new Enemy(GameObject::GO_ENEMY, _scene, Enemy::E_WIZARD);
 							}
-							break;
-							case 10:
+							theEnemy->pos.Set(tempPos.x, tempPos.y, tempPos.z);
+							theEnemy->hp = tempHp;
+							theEnemy->timer = tempTimer;
+							if (tempStopAttack == 0)
 							{
-								Buildings * theAIBrick = new Buildings(GameObject::GO_AI_BRICK, _scene, tempWallStackCounter);
-								theAIBrick->hitpoints = tempHitPoint;
-								theAIBrick->pos = tempPos;
-								theAIBrick->m_groundLevel = tempGroundLevel;
-								if (tempCanFall == 0)
-								{
-									theAIBrick->m_canFall = false;
-								}
-								else
-								{
-									theAIBrick->m_canFall = true;
-								}
-								_scene->theFactory->createGameObject(theAIBrick);
+								theEnemy->StopToAttack = false;
 							}
-							break;
+							else
+							{
+								theEnemy->StopToAttack = true;
+							}
+							if (tempAttacked == 0)
+							{
+								theEnemy->Attacked = false;
+							}
+							else
+							{
+								theEnemy->Attacked = true;
 							}
 
-							counter = 0;
+							theEnemy->enemyMoveX = tempEnemyMoveX;
+							_scene->theFactory->createGameObject(theEnemy);
 						}
-						// ----------------- 2 lines  for  player castle and AI castle ----------------------//
-						else if (counter > 2 && (tempType == 11 || tempType == 14))
+						break;
+						case 6:
 						{
+							PlayerTroop * theTroop;
 
-							// 11 - player castle
-							// 14 - AI castle
-							switch (tempType)
+							if (tempTroopType == 0)
 							{
-							case 11:
+								theTroop = new PlayerTroop(GameObject::GO_PLAYER, _scene, PlayerTroop::P_SOLDIER);
+							}
+							else if (tempTroopType == 1)
 							{
-								Buildings * thePlayerCastle = new Buildings(GameObject::GO_P_CASTLE, _scene, tempWallStackCounter);
-								thePlayerCastle->hitpoints = tempHitPoint;
-								_scene->theFactory->createGameObject(thePlayerCastle);
+								theTroop = new PlayerTroop(GameObject::GO_PLAYER, _scene, PlayerTroop::P_ARCHER);
 							}
-							break;
-							case 14:
+							else if (tempTroopType == 2)
 							{
-								AICastle * theAIcastle = new AICastle(GameObject::GO_AI_CASTLE, _scene);
-								theAIcastle->hitpoints = tempHitPoint;
-								_scene->theFactory->createGameObject(theAIcastle);
+								theTroop = new PlayerTroop(GameObject::GO_PLAYER, _scene, PlayerTroop::P_WIZARD);
 							}
-							break;
+							theTroop->pos.Set(tempPos.x, tempPos.y, tempPos.z);
+							theTroop->hp = tempHp;
+							theTroop->timer = tempTimer;
+							if (tempStopAttack == 0)
+							{
+								theTroop->StopToAttack = false;
 							}
-
+							else
+							{
+								theTroop->StopToAttack = true;
+							}
+							if (tempAttacked == 0)
+							{
+								theTroop->Attacked = false;
+							}
+							else
+							{
+								theTroop->Attacked = true;
+							}
+							theTroop->playerMoveX = tempPlayerMoveX;
+							_scene->theFactory->createGameObject(theTroop);
 						}
+						break;
+						}
+						counter = 0;
+					}
+
+					// ----------------- 6 lines  for  player brick and AI brick----------------------//
+					else if (counter > 5 && (tempType == 9 || tempType == 10))
+					{
+
+						switch (tempType)
+						{
+						case 9:
+						{
+							Buildings * thePlayerBrick = new Buildings(GameObject::GO_P_BRICK, _scene, tempWallStackCounter);
+							thePlayerBrick->hitpoints = tempHitPoint;
+							thePlayerBrick->pos = tempPos;
+							thePlayerBrick->m_groundLevel = tempGroundLevel;
+							if (tempCanFall == 0)
+							{
+								thePlayerBrick->m_canFall = false;
+							}
+							else
+							{
+								thePlayerBrick->m_canFall = true;
+							}
+							_scene->theFactory->createGameObject(thePlayerBrick);
+						}
+						break;
+						case 10:
+						{
+							Buildings * theAIBrick = new Buildings(GameObject::GO_AI_BRICK, _scene, tempWallStackCounter);
+							theAIBrick->hitpoints = tempHitPoint;
+							theAIBrick->pos = tempPos;
+							theAIBrick->m_groundLevel = tempGroundLevel;
+							if (tempCanFall == 0)
+							{
+								theAIBrick->m_canFall = false;
+							}
+							else
+							{
+								theAIBrick->m_canFall = true;
+							}
+							_scene->theFactory->createGameObject(theAIBrick);
+						}
+						break;
+						}
+
+						counter = 0;
+					}
+					// ----------------- 2 lines  for  player castle and AI castle ----------------------//
+					else if (counter > 2 && (tempType == 11 || tempType == 14))
+					{
+
+						// 11 - player castle
+						// 14 - AI castle
+						switch (tempType)
+						{
+						case 11:
+						{
+							Buildings * thePlayerCastle = new Buildings(GameObject::GO_P_CASTLE, _scene, tempWallStackCounter);
+							thePlayerCastle->hitpoints = tempHitPoint;
+							_scene->theFactory->createGameObject(thePlayerCastle);
+						}
+						break;
+						case 14:
+						{
+							AICastle * theAIcastle = new AICastle(GameObject::GO_AI_CASTLE, _scene);
+							theAIcastle->hitpoints = tempHitPoint;
+							_scene->theFactory->createGameObject(theAIcastle);
+						}
+						break;
+						}
+
 					}
 				}
-			//}
+			}
 		}
 
 	}
 
 	myLoadFile.close();
 }
+void FileConfiguration::loadScoreFromFile(string _fileName)
+{
+	ifstream myLoadFile;
+	ifstream scoreFile;
+	string eachLine;
+	unsigned tempScore;
+	int counter = 0;
 
+
+	myLoadFile.open(_fileName.c_str());
+
+	if (!myLoadFile.is_open())
+	{
+		cout << "Impossile to open the file" << endl;
+	}
+	else if (myLoadFile.is_open())
+	{
+		if (myLoadFile.peek() == std::ifstream::traits_type::eof())
+		{
+			cout << "File is Empty, there is nothing to load " << endl;
+		}
+		else
+		{
+			while (getline(myLoadFile, eachLine))
+			{
+				//store content of eachLine into ss
+				istringstream ss(eachLine);
+				string aToken = "";
+
+				if (!eachLine.empty())
+					counter++;
+
+				// copy contents of ss into aToken until '=' is reached
+				while (getline(ss, aToken, ':'))
+				{
+					string theTag = aToken;
+					getline(ss, aToken, ':');
+
+
+					//don't count  the line with Stage No and score
+					if (theTag == "Stage No" || theTag == "Highscore1" || theTag == "Highscore2" || theTag == "Highscore3" || theTag == "Highscore4" || theTag == "Highscore5")
+						counter--;
+
+					if (theTag == "Highscore1")
+					{
+						tempScore = stoi(aToken);
+						_scene->m_highScore[0] = tempScore;
+					}
+					if (theTag == "Highscore2")
+					{
+						tempScore = stoi(aToken);
+						_scene->m_highScore[1] = tempScore;
+					}
+					if (theTag == "Highscore3")
+					{
+						tempScore = stoi(aToken);
+						_scene->m_highScore[2] = tempScore;
+					}
+					if (theTag == "Highscore4")
+					{
+						tempScore = stoi(aToken);
+						_scene->m_highScore[3] = tempScore;
+					}
+					if (theTag == "Highscore5")
+					{
+						tempScore = stoi(aToken);
+						_scene->m_highScore[4] = tempScore;
+					}
+				}
+			}
+		}
+	}
+	myLoadFile.close();
+}
 
 
 void FileConfiguration::saveFile(string _fileName)
@@ -355,7 +446,11 @@ void FileConfiguration::saveFile(string _fileName)
 		else
 		{*/
 			//Save the current Stage
-			outPutFile << "Highscore:" << _scene->m_highScore << endl;
+			outPutFile << "Highscore1:" << _scene->m_highScore[0] << endl;
+			outPutFile << "Highscore2:" << _scene->m_highScore[1] << endl;
+			outPutFile << "Highscore3:" << _scene->m_highScore[2] << endl;
+			outPutFile << "Highscore4:" << _scene->m_highScore[3] << endl;
+			outPutFile << "Highscore5:" << _scene->m_highScore[4] << endl;
 			outPutFile << "Stage No:" << _scene->sceneNumber << endl;
 			outPutFile << endl;
 			outPutFile << endl;

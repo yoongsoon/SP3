@@ -31,7 +31,7 @@ public:
 	void loadFile(string _fileName);
 	void saveFile(string _fileName);
 	void loadLevel(string _fileName);
-
+	void loadScoreFromFile(string _fileName);
 
 	double Token2Double(string token);
 	Vector3 Token2Vector(string token);

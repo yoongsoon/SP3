@@ -37,7 +37,11 @@ void Stage1::Init()
 	//Physics code here
 	m_speed = 1.f;
 	m_levelScore = 10000;
-	m_highScore = 0; 
+	for (int i = 0; i < 5; ++i)
+	{
+		m_highScore[i] = 0;
+	}
+	
 	//theFile->loadFile("scorefile.txt");
 
 	Math::InitRNG();
@@ -198,8 +202,14 @@ void Stage1::Update(double dt)
 	
 	if (Application::IsKeyPressed('K') && pressDelay >= cooldownPressed)
 	{
-		if (m_levelScore > m_highScore)
-			m_highScore = m_levelScore;
+		
+		for (int i = 0; i < 5; ++i)
+		{
+			if (m_levelScore > m_highScore[i])
+			{
+				m_highScore[i] = m_levelScore;
+			}
+		}
 		//theFile->saveFile("scorefile.txt");
 
 		theFile->saveFile("Data.txt");
@@ -555,7 +565,7 @@ void Stage1::Update(double dt)
 		}
 		P_Bow_Sprite->m_anim->animActive = true;
 	
-		cout << result << endl;
+		//cout << result << endl;
 		//if (P_Bow_Sprite)
 		//{
 		//	P_Bow_Sprite->Update(dt);
