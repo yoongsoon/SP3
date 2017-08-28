@@ -26,18 +26,21 @@ void UIManager::UpdateText()
 	stringstream ss1;
 	ss1 << e;
 	currweap_cooldown = ss1.str();
-
-	e = theScene->thePlayer->weap_manager[0]->Get_d_elapsedTime();
+	int a= theScene->thePlayer->weap_manager[0]->Get_d_elapsedTime();
+	int b = theScene->thePlayer->weap_manager[0]->Get_d_timeBetweenShots();
+	e = b - a;
 	stringstream ss2;
 	ss2 << e;
 	weap1_cool = ss2.str();
-
-	e = theScene->thePlayer->weap_manager[1]->Get_d_elapsedTime();
+	 a = theScene->thePlayer->weap_manager[1]->Get_d_elapsedTime();
+	b = theScene->thePlayer->weap_manager[1]->Get_d_timeBetweenShots();
+	e = b - a;
 	stringstream ss3;
 	ss3 << e;
 	weap2_cool = ss3.str();
-
-	e = theScene->thePlayer->weap_manager[2]->Get_d_elapsedTime();
+	 a = theScene->thePlayer->weap_manager[2]->Get_d_elapsedTime();
+	 b = theScene->thePlayer->weap_manager[2]->Get_d_timeBetweenShots();
+	 e = b - a;
 	stringstream ss4;
 	ss4 << e;
 	weap3_cool = ss4.str();
@@ -260,13 +263,21 @@ void UIManager::Render()
 void UIManager::RenderText()
 {
 	//--------------------------------------------------Text---------------------------------------------------------//
-	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], player_weap_choice, Color(1, 0, 0), 5, 10, 20);
-	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], currweap_cooldown, Color(1, 0, 0), 5, 10, 18);
+	//theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], player_weap_choice, Color(1, 0, 0), 5, 10, 20);
+	//theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], currweap_cooldown, Color(1, 0, 0), 5, 10, 18);
 
-	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], weap1_cool, Color(1, 0, 0), 5, 10, 15);
-	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], weap2_cool, Color(1, 0, 0), 5, 10, 13);
-	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], weap3_cool, Color(1, 0, 0), 5, 10, 11);
-
+	if (theScene->weapon1)
+	{
+	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], weap1_cool, Color(1, 0, 0), 5, 5, 5);
+	}
+	else if (theScene->weapon2)
+	{
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], weap2_cool, Color(1, 0, 0), 5, 5, 5);
+	}
+	else if (theScene->weapon3)
+	{
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], weap3_cool, Color(1, 0, 0), 5, 5, 5);
+	}
 	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], score_text, Color(1, 1, 0), 3, 3, 56);
 	theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], score_counter, Color(1, 1, 0), 3, 3, 54);
 
