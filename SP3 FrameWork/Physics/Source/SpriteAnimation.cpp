@@ -58,10 +58,6 @@ void SpriteAnimation::Update(double dt)
 			{
 				m_currentTime = 0.0f;
 				m_currentFrame = m_anim->startFrame;
-				if (numFrame == 6)
-				{
-					cout << "wee" << endl;
-				}
 			}
 		}
 	}

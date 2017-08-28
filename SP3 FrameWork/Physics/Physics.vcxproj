@@ -189,6 +189,7 @@
     <ClCompile Include="Source\Score_Scene.cpp" />
     <ClCompile Include="Source\shader.cpp" />
     <ClCompile Include="Source\SoundEngine.cpp" />
+    <ClCompile Include="Source\EnemyAI.cpp" />
     <ClCompile Include="Source\SpriteAnimation.cpp" />
     <ClCompile Include="Source\Stage1.cpp" />
     <ClCompile Include="Source\Start_Scene.cpp" />
@@ -208,6 +209,7 @@
     <ClInclude Include="Source\CollisionManager.h" />
     <ClInclude Include="Source\Credits_Menu.h" />
     <ClInclude Include="Source\Enemy.h" />
+    <ClInclude Include="Source\EnemyAI.h" />
     <ClInclude Include="Source\Factory.h" />
     <ClInclude Include="Source\FileConfiguration.h" />
     <ClInclude Include="Source\GameObjectManager.h" />
