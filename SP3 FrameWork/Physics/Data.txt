@@ -1,121 +1,86 @@
+Highscore1:9531
+Highscore2:9531
+Highscore3:9531
+Highscore4:9531
+Highscore5:9531
 Stage No:1
 
 
 GameObjectValue:5
 Enemy Type:0
-Position:[ 97.7855, 50, 1 ]
-Hp:90
-Timer:0.488473
-B_StopAttack:1
-B_Attacked:1
-EnemyMoveX:-44.6812
-
-
-GameObjectValue:5
-Enemy Type:0
-Position:[ 97.7855, 50, 1 ]
-Hp:90
-Timer:0.289025
-B_StopAttack:1
-B_Attacked:1
-EnemyMoveX:-44.6812
-
-
-GameObjectValue:6
-Player Type:2
-Position:[ 73.0779, 50, 5 ]
-Hp:70
-Timer:0
-B_StopAttack:0
-B_Attacked:0
-PlayerMoveX:11.3888
-
-
-GameObjectValue:6
-Player Type:1
-Position:[ 64.2363, 52, 5 ]
-Hp:50
-Timer:0
-B_StopAttack:0
-B_Attacked:0
-PlayerMoveX:10.0109
-
-
-GameObjectValue:6
-Player Type:0
-Position:[ 52.1604, 50, 5 ]
+Position:[ 213.621, 50, 1 ]
 Hp:100
 Timer:0
 B_StopAttack:0
 B_Attacked:0
-PlayerMoveX:8.12892
+EnemyMoveX:-26.7084
 
 
-GameObjectValue:6
-Player Type:0
-Position:[ 90.9773, 50, 5 ]
-Hp:90
-Timer:0.573483
-B_StopAttack:1
-B_Attacked:1
-PlayerMoveX:14.1519
+GameObjectValue:5
+Enemy Type:1
+Position:[ 343.214, 50, 1.001 ]
+Hp:50
+Timer:0
+B_StopAttack:0
+B_Attacked:0
+EnemyMoveX:-8.8498
 
 
-GameObjectValue:6
-Player Type:0
-Position:[ 90.9773, 50, 5 ]
-Hp:90
-Timer:0.374035
-B_StopAttack:1
-B_Attacked:1
-PlayerMoveX:14.1519
+GameObjectValue:5
+Enemy Type:0
+Position:[ 223.312, 50, 1.002 ]
+Hp:100
+Timer:0
+B_StopAttack:0
+B_Attacked:0
+EnemyMoveX:-25.1981
 
 
 GameObjectValue:9
-HitPoints:0
+HitPoints:10
+B_CanFall:0
+Position:[ 50, 19.7058, 1 ]
+GroundLevel:20
+WallStackCounter:1
+
+
+GameObjectValue:9
+HitPoints:10
+B_CanFall:0
+Position:[ 50, 23.7181, 1 ]
+GroundLevel:20
+WallStackCounter:2
+
+
+GameObjectValue:9
+HitPoints:10
+B_CanFall:0
+Position:[ 50, 27.7343, 1 ]
+GroundLevel:20
+WallStackCounter:3
+
+
+GameObjectValue:9
+HitPoints:10
 B_CanFall:1
-Position:[ 50, 19.6262, 1 ]
-Wall Pos:[ 50, 17, 1 ]
-WallStackCounter:1
-
-
-GameObjectValue:9
-HitPoints:10
-B_CanFall:0
-Position:[ 50, 23.6301, 1 ]
-Wall Pos:[ 50, 598, 1 ]
-WallStackCounter:2
-
-
-GameObjectValue:9
-HitPoints:10
-B_CanFall:0
-Position:[ 50, 27.6458, 1 ]
-Wall Pos:[ 50, 1363, 1 ]
-WallStackCounter:3
-
-
-GameObjectValue:9
-HitPoints:10
-B_CanFall:0
-Position:[ 50, 31.6546, 1 ]
-Wall Pos:[ 50, 2128, 1 ]
+Position:[ 50, 31.7361, 1 ]
+GroundLevel:20
 WallStackCounter:4
 
 
 GameObjectValue:9
 HitPoints:10
 B_CanFall:0
-Position:[ 50, 35.6563, 1 ]
-Wall Pos:[ 50, 2717, 1 ]
+Position:[ 50, 35.7411, 1 ]
+GroundLevel:20
 WallStackCounter:5
 
 
 GameObjectValue:9
 HitPoints:10
 B_CanFall:0
-Position:[ 50, 39.6625, 1 ]
-Wall Pos:[ 50, 3486, 1 ]
+Position:[ 50, 39.7485, 1 ]
+GroundLevel:20
 WallStackCounter:6
 
 
@@ -127,267 +92,49 @@ WallStackCounter:0
 GameObjectValue:10
 HitPoints:10
 B_CanFall:0
-Position:[ 350, -1.00897, 1 ]
-Wall Pos:[ 0, 0, 0 ]
+Position:[ 350, 34.8205, 1 ]
+GroundLevel:20
 WallStackCounter:1
 
 
 GameObjectValue:10
 HitPoints:10
 B_CanFall:0
-Position:[ 350, 2.99709, 1 ]
-Wall Pos:[ 0, 292, 0 ]
+Position:[ 350, 31.7319, 1 ]
+GroundLevel:20
 WallStackCounter:2
 
 
 GameObjectValue:10
 HitPoints:10
 B_CanFall:0
-Position:[ 350, 7.00009, 1 ]
-Wall Pos:[ 0, 916, 0 ]
+Position:[ 350, 30.8251, 1 ]
+GroundLevel:20
 WallStackCounter:3
 
 
 GameObjectValue:10
 HitPoints:10
-B_CanFall:0
-Position:[ 350, 11.0012, 1 ]
-Wall Pos:[ 0, 1420, 0 ]
-WallStackCounter:4
-
-
-GameObjectValue:10
-HitPoints:10
-B_CanFall:0
-Position:[ 350, 15.0174, 1 ]
-Wall Pos:[ 0, 2028, 0 ]
-WallStackCounter:5
-
-
-GameObjectValue:10
-HitPoints:10
-B_CanFall:0
-Position:[ 350, 19.0327, 1 ]
-Wall Pos:[ 0, 2736, 0 ]
-WallStackCounter:6
-
-
-GameObjectValue:14
-HitPoints:500
-
-
-GameObjectValue:9
-HitPoints:0
 B_CanFall:1
-Position:[ 50, 20.0946, 1 ]
-Wall Pos:[ 50, 97, 1 ]
-WallStackCounter:1
-
-
-GameObjectValue:9
-HitPoints:10
-B_CanFall:0
-Position:[ 50, 24.1429, 1 ]
-Wall Pos:[ 50, 870, 1 ]
-WallStackCounter:2
-
-
-GameObjectValue:9
-HitPoints:10
-B_CanFall:0
-Position:[ 50, 28.1555, 1 ]
-Wall Pos:[ 50, 1451, 1 ]
-WallStackCounter:3
-
-
-GameObjectValue:9
-HitPoints:10
-B_CanFall:0
-Position:[ 50, 32.1669, 1 ]
-Wall Pos:[ 50, 2216, 1 ]
+Position:[ 350, 26.9591, 1 ]
+GroundLevel:20
 WallStackCounter:4
 
 
-GameObjectValue:9
+GameObjectValue:10
 HitPoints:10
 B_CanFall:0
-Position:[ 50, 36.1719, 1 ]
-Wall Pos:[ 50, 2981, 1 ]
+Position:[ 350, 22.9503, 1 ]
+GroundLevel:20
 WallStackCounter:5
 
 
-GameObjectValue:9
+GameObjectValue:10
 HitPoints:10
 B_CanFall:0
-Position:[ 50, 38.1029, 1 ]
-Wall Pos:[ 50, 3082, 1 ]
+Position:[ 350, 18.9461, 1 ]
+GroundLevel:20
 WallStackCounter:6
-
-
-GameObjectValue:11
-HitPoints:500
-WallStackCounter:0
-
-
-GameObjectValue:10
-HitPoints:10
-B_CanFall:0
-Position:[ 50, 37.5046, 1 ]
-Wall Pos:[ 50, 2950, 1 ]
-WallStackCounter:0
-
-
-GameObjectValue:10
-HitPoints:10
-B_CanFall:0
-Position:[ 350, -0.539526, 1 ]
-Wall Pos:[ 0, 88, 0 ]
-WallStackCounter:1
-
-
-GameObjectValue:10
-HitPoints:10
-B_CanFall:0
-Position:[ 350, 3.46466, 1 ]
-Wall Pos:[ 0, 384, 0 ]
-WallStackCounter:2
-
-
-GameObjectValue:10
-HitPoints:10
-B_CanFall:0
-Position:[ 350, 7.48101, 1 ]
-Wall Pos:[ 0, 1016, 0 ]
-WallStackCounter:3
-
-
-GameObjectValue:10
-HitPoints:10
-B_CanFall:0
-Position:[ 350, 11.4972, 1 ]
-Wall Pos:[ 0, 1528, 0 ]
-WallStackCounter:4
-
-
-GameObjectValue:10
-HitPoints:10
-B_CanFall:0
-Position:[ 350, 15.5124, 1 ]
-Wall Pos:[ 0, 2140, 0 ]
-WallStackCounter:5
-
-
-GameObjectValue:14
-HitPoints:10
-
-
-GameObjectValue:14
-HitPoints:500
-
-
-GameObjectValue:9
-HitPoints:10
-B_CanFall:0
-Position:[ 50, 19.7297, 1 ]
-Wall Pos:[ 50, 21, 1 ]
-WallStackCounter:1
-
-
-GameObjectValue:9
-HitPoints:10
-B_CanFall:0
-Position:[ 50, 23.744, 1 ]
-Wall Pos:[ 50, 782, 1 ]
-WallStackCounter:2
-
-
-GameObjectValue:9
-HitPoints:10
-B_CanFall:0
-Position:[ 50, 27.7566, 1 ]
-Wall Pos:[ 50, 1363, 1 ]
-WallStackCounter:3
-
-
-GameObjectValue:9
-HitPoints:10
-B_CanFall:0
-Position:[ 50, 31.768, 1 ]
-Wall Pos:[ 50, 2128, 1 ]
-WallStackCounter:4
-
-
-GameObjectValue:9
-HitPoints:10
-B_CanFall:0
-Position:[ 50, 35.773, 1 ]
-Wall Pos:[ 50, 2893, 1 ]
-WallStackCounter:5
-
-
-GameObjectValue:9
-HitPoints:10
-B_CanFall:0
-Position:[ 50, 37.5046, 1 ]
-Wall Pos:[ 50, 2950, 1 ]
-WallStackCounter:6
-
-
-GameObjectValue:11
-HitPoints:500
-WallStackCounter:0
-
-
-GameObjectValue:10
-HitPoints:10
-B_CanFall:0
-Position:[ 50, 37.5046, 1 ]
-Wall Pos:[ 50, 2950, 1 ]
-WallStackCounter:0
-
-
-GameObjectValue:10
-HitPoints:10
-B_CanFall:0
-Position:[ 350, -0.938422, 1 ]
-Wall Pos:[ 0, 0, 0 ]
-WallStackCounter:1
-
-
-GameObjectValue:10
-HitPoints:10
-B_CanFall:0
-Position:[ 350, 3.06577, 1 ]
-Wall Pos:[ 0, 296, 0 ]
-WallStackCounter:2
-
-
-GameObjectValue:10
-HitPoints:10
-B_CanFall:0
-Position:[ 350, 7.08211, 1 ]
-Wall Pos:[ 0, 928, 0 ]
-WallStackCounter:3
-
-
-GameObjectValue:10
-HitPoints:10
-B_CanFall:0
-Position:[ 350, 11.0983, 1 ]
-Wall Pos:[ 0, 1440, 0 ]
-WallStackCounter:4
-
-
-GameObjectValue:10
-HitPoints:10
-B_CanFall:0
-Position:[ 350, 15.1135, 1 ]
-Wall Pos:[ 0, 2052, 0 ]
-WallStackCounter:5
-
-
-GameObjectValue:14
-HitPoints:10
 
 
 GameObjectValue:14

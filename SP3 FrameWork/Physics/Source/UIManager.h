@@ -30,4 +30,5 @@ private:
 	string score_counter;
 	string highscore_text;
 	string highscore_counter;
+	string arr_highscore[5];
 };

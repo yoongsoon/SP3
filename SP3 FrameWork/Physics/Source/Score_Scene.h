@@ -27,5 +27,4 @@ protected:
 									//Physics
 	float m_speed;
 
-
 };

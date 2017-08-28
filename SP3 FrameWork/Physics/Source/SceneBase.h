@@ -142,6 +142,7 @@ public:
 		SC_03,
 		SC_04,
 		SC_05,
+		SC_SCORE,
 		SC_END,
 	};
 
@@ -204,7 +205,7 @@ public:
 	bool weapon2 = false;
 	bool weapon3 = false;
 
-	int m_highScore;
+	unsigned m_highScore[5];
 	int m_levelScore;
 
 	// current position of mouse based on world coordinate
@@ -226,7 +227,7 @@ protected:
 	float fps;
 
 	float P_rotation = 0;
-	float Projectile_to_rotate_test = 0;
+	//float Projectile_to_rotate_test = 0;
 	//--------------------------------PHYSIC CODES---------------------------------------------------//
 	float m_worldWidth;
 	float m_worldHeight;
