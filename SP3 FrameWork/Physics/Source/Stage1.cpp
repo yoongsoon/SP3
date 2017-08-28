@@ -37,7 +37,11 @@ void Stage1::Init()
 	//Physics code here
 	m_speed = 1.f;
 	m_levelScore = 10000;
-	m_highScore = 0; 
+	for (int i = 0; i < 5; ++i)
+	{
+		m_highScore[i] = 0;
+	}
+	
 	//theFile->loadFile("scorefile.txt");
 
 	Math::InitRNG();
@@ -197,8 +201,14 @@ void Stage1::Update(double dt)
 	
 	if (Application::IsKeyPressed('K') && pressDelay >= cooldownPressed)
 	{
-		if (m_levelScore > m_highScore)
-			m_highScore = m_levelScore;
+		
+		for (int i = 0; i < 5; ++i)
+		{
+			if (m_levelScore > m_highScore[i])
+			{
+				m_highScore[i] = m_levelScore;
+			}
+		}
 		//theFile->saveFile("scorefile.txt");
 
 		theFile->saveFile("Data.txt");
@@ -529,20 +539,20 @@ void Stage1::Update(double dt)
 		}
 		P_Bow_Sprite->m_anim->animActive = true;
 
-
-
 		P_Catapult_Sprite->Update(dt);
-		if ((fire)&&(!thePlayer->weap_manager[2]->Get_b_Fire()))
+		if ((fire) && (!thePlayer->weap_manager[2]->Get_b_Fire()))
 		{
 			P_Catapult_Sprite->m_anim->animActive = true;
 			if (P_Catapult_Sprite->m_currentFrame > 8)
 			{
 				fire = false;
 			}
+
 		}
 		else if ((!fire) && (thePlayer->weap_manager[2]->Get_b_Fire()))
 		{
 			P_Catapult_Sprite->m_anim->animActive = false;
+
 		}
 	}
 	else

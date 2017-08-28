@@ -164,11 +164,11 @@
     <ClCompile Include="Source\HealthBar.cpp">
       <Filter>Source Files\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Score_Scene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\EnemyAI.cpp">
       <Filter>Source Files\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Score_Scene.cpp">
+      <Filter>Source Files\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -301,11 +301,11 @@
     <ClInclude Include="Source\HealthBar.h">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Score_Scene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\EnemyAI.h">
       <Filter>Source Files\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Score_Scene.h">
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

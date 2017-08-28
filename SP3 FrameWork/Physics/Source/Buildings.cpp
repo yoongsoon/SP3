@@ -15,11 +15,11 @@ Buildings::Buildings(GAMEOBJECT_TYPE typeValue, SceneBase * scene, unsigned offs
 		case GameObject::GO_P_BRICK:
 			hitpoints = 10;
 			meshValue = theScene->GEO_BRICK;
-			pos.Set(50, 60 + scale.y + (offset * 10), 1);
+			pos.Set(50, theScene->m_worldHeight * 0.5 + (offset * 10), 1);
 			dir.Set(0, 1, 0);
 			scale.Set(12, 4, 1);
 			m_canFall = true;
-			m_groundLevel = theScene->m_worldHeight * 0.1f;
+			m_groundLevel = theScene->m_worldHeight * 0.2f;
 			debugTag = "pWall";
 			debugTag += to_string(offset);
 			break;
@@ -34,10 +34,11 @@ Buildings::Buildings(GAMEOBJECT_TYPE typeValue, SceneBase * scene, unsigned offs
 		case GameObject::GO_AI_BRICK:
 			hitpoints = 10;
 			meshValue = theScene->GEO_BRICK;
-			pos.Set((theScene->m_worldWidth * 3) - 50.f, 60 + scale.y + (offset * 10), 1);
+			pos.Set((theScene->m_worldWidth * 3) - 50.f, theScene->m_worldHeight * 0.5 + (offset * 10), 1);
 			dir.Set(0, 1, 0);
 			scale.Set(12, 4, 1);
 			m_canFall = true;
+			m_groundLevel = theScene->m_worldHeight * 0.2f;
 			debugTag = "aiWall";
 			debugTag += to_string(offset);
 			break;

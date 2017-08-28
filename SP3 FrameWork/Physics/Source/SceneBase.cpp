@@ -179,6 +179,9 @@ void SceneBase::Init()
 	//--------------------Main Menu--------------------------//
 	meshList[GEO_MAIN_MENU] = MeshBuilder::GenerateQuad("MainMenu", Color(1.f, 1.f, 1.f), 1.f);
 	meshList[GEO_MAIN_MENU]->textureID = LoadTGA("Image/menu.tga");
+	//------------------High Score Scene----------------------------//
+	meshList[GEO_SCORESCENE] = MeshBuilder::GenerateQuad("scorescene", Color(1.f, 1.f, 1.f), 1.f);
+	meshList[GEO_SCORESCENE]->textureID = LoadTGA("Image/highscorewall.tga");
 	//------------------Lose Scene----------------------------//
 	meshList[GEO_LOSE_SCENE] = MeshBuilder::GenerateQuad("LoseScene", Color(1.f, 1.f, 1.f), 1.f);
 	meshList[GEO_LOSE_SCENE]->textureID = LoadTGA("Image/LoseScene.tga");

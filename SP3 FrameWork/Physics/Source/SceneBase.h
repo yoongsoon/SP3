@@ -141,6 +141,7 @@ public:
 		SC_03,
 		SC_04,
 		SC_05,
+		SC_SCORE,
 		SC_END,
 	};
 
@@ -201,7 +202,7 @@ public:
 	bool weapon2 = false;
 	bool weapon3 = false;
 
-	int m_highScore;
+	unsigned m_highScore[5];
 	int m_levelScore;
 
 	// current position of mouse based on world coordinate
