@@ -11,9 +11,13 @@ public:
 	UIManager(SceneBase * scene);
 	~UIManager();
 
+	//Update of text
 	void UpdateText();
+	//Update of mesh
 	void Update();
+	//Render of mesh
 	void Render();
+	// Render of Text
 	void RenderText();
 
 private:

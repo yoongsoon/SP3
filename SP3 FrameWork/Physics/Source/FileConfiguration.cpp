@@ -51,6 +51,7 @@ void FileConfiguration::loadFile(string _fileName)
 		}
 		else
 		{
+
 			//if (_fileName == "scorefile.txt")
 			//{
 			//	while (getline(myLoadFile, eachLine))
@@ -344,6 +345,7 @@ void FileConfiguration::loadFile(string _fileName)
 
 					}
 				}
+
 			}
 		}
 
@@ -439,12 +441,7 @@ void FileConfiguration::saveFile(string _fileName)
 	else
 	{
 		cout << "Saved file successfully" << endl;
-		/*if (_fileName == "scorefile.txt")
-		{
-			
-		}
-		else
-		{*/
+	
 			//Save the current Stage
 			outPutFile << "Highscore1:" << _scene->m_highScore[0] << endl;
 			outPutFile << "Highscore2:" << _scene->m_highScore[1] << endl;
@@ -455,7 +452,7 @@ void FileConfiguration::saveFile(string _fileName)
 			outPutFile << endl;
 			outPutFile << endl;
 
-
+             //save objects in factory container
 			for (auto & it : _scene->theFactory->g_FactoryMap)
 			{
 				if (it.second->active == false)
@@ -489,6 +486,7 @@ void FileConfiguration::saveFile(string _fileName)
 				}
 			}
 
+			// save objects in building container
 			for (auto & it : _scene->theFactory->g_BuildingsVector)
 			{
 				if (it->active == false)
@@ -511,13 +509,14 @@ void FileConfiguration::saveFile(string _fileName)
 			}
 		}
 
-	//}
+	
 	outPutFile.close();
 
 }
 
 void FileConfiguration::loadLevel(string _fileName)
 {
+	// static bool variable to determine whether to load level
 	b_isLoadLevel = true;
 
 	ifstream myLoadFile;

@@ -25,6 +25,7 @@ public:
 	FileConfiguration();
 	~FileConfiguration();
 
+	// set SceneBase pointer to access the container from the factory class
 	void setScene(SceneBase * scene);
 
 	//file configuration

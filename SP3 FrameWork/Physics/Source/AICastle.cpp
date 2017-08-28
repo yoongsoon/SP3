@@ -9,16 +9,15 @@ AICastle::AICastle(GAMEOBJECT_TYPE typeValue, SceneBase * scene)
 	,m_coolDownTime(10.f)
 	,b_isAttack(false)
 {
-	stateOfAI = AICastle::AI_ATTACK;
 	active = true;
+	m_DefaultHp = hitpoints;
 
 	meshValue = SceneBase::GEO_MINI_ENEMY_CASTLE;
 	scale.Set(30, 30, 1);
 	/*pos = Vector3((theScene->m_worldWidth * 3) - 15.f, 35.f, 1.f);*/
-	pos = Vector3((theScene->m_worldWidth * 3) - 15.f, 33.f, theScene->zaxis);
-	theScene->zaxis += 0.001f;
+	pos = Vector3((theScene->m_worldWidth * 3) - 15.f, 33.f, 1.f);
 	hitpoints = 500.f;
-	m_DefaultHp = hitpoints;
+
 	theAIweapon = new Cannon();
 	theAIweapon->Init();
 	//AIweapons = new Weapon_Info*[totanumberAIweapons];
@@ -31,22 +30,7 @@ AICastle::~AICastle()
 }
 
 void AICastle::update()
-{
-	switch (stateOfAI)
-	{
-	case AI_IDLE:
-	{
-
-	}
-	break;
-	case AI_ATTACK:
-	{
-		
-
-	}
-	break;
-	}
-	
+{	
 	// update the pos when resizing the screen
 	if(Application::b_isResize)
 		pos = Vector3((theScene->m_worldWidth * 3) - 15.f, 35.f, 1.f);
@@ -61,13 +45,11 @@ void AICastle::update()
 
 				float distanceX = (pos.x - it.second->pos.x);
 
-				//it.second->pos.z = 5;
 				// if hp goes below 25 %
 				if (hitpoints < (m_DefaultHp * 0.25))
 				{
 					//shoots 3 bullets(burstfire)
 					theAIweapon->Set_Max_BulletCount(3);
-					//theAIweapon->setFireMode(Weapon_Info::BURST_FIRE);
 				}
 				else
 				{
@@ -81,24 +63,24 @@ void AICastle::update()
 				if (abs(distanceX) < m_castleRange && abs(distanceX) > 10 )
 				{
 					theAIweapon->castleAIDischarge(Vector3(pos.x, 60, 5), distanceX - 50, theScene);
-					CSoundEngine::getInstance()->AddSound("BackGround Music", "Sound//Crossroads.ogg");
-					CSoundEngine::getInstance()->PlayASound("BackGround Music", true, false);
 				}
 				// change projectile motion to "LINEAR MOTION"  if the distance between
 				// enemy and castle is lesser than 10
 				else if (abs(distanceX) < 10 )
 				{
 					theAIweapon->castleAIDischarge(Vector3(pos.x, 60, 5), it.second->pos, theScene);
-					CSoundEngine::getInstance()->AddSound("BackGround Music", "Sound//Crossroads.ogg");
-					CSoundEngine::getInstance()->PlayASound("BackGround Music", true, false);
+				
 				}
 			}
 		}
-		//Duel
+
+		theAIweapon->Update(theScene->_dt);
+
+		//Destroy the castle if hp goes below 0
 		if (hitpoints < 0)
 		{
 			hitpoints = 0;
-			active = false;
+			isDestroyed = true;
+			return;
 		}
-		theAIweapon->Update(theScene->_dt);
 }

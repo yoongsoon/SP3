@@ -15,13 +15,17 @@ BackGround::BackGround(BACKGROUND_TYPE  _backGroundType, GAMEOBJECT_TYPE typeVal
 		meshValue = SceneBase::GEO_BACKGROUND;
 	}
 	break;
+	case BACK_GROUND_STAGE2:
+	{
+		meshValue = SceneBase::GEO_BACKGROUND_STAGE_2;
+	}
+	break;
 	}
 
 
 	scale.Set(theScene->m_worldWidth *4, theScene->m_worldHeight, 1);
-	pos.Set(theScene->m_worldWidth + 66.6f, theScene->m_worldHeight * 0.5, 1.f);
-	cout << "back " << pos.z << endl;
-	//theScene->zaxis += 0.001f;
+	pos.Set(theScene->m_worldWidth + 66.6f, theScene->m_worldHeight * 0.5, 0);
+
 
 }
 

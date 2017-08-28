@@ -24,7 +24,6 @@
 #include "Player.h"
 #include "PlayerTroops.h"
 #include "FileConfiguration.h"
-#include "EnemyAI.h"
 
 #include <vector>
 
@@ -86,6 +85,7 @@ public:
 		GEO_WIZARD,
 		GEO_WIZARD_ATTACK,
 		GEO_BACKGROUND,
+		GEO_BACKGROUND_STAGE_2,
 		GEO_BRICK,
 		//for different projectile colours
 		GEO_SPHERE1,
@@ -193,8 +193,22 @@ public:
 	PlayerInfo* thePlayer;
 	Player *theplayer;
 	FileConfiguration * theFile;
-	Buildings * theCastle;
-	AICastle * theAICastle;
+
+	//switch weapons
+	Weapon_Info** weap_manager;
+	int curr_weapon = 0;
+	//Weapon_Info* potato;
+
+	//Physics
+	float m_speed;
+	Enemy *enemy;
+	//SceneBase * scenebase;
+	bool ghost_exist = false;
+	bool release_ghost_exist = false;
+	bool M_ghost_exist = false;
+	bool canPredict;
+	bool fire = false;
+
 
 	//bool for pause
 	static bool b_isPause;
@@ -239,7 +253,6 @@ protected:
 	GameObject * theGhostProj;
 	GameObject * theReleaseMouseGhostProj;
 	GameObject * theMouseGhostProj;
-	EnemyAI * theEnemyAI;
 
 	double mouseX, mouseY;
 	float backGroundX = 40.f;

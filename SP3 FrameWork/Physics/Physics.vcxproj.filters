@@ -1,52 +1,96 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Source Files\Scene">
-      <UniqueIdentifier>{28a0d1b7-fe90-4518-bb36-47c0424f3574}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Scene">
-      <UniqueIdentifier>{44f5d576-28e6-4785-a037-7e5dad2a5a0e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\GameObject">
-      <UniqueIdentifier>{a8c96e26-f56c-4815-b835-8964b48f2030}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GameObject">
-      <UniqueIdentifier>{b2ebeb70-e239-452b-bfea-6bad248ce1b2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Collider">
-      <UniqueIdentifier>{dc47881d-1225-4191-b871-f3dcecb220a3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Collider">
-      <UniqueIdentifier>{d956ff2a-4c16-4fa7-aec1-6900ee9dcb3a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Enemy">
-      <UniqueIdentifier>{85bd4b80-e666-43b7-9d73-9270bfc618a1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Player">
-      <UniqueIdentifier>{7155dc7a-d7b0-4ffb-8a90-38841a572d93}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\UI">
-      <UniqueIdentifier>{aa803dc8-bd79-4abb-846a-c3c0f94bac8e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\UI">
-      <UniqueIdentifier>{ac0be372-a7ee-4865-8a8f-3110f120d4ed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\SpriteAnimation">
-      <UniqueIdentifier>{45c18a86-c16a-4e4d-b9fe-a4ab85f98b2c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\SoundEngine">
-      <UniqueIdentifier>{a8b1639e-8e90-4871-8157-034ba84e7810}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="Source\AICastle.cpp" />
+    <ClCompile Include="Source\Application.cpp" />
+    <ClCompile Include="Source\Bow.cpp" />
+    <ClCompile Include="Source\Camera.cpp" />
+    <ClCompile Include="Source\Cannon.cpp" />
+    <ClCompile Include="Source\Catapult.cpp" />
+    <ClCompile Include="Source\BackGround.cpp" />
+    <ClCompile Include="Source\Buildings.cpp" />
+    <ClCompile Include="Source\CollisionManager.cpp" />
+    <ClCompile Include="Source\Credits_Menu.cpp" />
+    <ClCompile Include="Source\Enemy.cpp" />
+    <ClCompile Include="Source\Factory.cpp" />
+    <ClCompile Include="Source\FileConfiguration.cpp" />
+    <ClCompile Include="Source\GameObjectManager.cpp" />
+    <ClCompile Include="Source\GameObject.cpp" />
+    <ClCompile Include="Source\HealthBar.cpp" />
+    <ClCompile Include="Source\LoadHmap.cpp" />
+    <ClCompile Include="Source\LoadOBJ.cpp" />
+    <ClCompile Include="Source\LoadTGA.cpp" />
+    <ClCompile Include="Source\LoseScene.cpp" />
+    <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\MainMenu.cpp" />
+    <ClCompile Include="Source\Mesh.cpp" />
+    <ClCompile Include="Source\MeshBuilder.cpp" />
+    <ClCompile Include="Source\MiniMap.cpp" />
+    <ClCompile Include="Source\Player.cpp" />
+    <ClCompile Include="Source\PlayerInfo.cpp" />
+    <ClCompile Include="Source\PlayerTroops.cpp" />
+    <ClCompile Include="Source\Projectile.cpp" />
+    <ClCompile Include="Source\SceneBase.cpp" />
+    <ClCompile Include="Source\SceneManager.cpp" />
+    <ClCompile Include="Source\Score_Scene.cpp" />
+    <ClCompile Include="Source\shader.cpp" />
+    <ClCompile Include="Source\SoundEngine.cpp" />
+    <ClCompile Include="Source\SpriteAnimation.cpp" />
+    <ClCompile Include="Source\Stage1.cpp" />
+    <ClCompile Include="Source\Start_Scene.cpp" />
+    <ClCompile Include="Source\UIManager.cpp" />
+    <ClCompile Include="Source\Utility.cpp" />
+    <ClCompile Include="Source\WeaponInfo.cpp" />
+    <ClCompile Include="Source\Stage2.cpp" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
+    <ClInclude Include="Source\AICastle.h" />
+    <ClInclude Include="Source\Application.h" />
+    <ClInclude Include="Source\Bow.h" />
+    <ClInclude Include="Source\Camera.h" />
+    <ClInclude Include="Source\Cannon.h" />
+    <ClInclude Include="Source\Catapult.h" />
+    <ClInclude Include="Source\BackGround.h" />
+    <ClInclude Include="Source\Buildings.h" />
+    <ClInclude Include="Source\CollisionManager.h" />
+    <ClInclude Include="Source\Credits_Menu.h" />
+    <ClInclude Include="Source\Enemy.h" />
+    <ClInclude Include="Source\Factory.h" />
+    <ClInclude Include="Source\FileConfiguration.h" />
+    <ClInclude Include="Source\GameObjectManager.h" />
+    <ClInclude Include="Source\GameObject.h" />
+    <ClInclude Include="Source\HealthBar.h" />
+    <ClInclude Include="Source\Light.h" />
+    <ClInclude Include="Source\LoadHmap.h" />
+    <ClInclude Include="Source\LoadOBJ.h" />
+    <ClInclude Include="Source\LoadTGA.h" />
+    <ClInclude Include="Source\LoseScene.h" />
+    <ClInclude Include="Source\MainMenu.h" />
+    <ClInclude Include="Source\Material.h" />
+    <ClInclude Include="Source\Mesh.h" />
+    <ClInclude Include="Source\MeshBuilder.h" />
+    <ClInclude Include="Source\MiniMap.h" />
+    <ClInclude Include="Source\Player.h" />
+    <ClInclude Include="Source\PlayerInfo.h" />
+    <ClInclude Include="Source\PlayerTroops.h" />
+    <ClInclude Include="Source\Projectile.h" />
+    <ClInclude Include="Source\Scene.h" />
+    <ClInclude Include="Source\SceneBase.h" />
+    <ClInclude Include="Source\SceneManager.h" />
+    <ClInclude Include="Source\Score_Scene.h" />
+    <ClInclude Include="Source\shader.hpp" />
+    <ClInclude Include="Source\Singleton.h" />
+    <ClInclude Include="Source\SoundEngine.h" />
+    <ClInclude Include="Source\SpriteAnimation.h" />
+    <ClInclude Include="Source\Stage1.h" />
+    <ClInclude Include="Source\Start_Scene.h" />
+    <ClInclude Include="Source\UIManager.h" />
+    <ClInclude Include="Source\Utility.h" />
+    <ClInclude Include="Source\Vertex.h" />
+    <ClInclude Include="Source\WeaponInfo.h" />
+    <ClInclude Include="Source\Stage2.h" />
+=======
     <ClCompile Include="Source\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -307,5 +351,6 @@
     <ClInclude Include="Source\Score_Scene.h">
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
+>>>>>>> 22b41f6740ab8606cc4979a8ed04dbb36c883aa8
   </ItemGroup>
 </Project>

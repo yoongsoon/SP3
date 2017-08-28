@@ -8,23 +8,6 @@
 class AICastle : public GameObject
 {
 public:
-	enum AIStage
-	{
-		AI_STAGE1,
-		AI_STAGE2,
-		AI_STAGE3,
-		AI_STAGE4,
-
-	};
-
-	enum AI_STATE
-	{
-		AI_IDLE,
-		AI_ATTACK,
-	};
-
-	AI_STATE stateOfAI;
-
 	AICastle(GAMEOBJECT_TYPE typeValue, SceneBase * scene);
 	virtual ~AICastle();
 

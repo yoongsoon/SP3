@@ -33,7 +33,6 @@ public:
 
 	//Iterators
 	Mapping::iterator gameObjectIter;
-
 	ProjectileVector::iterator projectileIterator;
 	BuildingsVector::iterator buildingsIterator;
 

@@ -17,36 +17,13 @@ public:
 	virtual void Exit();
 
 	//void CreatePlayerWeap();
-	/*void CreateEnemySoldier();
+	void CreateEnemySoldier();
 	void CreateEnemyArcher();
-	void CreateEnemyWizard();*/
+	void CreateEnemyWizard();
 	void CreateFriendlySoldier();
 	void CreateFriendlyArcher();
 	void CreateFriendlyWizard();
-
 protected:
 	static Stage1 * sInstance; // The pointer to the object that gets registered
-	//player(aka the player on tower)
-	/*
-	contains 
-	health
-	weapons
-	prjectile*/
-	//switch weapons
-	Weapon_Info** weap_manager;
-	int curr_weapon = 0;
-	//Weapon_Info* potato;
-				
-	//Physics
-	float m_speed;
-	Enemy *enemy;
-	//SceneBase * scenebase;
 
-	bool ghost_exist = false;
-	bool release_ghost_exist = false;
-	bool M_ghost_exist = false;
-	bool canPredict;
-	bool fire = false;
-private:
-	//TextEntity* textObj[3];
 };

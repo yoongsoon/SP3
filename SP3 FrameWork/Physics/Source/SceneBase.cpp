@@ -158,8 +158,12 @@ void SceneBase::Init()
 	meshList[GEO_WIZARD_ATTACK]->textureID = LoadTGA("Image//WizardAttack.tga");
 	meshList[GEO_BRICK] = MeshBuilder::GenerateQuad("brick", Color(.5f, .5f, .5f), 1.f);
 	meshList[GEO_BRICK]->textureID = LoadTGA("Image//castlebrick.tga");
+
 	meshList[GEO_BACKGROUND] = MeshBuilder::GenerateQuad("BackGround", Color(1.f, 1.f, 1.f), 1.f);
 	meshList[GEO_BACKGROUND]->textureID = LoadTGA("Image/BackGround.tga");
+	meshList[GEO_BACKGROUND_STAGE_2] = MeshBuilder::GenerateQuad("BackGroundStag2", Color(1.f, 1.f, 1.f), 1.f);
+	meshList[GEO_BACKGROUND_STAGE_2]->textureID = LoadTGA("Image/BackGroundStage2.tga");
+
 
 	meshList[GEO_WIN_MENU] = MeshBuilder::GenerateQuad("WinMenu", Color(1.f, 1.f, 1.f), 1.f);
 	meshList[GEO_WIN_MENU]->textureID = LoadTGA("Image/Menu_Win.tga");

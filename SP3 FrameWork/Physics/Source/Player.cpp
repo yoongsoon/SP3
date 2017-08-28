@@ -4,10 +4,10 @@
 Player::Player()
 {
 	cashamount = 10.f;
-	wallet = 2000.f;
-	maxWallet = 2000.f;
+	wallet = 20000.f;
+	maxWallet = wallet;
 	enemycashamount = 10.f;
-	enemywallet = 20000.f;
+	enemywallet = 200.f;
 }
 
 Player::~Player()

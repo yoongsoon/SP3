@@ -93,7 +93,7 @@ void Stage1::Init()
 			Buildings * theWall = new Buildings(GameObject::GO_P_BRICK, this, m_wallStackCounter);
 			theFactory->createGameObject(theWall);
 		}
-		theCastle = new Buildings(GameObject::GO_P_CASTLE, this, 0);
+		Buildings * theCastle = new Buildings(GameObject::GO_P_CASTLE, this, 0);
 		theFactory->createGameObject(theCastle);
 
 		for (int m_wallStackCounter = 1; m_wallStackCounter <= 6; ++m_wallStackCounter)
@@ -101,10 +101,10 @@ void Stage1::Init()
 			Buildings * theWall = new Buildings(GameObject::GO_AI_BRICK, this, m_wallStackCounter);
 			theFactory->createGameObject(theWall);
 		}
-		theAICastle = new AICastle(GameObject::GO_AI_CASTLE, this);
+		AICastle * theAICastle = new AICastle(GameObject::GO_AI_CASTLE, this);
 		theFactory->createGameObject(theAICastle);
 	}
-	theEnemyAI = new EnemyAI(this, EnemyAI::STAGE_1);
+
 	BackGround * theBackGround = new BackGround(BackGround::BACK_GROUND_STAGE1, GameObject::GO_NONE, this);
 	theFactory->createGameObject(theBackGround);
 
@@ -183,7 +183,7 @@ void Stage1::Init()
 	if(FileConfiguration::b_isLoadLevel == true)
 	theFile->loadFile("Data.txt");
 
-	 //Scene 1
+	 //enum variable use to load scene from main menu
 	sceneNumber = SC_01;
 	//static variable use for switching scene in lose scene
 	stageNo = 1;
@@ -194,14 +194,14 @@ void Stage1::Update(double dt)
 	_elapsedTime += (float)dt;
 	pressDelay += (float)dt;
 	_dt = (float)dt;
-	
+
 	//Calculating aspect ratio ( 4:3)
 	m_worldHeight = 100.f;
 	m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
-	
+
 	if (Application::IsKeyPressed('K') && pressDelay >= cooldownPressed)
 	{
-		
+
 		for (int i = 0; i < 5; ++i)
 		{
 			if (m_levelScore > m_highScore[i])
@@ -222,7 +222,7 @@ void Stage1::Update(double dt)
 	}
 
 
-	
+
 	if ((b_isPause == false) && (b_isWon == false))
 	{
 		m_levelScore -= (float)dt * 0.5f;
@@ -277,38 +277,37 @@ void Stage1::Update(double dt)
 		{
 			bow = false;
 		}
-	/*	static bool onepress = false;
+		/*	static bool onepress = false;
 		if (Application::IsKeyPressed('1') && !onepress)
 		{
-			CreateEnemySoldier();
-			onepress = true;
+		CreateEnemySoldier();
+		onepress = true;
 		}
 		else if (!Application::IsKeyPressed('1') && onepress)
 		{
-			onepress = false;
+		onepress = false;
 		}
-
 		static bool twopress = false;
 		if (Application::IsKeyPressed('2') && !twopress)
 		{
-			CreateEnemyArcher();
-			twopress = true;
+		CreateEnemyArcher();
+		twopress = true;
 		}
 		else if (!Application::IsKeyPressed('2') && twopress)
 		{
-			twopress = false;
+		twopress = false;
 		}
 		static bool threepress = false;
 		if (Application::IsKeyPressed('3') && !threepress)
 		{
-			CreateEnemyWizard();
-			threepress = true;
+		CreateEnemyWizard();
+		threepress = true;
 		}
 		else if (!Application::IsKeyPressed('3') && threepress)
 		{
-			threepress = false;
+		threepress = false;
 		}
-*/
+		*/
 		static bool fourpress = false;
 		if (Application::IsMousePressed(1) && !fourpress)
 		{
@@ -341,38 +340,37 @@ void Stage1::Update(double dt)
 		}
 
 		/*	static bool fourpress = false;
-			if (Application::IsKeyPressed('4') && !fourpress)
-			{
-				CreateFriendlySoldier();
-				fourpress = true;
-			}
-			else if (!Application::IsKeyPressed('4') && fourpress)
-			{
-				fourpress = false;
-			}
+		if (Application::IsKeyPressed('4') && !fourpress)
+		{
+		CreateFriendlySoldier();
+		fourpress = true;
+		}
+		else if (!Application::IsKeyPressed('4') && fourpress)
+		{
+		fourpress = false;
+		}
+		static bool fivepress = false;
+		if (Application::IsKeyPressed('5') && !fivepress)
+		{
+		CreateFriendlyArcher();
+		fivepress = true;
+		}
+		else if (!Application::IsKeyPressed('5') && fivepress)
+		{
+		fivepress = false;
+		}
+		static bool sixpress = false;
+		if (Application::IsKeyPressed('6') && !sixpress)
+		{
+		CreateFriendlyWizard();
+		sixpress = true;
+		}
+		else if (!Application::IsKeyPressed('6') && sixpress)
+		{
+		sixpress = false;
+		}*/
 
-			static bool fivepress = false;
-			if (Application::IsKeyPressed('5') && !fivepress)
-			{
-				CreateFriendlyArcher();
-				fivepress = true;
-			}
-			else if (!Application::IsKeyPressed('5') && fivepress)
-			{
-				fivepress = false;
-			}
-			static bool sixpress = false;
-			if (Application::IsKeyPressed('6') && !sixpress)
-			{
-				CreateFriendlyWizard();
-				sixpress = true;
-			}
-			else if (!Application::IsKeyPressed('6') && sixpress)
-			{
-				sixpress = false;
-			}*/
-
-			//Mouse Section
+		//Mouse Section
 		Application::GetCursorPos(&mouseX, &mouseY);
 		currentPos.x = (float)mouseX / Application::GetWindowWidth() * m_worldWidth;
 		currentPos.y = (Application::GetWindowHeight() - (float)mouseY) / Application::GetWindowHeight() * m_worldHeight;
@@ -402,14 +400,14 @@ void Stage1::Update(double dt)
 
 			//shoots projectile
 			thePlayer->DischargePPTEST(theGhostProj->pos, currentPos, this);
-			
+
 			if (weapon3)
 			{
 				fire = true;
 			}
-			
+
 		}
-		
+
 		//shows where mouse is(if need remove mouse cursor)
 		theMouseGhostProj->pos = currentPos;
 		//prediction line when hold leftclick
@@ -456,7 +454,7 @@ void Stage1::Update(double dt)
 		theFactory->updateGameObject();
 		// Update collisions
 		theCollider->Update(dt);
-		theEnemyAI->Update(dt);
+		//theEnemyAI->Update(dt);
 
 		gom->update();
 		//player units
@@ -473,7 +471,7 @@ void Stage1::Update(double dt)
 		sprite[3] = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER_ATTACK]);
 		sprite[4] = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER]);
 		sprite[5] = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER_ATTACK]);
-	
+
 		SpriteAnimation* P_Bow_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_BOW_ARROW]);
 		SpriteAnimation* P_Catapult_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CATAPULT_ROCKS]);
 		//Sprite Animation update
@@ -482,11 +480,11 @@ void Stage1::Update(double dt)
 			sprite[a]->Update(dt);
 			sprite[a]->m_anim->animActive = true;
 		}
-	
+
 		//distance of click and drag
 		double result = sqrt(((theGhostProj->pos.x - theMouseGhostProj->pos.x)*(theGhostProj->pos.x - theMouseGhostProj->pos.x)) + ((theGhostProj->pos.y - theMouseGhostProj->pos.y)*(theGhostProj->pos.y - theMouseGhostProj->pos.y)));
 
-		if (!bLButtonState &&!fire)
+		if (!bLButtonState && !fire)
 		{
 			P_Bow_Sprite->m_currentFrame = 0;
 			P_Catapult_Sprite->m_currentFrame = 0;
@@ -560,7 +558,7 @@ void Stage1::Update(double dt)
 	{
 		CSoundEngine::getInstance()->theCurrentSound->setIsPaused();
 	}
-	
+
 	//win the game
 	if (m_levelScore <= 0)
 	{
@@ -569,7 +567,6 @@ void Stage1::Update(double dt)
 
 	theUIManager->Update();
 	theUIManager->UpdateText();
-
 }
 
 void Stage1::Render()
@@ -654,51 +651,51 @@ void Stage1::Exit()
 	SceneBase::Exit();
 }
 
-//void Stage1::CreateEnemySoldier()
-//{
-//	//GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_SOLDIER);
-//	Enemy * tempEnemy = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_SOLDIER);
-//	cout << theplayer->ReturnEnemyWallet() << endl;
-//	if (theplayer->ReturnEnemyWallet() > tempEnemy->cost)
-//	{
-//		theplayer->ReduceEnemyWalletAmount(tempEnemy->cost);
-//		theFactory->createGameObject(tempEnemy);
-//		cout << "Soldier" << endl;
-//		zaxis += 0.001f;
-//		cout << zaxis << endl;
-//	}
-//	//delete tempEnemy;
-//}
-//
-//void Stage1::CreateEnemyArcher()
-//{
-//	//GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_ARCHER);
-//	Enemy * tempEnemy = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_ARCHER);
-//	cout << theplayer->ReturnEnemyWallet() << endl;
-//	if (theplayer->ReturnEnemyWallet() > tempEnemy->cost)
-//	{
-//		theplayer->ReduceEnemyWalletAmount(tempEnemy->cost);
-//		theFactory->createGameObject(tempEnemy);
-//		cout << "Archer" << endl;
-//		zaxis += 0.001f;
-//		cout << zaxis << endl;
-//	}
-//}
-//
-//void Stage1::CreateEnemyWizard()
-//{
-//	//GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_WIZARD);
-//	Enemy * tempEnemy = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_WIZARD);
-//	cout << theplayer->ReturnEnemyWallet() << endl;
-//	if (theplayer->ReturnEnemyWallet() > tempEnemy->cost)
-//	{
-//		theplayer->ReduceEnemyWalletAmount(tempEnemy->cost);
-//		theFactory->createGameObject(tempEnemy);
-//		cout << "Wizard" << endl;
-//		zaxis += 0.001f;
-//		cout << zaxis << endl;
-//	}
-//}
+void Stage1::CreateEnemySoldier()
+{
+	//GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_SOLDIER);
+	Enemy * tempEnemy = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_SOLDIER);
+	cout << theplayer->ReturnEnemyWallet() << endl;
+	if (theplayer->ReturnEnemyWallet() > tempEnemy->cost)
+	{
+		theplayer->ReduceEnemyWalletAmount(tempEnemy->cost);
+		theFactory->createGameObject(tempEnemy);
+		cout << "Soldier" << endl;
+		zaxis += 0.001f;
+		cout << zaxis << endl;
+	}
+	//delete tempEnemy;
+}
+
+void Stage1::CreateEnemyArcher()
+{
+	//GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_ARCHER);
+	Enemy * tempEnemy = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_ARCHER);
+	cout << theplayer->ReturnEnemyWallet() << endl;
+	if (theplayer->ReturnEnemyWallet() > tempEnemy->cost)
+	{
+		theplayer->ReduceEnemyWalletAmount(tempEnemy->cost);
+		theFactory->createGameObject(tempEnemy);
+		cout << "Archer" << endl;
+		zaxis += 0.001f;
+		cout << zaxis << endl;
+	}
+}
+
+void Stage1::CreateEnemyWizard()
+{
+	//GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_WIZARD);
+	Enemy * tempEnemy = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_WIZARD);
+	cout << theplayer->ReturnEnemyWallet() << endl;
+	if (theplayer->ReturnEnemyWallet() > tempEnemy->cost)
+	{
+		theplayer->ReduceEnemyWalletAmount(tempEnemy->cost);
+		theFactory->createGameObject(tempEnemy);
+		cout << "Wizard" << endl;
+		zaxis += 0.001f;
+		cout << zaxis << endl;
+	}
+}
 
 void Stage1::CreateFriendlySoldier()
 {

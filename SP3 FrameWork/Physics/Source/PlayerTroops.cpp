@@ -5,7 +5,6 @@
 
 PlayerTroop::PlayerTroop(GAMEOBJECT_TYPE GO_PLAYER, SceneBase * scene, PLAYER_TYPE meshvalue) :GameObject(GO_PLAYER, scene)
 {
-	Buildings * build = new Buildings(GameObject::GO_AI_CASTLE, theScene, 0);
 	playerMoveX = 0.f;
 	if (meshvalue == P_SOLDIER)
 	{
@@ -14,16 +13,15 @@ PlayerTroop::PlayerTroop(GAMEOBJECT_TYPE GO_PLAYER, SceneBase * scene, PLAYER_TY
 		//float zaxis = 1.f;
 		active = true;
 		meshValue = SceneBase::GEO_SOLDIER;
-		scale.Set(10, 10, 1.f);
+		scale.Set(10, 10, 1);
 		vel.Set(10.f, 0.f, 0.f);
-		pos.Set(theScene->theCastle->pos.x, theScene->theCastle->pos.y - (theScene->theCastle->scale.y / 3), theScene->zaxis);
+		pos.Set(0.f, m_worldHeight / 2, theScene->zaxis);
 		playerType = PlayerTroop::P_SOLDIER;
 		hp = 100.f;
 		range = 1.f;
 		damage = 10.f;
 		attackcooldown = 3.f;
 		cost = 50.f;
-		//cout << "p" << pos.z << endl;
 	}
 	else if (meshvalue == P_ARCHER)
 	{
@@ -49,7 +47,7 @@ PlayerTroop::PlayerTroop(GAMEOBJECT_TYPE GO_PLAYER, SceneBase * scene, PLAYER_TY
 
 		active = true;
 		meshValue = SceneBase::GEO_WIZARD;
-		scale.Set(10, 10, 1);
+		scale.Set(10, 10, 10);
 		vel.Set(10.f, 0.f, 0.f);
 		pos.Set(0.f, m_worldHeight / 2, theScene->zaxis);
 		playerType = PlayerTroop::P_WIZARD;

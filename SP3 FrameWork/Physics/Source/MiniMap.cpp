@@ -20,7 +20,7 @@ void MiniMap::Update()
 {
 	float distBorderX = 60.f;
 
-	
+	// Move mini enemies and mini allies on the minimap
 		for (auto & it : theScene->theFactory->g_FactoryMap)
 		{
 			if (it.first == GameObject::GO_ENEMY  && static_cast<Enemy*>(it.second)->StopToAttack == false)
@@ -38,10 +38,8 @@ void MiniMap::Update()
 
 void MiniMap::RenderUI()
 {
-	//theScene->m_worldWidth / 2 + 42.5f
-	// theScene->m_worldWidth / 2 - 17.5f
 
-
+	//Render the mini allies and mini enemies on the minimap
 	for (auto & it : theScene->theFactory->g_FactoryMap)
 	{
 		if (it.second->active == false)
@@ -57,6 +55,8 @@ void MiniMap::RenderUI()
 				, pos.y - 2.f, scale.x - 20.f, scale.y);
 		}
 	}
+
+	// Render both the player and enemy castle UI on both side of the minimap
 	for (auto & it : theScene->theFactory->g_BuildingsVector)
 	{
 		if (it->active == false)
@@ -71,8 +71,9 @@ void MiniMap::RenderUI()
 		}
 	}
 
-
+	//Mini Arrow
 	theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_MINI_ARROW], 50.f + arrowX , pos.y + 2.f, 10.f , 2.5f);
+	//Minimap background
 	theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_MINI_BORDER], pos.x, pos.y, scale.x + 5.f, scale.y);
 
 
