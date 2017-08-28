@@ -198,15 +198,15 @@ void UIManager::Render()
 	theScene->modelStack.Translate(10.0f, 10.0f, 1.0f);
 	theScene->modelStack.Scale(15.0f, 15.0f, 1.0f);
 
-	if (theScene->weapon1)
+	if ((theScene->weapon1) && (theScene->thePlayer->weap_manager[0]->Get_b_Fire()))
 	{
 		theScene->RenderMesh(theScene->meshList[SceneBase::GEO_BOW_ARROW], false);
 	}
-	else if (theScene->weapon2)
+	else if ((theScene->weapon2) && (theScene->thePlayer->weap_manager[1]->Get_b_Fire()))
 	{
 		theScene->RenderMesh(theScene->meshList[SceneBase::GEO_CANNON_BALLS], false);
 	}
-	else if (theScene->weapon3)
+	else if ((theScene->weapon3) && (theScene->thePlayer->weap_manager[2]->Get_b_Fire()))
 	{
 		theScene->RenderMesh(theScene->meshList[SceneBase::GEO_CATAPULT_ROCKS], false);
 	}
@@ -241,6 +241,7 @@ void UIManager::Render()
 			break;
 		}
 	}
+	//-------------------------------------Win Menu---------------------------------------------------//
 	if (theScene->b_isWon == true)
 	{
 		theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_WIN_MENU], 80, 30, 120, 40);
@@ -253,9 +254,6 @@ void UIManager::Render()
 		case SceneBase::WIN_RESTART:
 			theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_PAUSE_ARROW], 57, 15, 10, 5);
 			break;
-	/*	case SceneBase::PAUSE_MAINMENU:
-			theScene->RenderMeshOnScreen(theScene->meshList[SceneBase::GEO_PAUSE_ARROW], 60, 25, 10, 5);
-			break;*/
 		}
 	}
 }

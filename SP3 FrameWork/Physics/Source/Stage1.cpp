@@ -33,7 +33,7 @@ void Stage1::Init()
 	canPredict = true;
 	weap_manager = NULL;
 	P_rotation = 1.f;
-	Projectile_to_rotate_test = 1.f;
+	//Projectile_to_rotate_test = 1.f;
 	//Physics code here
 	m_speed = 1.f;
 	m_levelScore = 10000;
@@ -190,8 +190,7 @@ void Stage1::Update(double dt)
 	_elapsedTime += (float)dt;
 	pressDelay += (float)dt;
 	_dt = (float)dt;
-	m_levelScore -= (float)dt * 0.5f;
-
+	
 	//Calculating aspect ratio ( 4:3)
 	m_worldHeight = 100.f;
 	m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
@@ -216,6 +215,8 @@ void Stage1::Update(double dt)
 	
 	if ((b_isPause == false) && (b_isWon == false))
 	{
+		m_levelScore -= (float)dt * 0.5f;
+
 		CSoundEngine::getInstance()->theCurrentSound->setIsPaused(false);
 
 		//CSoundEngine::getInstance()->PauseSounds("BackGround Music");
@@ -533,27 +534,27 @@ void Stage1::Update(double dt)
 		P_Catapult_Sprite->Update(dt);
 		if ((fire)&&(!thePlayer->weap_manager[2]->Get_b_Fire()))
 		{
-			
 			P_Catapult_Sprite->m_anim->animActive = true;
 			if (P_Catapult_Sprite->m_currentFrame > 8)
 			{
 				fire = false;
 			}
-			
 		}
 		else if ((!fire) && (thePlayer->weap_manager[2]->Get_b_Fire()))
 		{
-		//	P_Catapult_Sprite->Update(dt);
 			P_Catapult_Sprite->m_anim->animActive = false;
-			
 		}
 	}
 	else
 	{
 		CSoundEngine::getInstance()->theCurrentSound->setIsPaused();
 	}
-
 	
+	//win the game
+	if (m_levelScore <= 0)
+	{
+		b_isWon = true;
+	}
 
 	theUIManager->Update();
 	theUIManager->UpdateText();
@@ -562,6 +563,7 @@ void Stage1::Update(double dt)
 
 void Stage1::Render()
 {
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Projection matrix : Orthographic Projection
@@ -596,40 +598,38 @@ void Stage1::Render()
 	theUIManager->Render();
 	theUIManager->RenderText();
 
+	SpriteAnimation* P_Catapult_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CATAPULT_ROCKS]);
+
 
 	//rendering problem
-	if ((weapon1) && (thePlayer->weap_manager[0]->Get_b_Fire()))
+	if ((weapon1))
 	{
 		modelStack.PushMatrix();
 		modelStack.Translate(20.0f, 50.0f, 5.0f);
 		modelStack.Rotate(P_rotation, 0, 0, 1);
-		//modelStack.Rotate(Projectile_to_rotate_test, 0, 0, 1);
 		modelStack.Scale(15.0f, 15.0f, 1.0f);
 		RenderMesh(meshList[GEO_P_BOW_ARROW], false);
 		modelStack.PopMatrix();
 	}
-	if ((weapon2) && (thePlayer->weap_manager[1]->Get_b_Fire()))
+	if ((weapon2))
 	{
 		modelStack.PushMatrix();
 		modelStack.Translate(20.0f, 50.0f, 5.0f);
 		modelStack.Rotate(P_rotation, 0, 0, 1);
 		modelStack.Scale(15.0f, 15.0f, 1.0f);
 		RenderMesh(meshList[GEO_P_CANNON], false);
-		//RenderMesh(meshList[GEO_P_CANNON_STAND], false);
 		modelStack.PopMatrix();
 
 		modelStack.PushMatrix();
 		modelStack.Translate(20.0f, 50.0f, 5.0f);
 		modelStack.Scale(15.0f, 15.0f, 1.0f);
-		//RenderMesh(meshList[GEO_P_CANNON], false);
 		RenderMesh(meshList[GEO_P_CANNON_STAND], false);
 		modelStack.PopMatrix();
 	}
-	if ((weapon3) && (thePlayer->weap_manager[2]->Get_b_Fire()))
+	if ((weapon3))
 	{
 		modelStack.PushMatrix();
 		modelStack.Translate(17.0f, 47.0f, 5.0f);
-		//modelStack.Rotate(P_rotation, 0, 0, 1);
 		modelStack.Scale(15.0f, 15.0f, 1.0f);
 		RenderMesh(meshList[GEO_P_CATAPULT_ROCKS], false);
 		modelStack.PopMatrix();
