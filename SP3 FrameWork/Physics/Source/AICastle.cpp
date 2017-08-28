@@ -11,14 +11,14 @@ AICastle::AICastle(GAMEOBJECT_TYPE typeValue, SceneBase * scene)
 {
 	stateOfAI = AICastle::AI_ATTACK;
 	active = true;
-	m_DefaultHp = hitpoints;
 
 	meshValue = SceneBase::GEO_MINI_ENEMY_CASTLE;
 	scale.Set(30, 30, 1);
 	/*pos = Vector3((theScene->m_worldWidth * 3) - 15.f, 35.f, 1.f);*/
-	pos = Vector3((theScene->m_worldWidth * 3) - 15.f, 33.f, 1.f);
+	pos = Vector3((theScene->m_worldWidth * 3) - 15.f, 33.f, theScene->zaxis);
+	theScene->zaxis += 0.001f;
 	hitpoints = 500.f;
-
+	m_DefaultHp = hitpoints;
 	theAIweapon = new Cannon();
 	theAIweapon->Init();
 	//AIweapons = new Weapon_Info*[totanumberAIweapons];

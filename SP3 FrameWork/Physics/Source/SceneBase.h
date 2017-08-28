@@ -24,6 +24,7 @@
 #include "Player.h"
 #include "PlayerTroops.h"
 #include "FileConfiguration.h"
+#include "EnemyAI.h"
 
 #include <vector>
 
@@ -191,6 +192,8 @@ public:
 	PlayerInfo* thePlayer;
 	Player *theplayer;
 	FileConfiguration * theFile;
+	Buildings * theCastle;
+	AICastle * theAICastle;
 
 	//bool for pause
 	static bool b_isPause;
@@ -235,6 +238,7 @@ protected:
 	GameObject * theGhostProj;
 	GameObject * theReleaseMouseGhostProj;
 	GameObject * theMouseGhostProj;
+	EnemyAI * theEnemyAI;
 
 	double mouseX, mouseY;
 	float backGroundX = 40.f;

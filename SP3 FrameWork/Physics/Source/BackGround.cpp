@@ -19,8 +19,9 @@ BackGround::BackGround(BACKGROUND_TYPE  _backGroundType, GAMEOBJECT_TYPE typeVal
 
 
 	scale.Set(theScene->m_worldWidth *4, theScene->m_worldHeight, 1);
-	pos.Set(theScene->m_worldWidth + 66.6f, theScene->m_worldHeight * 0.5, 0);
-
+	pos.Set(theScene->m_worldWidth + 66.6f, theScene->m_worldHeight * 0.5, 1.f);
+	cout << "back " << pos.z << endl;
+	//theScene->zaxis += 0.001f;
 
 }
 

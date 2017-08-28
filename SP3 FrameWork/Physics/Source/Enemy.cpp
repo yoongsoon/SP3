@@ -15,7 +15,7 @@ Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) 
 		meshValue = SceneBase::GEO_SOLDIER;
 		scale.Set(5, 5, 1);
 		vel.Set(-30.f, 0.f, 0.f);
-		pos.Set((m_worldWidth * 3) -15.f, m_worldHeight / 2, theScene->zaxis);
+		pos.Set(theScene->theAICastle->pos.x, theScene->theAICastle->pos.y - (theScene->theAICastle->scale.y / 3), theScene->zaxis);
 		enemyType = Enemy::E_SOLDIER;
 		hp = 100.f;
 		range = 1.f;
