@@ -171,7 +171,7 @@ void Stage1::Init()
 	if (P_Catapult_Sprite)
 	{
 		P_Catapult_Sprite->m_anim = new Animation();
-		P_Catapult_Sprite->m_anim->Set(0, 10, 0, 1.0f, true);
+		P_Catapult_Sprite->m_anim->Set(2, 9, 0, 1.0f, true);
 	}
 
 	theUIManager = new UIManager(this);
@@ -224,12 +224,12 @@ void Stage1::Update(double dt)
 
 
 	
-	if( (b_isPause == false) && (b_isWon==false))
+	if ((b_isPause == false) && (b_isWon == false))
 	{
 		CSoundEngine::getInstance()->theCurrentSound->setIsPaused(false);
 
 		//CSoundEngine::getInstance()->PauseSounds("BackGround Music");
-		
+
 		static bool bow = false;
 		if (Application::IsKeyPressed(VK_NUMPAD1) && !bow)
 		{
@@ -339,39 +339,39 @@ void Stage1::Update(double dt)
 			fourpress = false;
 		}
 
-	/*	static bool fourpress = false;
-		if (Application::IsKeyPressed('4') && !fourpress)
-		{
-			CreateFriendlySoldier();
-			fourpress = true;
-		}
-		else if (!Application::IsKeyPressed('4') && fourpress)
-		{
-			fourpress = false;
-		}
+		/*	static bool fourpress = false;
+			if (Application::IsKeyPressed('4') && !fourpress)
+			{
+				CreateFriendlySoldier();
+				fourpress = true;
+			}
+			else if (!Application::IsKeyPressed('4') && fourpress)
+			{
+				fourpress = false;
+			}
 
-		static bool fivepress = false;
-		if (Application::IsKeyPressed('5') && !fivepress)
-		{
-			CreateFriendlyArcher();
-			fivepress = true;
-		}
-		else if (!Application::IsKeyPressed('5') && fivepress)
-		{
-			fivepress = false;
-		}
-		static bool sixpress = false;
-		if (Application::IsKeyPressed('6') && !sixpress)
-		{
-			CreateFriendlyWizard();
-			sixpress = true;
-		}
-		else if (!Application::IsKeyPressed('6') && sixpress)
-		{
-			sixpress = false;
-		}*/
+			static bool fivepress = false;
+			if (Application::IsKeyPressed('5') && !fivepress)
+			{
+				CreateFriendlyArcher();
+				fivepress = true;
+			}
+			else if (!Application::IsKeyPressed('5') && fivepress)
+			{
+				fivepress = false;
+			}
+			static bool sixpress = false;
+			if (Application::IsKeyPressed('6') && !sixpress)
+			{
+				CreateFriendlyWizard();
+				sixpress = true;
+			}
+			else if (!Application::IsKeyPressed('6') && sixpress)
+			{
+				sixpress = false;
+			}*/
 
-		//Mouse Section
+			//Mouse Section
 		Application::GetCursorPos(&mouseX, &mouseY);
 		currentPos.x = (float)mouseX / Application::GetWindowWidth() * m_worldWidth;
 		currentPos.y = (Application::GetWindowHeight() - (float)mouseY) / Application::GetWindowHeight() * m_worldHeight;
@@ -401,8 +401,14 @@ void Stage1::Update(double dt)
 
 			//shoots projectile
 			thePlayer->DischargePPTEST(theGhostProj->pos, currentPos, this);
-			fire = true;
+			
+			if (weapon3)
+			{
+				fire = true;
+			}
+			
 		}
+		
 		//shows where mouse is(if need remove mouse cursor)
 		theMouseGhostProj->pos = currentPos;
 		//prediction line when hold leftclick
@@ -465,15 +471,8 @@ void Stage1::Update(double dt)
 		sprite[3] = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER_ATTACK]);
 		sprite[4] = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER]);
 		sprite[5] = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER_ATTACK]);
-		//SpriteAnimation* wizard = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD]);
-		//SpriteAnimation* wizardattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD_ATTACK]);
-		//SpriteAnimation* archer = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER]);
-		//SpriteAnimation* archerattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER_ATTACK]);
-		//SpriteAnimation* soldier = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER]);
-		//SpriteAnimation* soldierattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER_ATTACK]);
-		//SpriteAnimation* P_weapon_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_BOW_ARROW]);
+	
 		SpriteAnimation* P_Bow_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_BOW_ARROW]);
-		//SpriteAnimation* P_Cannon_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CANNON_BALLS]);
 		SpriteAnimation* P_Catapult_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CATAPULT_ROCKS]);
 		//Sprite Animation update
 		for (int a = 0; a < 6; a++)
@@ -481,111 +480,79 @@ void Stage1::Update(double dt)
 			sprite[a]->Update(dt);
 			sprite[a]->m_anim->animActive = true;
 		}
-		//if (wizard)
-		//{
-		//	wizard->Update(dt);
-		//	wizard->m_anim->animActive = true;
-		//}
-		//if (wizardattack)
-		//{
-		//	wizardattack->Update(dt);
-		//	wizardattack->m_anim->animActive = true;
-		//}
-		//if (archer)
-		//{
-		//	archer->Update(dt);
-		//	archer->m_anim->animActive = true;
-		//}
-		//if (archerattack)
-		//{
-		//	archerattack->Update(dt);
-		//	archerattack->m_anim->animActive = true;
-		//}
-		//if (soldier)
-		//{
-		//	soldier->Update(dt);
-		//	soldier->m_anim->animActive = true;
-		//}
-		//if (soldierattack)
-		//{
-		//	soldierattack->Update(dt);
-		//	soldierattack->m_anim->animActive = true;
-		//}
-		//if (P_weapon_Sprite)
-
+	
+		//distance of click and drag
 		double result = sqrt(((theGhostProj->pos.x - theMouseGhostProj->pos.x)*(theGhostProj->pos.x - theMouseGhostProj->pos.x)) + ((theGhostProj->pos.y - theMouseGhostProj->pos.y)*(theGhostProj->pos.y - theMouseGhostProj->pos.y)));
 
-		if (!bLButtonState)
+		if (!bLButtonState &&!fire)
 		{
 			P_Bow_Sprite->m_currentFrame = 0;
+			P_Catapult_Sprite->m_currentFrame = 0;
 		}
-		else if( (bLButtonState)&&(result>50))
+		else if ((bLButtonState) && (result > 50))
 		{
 			P_Bow_Sprite->m_currentFrame = 11;
 		}
-		else if ((bLButtonState) && (result>45))
+		else if ((bLButtonState) && (result > 45))
 		{
 			P_Bow_Sprite->m_currentFrame = 10;
 		}
-		else if ((bLButtonState) && (result>40))
+		else if ((bLButtonState) && (result > 40))
 		{
 			P_Bow_Sprite->m_currentFrame = 9;
 		}
-		else if ((bLButtonState) && (result>35))
+		else if ((bLButtonState) && (result > 35))
 		{
-		P_Bow_Sprite->m_currentFrame = 8;
+			P_Bow_Sprite->m_currentFrame = 8;
+			P_Catapult_Sprite->m_currentFrame = 2;
 		}
-		else if ((bLButtonState) && (result>30))
+		else if ((bLButtonState) && (result > 30))
 		{
-		P_Bow_Sprite->m_currentFrame = 7;
+			P_Bow_Sprite->m_currentFrame = 7;
 		}
-		else if ((bLButtonState) && (result>25))
+		else if ((bLButtonState) && (result > 25))
 		{
 			P_Bow_Sprite->m_currentFrame = 6;
+			P_Catapult_Sprite->m_currentFrame = 1;
 		}
-		else if ((bLButtonState) && (result>20))
+		else if ((bLButtonState) && (result > 20))
 		{
 			P_Bow_Sprite->m_currentFrame = 5;
 		}
-		else if ((bLButtonState) && (result>15))
+		else if ((bLButtonState) && (result > 15))
 		{
 			P_Bow_Sprite->m_currentFrame = 4;
 		}
-		else if ((bLButtonState) && (result>10))
+		else if ((bLButtonState) && (result > 10))
 		{
 			P_Bow_Sprite->m_currentFrame = 3;
+			P_Catapult_Sprite->m_currentFrame = 0;
 		}
-		else if ((bLButtonState) && (result>5))
+		else if ((bLButtonState) && (result > 5))
 		{
 			P_Bow_Sprite->m_currentFrame = 2;
 		}
-		else if ((bLButtonState) && (result>1))
+		else if ((bLButtonState) && (result > 1))
 		{
 			P_Bow_Sprite->m_currentFrame = 1;
 		}
 		P_Bow_Sprite->m_anim->animActive = true;
-	
-		//cout << result << endl;
-		//if (P_Bow_Sprite)
-		//{
-		//	P_Bow_Sprite->Update(dt);
-		//	P_Bow_Sprite->m_anim->animActive = true;
-		//}
-	//	if (P_Cannon_Sprite)
-	//	{
-	//		P_Cannon_Sprite->Update(dt);
-	//		P_Cannon_Sprite->m_anim->animActive = true;
-	//	}
-		if (fire)
+
+		P_Catapult_Sprite->Update(dt);
+		if ((fire) && (!thePlayer->weap_manager[2]->Get_b_Fire()))
 		{
-			P_Catapult_Sprite->Update(dt);
 			P_Catapult_Sprite->m_anim->animActive = true;
-			
+			if (P_Catapult_Sprite->m_currentFrame > 8)
+			{
+				fire = false;
+			}
+
 		}
-		else if ((fire)&& (P_Catapult_Sprite->m_currentFrame == 9))
+		else if ((!fire) && (thePlayer->weap_manager[2]->Get_b_Fire()))
 		{
-			fire = false;
+			//	P_Catapult_Sprite->Update(dt);
 			P_Catapult_Sprite->m_anim->animActive = false;
+
 		}
 	}
 	else
@@ -638,41 +605,8 @@ void Stage1::Render()
 
 
 	//rendering problem
-	if (weapon2)
+	if ((weapon1) && (thePlayer->weap_manager[0]->Get_b_Fire()))
 	{
-
-
-		modelStack.PushMatrix();
-		modelStack.Translate(30.0f, 40.0f, 5.0f);
-		//modelStack.Rotate(P_rotation, 0, 0, 1);
-		modelStack.Scale(15.0f, 15.0f, 1.0f);
-		//RenderMesh(meshList[GEO_P_CANNON], false);
-		RenderMesh(meshList[GEO_P_CANNON_STAND], false);
-		modelStack.PopMatrix();
-
-		modelStack.PushMatrix();
-		modelStack.Translate(20.0f, 50.0f, 5.0f);
-		modelStack.Rotate(P_rotation, 0, 0, 1);
-		modelStack.Scale(15.0f, 15.0f, 1.0f);
-		RenderMesh(meshList[GEO_P_CANNON], false);
-		//RenderMesh(meshList[GEO_P_CANNON_STAND], false);
-		modelStack.PopMatrix();
-	}
-	if (weapon3)
-	{
-
-
-		modelStack.PushMatrix();
-		modelStack.Translate(17.0f, 47.0f, 5.0f);
-		//modelStack.Rotate(P_rotation, 0, 0, 1);
-		modelStack.Scale(15.0f, 15.0f, 1.0f);
-		RenderMesh(meshList[GEO_P_CATAPULT_ROCKS], false);
-		modelStack.PopMatrix();
-	}
-	if (weapon1)
-	{
-
-
 		modelStack.PushMatrix();
 		modelStack.Translate(20.0f, 50.0f, 5.0f);
 		modelStack.Rotate(P_rotation, 0, 0, 1);
@@ -681,6 +615,33 @@ void Stage1::Render()
 		RenderMesh(meshList[GEO_P_BOW_ARROW], false);
 		modelStack.PopMatrix();
 	}
+	if ((weapon2) && (thePlayer->weap_manager[1]->Get_b_Fire()))
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(20.0f, 50.0f, 5.0f);
+		modelStack.Rotate(P_rotation, 0, 0, 1);
+		modelStack.Scale(15.0f, 15.0f, 1.0f);
+		RenderMesh(meshList[GEO_P_CANNON], false);
+		//RenderMesh(meshList[GEO_P_CANNON_STAND], false);
+		modelStack.PopMatrix();
+
+		modelStack.PushMatrix();
+		modelStack.Translate(20.0f, 50.0f, 5.0f);
+		modelStack.Scale(15.0f, 15.0f, 1.0f);
+		//RenderMesh(meshList[GEO_P_CANNON], false);
+		RenderMesh(meshList[GEO_P_CANNON_STAND], false);
+		modelStack.PopMatrix();
+	}
+	if ((weapon3) && (thePlayer->weap_manager[2]->Get_b_Fire()))
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(17.0f, 47.0f, 5.0f);
+		//modelStack.Rotate(P_rotation, 0, 0, 1);
+		modelStack.Scale(15.0f, 15.0f, 1.0f);
+		RenderMesh(meshList[GEO_P_CATAPULT_ROCKS], false);
+		modelStack.PopMatrix();
+	}
+	
 }
 
 void Stage1::Exit()
