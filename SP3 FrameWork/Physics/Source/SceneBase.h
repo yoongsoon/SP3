@@ -187,6 +187,8 @@ public:
 	float _elapsedTime = 0.f;
 	float _dt = 0.f;
 	float zaxis = 1.f;
+	float enemy_yaxis = 0.005f;
+	float player_yaxis = 0.005f;
 
 	Factory * theFactory;
 	MiniMap * theMiniMap;
@@ -264,6 +266,7 @@ protected:
 	GameObject * theReleaseMouseGhostProj;
 	GameObject * theMouseGhostProj;
 	EnemyAI * theEnemyAI;
+	Enemy* theEnemy;
 
 	double mouseX, mouseY;
 	float backGroundX = 40.f;

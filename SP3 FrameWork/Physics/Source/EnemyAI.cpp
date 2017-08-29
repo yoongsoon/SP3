@@ -63,6 +63,7 @@ void EnemyAI::CreateEnemySoldier()
 		theScene->theFactory->createGameObject(tempEnemy);
 		cout << "Soldier" << endl;
 		theScene->zaxis += 0.001f;
+		theScene->enemy_yaxis += 0.05f;
 		cout << theScene->zaxis << endl;
 	}
 	//delete tempEnemy;
@@ -79,6 +80,7 @@ void EnemyAI::CreateEnemyArcher()
 		theScene->theFactory->createGameObject(tempEnemy);
 		cout << "Archer" << endl;
 		theScene->zaxis += 0.001f;
+		theScene->enemy_yaxis += 0.05f;
 		cout << theScene->zaxis << endl;
 	}
 }
@@ -94,6 +96,7 @@ void EnemyAI::CreateEnemyWizard()
 		theScene->theFactory->createGameObject(tempEnemy);
 		cout << "Wizard" << endl;
 		theScene->zaxis += 0.001f;
+		theScene->enemy_yaxis += 0.05f;
 		cout << theScene->zaxis << endl;
 	}
 }

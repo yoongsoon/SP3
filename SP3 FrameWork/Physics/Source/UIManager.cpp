@@ -319,11 +319,11 @@ void UIManager::RenderText()
 			theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], weap3_cool, Color(1, 0, 0), 5, 5, 5);
 		}
 
-		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], score_text, Color(1, 1, 0), 3, 3, 56);
-		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], score_counter, Color(1, 1, 0), 3, 3, 54);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], score_text, Color(1, 1, 0), 2.2, 1, 56);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], score_counter, Color(1, 1, 0), 2.2, 1, 54);
 
-		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], highscore_text, Color(1, 1, 0), 3, 3, 52);
-		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], highscore_counter, Color(1, 1, 0), 3, 3, 50);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], highscore_text, Color(1, 1, 0), 2.2, 1, 52);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], highscore_counter, Color(1, 1, 0), 2.2, 1, 50);
 
 		std::ostringstream ss;
 		ss.precision(4);

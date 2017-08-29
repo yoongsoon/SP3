@@ -16,8 +16,10 @@ Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) 
 		meshValue = SceneBase::GEO_SOLDIER;
 		scale.Set(10, 10, 1.f);
 		vel.Set(-30.f, 0.f, 0.f);
-		if(FileConfiguration::b_isLoadLevel == false)
-		pos.Set(theScene->theAICastle->pos.x, theScene->theAICastle->pos.y - (theScene->theAICastle->scale.y / 3), theScene->zaxis);
+		if (FileConfiguration::b_isLoadLevel == false)
+		{
+			pos.Set(theScene->theAICastle->pos.x, theScene->theAICastle->pos.y - (theScene->theAICastle->scale.y / 3) + theScene->enemy_yaxis, theScene->zaxis);
+		}
 		enemyType = Enemy::E_SOLDIER;
 		hp = 100.f;
 		range = 1.f;
@@ -34,7 +36,7 @@ Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) 
 		meshValue = SceneBase::GEO_ARCHER;
 		scale.Set(20, 15, 1);
 		vel.Set(-10.f, 0.f, 0.f);
-		pos.Set(theScene->theAICastle->pos.x, theScene->theAICastle->pos.y - (theScene->theAICastle->scale.y / 3) + 2.f, theScene->zaxis);
+		pos.Set(theScene->theAICastle->pos.x, theScene->theAICastle->pos.y - (theScene->theAICastle->scale.y / 3) + 2.f + theScene->enemy_yaxis, theScene->zaxis);
 		enemyType = Enemy::E_ARCHER;
 		hp = 50.f;
 		range = 10.f;
@@ -51,7 +53,7 @@ Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) 
 		meshValue = SceneBase::GEO_WIZARD;
 		scale.Set(10, 10, 1);
 		vel.Set(-10.f, 0.f, 0.f);
-		pos.Set(theScene->theAICastle->pos.x, theScene->theAICastle->pos.y - (theScene->theAICastle->scale.y / 3), theScene->zaxis);
+		pos.Set(theScene->theAICastle->pos.x, theScene->theAICastle->pos.y - (theScene->theAICastle->scale.y / 3) + theScene->enemy_yaxis, theScene->zaxis);
 		enemyType = Enemy::E_WIZARD;
 		hp = 70.f;
 		range = 10.f;
@@ -122,6 +124,10 @@ void Enemy::update()
 	if (pos.x <= 0)
 	{
 		active = false;
+	}
+	if (theScene->enemy_yaxis > 1.f)
+	{
+		theScene->enemy_yaxis = 0.005f;
 	}
 }
 
