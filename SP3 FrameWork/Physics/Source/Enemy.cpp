@@ -2,6 +2,7 @@
 #include "SceneBase.h"
 #include "Application.h"
 #include "GL\glew.h"
+#include "FileConfiguration.h"
 
 Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) :GameObject(GO_ENEMY, scene)
 {
@@ -13,8 +14,9 @@ Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) 
 
 		active = true;
 		meshValue = SceneBase::GEO_SOLDIER;
-		scale.Set(5, 5, 1);
+		scale.Set(10, 10, 1.f);
 		vel.Set(-30.f, 0.f, 0.f);
+		if(FileConfiguration::b_isLoadLevel == false)
 		pos.Set(theScene->theAICastle->pos.x, theScene->theAICastle->pos.y - (theScene->theAICastle->scale.y / 3), theScene->zaxis);
 		enemyType = Enemy::E_SOLDIER;
 		hp = 100.f;
@@ -30,9 +32,9 @@ Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) 
 
 		active = true;
 		meshValue = SceneBase::GEO_ARCHER;
-		scale.Set(5, 5, 1);
+		scale.Set(20, 15, 1);
 		vel.Set(-10.f, 0.f, 0.f);
-		pos.Set((m_worldWidth * 3), m_worldHeight / 2, theScene->zaxis);
+		pos.Set(theScene->theAICastle->pos.x, theScene->theAICastle->pos.y - (theScene->theAICastle->scale.y / 3) + 2.f, theScene->zaxis);
 		enemyType = Enemy::E_ARCHER;
 		hp = 50.f;
 		range = 10.f;
@@ -47,9 +49,9 @@ Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) 
 
 		active = true;
 		meshValue = SceneBase::GEO_WIZARD;
-		scale.Set(5, 5, 1);
+		scale.Set(10, 10, 1);
 		vel.Set(-10.f, 0.f, 0.f);
-		pos.Set((m_worldWidth * 3), m_worldHeight / 2, theScene->zaxis);
+		pos.Set(theScene->theAICastle->pos.x, theScene->theAICastle->pos.y - (theScene->theAICastle->scale.y / 3), theScene->zaxis);
 		enemyType = Enemy::E_WIZARD;
 		hp = 70.f;
 		range = 10.f;
@@ -125,11 +127,11 @@ void Enemy::update()
 
 void Enemy::render()
 {
-	glDisable(GL_DEPTH_TEST);
+	//glDisable(GL_DEPTH_TEST);
 	theScene->modelStack.PushMatrix();
 	theScene->modelStack.Translate(pos.x, pos.y, pos.z);
 	theScene->modelStack.Scale(scale.x, scale.y, scale.z);
 	theScene->RenderMesh(theScene->meshList[meshValue], false);
 	theScene->modelStack.PopMatrix();
-	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_DEPTH_TEST);
 }

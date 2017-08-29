@@ -22,6 +22,7 @@ void Player::update()
 {
 	wallet += cashamount * theScene->_dt;
 	enemywallet += enemycashamount * theScene->_dt;
+	wallet = Math::Clamp(wallet, 0.f, 2000.f);
 	//cout << wallet << endl;
 }
 

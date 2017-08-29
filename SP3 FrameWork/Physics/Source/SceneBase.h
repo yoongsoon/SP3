@@ -197,6 +197,15 @@ public:
 	Buildings * theCastle;
 	AICastle * theAICastle;
 
+	//SpriteAnimation* wizard;
+	//SpriteAnimation* wizardattack;
+	//SpriteAnimation* archer;
+	//SpriteAnimation* archerattack;
+	//SpriteAnimation* soldier;
+	//SpriteAnimation* soldierattack;
+	//SpriteAnimation* P_Bow_Sprite;
+	//SpriteAnimation* P_Catapult_Sprite;
+
 	//switch weapons
 	Weapon_Info** weap_manager;
 	int curr_weapon = 0;

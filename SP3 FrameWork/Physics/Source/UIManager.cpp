@@ -62,7 +62,7 @@ void UIManager::UpdateText()
 		ss7 << "Hi-Score:";
 		highscore_text = ss7.str();
 
-		e = theScene->m_highScore[0];
+		e = theScene->m_highScore[4];
 		stringstream ss8;
 		ss8 << e;
 		highscore_counter = ss8.str();
@@ -164,6 +164,15 @@ void UIManager::Update()
 			}
 			else if (theScene->menuPause == SceneBase::PAUSE_SAVE)
 			{
+				for (int i = 0; i < 5; ++i)
+				{
+					if (theScene->m_levelScore > theScene->m_highScore[i])
+					{
+						theScene->m_highScore[i] = theScene->m_levelScore;
+						cout << theScene->m_highScore[i] << endl;
+						break;
+					}
+				}
 				theScene->theFile->saveFile("Data.txt");
 			}
 			else if (theScene->menuPause == SceneBase::PAUSE_MAINMENU)
@@ -317,21 +326,25 @@ void UIManager::RenderText()
 		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], highscore_counter, Color(1, 1, 0), 3, 3, 50);
 
 		std::ostringstream ss;
-		ss.precision(3);
+		ss.precision(4);
 		ss << theScene->theplayer->ReturnWallet();
-		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 60, 55);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], ss.str(), Color(0, 1, 0),2.2, 60, 55);
 
-		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], "/", Color(0, 1, 0), 3, 69, 55);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], "/", Color(0, 1, 0), 2.2, 69, 55);
 
 
 		std::ostringstream ss1;
-		ss1.precision(3);
+		ss1.precision(4);
 		ss1 << theScene->theplayer->ReturnMaxWallet();
-		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], ss1.str(), Color(0, 1, 0), 3, 72, 55);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], ss1.str(), Color(0, 1, 0), 2.2, 72, 55);
 	}
 	else if (theScene->sceneNumber == SceneBase::SC_SCORE)
 	{
-		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], arr_highscore[0], Color(1, 1, 1), 10, 3, 50);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], arr_highscore[0], Color(0, 0, 1), 4, 29.5f, 45);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], arr_highscore[1], Color(.5f, .5f, 1), 6, 13, 34.5f);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], arr_highscore[2], Color(0, 1, 0), 3.5f, 47.5f, 34);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], arr_highscore[3], Color(1, .5f, .5f), 5, 32, 25.5f);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], arr_highscore[4], Color(1, 0, 0), 4, 23, 14.5f);
 	}
 }
 

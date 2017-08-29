@@ -59,28 +59,28 @@ void GameObjectManager::Enemy_Enemy_Collision()
 				//----------------------------------------------Enemy vs Player Units Collision----------------------------------------------------------------------------------------------------------------
 
 				//Soldier is actually refering to player
-				float soldier_position = static_cast <Enemy *>(it2->second)->pos.x;
-				float soldier_range = static_cast <Enemy *>(it2->second)->range;
-				float soldier_scale = static_cast <Enemy *>(it2->second)->scale.x;
-				float soldier_hp = static_cast <Enemy *>(it2->second)->hp;
-				float soldier_damage = static_cast <Enemy *>(it2->second)->damage;
-				bool soldier_attacked = static_cast <Enemy *>(it2->second)->Attacked;
-				bool soldier_stoptoattack = static_cast <Enemy *>(it2->second)->StopToAttack;
-				bool soldier_active = static_cast <Enemy *>(it2->second)->active;
+				float player_position = static_cast <Enemy *>(it2->second)->pos.x;
+				float player_range = static_cast <Enemy *>(it2->second)->range;
+				float player_scale = static_cast <Enemy *>(it2->second)->scale.x;
+				float player_hp = static_cast <Enemy *>(it2->second)->hp;
+				float player_damage = static_cast <Enemy *>(it2->second)->damage;
+				bool player_attacked = static_cast <Enemy *>(it2->second)->Attacked;
+				bool player_stoptoattack = static_cast <Enemy *>(it2->second)->StopToAttack;
+				bool player_active = static_cast <Enemy *>(it2->second)->active;
 				//Archer is refering to enemy
-				float archer_position = static_cast <Enemy *>(it->second)->pos.x;
-				float archer_range = static_cast <Enemy *>(it->second)->range;
-				float archer_scale = static_cast <Enemy *>(it->second)->scale.x;
-				float archer_hp = static_cast <Enemy *>(it->second)->hp;
-				float archer_damage = static_cast <Enemy *>(it->second)->damage;
-				bool archer_attacked = static_cast <Enemy *>(it->second)->Attacked;
-				bool archer_stoptoattack = static_cast <Enemy *>(it->second)->StopToAttack;
-				bool archer_active = static_cast <Enemy *>(it->second)->active;
+				float enemy_position = static_cast <Enemy *>(it->second)->pos.x;
+				float enemy_range = static_cast <Enemy *>(it->second)->range;
+				float enemy_scale = static_cast <Enemy *>(it->second)->scale.x;
+				float enemy_hp = static_cast <Enemy *>(it->second)->hp;
+				float enemy_damage = static_cast <Enemy *>(it->second)->damage;
+				bool enemy_attacked = static_cast <Enemy *>(it->second)->Attacked;
+				bool enemy_stoptoattack = static_cast <Enemy *>(it->second)->StopToAttack;
+				bool enemy_active = static_cast <Enemy *>(it->second)->active;
 
 
-				if (archer_active == true && soldier_active == true)
+				if (enemy_active == true && player_active == true)
 				{
-					if (archer_attacked == true && soldier_attacked == true)
+					if (enemy_attacked == true && player_attacked == true)
 					{
 						if (CSoundEngine::getInstance()->isSoundAdded == false)
 						{
@@ -89,106 +89,105 @@ void GameObjectManager::Enemy_Enemy_Collision()
 							CSoundEngine::getInstance()->PlayASound("Combat", false, false);
 						}
 					}
+					//cout << player_position + player_range + player_scale - enemy_position << endl;
+					//cout << enemy_position - enemy_range - enemy_scale - player_position << endl;
 				}
+				//if ((player_position > enemy_position) && ((player_position - player_range - player_scale - enemy_position) < 1.f) && player_active)//collision for player(for if enemy is on left side) && player is active
+				//{
 
+				//	if (enemy_active)//if enemy is active
+				//	{
+				//		if (!player_attacked)//if player has not attacked
+				//		{
+				//			enemy_hp -= player_damage; //enemy hp - player damage (attack)
+				//			player_attacked = true;//start attack cooldown
+				//			cout << "enemy " << enemy_hp << endl;
+				//		}
+				//		player_stoptoattack = true;//player stop moving to attack
 
-
-				if ((soldier_position > archer_position) && ((soldier_position - soldier_range - soldier_scale - archer_position) < 1.f) && soldier_active)//collision for soldier(for if archer is on left side) && soldier is active
+				//	}
+				//	else  //if enemy not active
+				//	{
+				//		//CSoundEngine::getInstance()->isSoundAdded = false;
+				//		CSoundEngine::getInstance()->theCurrentSound->stop();
+				//		player_stoptoattack = false;//player move after enemy died
+				//	}
+				//}
+				if ((player_position < enemy_position) && ((player_position + player_range + player_scale - enemy_position) > -1.f) && player_active)//collision for player(for if enemy is on right side) && player is active
 				{
-
-					if (archer_active)//if archer is active
+					if (enemy_active)//if enemy is active
 					{
-						if (!soldier_attacked)//if soldier has not attacked
+						if (!player_attacked)//if player has not attacked
 						{
-							archer_hp -= soldier_damage; //archer hp - soldier damage (attack)
-							soldier_attacked = true;//start attack cooldown
-							cout << "archer " << archer_hp << endl;
+							enemy_hp -= player_damage; //enemy hp - player damage (attack)
+							player_attacked = true;//start attack cooldown
+							//cout << "enemy " << enemy_hp << endl;
 						}
-						soldier_stoptoattack = true;//soldier stop moving to attack
-
+						player_stoptoattack = true;//player stop moving to attack
 					}
-					else  //if archer not active
+					else // if enemy not active
 					{
-						CSoundEngine::getInstance()->isSoundAdded = false;
+						//CSoundEngine::getInstance()->isSoundAdded = false;
 						CSoundEngine::getInstance()->theCurrentSound->stop();
-						soldier_stoptoattack = false;//soldier move after enemy died
+						player_stoptoattack = false;//player move after enemy died
+													 //cout << enemy
 					}
 				}
-				else if ((soldier_position < archer_position) && ((soldier_position + soldier_range + soldier_scale - archer_position) > 1.f) && soldier_active)//collision for soldier(for if archer is on right side) && soldier is active
+				if ((enemy_position > player_position) && ((enemy_position - enemy_range - enemy_scale - player_position) < 1.f) && enemy_active)//collision for player(for if enemy is on left side)
 				{
-					if (archer_active)//if archer is active
+					if (player_active)//if player is active
 					{
-						if (!soldier_attacked)//if soldier has not attacked
+						if (!enemy_attacked)//if enemy has not attacked
 						{
-							archer_hp -= soldier_damage; //archer hp - soldier damage (attack)
-							soldier_attacked = true;//start attack cooldown
-							cout << "archer " << archer_hp << endl;
+							player_hp -= enemy_damage; //player hp - enemy damage (attack)
+							enemy_attacked = true;//start attack cooldown
+							//cout << "player " << player_hp << endl;
 						}
-						soldier_stoptoattack = true;//soldier stop moving to attack
+						enemy_stoptoattack = true;//enemy stop moving to attack
 					}
-					else // if archer not active
+					else // if player not active
 					{
-						CSoundEngine::getInstance()->isSoundAdded = false;
+						//CSoundEngine::getInstance()->isSoundAdded = false;
 						CSoundEngine::getInstance()->theCurrentSound->stop();
-						soldier_stoptoattack = false;//soldier move after enemy died
-													 //cout << archer
+						enemy_stoptoattack = false;//enemy move after enemy died
 					}
 				}
-				if ((archer_position > soldier_position) && ((archer_position - archer_range - archer_scale - soldier_position) < 1.f) && archer_active)//collision for soldier(for if archer is on left side)
-				{
-					if (soldier_active)//if soldier is active
-					{
-						if (!archer_attacked)//if archer has not attacked
-						{
-							soldier_hp -= archer_damage; //soldier hp - archer damage (attack)
-							archer_attacked = true;//start attack cooldown
-							cout << "soldier " << soldier_hp << endl;
-						}
-						archer_stoptoattack = true;//archer stop moving to attack
-					}
-					else // if soldier not active
-					{
-						CSoundEngine::getInstance()->isSoundAdded = false;
-						CSoundEngine::getInstance()->theCurrentSound->stop();
-						archer_stoptoattack = false;//archer move after enemy died
-					}
-				}
-				else if ((archer_position < soldier_position) && ((archer_position + archer_range + archer_scale - soldier_position) > 1.f) && archer_active)//collision for soldier(for if archer is on right side)
-				{
-					if (soldier_active)//if soldier is active
-					{
-						if (!archer_attacked)//if archer has not attacked
-						{
-							soldier_hp -= archer_damage; //soldier hp - archer damage (attack)
-							archer_attacked = true;//start attack cooldown
-							cout << "soldier " << soldier_hp << endl;
-						}
-						archer_stoptoattack = true;//archer stop moving to attack
-					}
-					else // if soldier not active
-					{
-						CSoundEngine::getInstance()->isSoundAdded = false;
-						CSoundEngine::getInstance()->theCurrentSound->stop();
-						archer_stoptoattack = false;//archer move after enemy died
-					}
-				}
-				static_cast <Enemy *>(it2->second)->pos.x = soldier_position;
-				static_cast <Enemy *>(it2->second)->range = soldier_range;
-				static_cast <Enemy *>(it2->second)->scale.x = soldier_scale;
-				static_cast <Enemy *>(it2->second)->hp = soldier_hp;
-				static_cast <Enemy *>(it2->second)->damage = soldier_damage;
-				static_cast <Enemy *>(it2->second)->Attacked = soldier_attacked;
-				static_cast <Enemy *>(it2->second)->StopToAttack = soldier_stoptoattack;
-				static_cast <Enemy *>(it2->second)->active = soldier_active;
+				//else if ((enemy_position < player_position) && ((enemy_position + enemy_range + enemy_scale - player_position) > 1.f) && enemy_active)//collision for player(for if enemy is on right side)
+				//{
+				//	if (player_active)//if player is active
+				//	{
+				//		if (!enemy_attacked)//if enemy has not attacked
+				//		{
+				//			player_hp -= enemy_damage; //player hp - enemy damage (attack)
+				//			enemy_attacked = true;//start attack cooldown
+				//			cout << "player " << player_hp << endl;
+				//		}
+				//		enemy_stoptoattack = true;//enemy stop moving to attack
+				//	}
+				//	else // if player not active
+				//	{
+				//		//CSoundEngine::getInstance()->isSoundAdded = false;
+				//		CSoundEngine::getInstance()->theCurrentSound->stop();
+				//		enemy_stoptoattack = false;//enemy move after enemy died
+				//	}
+				//}
+				static_cast <Enemy *>(it2->second)->pos.x = player_position;
+				static_cast <Enemy *>(it2->second)->range = player_range;
+				static_cast <Enemy *>(it2->second)->scale.x = player_scale;
+				static_cast <Enemy *>(it2->second)->hp = player_hp;
+				static_cast <Enemy *>(it2->second)->damage = player_damage;
+				static_cast <Enemy *>(it2->second)->Attacked = player_attacked;
+				static_cast <Enemy *>(it2->second)->StopToAttack = player_stoptoattack;
+				static_cast <Enemy *>(it2->second)->active = player_active;
 
-				static_cast <Enemy *>(it->second)->pos.x = archer_position;
-				static_cast <Enemy *>(it->second)->range = archer_range;
-				static_cast <Enemy *>(it->second)->scale.x = archer_scale;
-				static_cast <Enemy *>(it->second)->hp = archer_hp;
-				static_cast <Enemy *>(it->second)->damage = archer_damage;
-				static_cast <Enemy *>(it->second)->Attacked = archer_attacked;
-				static_cast <Enemy *>(it->second)->StopToAttack = archer_stoptoattack;
-				static_cast <Enemy *>(it->second)->active = archer_active;
+				static_cast <Enemy *>(it->second)->pos.x = enemy_position;
+				static_cast <Enemy *>(it->second)->range = enemy_range;
+				static_cast <Enemy *>(it->second)->scale.x = enemy_scale;
+				static_cast <Enemy *>(it->second)->hp = enemy_hp;
+				static_cast <Enemy *>(it->second)->damage = enemy_damage;
+				static_cast <Enemy *>(it->second)->Attacked = enemy_attacked;
+				static_cast <Enemy *>(it->second)->StopToAttack = enemy_stoptoattack;
+				static_cast <Enemy *>(it->second)->active = enemy_active;
 				//------------------------------------------------------------------------------------------------------------------------------------------------------------------
 				//}
 			}
@@ -232,13 +231,13 @@ void GameObjectManager::Enemy_Enemy_Collision()
 						{
 							castle_hp -= archer_damage; //castle hp - archer damage (attack)
 							archer_attacked = true;//start attack cooldown
-							cout << "castle " << castle_hp << endl;
+							//cout << "castle " << castle_hp << endl;
 						}
 						archer_stoptoattack = true;//archer stop moving to attack
 					}
 					else // if castle not active
 					{
-						CSoundEngine::getInstance()->isSoundAdded = false;
+						//CSoundEngine::getInstance()->isSoundAdded = false;
 						CSoundEngine::getInstance()->theCurrentSound->stop();
 						archer_stoptoattack = false;//archer move after enemy died
 					}
@@ -259,13 +258,13 @@ void GameObjectManager::Enemy_Enemy_Collision()
 						{
 							castle_hp -= archer_damage; //castle hp - archer damage (attack)
 							archer_attacked = true;//start attack cooldown
-							cout << "castle " << castle_hp << endl;
+							//cout << "castle " << castle_hp << endl;
 						}
 						archer_stoptoattack = true;//archer stop moving to attack
 					}
 					else // if castle not active
 					{
-						CSoundEngine::getInstance()->isSoundAdded = false;
+						//CSoundEngine::getInstance()->isSoundAdded = false;
 						CSoundEngine::getInstance()->theCurrentSound->stop();
 						archer_stoptoattack = false;//archer move after enemy died
 					}

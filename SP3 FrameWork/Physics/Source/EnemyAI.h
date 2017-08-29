@@ -26,5 +26,6 @@ public:
 private:
 	float timer = 0.0f;
 	bool surge = false;
-
+	bool Stage1surge1 = true;
+	bool Stage1surge2 = true;
 };

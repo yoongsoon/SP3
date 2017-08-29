@@ -26,6 +26,12 @@ void Stage1::Init()
 {
 	SceneBase::Init();
 	
+	for (int i = 0; i < 5; ++i)
+	{
+		m_highScore[i] = 0;
+	}
+	
+	
 	m_sceneID = SceneBase::SC_01;
 	ghost_exist = false;
 	release_ghost_exist = false;
@@ -37,10 +43,7 @@ void Stage1::Init()
 	//Physics code here
 	m_speed = 1.f;
 	m_levelScore = 10000;
-	for (int i = 0; i < 5; ++i)
-	{
-		m_highScore[i] = 0;
-	}
+	
 	
 	//theFile->loadFile("scorefile.txt");
 
@@ -93,7 +96,7 @@ void Stage1::Init()
 			Buildings * theWall = new Buildings(GameObject::GO_P_BRICK, this, m_wallStackCounter);
 			theFactory->createGameObject(theWall);
 		}
-		 theCastle = new Buildings(GameObject::GO_P_CASTLE, this, 0);
+		theCastle = new Buildings(GameObject::GO_P_CASTLE, this, 0);
 		theFactory->createGameObject(theCastle);
 
 		for (int m_wallStackCounter = 1; m_wallStackCounter <= 6; ++m_wallStackCounter)
@@ -101,7 +104,7 @@ void Stage1::Init()
 			Buildings * theWall = new Buildings(GameObject::GO_AI_BRICK, this, m_wallStackCounter);
 			theFactory->createGameObject(theWall);
 		}
-		AICastle * theAICastle  = new AICastle(GameObject::GO_AI_CASTLE, this);
+	     theAICastle  = new AICastle(GameObject::GO_AI_CASTLE, this);
 		theFactory->createGameObject(theAICastle);
 	}
 
@@ -126,7 +129,6 @@ void Stage1::Init()
 	SpriteAnimation* soldier = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER]);
 	SpriteAnimation* soldierattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER_ATTACK]);
 	SpriteAnimation* P_Bow_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_BOW_ARROW]);
-//	SpriteAnimation* P_Cannon_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CANNON_BALLS]);
 	SpriteAnimation* P_Catapult_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CATAPULT_ROCKS]);
 	//Sprite Animation init
 	if (wizard)
@@ -179,7 +181,7 @@ void Stage1::Init()
 
 	//Init scene
 	theFile->setScene(this);
-
+	theFile->loadScoreFromFile("Data.txt");
 	// if the load function is called , then load file
 	if(FileConfiguration::b_isLoadLevel == true)
 	theFile->loadFile("Data.txt");
@@ -208,6 +210,7 @@ void Stage1::Update(double dt)
 			if (m_levelScore > m_highScore[i])
 			{
 				m_highScore[i] = m_levelScore;
+				break;
 			}
 		}
 		//theFile->saveFile("scorefile.txt");
@@ -387,7 +390,7 @@ void Stage1::Update(double dt)
 			//places current mouse pos and fixes to the pos where mouse clicked
 			theGhostProj->pos = currentPos;// (float)mouseX / Application::GetWindowWidth() * m_worldWidth;
 										   //	theGhostProj->pos.y = (Application::GetWindowHeight() - (float)mouseY) / Application::GetWindowHeight() * m_worldHeight;
-			theGhostProj->active = true;
+			//theGhostProj->active = true;
 			//changes prev mouse ghost
 			theReleaseMouseGhostProj->active = false;
 
@@ -398,8 +401,8 @@ void Stage1::Update(double dt)
 			bLButtonState = false;
 			//when mouseclick release it renders wwhere the mouse was released 
 			theReleaseMouseGhostProj->pos = currentPos;
-			theReleaseMouseGhostProj->active = true;
-
+			//theReleaseMouseGhostProj->active = true;
+			//theGhostProj->active = false;
 			//shoots projectile
 			thePlayer->DischargePPTEST(theGhostProj->pos, currentPos, this);
 
@@ -615,34 +618,38 @@ void Stage1::Render()
 	if ((weapon1))
 	{
 		modelStack.PushMatrix();
-		modelStack.Translate(20.0f, 50.0f, 5.0f);
+		modelStack.Translate(20.0f, 50.0f, zaxis);
 		modelStack.Rotate(P_rotation, 0, 0, 1);
 		modelStack.Scale(15.0f, 15.0f, 1.0f);
 		RenderMesh(meshList[GEO_P_BOW_ARROW], false);
 		modelStack.PopMatrix();
+		zaxis += 0.001;
 	}
 	if ((weapon2))
 	{
 		modelStack.PushMatrix();
-		modelStack.Translate(20.0f, 50.0f, 5.0f);
+		modelStack.Translate(20.0f, 50.0f, zaxis);
 		modelStack.Rotate(P_rotation, 0, 0, 1);
 		modelStack.Scale(15.0f, 15.0f, 1.0f);
 		RenderMesh(meshList[GEO_P_CANNON], false);
 		modelStack.PopMatrix();
+		zaxis += 0.001;
 
 		modelStack.PushMatrix();
-		modelStack.Translate(20.0f, 50.0f, 5.0f);
+		modelStack.Translate(20.0f, 50.0f, zaxis);
 		modelStack.Scale(15.0f, 15.0f, 1.0f);
 		RenderMesh(meshList[GEO_P_CANNON_STAND], false);
 		modelStack.PopMatrix();
+		zaxis += 0.001;
 	}
 	if ((weapon3))
 	{
 		modelStack.PushMatrix();
-		modelStack.Translate(17.0f, 47.0f, 5.0f);
+		modelStack.Translate(17.0f, 47.0f, zaxis);
 		modelStack.Scale(15.0f, 15.0f, 1.0f);
 		RenderMesh(meshList[GEO_P_CATAPULT_ROCKS], false);
 		modelStack.PopMatrix();
+		zaxis += 0.001;
 	}
 	
 }

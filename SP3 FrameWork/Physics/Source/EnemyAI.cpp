@@ -1,5 +1,6 @@
 #include "EnemyAI.h"
 #include "SceneBase.h"
+#include "FileConfiguration.h"
 
 EnemyAI::EnemyAI(SceneBase * scene, AI_LEVEL _levelAi)
 	:theScene(scene)
@@ -15,22 +16,39 @@ EnemyAI::~EnemyAI()
 
 void EnemyAI::Update(double dt)
 {
-	/*float steps = theScene->theAICastle->m_DefaultHp / theScene->theAICastle->hitpoints;*/
+	if (FileConfiguration::b_isLoadLevel == true)
+		return;
+	
+
+	int steps = theScene->theAICastle->m_DefaultHp / theScene->theAICastle->hitpoints;
+
 	timer += dt;
-	if (timer >= 5.f)
+	if (timer >= 4.f)
 	{
 		timer = 0.0f;
 		CreateEnemySoldier();
 	}
-	//if (steps > 2 && steps < 3|| steps > 3 && steps < 4|| steps > 4 && steps < 5|| steps > 5)
-	//{
-	//	surge = true;
-	//	//for (int a = 0; a < 2; a++)
-	//	//{
-	//	//	CreateEnemySoldier();
-	//	//	CreateEnemyArcher();
-	//	//}
-	//}
+
+
+	if (steps == 2 && Stage1surge1)
+	{
+		for (int a = 0; a < 6; a++)
+		{
+			CreateEnemySoldier();
+		}
+		Stage1surge1 = false;
+		cout << "surge 1" << endl;
+	}
+	else if (steps == 5 && Stage1surge2)
+	{
+		for (int a = 0; a < 6; a++)
+		{
+			CreateEnemySoldier();
+		}
+		Stage1surge2 = false;
+		cout << "surge 2" << endl;
+	}
+	//cout << "step " << steps << endl;
 }
 
 
