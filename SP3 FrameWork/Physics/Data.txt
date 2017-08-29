@@ -1,140 +1,72 @@
-Highscore1:9531
-Highscore2:9531
-Highscore3:9531
-Highscore4:9531
-Highscore5:9531
+Highscore1:0
+Highscore2:0
+Highscore3:0
+Highscore4:0
+Highscore5:0
 Stage No:1
 
 
 GameObjectValue:5
 Enemy Type:0
-Position:[ 213.621, 50, 1 ]
+Position:[ 316.589, 23, 1.013 ]
 Hp:100
 Timer:0
 B_StopAttack:0
 B_Attacked:0
-EnemyMoveX:-26.7084
-
-
-GameObjectValue:5
-Enemy Type:1
-Position:[ 343.214, 50, 1.001 ]
-Hp:50
-Timer:0
-B_StopAttack:0
-B_Attacked:0
-EnemyMoveX:-8.8498
-
-
-GameObjectValue:5
-Enemy Type:0
-Position:[ 223.312, 50, 1.002 ]
-Hp:100
-Timer:0
-B_StopAttack:0
-B_Attacked:0
-EnemyMoveX:-25.1981
+EnemyMoveX:-10.7411
 
 
 GameObjectValue:9
 HitPoints:10
 B_CanFall:0
-Position:[ 50, 19.7058, 1 ]
-GroundLevel:20
+Position:[ 50, 9.87372, 1 ]
+GroundLevel:10
 WallStackCounter:1
 
 
 GameObjectValue:9
 HitPoints:10
 B_CanFall:0
-Position:[ 50, 23.7181, 1 ]
-GroundLevel:20
+Position:[ 50, 13.8853, 1.001 ]
+GroundLevel:10
 WallStackCounter:2
 
 
 GameObjectValue:9
 HitPoints:10
-B_CanFall:0
-Position:[ 50, 27.7343, 1 ]
-GroundLevel:20
+B_CanFall:1
+Position:[ 50, 17.8924, 1.002 ]
+GroundLevel:10
 WallStackCounter:3
 
 
 GameObjectValue:9
 HitPoints:10
 B_CanFall:1
-Position:[ 50, 31.7361, 1 ]
-GroundLevel:20
+Position:[ 50, 21.9026, 1.003 ]
+GroundLevel:10
 WallStackCounter:4
 
 
 GameObjectValue:9
 HitPoints:10
 B_CanFall:0
-Position:[ 50, 35.7411, 1 ]
-GroundLevel:20
+Position:[ 50, 25.9177, 1.004 ]
+GroundLevel:10
 WallStackCounter:5
 
 
 GameObjectValue:9
 HitPoints:10
 B_CanFall:0
-Position:[ 50, 39.7485, 1 ]
-GroundLevel:20
+Position:[ 50, 29.7144, 1.005 ]
+GroundLevel:10
 WallStackCounter:6
 
 
 GameObjectValue:11
 HitPoints:500
 WallStackCounter:0
-
-
-GameObjectValue:10
-HitPoints:10
-B_CanFall:0
-Position:[ 350, 34.8205, 1 ]
-GroundLevel:20
-WallStackCounter:1
-
-
-GameObjectValue:10
-HitPoints:10
-B_CanFall:0
-Position:[ 350, 31.7319, 1 ]
-GroundLevel:20
-WallStackCounter:2
-
-
-GameObjectValue:10
-HitPoints:10
-B_CanFall:0
-Position:[ 350, 30.8251, 1 ]
-GroundLevel:20
-WallStackCounter:3
-
-
-GameObjectValue:10
-HitPoints:10
-B_CanFall:1
-Position:[ 350, 26.9591, 1 ]
-GroundLevel:20
-WallStackCounter:4
-
-
-GameObjectValue:10
-HitPoints:10
-B_CanFall:0
-Position:[ 350, 22.9503, 1 ]
-GroundLevel:20
-WallStackCounter:5
-
-
-GameObjectValue:10
-HitPoints:10
-B_CanFall:0
-Position:[ 350, 18.9461, 1 ]
-GroundLevel:20
-WallStackCounter:6
 
 
 GameObjectValue:14

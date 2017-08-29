@@ -126,7 +126,6 @@ void Stage1::Init()
 	SpriteAnimation* soldier = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER]);
 	SpriteAnimation* soldierattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER_ATTACK]);
 	SpriteAnimation* P_Bow_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_BOW_ARROW]);
-//	SpriteAnimation* P_Cannon_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CANNON_BALLS]);
 	SpriteAnimation* P_Catapult_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CATAPULT_ROCKS]);
 	//Sprite Animation init
 	if (wizard)
@@ -387,7 +386,7 @@ void Stage1::Update(double dt)
 			//places current mouse pos and fixes to the pos where mouse clicked
 			theGhostProj->pos = currentPos;// (float)mouseX / Application::GetWindowWidth() * m_worldWidth;
 										   //	theGhostProj->pos.y = (Application::GetWindowHeight() - (float)mouseY) / Application::GetWindowHeight() * m_worldHeight;
-			theGhostProj->active = true;
+			//theGhostProj->active = true;
 			//changes prev mouse ghost
 			theReleaseMouseGhostProj->active = false;
 
@@ -398,8 +397,8 @@ void Stage1::Update(double dt)
 			bLButtonState = false;
 			//when mouseclick release it renders wwhere the mouse was released 
 			theReleaseMouseGhostProj->pos = currentPos;
-			theReleaseMouseGhostProj->active = true;
-
+			//theReleaseMouseGhostProj->active = true;
+			//theGhostProj->active = false;
 			//shoots projectile
 			thePlayer->DischargePPTEST(theGhostProj->pos, currentPos, this);
 
@@ -615,34 +614,38 @@ void Stage1::Render()
 	if ((weapon1))
 	{
 		modelStack.PushMatrix();
-		modelStack.Translate(20.0f, 50.0f, 5.0f);
+		modelStack.Translate(20.0f, 50.0f, zaxis);
 		modelStack.Rotate(P_rotation, 0, 0, 1);
 		modelStack.Scale(15.0f, 15.0f, 1.0f);
 		RenderMesh(meshList[GEO_P_BOW_ARROW], false);
 		modelStack.PopMatrix();
+		zaxis += 0.001;
 	}
 	if ((weapon2))
 	{
 		modelStack.PushMatrix();
-		modelStack.Translate(20.0f, 50.0f, 5.0f);
+		modelStack.Translate(20.0f, 50.0f, zaxis);
 		modelStack.Rotate(P_rotation, 0, 0, 1);
 		modelStack.Scale(15.0f, 15.0f, 1.0f);
 		RenderMesh(meshList[GEO_P_CANNON], false);
 		modelStack.PopMatrix();
+		zaxis += 0.001;
 
 		modelStack.PushMatrix();
-		modelStack.Translate(20.0f, 50.0f, 5.0f);
+		modelStack.Translate(20.0f, 50.0f, zaxis);
 		modelStack.Scale(15.0f, 15.0f, 1.0f);
 		RenderMesh(meshList[GEO_P_CANNON_STAND], false);
 		modelStack.PopMatrix();
+		zaxis += 0.001;
 	}
 	if ((weapon3))
 	{
 		modelStack.PushMatrix();
-		modelStack.Translate(17.0f, 47.0f, 5.0f);
+		modelStack.Translate(17.0f, 47.0f, zaxis);
 		modelStack.Scale(15.0f, 15.0f, 1.0f);
 		RenderMesh(meshList[GEO_P_CATAPULT_ROCKS], false);
 		modelStack.PopMatrix();
+		zaxis += 0.001;
 	}
 	
 }
