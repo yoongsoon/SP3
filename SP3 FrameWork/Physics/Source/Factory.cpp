@@ -7,7 +7,7 @@ using std::make_pair;
 void Factory::createGameObject(GameObject * value)
 {
 	// push every game object except projectile into the map container
-	if (value->type == GameObject::GO_P_PROJECTILE || value->type == GameObject::GO_AI_PROJECTILE)
+	if (value->type == GameObject::GO_P_PROJECTILE || value->type == GameObject::GO_AI_PROJECTILE || value->type == GameObject::GO_NONE)
 		g_ProjectileVector.push_back(static_cast<Projectile*>(value));
 	else if (value->type == GameObject::GO_P_BRICK || value->type == GameObject::GO_AI_BRICK || value->type == GameObject::GO_P_CASTLE || value->type == GameObject::GO_AI_CASTLE)
 		g_BuildingsVector.push_back(static_cast<Buildings*>(value));
@@ -99,16 +99,6 @@ void Factory::updateGameObject()
 
 void Factory::renderGameObject()
 {
-	Mapping::iterator it = g_FactoryMap.begin();
-
-	for (it; it != g_FactoryMap.end(); it++)
-	{
-		if (it->second->active)  //<--- only render if GameObject *  's active is set to true
-		{
-			it->second->render();
-		}
-	}
-
 
 	ProjectileVector::iterator iter = g_ProjectileVector.begin();
 
@@ -129,6 +119,17 @@ void Factory::renderGameObject()
 			(*iter2)->render();
 		}
 	}
+
+	Mapping::iterator it = g_FactoryMap.begin();
+
+	for (it; it != g_FactoryMap.end(); it++)
+	{
+		if (it->second->active)  //<--- only render if GameObject *  's active is set to true
+		{
+			it->second->render();
+		}
+	}
+
 }
 
 

@@ -93,7 +93,7 @@ void Stage1::Init()
 			Buildings * theWall = new Buildings(GameObject::GO_P_BRICK, this, m_wallStackCounter);
 			theFactory->createGameObject(theWall);
 		}
-		Buildings * theCastle = new Buildings(GameObject::GO_P_CASTLE, this, 0);
+		 theCastle = new Buildings(GameObject::GO_P_CASTLE, this, 0);
 		theFactory->createGameObject(theCastle);
 
 		for (int m_wallStackCounter = 1; m_wallStackCounter <= 6; ++m_wallStackCounter)
@@ -101,10 +101,11 @@ void Stage1::Init()
 			Buildings * theWall = new Buildings(GameObject::GO_AI_BRICK, this, m_wallStackCounter);
 			theFactory->createGameObject(theWall);
 		}
-		AICastle * theAICastle = new AICastle(GameObject::GO_AI_CASTLE, this);
+	     theAICastle = new AICastle(GameObject::GO_AI_CASTLE, this);
 		theFactory->createGameObject(theAICastle);
 	}
 
+	theEnemyAI = new EnemyAI(this, EnemyAI::STAGE_1);
 	BackGround * theBackGround = new BackGround(BackGround::BACK_GROUND_STAGE1, GameObject::GO_NONE, this);
 	theFactory->createGameObject(theBackGround);
 
@@ -317,6 +318,7 @@ void Stage1::Update(double dt)
 			{
 				CreateFriendlySoldier();
 				fourpress = true;
+			/*	SceneManager::getInstance()->SetActiveScene("MainMenu");*/
 			}
 			// 68.5 middle x position of the arhcer image
 			else if (currentPos.x >= 59.5f && currentPos.x <= 73.5f
@@ -454,7 +456,7 @@ void Stage1::Update(double dt)
 		theFactory->updateGameObject();
 		// Update collisions
 		theCollider->Update(dt);
-		//theEnemyAI->Update(dt);
+		theEnemyAI->Update(dt);
 
 		gom->update();
 		//player units
@@ -647,55 +649,38 @@ void Stage1::Render()
 
 void Stage1::Exit()
 {
+	//Clearing the memory
+	if (theplayer)
+	{
+		delete theplayer;
+	}
+
+	if (thePlayer)
+	{
+		delete thePlayer;
+	}
+
+	if (theUIManager)
+	{
+		delete theUIManager;
+	}
+
+	if (theMiniMap)
+	{
+		delete theMiniMap;
+	}
+
+	if (theCollider)
+	{
+		delete theCollider;
+	}
+
+
 	CSoundEngine::getInstance()->Exit();
+	FileConfiguration::b_isLoadLevel = false;
 	SceneBase::Exit();
 }
 
-void Stage1::CreateEnemySoldier()
-{
-	//GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_SOLDIER);
-	Enemy * tempEnemy = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_SOLDIER);
-	cout << theplayer->ReturnEnemyWallet() << endl;
-	if (theplayer->ReturnEnemyWallet() > tempEnemy->cost)
-	{
-		theplayer->ReduceEnemyWalletAmount(tempEnemy->cost);
-		theFactory->createGameObject(tempEnemy);
-		cout << "Soldier" << endl;
-		zaxis += 0.001f;
-		cout << zaxis << endl;
-	}
-	//delete tempEnemy;
-}
-
-void Stage1::CreateEnemyArcher()
-{
-	//GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_ARCHER);
-	Enemy * tempEnemy = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_ARCHER);
-	cout << theplayer->ReturnEnemyWallet() << endl;
-	if (theplayer->ReturnEnemyWallet() > tempEnemy->cost)
-	{
-		theplayer->ReduceEnemyWalletAmount(tempEnemy->cost);
-		theFactory->createGameObject(tempEnemy);
-		cout << "Archer" << endl;
-		zaxis += 0.001f;
-		cout << zaxis << endl;
-	}
-}
-
-void Stage1::CreateEnemyWizard()
-{
-	//GameObject *go = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_WIZARD);
-	Enemy * tempEnemy = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_WIZARD);
-	cout << theplayer->ReturnEnemyWallet() << endl;
-	if (theplayer->ReturnEnemyWallet() > tempEnemy->cost)
-	{
-		theplayer->ReduceEnemyWalletAmount(tempEnemy->cost);
-		theFactory->createGameObject(tempEnemy);
-		cout << "Wizard" << endl;
-		zaxis += 0.001f;
-		cout << zaxis << endl;
-	}
-}
 
 void Stage1::CreateFriendlySoldier()
 {

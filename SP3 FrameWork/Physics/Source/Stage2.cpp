@@ -25,7 +25,7 @@ void Stage2::Init()
 {
 	SceneBase::Init();
 
-	m_sceneID = SceneBase::SC_01;
+	m_sceneID = SceneBase::SC_02;
 	ghost_exist = false;
 	release_ghost_exist = false;
 	M_ghost_exist = false;
@@ -36,7 +36,11 @@ void Stage2::Init()
 	//Physics code here
 	m_speed = 1.f;
 	m_levelScore = 10000;
-	//m_highScore = 0;
+	for (int i = 0; i < 5; ++i)
+	{
+		m_highScore[i] = 0;
+	}
+
 	//theFile->loadFile("scorefile.txt");
 
 	Math::InitRNG();
@@ -100,7 +104,7 @@ void Stage2::Init()
 		theFactory->createGameObject(theAICastle);
 	}
 
-	BackGround * theBackGround = new BackGround(BackGround::BACK_GROUND_STAGE2, GameObject::GO_NONE, this);
+	BackGround * theBackGround = new BackGround(BackGround::BACK_GROUND_STAGE1, GameObject::GO_NONE, this);
 	theFactory->createGameObject(theBackGround);
 
 	theplayer = new Player();
@@ -166,7 +170,7 @@ void Stage2::Init()
 	if (P_Catapult_Sprite)
 	{
 		P_Catapult_Sprite->m_anim = new Animation();
-		P_Catapult_Sprite->m_anim->Set(0, 10, 0, 1.0f, true);
+		P_Catapult_Sprite->m_anim->Set(2, 9, 0, 1.0f, true);
 	}
 
 	theUIManager = new UIManager(this);
@@ -327,7 +331,7 @@ void Stage2::Update(double dt)
 				CreateFriendlyWizard();
 				fourpress = true;
 			}
-
+	
 		}
 		else if (!Application::IsMousePressed(1) && fourpress)
 		{
@@ -651,6 +655,7 @@ void Stage2::Render()
 void Stage2::Exit()
 {
 	CSoundEngine::getInstance()->Exit();
+	FileConfiguration::b_isLoadLevel = false;
 	SceneBase::Exit();
 }
 

@@ -3,7 +3,7 @@
 #include "Application.h"
 #include "GL\glew.h"
 
-Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) :GameObject( GO_ENEMY, scene)
+Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) :GameObject(GO_ENEMY, scene)
 {
 	enemyMoveX = 0.f;
 	if (meshvalue == E_SOLDIER)
@@ -15,7 +15,7 @@ Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) 
 		meshValue = SceneBase::GEO_SOLDIER;
 		scale.Set(5, 5, 1);
 		vel.Set(-30.f, 0.f, 0.f);
-		pos.Set((m_worldWidth * 3) -15.f, m_worldHeight / 2, theScene->zaxis);
+		pos.Set(theScene->theAICastle->pos.x, theScene->theAICastle->pos.y - (theScene->theAICastle->scale.y / 3), theScene->zaxis);
 		enemyType = Enemy::E_SOLDIER;
 		hp = 100.f;
 		range = 1.f;
@@ -23,7 +23,7 @@ Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) 
 		attackcooldown = 3.f;
 		cost = 50.f;
 	}
-	else if(meshvalue == E_ARCHER)
+	else if (meshvalue == E_ARCHER)
 	{
 		float m_worldHeight = 100.f;
 		float m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
@@ -70,52 +70,52 @@ Enemy::~Enemy()
 void Enemy::update()
 {
 	//destroy enemy when it ran out of hp
-	
-		if (enemyType == ENEMY_TYPE::E_SOLDIER)
+
+	if (enemyType == ENEMY_TYPE::E_SOLDIER)
+	{
+		if (!StopToAttack)
 		{
-			if (!StopToAttack)
-			{
-				pos += vel * theScene->_dt;
-				meshValue = SceneBase::GEO_SOLDIER;
-			}
-			else
-			{
-				meshValue = SceneBase::GEO_SOLDIER_ATTACK;
-			}
+			pos += vel * theScene->_dt;
+			meshValue = SceneBase::GEO_SOLDIER;
 		}
-		else if (enemyType == ENEMY_TYPE::E_ARCHER)
+		else
 		{
-			if (!StopToAttack)
-			{
-				pos += vel * theScene->_dt;
-				meshValue = SceneBase::GEO_ARCHER;
-			}
-			else
-			{
-				meshValue = SceneBase::GEO_ARCHER_ATTACK;
-			}
+			meshValue = SceneBase::GEO_SOLDIER_ATTACK;
 		}
-		else if (enemyType == ENEMY_TYPE::E_WIZARD)
+	}
+	else if (enemyType == ENEMY_TYPE::E_ARCHER)
+	{
+		if (!StopToAttack)
 		{
-			if (!StopToAttack)
-			{
-				pos += vel * theScene->_dt;
-			}
+			pos += vel * theScene->_dt;
+			meshValue = SceneBase::GEO_ARCHER;
 		}
-		if (Attacked)
+		else
 		{
-			timer += theScene->_dt;
-			if (timer > attackcooldown)
-			{
-				Attacked = false;
-				timer = 0.0f;
-				cout << "RESET" << endl;
-			}
+			meshValue = SceneBase::GEO_ARCHER_ATTACK;
 		}
-		if (hp <= 0.f)
+	}
+	else if (enemyType == ENEMY_TYPE::E_WIZARD)
+	{
+		if (!StopToAttack)
 		{
-			active = false;
+			pos += vel * theScene->_dt;
 		}
+	}
+	if (Attacked)
+	{
+		timer += theScene->_dt;
+		if (timer > attackcooldown)
+		{
+			Attacked = false;
+			timer = 0.0f;
+			cout << "RESET" << endl;
+		}
+	}
+	if (hp <= 0.f)
+	{
+		active = false;
+	}
 
 	if (pos.x <= 0)
 	{

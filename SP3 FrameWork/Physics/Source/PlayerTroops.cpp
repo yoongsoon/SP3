@@ -5,6 +5,7 @@
 
 PlayerTroop::PlayerTroop(GAMEOBJECT_TYPE GO_PLAYER, SceneBase * scene, PLAYER_TYPE meshvalue) :GameObject(GO_PLAYER, scene)
 {
+	Buildings * build = new Buildings(GameObject::GO_AI_CASTLE, theScene, 0);
 	playerMoveX = 0.f;
 	if (meshvalue == P_SOLDIER)
 	{
@@ -13,15 +14,16 @@ PlayerTroop::PlayerTroop(GAMEOBJECT_TYPE GO_PLAYER, SceneBase * scene, PLAYER_TY
 		//float zaxis = 1.f;
 		active = true;
 		meshValue = SceneBase::GEO_SOLDIER;
-		scale.Set(10, 10, 1);
+		scale.Set(10, 10, 1.f);
 		vel.Set(10.f, 0.f, 0.f);
-		pos.Set(0.f, m_worldHeight / 2, theScene->zaxis);
+		pos.Set(theScene->theCastle->pos.x, theScene->theCastle->pos.y - (theScene->theCastle->scale.y / 3), theScene->zaxis);
 		playerType = PlayerTroop::P_SOLDIER;
 		hp = 100.f;
 		range = 1.f;
 		damage = 10.f;
 		attackcooldown = 3.f;
 		cost = 50.f;
+		//cout << "p" << pos.z << endl;
 	}
 	else if (meshvalue == P_ARCHER)
 	{
@@ -47,7 +49,7 @@ PlayerTroop::PlayerTroop(GAMEOBJECT_TYPE GO_PLAYER, SceneBase * scene, PLAYER_TY
 
 		active = true;
 		meshValue = SceneBase::GEO_WIZARD;
-		scale.Set(10, 10, 10);
+		scale.Set(10, 10, 1);
 		vel.Set(10.f, 0.f, 0.f);
 		pos.Set(0.f, m_worldHeight / 2, theScene->zaxis);
 		playerType = PlayerTroop::P_WIZARD;
@@ -109,20 +111,20 @@ void PlayerTroop::update()
 			meshValue = SceneBase::GEO_WIZARD_ATTACK;
 		}
 	}
-		if (Attacked)
+	if (Attacked)
+	{
+		timer += theScene->_dt;
+		if (timer > attackcooldown)
 		{
-			timer += theScene->_dt;
-			if (timer > attackcooldown)
-			{
-				Attacked = false;
-				timer = 0.0f;
-				cout << "player RESET" << endl;
-			}
+			Attacked = false;
+			timer = 0.0f;
+			cout << "player RESET" << endl;
 		}
-		if (hp <= 0.f)
-		{
-			active = false;
-		}
+	}
+	if (hp <= 0.f)
+	{
+		active = false;
+	}
 
 	if (pos.x <= 0 || pos.x > (m_worldWidth * 3))
 	{

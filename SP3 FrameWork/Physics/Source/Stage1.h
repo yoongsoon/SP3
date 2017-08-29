@@ -16,10 +16,6 @@ public:
 	virtual void Render();
 	virtual void Exit();
 
-	//void CreatePlayerWeap();
-	void CreateEnemySoldier();
-	void CreateEnemyArcher();
-	void CreateEnemyWizard();
 	void CreateFriendlySoldier();
 	void CreateFriendlyArcher();
 	void CreateFriendlyWizard();

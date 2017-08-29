@@ -15,40 +15,45 @@ Buildings::Buildings(GAMEOBJECT_TYPE typeValue, SceneBase * scene, unsigned offs
 		case GameObject::GO_P_BRICK:
 			hitpoints = 10;
 			meshValue = theScene->GEO_BRICK;
-			pos.Set(50, theScene->m_worldHeight * 0.5 + (offset * 10), 1);
+			pos.Set(50, 60 + scale.y + (offset * 10), theScene->zaxis);
 			dir.Set(0, 1, 0);
 			scale.Set(12, 4, 1);
 			m_canFall = true;
-			m_groundLevel = theScene->m_worldHeight * 0.2f;
+			m_groundLevel = theScene->m_worldHeight * 0.1f;
 			debugTag = "pWall";
 			debugTag += to_string(offset);
+			theScene->zaxis += 0.001f;
 			break;
 		case GameObject::GO_P_CASTLE:
 			hitpoints = 500.f;
 			meshValue = theScene->GEO_MINI_PLAYER_CASTLE;
-			pos.Set(15.f, 33.f, 1.f);
+			pos.Set(15.f, 33.f, theScene->zaxis);
 			scale.Set(30.f, 30.f, 1.f);
 			m_canFall = false;
 			debugTag = "pCastle";
+			cout << "castle " << pos.z << endl;
+			cout << "castle2 " << scale.z << endl;
+			theScene->zaxis += 0.001f;
 			break;
 		case GameObject::GO_AI_BRICK:
 			hitpoints = 10;
 			meshValue = theScene->GEO_BRICK;
-			pos.Set((theScene->m_worldWidth * 3) - 50.f, theScene->m_worldHeight * 0.5 + (offset * 10), 1);
+			pos.Set((theScene->m_worldWidth * 3) - 50.f, 60 + scale.y + (offset * 10), theScene->zaxis);
 			dir.Set(0, 1, 0);
 			scale.Set(12, 4, 1);
 			m_canFall = true;
-			m_groundLevel = theScene->m_worldHeight * 0.2f;
 			debugTag = "aiWall";
 			debugTag += to_string(offset);
+			theScene->zaxis += 0.001f;
 			break;
 		case GameObject::GO_AI_CASTLE:
 			hitpoints = 500.f;
-			pos.Set(15.f, 35.f, 1.f);
+			pos.Set(15.f, 35.f, theScene->zaxis);
 			meshValue = theScene->GEO_MINI_ENEMY_CASTLE;
 			scale.Set(30.f, 30.f, 1.f);
 			m_canFall = false;
 			debugTag = "aiCastle";
+			theScene->zaxis += 0.001f;
 			break;
 		}
 	}

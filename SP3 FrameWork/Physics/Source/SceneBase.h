@@ -24,6 +24,7 @@
 #include "Player.h"
 #include "PlayerTroops.h"
 #include "FileConfiguration.h"
+#include "EnemyAI.h"
 
 #include <vector>
 
@@ -193,6 +194,8 @@ public:
 	PlayerInfo* thePlayer;
 	Player *theplayer;
 	FileConfiguration * theFile;
+	Buildings * theCastle;
+	AICastle * theAICastle;
 
 	//switch weapons
 	Weapon_Info** weap_manager;
@@ -201,7 +204,6 @@ public:
 
 	//Physics
 	float m_speed;
-	Enemy *enemy;
 	//SceneBase * scenebase;
 	bool ghost_exist = false;
 	bool release_ghost_exist = false;
@@ -247,12 +249,12 @@ protected:
 	float m_worldHeight;
 
 	CollisionManager * theCollider;
-	Enemy * theEnemy;
 	GameObjectManager * gom;
 	GameObject** thePredictionLine;
 	GameObject * theGhostProj;
 	GameObject * theReleaseMouseGhostProj;
 	GameObject * theMouseGhostProj;
+	EnemyAI * theEnemyAI;
 
 	double mouseX, mouseY;
 	float backGroundX = 40.f;
