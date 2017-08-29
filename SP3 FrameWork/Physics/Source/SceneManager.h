@@ -26,7 +26,6 @@ public:
 	void SetActiveScene(const string& _name);
 	bool CheckSceneExist(const string& _name);
 
-
 private:
 	SceneManager();
 	~SceneManager();

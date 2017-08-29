@@ -13,6 +13,7 @@ UIManager::UIManager(SceneBase * scene)
 
 UIManager::~UIManager()
 {
+
 }
 
 void UIManager::UpdateText()
@@ -176,6 +177,7 @@ void UIManager::Update()
 			}
 			else if (theScene->menuPause == SceneBase::PAUSE_MAINMENU)
 			{
+				theScene->b_isPause = false;
 				SceneManager::getInstance()->SetActiveScene("MainMenu");
 			}
 			theScene->pressDelay = 0.f;
@@ -317,24 +319,24 @@ void UIManager::RenderText()
 			theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], weap3_cool, Color(1, 0, 0), 5, 5, 5);
 		}
 
-		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], score_text, Color(1, 1, 0), 3, 3, 56);
-		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], score_counter, Color(1, 1, 0), 3, 3, 54);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], score_text, Color(1, 1, 0), 2.2, 1, 56);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], score_counter, Color(1, 1, 0), 2.2, 1, 54);
 
-		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], highscore_text, Color(1, 1, 0), 3, 3, 52);
-		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], highscore_counter, Color(1, 1, 0), 3, 3, 50);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], highscore_text, Color(1, 1, 0), 2.2, 1, 52);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], highscore_counter, Color(1, 1, 0), 2.2, 1, 50);
 
 		std::ostringstream ss;
-		ss.precision(3);
+		ss.precision(4);
 		ss << theScene->theplayer->ReturnWallet();
-		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 60, 55);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], ss.str(), Color(0, 1, 0),2.2, 60, 55);
 
-		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], "/", Color(0, 1, 0), 3, 69, 55);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], "/", Color(0, 1, 0), 2.2, 69, 55);
 
 
 		std::ostringstream ss1;
-		ss1.precision(3);
+		ss1.precision(4);
 		ss1 << theScene->theplayer->ReturnMaxWallet();
-		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], ss1.str(), Color(0, 1, 0), 3, 72, 55);
+		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], ss1.str(), Color(0, 1, 0), 2.2, 72, 55);
 	}
 	else if (theScene->sceneNumber == SceneBase::SC_SCORE)
 	{
@@ -345,3 +347,4 @@ void UIManager::RenderText()
 		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], arr_highscore[4], Color(1, 0, 0), 4, 23, 14.5f);
 	}
 }
+

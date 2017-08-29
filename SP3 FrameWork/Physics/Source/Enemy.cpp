@@ -2,6 +2,7 @@
 #include "SceneBase.h"
 #include "Application.h"
 #include "GL\glew.h"
+#include "FileConfiguration.h"
 
 Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) :GameObject(GO_ENEMY, scene)
 {
@@ -15,7 +16,10 @@ Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) 
 		meshValue = SceneBase::GEO_SOLDIER;
 		scale.Set(10, 10, 1.f);
 		vel.Set(-30.f, 0.f, 0.f);
-		pos.Set(theScene->theAICastle->pos.x, theScene->theAICastle->pos.y - (theScene->theAICastle->scale.y / 3) + theScene->enemy_yaxis, theScene->zaxis);
+		if (FileConfiguration::b_isLoadLevel == false)
+		{
+			pos.Set(theScene->theAICastle->pos.x, theScene->theAICastle->pos.y - (theScene->theAICastle->scale.y / 3) + theScene->enemy_yaxis, theScene->zaxis);
+		}
 		enemyType = Enemy::E_SOLDIER;
 		hp = 100.f;
 		range = 1.f;

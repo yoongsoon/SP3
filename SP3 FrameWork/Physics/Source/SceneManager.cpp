@@ -88,6 +88,7 @@ void SceneManager::RemoveScene(const std::string& _name)
 
 void SceneManager::SetActiveScene(const std::string& _name)
 {
+
 	if (!CheckSceneExist(_name))
 	{
 		// Scene does not exist
@@ -96,9 +97,11 @@ void SceneManager::SetActiveScene(const std::string& _name)
 
 	// Scene exist, set the next scene pointer to that scene
 	nextScene = sceneMap[_name];
+
 }
 
 bool SceneManager::CheckSceneExist(const string& _name)
 {
 	return sceneMap.count(_name) != 0;
 }
+
