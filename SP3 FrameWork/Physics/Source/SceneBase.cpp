@@ -156,6 +156,18 @@ void SceneBase::Init()
 	meshList[GEO_WIZARD]->textureID = LoadTGA("Image//WizardWalking.tga");
 	meshList[GEO_WIZARD_ATTACK] = MeshBuilder::GenerateSpriteAnimation("wizard", 1, 9, 1.0f);
 	meshList[GEO_WIZARD_ATTACK]->textureID = LoadTGA("Image//WizardAttack.tga");
+	meshList[GEO_ENEMY_SOLDIER] = MeshBuilder::GenerateSpriteAnimation("enemy soldier", 2, 3, 1.0f);
+	meshList[GEO_ENEMY_SOLDIER]->textureID = LoadTGA("Image//EnemySoldierWalking.tga");
+	meshList[GEO_ENEMY_SOLDIER_ATTACK] = MeshBuilder::GenerateSpriteAnimation("enemy soldier", 1, 5, 1.0f);
+	meshList[GEO_ENEMY_SOLDIER_ATTACK]->textureID = LoadTGA("Image//EnemySoldierAttack.tga");
+	meshList[GEO_ENEMY_ARCHER] = MeshBuilder::GenerateSpriteAnimation("enemy archer", 1, 4, 1.0f);
+	meshList[GEO_ENEMY_ARCHER]->textureID = LoadTGA("Image//EnemyArcherWalking.tga");
+	meshList[GEO_ENEMY_ARCHER_ATTACK] = MeshBuilder::GenerateSpriteAnimation("enemy archer", 1, 3, 1.0f);
+	meshList[GEO_ENEMY_ARCHER_ATTACK]->textureID = LoadTGA("Image//EnemyArcherAttack.tga");
+	meshList[GEO_ENEMY_WIZARD] = MeshBuilder::GenerateSpriteAnimation("enemy wizard", 1, 6, 1.0f);
+	meshList[GEO_ENEMY_WIZARD]->textureID = LoadTGA("Image//EnemyWizardWalking.tga");
+	meshList[GEO_ENEMY_WIZARD_ATTACK] = MeshBuilder::GenerateSpriteAnimation("enemy wizard", 1, 9, 1.0f);
+	meshList[GEO_ENEMY_WIZARD_ATTACK]->textureID = LoadTGA("Image//EnemyWizardAttack.tga");
 	meshList[GEO_BRICK] = MeshBuilder::GenerateQuad("brick", Color(.5f, .5f, .5f), 1.f);
 	meshList[GEO_BRICK]->textureID = LoadTGA("Image//castlebrick.tga");
 

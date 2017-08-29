@@ -21,7 +21,8 @@ public:
 	bool b_isAttack;
 	// default Hp
 	float m_DefaultHp;
-
+	
+	bool isDead = false;
 	//use weapon info is better
 	//Cannon * theAIweapon;
 	Weapon_Info * theAIweapon;

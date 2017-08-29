@@ -64,7 +64,7 @@ void EnemyAI::CreateEnemySoldier()
 		cout << "Soldier" << endl;
 		theScene->zaxis += 0.001f;
 		theScene->enemy_yaxis += 0.05f;
-		cout << theScene->zaxis << endl;
+		cout << "enemy " << theScene->zaxis << endl;
 	}
 	//delete tempEnemy;
 }
@@ -81,7 +81,7 @@ void EnemyAI::CreateEnemyArcher()
 		cout << "Archer" << endl;
 		theScene->zaxis += 0.001f;
 		theScene->enemy_yaxis += 0.05f;
-		cout << theScene->zaxis << endl;
+		cout << "enemy " << theScene->zaxis << endl;
 	}
 }
 
@@ -97,7 +97,7 @@ void EnemyAI::CreateEnemyWizard()
 		cout << "Wizard" << endl;
 		theScene->zaxis += 0.001f;
 		theScene->enemy_yaxis += 0.05f;
-		cout << theScene->zaxis << endl;
+		cout << "enemy " << theScene->zaxis << endl;
 	}
 }
 

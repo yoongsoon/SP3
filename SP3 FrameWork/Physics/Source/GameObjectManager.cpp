@@ -231,7 +231,7 @@ void GameObjectManager::Enemy_Enemy_Collision()
 						{
 							castle_hp -= archer_damage; //castle hp - archer damage (attack)
 							archer_attacked = true;//start attack cooldown
-							//cout << "castle " << castle_hp << endl;
+							cout << "castle " << castle_hp << endl;
 						}
 						archer_stoptoattack = true;//archer stop moving to attack
 					}
@@ -258,7 +258,11 @@ void GameObjectManager::Enemy_Enemy_Collision()
 						{
 							castle_hp -= archer_damage; //castle hp - archer damage (attack)
 							archer_attacked = true;//start attack cooldown
-							//cout << "castle " << castle_hp << endl;
+							cout << "type " << (*it2)->type << endl;
+							if ((*it2)->type == GameObject::GO_AI_CASTLE)
+							{
+								cout << "castle " << castle_hp << endl;
+							}
 						}
 						archer_stoptoattack = true;//archer stop moving to attack
 					}

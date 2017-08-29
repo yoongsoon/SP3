@@ -126,7 +126,7 @@ void Application::Init()
 void Application::Run()
 {
 	//Main Loop
-	SceneManager::getInstance()->SetActiveScene("MainMenu");
+	SceneManager::getInstance()->SetActiveScene("Stage2");
 
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
 	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))

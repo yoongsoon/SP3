@@ -1,3 +1,4 @@
+
 #include "Stage2.h"
 #include "GL\glew.h"
 #include "Application.h"
@@ -25,6 +26,12 @@ void Stage2::Init()
 {
 	SceneBase::Init();
 
+	for (int i = 0; i < 5; ++i)
+	{
+		m_highScore[i] = 0;
+	}
+
+
 	m_sceneID = SceneBase::SC_02;
 	ghost_exist = false;
 	release_ghost_exist = false;
@@ -36,10 +43,7 @@ void Stage2::Init()
 	//Physics code here
 	m_speed = 1.f;
 	m_levelScore = 10000;
-	for (int i = 0; i < 5; ++i)
-	{
-		m_highScore[i] = 0;
-	}
+	zaxis = 1.f;
 
 	//theFile->loadFile("scorefile.txt");
 
@@ -92,7 +96,7 @@ void Stage2::Init()
 			Buildings * theWall = new Buildings(GameObject::GO_P_BRICK, this, m_wallStackCounter);
 			theFactory->createGameObject(theWall);
 		}
-		Buildings * theCastle = new Buildings(GameObject::GO_P_CASTLE, this, 0);
+		theCastle = new Buildings(GameObject::GO_P_CASTLE, this, 0);
 		theFactory->createGameObject(theCastle);
 
 		for (int m_wallStackCounter = 1; m_wallStackCounter <= 6; ++m_wallStackCounter)
@@ -100,15 +104,19 @@ void Stage2::Init()
 			Buildings * theWall = new Buildings(GameObject::GO_AI_BRICK, this, m_wallStackCounter);
 			theFactory->createGameObject(theWall);
 		}
-		AICastle * theAICastle = new AICastle(GameObject::GO_AI_CASTLE, this);
+		theAICastle = new AICastle(GameObject::GO_AI_CASTLE, this);
 		theFactory->createGameObject(theAICastle);
 	}
 
-	BackGround * theBackGround = new BackGround(BackGround::BACK_GROUND_STAGE1, GameObject::GO_NONE, this);
+	theEnemyAI = new EnemyAI(this, EnemyAI::STAGE_1);
+	BackGround * theBackGround = new BackGround(BackGround::BACK_GROUND_STAGE2, GameObject::GO_NONE, this);
 	theFactory->createGameObject(theBackGround);
 
 	theplayer = new Player();
 	theplayer->setScene(this);
+
+	theEnemy = new Enemy(GameObject::GO_ENEMY, this, Enemy::E_SOLDIER);
+
 	gom = new GameObjectManager(this);
 
 	/*scenebase = new SceneBase();*/
@@ -123,8 +131,15 @@ void Stage2::Init()
 	SpriteAnimation* archerattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER_ATTACK]);
 	SpriteAnimation* soldier = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER]);
 	SpriteAnimation* soldierattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER_ATTACK]);
+
+	SpriteAnimation* enemywizard = dynamic_cast<SpriteAnimation*>(meshList[GEO_ENEMY_WIZARD]);
+	SpriteAnimation* enemywizardattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_ENEMY_WIZARD_ATTACK]);
+	SpriteAnimation* enemyarcher = dynamic_cast<SpriteAnimation*>(meshList[GEO_ENEMY_ARCHER]);
+	SpriteAnimation* enemyarcherattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_ENEMY_ARCHER_ATTACK]);
+	SpriteAnimation* enemysoldier = dynamic_cast<SpriteAnimation*>(meshList[GEO_ENEMY_SOLDIER]);
+	SpriteAnimation* enemysoldierattack = dynamic_cast<SpriteAnimation*>(meshList[GEO_ENEMY_SOLDIER_ATTACK]);
+
 	SpriteAnimation* P_Bow_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_BOW_ARROW]);
-	//	SpriteAnimation* P_Cannon_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CANNON_BALLS]);
 	SpriteAnimation* P_Catapult_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CATAPULT_ROCKS]);
 	//Sprite Animation init
 	if (wizard)
@@ -157,6 +172,37 @@ void Stage2::Init()
 		soldierattack->m_anim = new Animation();
 		soldierattack->m_anim->Set(0, 4, 0, 1.0f, true);
 	}
+
+	if (enemywizard)
+	{
+		enemywizard->m_anim = new Animation();
+		enemywizard->m_anim->Set(0, 5, 0, 1.0f, true);
+	}
+	if (enemywizardattack)
+	{
+		enemywizardattack->m_anim = new Animation();
+		enemywizardattack->m_anim->Set(0, 8, 0, 1.0f, true);
+	}
+	if (enemyarcher)
+	{
+		enemyarcher->m_anim = new Animation();
+		enemyarcher->m_anim->Set(0, 3, 0, 1.0f, true);
+	}
+	if (enemyarcherattack)
+	{
+		enemyarcherattack->m_anim = new Animation();
+		enemyarcherattack->m_anim->Set(0, 2, 0, 1.0f, true);
+	}
+	if (enemysoldier)
+	{
+		enemysoldier->m_anim = new Animation();
+		enemysoldier->m_anim->Set(0, 5, 0, 1.0f, true);
+	}
+	if (enemysoldierattack)
+	{
+		enemysoldierattack->m_anim = new Animation();
+		enemysoldierattack->m_anim->Set(0, 4, 0, 1.0f, true);
+	}
 	//if (P_Bow_Sprite)
 	//{
 	P_Bow_Sprite->m_anim = new Animation();
@@ -177,7 +223,7 @@ void Stage2::Init()
 
 	//Init scene
 	theFile->setScene(this);
-
+	theFile->loadScoreFromFile("Data.txt");
 	// if the load function is called , then load file
 	if (FileConfiguration::b_isLoadLevel == true)
 		theFile->loadFile("Data.txt");
@@ -206,6 +252,7 @@ void Stage2::Update(double dt)
 			if (m_levelScore > m_highScore[i])
 			{
 				m_highScore[i] = m_levelScore;
+				break;
 			}
 		}
 		//theFile->saveFile("scorefile.txt");
@@ -316,6 +363,7 @@ void Stage2::Update(double dt)
 			{
 				CreateFriendlySoldier();
 				fourpress = true;
+				/*	SceneManager::getInstance()->SetActiveScene("MainMenu");*/
 			}
 			// 68.5 middle x position of the arhcer image
 			else if (currentPos.x >= 59.5f && currentPos.x <= 73.5f
@@ -331,7 +379,7 @@ void Stage2::Update(double dt)
 				CreateFriendlyWizard();
 				fourpress = true;
 			}
-	
+
 		}
 		else if (!Application::IsMousePressed(1) && fourpress)
 		{
@@ -384,8 +432,8 @@ void Stage2::Update(double dt)
 			//places current mouse pos and fixes to the pos where mouse clicked
 			theGhostProj->pos = currentPos;// (float)mouseX / Application::GetWindowWidth() * m_worldWidth;
 										   //	theGhostProj->pos.y = (Application::GetWindowHeight() - (float)mouseY) / Application::GetWindowHeight() * m_worldHeight;
-			theGhostProj->active = true;
-			//changes prev mouse ghost
+										   //theGhostProj->active = true;
+										   //changes prev mouse ghost
 			theReleaseMouseGhostProj->active = false;
 
 
@@ -395,8 +443,8 @@ void Stage2::Update(double dt)
 			bLButtonState = false;
 			//when mouseclick release it renders wwhere the mouse was released 
 			theReleaseMouseGhostProj->pos = currentPos;
-			theReleaseMouseGhostProj->active = true;
-
+			//theReleaseMouseGhostProj->active = true;
+			//theGhostProj->active = false;
 			//shoots projectile
 			thePlayer->DischargePPTEST(theGhostProj->pos, currentPos, this);
 
@@ -452,8 +500,8 @@ void Stage2::Update(double dt)
 		//Update all Game Objects
 		theFactory->updateGameObject();
 		// Update collisions
-		//theCollider->Update(dt);
-		//theEnemyAI->Update(dt);
+		theCollider->Update(dt);
+		theEnemyAI->Update(dt);
 
 		gom->update();
 		//player units
@@ -463,7 +511,7 @@ void Stage2::Update(double dt)
 
 		theMiniMap->Update();
 
-		SpriteAnimation** sprite = new SpriteAnimation*[6];
+		SpriteAnimation** sprite = new SpriteAnimation*[12];
 		sprite[0] = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD]);
 		sprite[1] = dynamic_cast<SpriteAnimation*>(meshList[GEO_WIZARD_ATTACK]);
 		sprite[2] = dynamic_cast<SpriteAnimation*>(meshList[GEO_ARCHER]);
@@ -471,13 +519,21 @@ void Stage2::Update(double dt)
 		sprite[4] = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER]);
 		sprite[5] = dynamic_cast<SpriteAnimation*>(meshList[GEO_SOLDIER_ATTACK]);
 
+		sprite[6] = dynamic_cast<SpriteAnimation*>(meshList[GEO_ENEMY_WIZARD]);
+		sprite[7] = dynamic_cast<SpriteAnimation*>(meshList[GEO_ENEMY_WIZARD_ATTACK]);
+		sprite[8] = dynamic_cast<SpriteAnimation*>(meshList[GEO_ENEMY_ARCHER]);
+		sprite[9] = dynamic_cast<SpriteAnimation*>(meshList[GEO_ENEMY_ARCHER_ATTACK]);
+		sprite[10] = dynamic_cast<SpriteAnimation*>(meshList[GEO_ENEMY_SOLDIER]);
+		sprite[11] = dynamic_cast<SpriteAnimation*>(meshList[GEO_ENEMY_SOLDIER_ATTACK]);
+
 		SpriteAnimation* P_Bow_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_BOW_ARROW]);
 		SpriteAnimation* P_Catapult_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CATAPULT_ROCKS]);
 		//Sprite Animation update
-		for (int a = 0; a < 6; a++)
+		for (int a = 0; a < 12; a++)
 		{
 			sprite[a]->Update(dt);
 			sprite[a]->m_anim->animActive = true;
+			//cout << theEnemy->Attacked << endl;
 		}
 
 		//distance of click and drag
@@ -563,14 +619,19 @@ void Stage2::Update(double dt)
 	{
 		b_isWon = true;
 	}
-
 	theUIManager->Update();
 	theUIManager->UpdateText();
 
+	if (theAICastle->isDead)
+	{
+		FileConfiguration::b_isLoadLevel = false;
+		SceneManager::getInstance()->SetActiveScene("Stage2");
+	}
 }
 
 void Stage2::Render()
 {
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Projection matrix : Orthographic Projection
@@ -605,60 +666,82 @@ void Stage2::Render()
 	theUIManager->Render();
 	theUIManager->RenderText();
 
+	SpriteAnimation* P_Catapult_Sprite = dynamic_cast<SpriteAnimation*>(meshList[GEO_P_CATAPULT_ROCKS]);
+
 
 	//rendering problem
-	if (weapon2)
+	if ((weapon1))
 	{
-
-
 		modelStack.PushMatrix();
-		modelStack.Translate(30.0f, 40.0f, 5.0f);
-		//modelStack.Rotate(P_rotation, 0, 0, 1);
-		modelStack.Scale(15.0f, 15.0f, 1.0f);
-		//RenderMesh(meshList[GEO_P_CANNON], false);
-		RenderMesh(meshList[GEO_P_CANNON_STAND], false);
-		modelStack.PopMatrix();
-
-		modelStack.PushMatrix();
-		modelStack.Translate(20.0f, 50.0f, 5.0f);
+		modelStack.Translate(20.0f, 50.0f, zaxis);
 		modelStack.Rotate(P_rotation, 0, 0, 1);
-		modelStack.Scale(15.0f, 15.0f, 1.0f);
-		RenderMesh(meshList[GEO_P_CANNON], false);
-		//RenderMesh(meshList[GEO_P_CANNON_STAND], false);
-		modelStack.PopMatrix();
-	}
-	if (weapon3)
-	{
-
-
-		modelStack.PushMatrix();
-		modelStack.Translate(17.0f, 47.0f, 5.0f);
-		//modelStack.Rotate(P_rotation, 0, 0, 1);
-		modelStack.Scale(15.0f, 15.0f, 1.0f);
-		RenderMesh(meshList[GEO_P_CATAPULT_ROCKS], false);
-		modelStack.PopMatrix();
-	}
-	if (weapon1)
-	{
-
-
-		modelStack.PushMatrix();
-		modelStack.Translate(20.0f, 50.0f, 5.0f);
-		modelStack.Rotate(P_rotation, 0, 0, 1);
-		//modelStack.Rotate(Projectile_to_rotate_test, 0, 0, 1);
 		modelStack.Scale(15.0f, 15.0f, 1.0f);
 		RenderMesh(meshList[GEO_P_BOW_ARROW], false);
 		modelStack.PopMatrix();
+		zaxis += 0.001;
 	}
+	if ((weapon2))
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(20.0f, 50.0f, zaxis);
+		modelStack.Rotate(P_rotation, 0, 0, 1);
+		modelStack.Scale(15.0f, 15.0f, 1.0f);
+		RenderMesh(meshList[GEO_P_CANNON], false);
+		modelStack.PopMatrix();
+		zaxis += 0.001;
+
+		modelStack.PushMatrix();
+		modelStack.Translate(20.0f, 50.0f, zaxis);
+		modelStack.Scale(15.0f, 15.0f, 1.0f);
+		RenderMesh(meshList[GEO_P_CANNON_STAND], false);
+		modelStack.PopMatrix();
+		zaxis += 0.001;
+	}
+	if ((weapon3))
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(17.0f, 47.0f, zaxis);
+		modelStack.Scale(15.0f, 15.0f, 1.0f);
+		RenderMesh(meshList[GEO_P_CATAPULT_ROCKS], false);
+		modelStack.PopMatrix();
+		zaxis += 0.001;
+	}
+
 }
 
 void Stage2::Exit()
 {
+	//Clearing the memory
+	if (theplayer)
+	{
+		delete theplayer;
+	}
+
+	if (thePlayer)
+	{
+		delete thePlayer;
+	}
+
+	if (theUIManager)
+	{
+		delete theUIManager;
+	}
+
+	if (theMiniMap)
+	{
+		delete theMiniMap;
+	}
+
+	if (theCollider)
+	{
+		delete theCollider;
+	}
+
+
 	CSoundEngine::getInstance()->Exit();
 	FileConfiguration::b_isLoadLevel = false;
 	SceneBase::Exit();
 }
-
 
 
 void Stage2::CreateFriendlySoldier()
@@ -672,6 +755,7 @@ void Stage2::CreateFriendlySoldier()
 		theFactory->createGameObject(tempPlayer);
 		cout << "friend Soldier" << endl;
 		zaxis += 0.001f;
+		player_yaxis += 0.05f;
 		cout << zaxis << endl;
 	}
 }
@@ -687,6 +771,7 @@ void Stage2::CreateFriendlyArcher()
 		theFactory->createGameObject(tempPlayer);
 		cout << "friend Archer" << endl;
 		zaxis += 0.001f;
+		player_yaxis += 0.05f;
 		cout << zaxis << endl;
 	}
 }
@@ -701,6 +786,7 @@ void Stage2::CreateFriendlyWizard()
 		theplayer->ReduceWalletAmount(tempPlayer->cost);
 		theFactory->createGameObject(tempPlayer);
 		cout << "friend Wizard" << endl;
+		player_yaxis += 0.05f;
 		zaxis += 0.001f;
 		cout << zaxis << endl;
 	}

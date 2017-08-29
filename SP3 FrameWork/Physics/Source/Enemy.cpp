@@ -13,7 +13,7 @@ Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) 
 		float m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
 
 		active = true;
-		meshValue = SceneBase::GEO_SOLDIER;
+		meshValue = SceneBase::GEO_ENEMY_SOLDIER;
 		scale.Set(10, 10, 1.f);
 		vel.Set(-30.f, 0.f, 0.f);
 		if (FileConfiguration::b_isLoadLevel == false)
@@ -33,7 +33,7 @@ Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) 
 		float m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
 
 		active = true;
-		meshValue = SceneBase::GEO_ARCHER;
+		meshValue = SceneBase::GEO_ENEMY_ARCHER;
 		scale.Set(20, 15, 1);
 		vel.Set(-10.f, 0.f, 0.f);
 		pos.Set(theScene->theAICastle->pos.x, theScene->theAICastle->pos.y - (theScene->theAICastle->scale.y / 3) + 2.f + theScene->enemy_yaxis, theScene->zaxis);
@@ -50,7 +50,7 @@ Enemy::Enemy(GAMEOBJECT_TYPE GO_ENEMY, SceneBase * scene, ENEMY_TYPE meshvalue) 
 		float m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
 
 		active = true;
-		meshValue = SceneBase::GEO_WIZARD;
+		meshValue = SceneBase::GEO_ENEMY_WIZARD;
 		scale.Set(10, 10, 1);
 		vel.Set(-10.f, 0.f, 0.f);
 		pos.Set(theScene->theAICastle->pos.x, theScene->theAICastle->pos.y - (theScene->theAICastle->scale.y / 3) + theScene->enemy_yaxis, theScene->zaxis);
@@ -80,11 +80,11 @@ void Enemy::update()
 		if (!StopToAttack)
 		{
 			pos += vel * theScene->_dt;
-			meshValue = SceneBase::GEO_SOLDIER;
+			meshValue = SceneBase::GEO_ENEMY_SOLDIER;
 		}
 		else
 		{
-			meshValue = SceneBase::GEO_SOLDIER_ATTACK;
+			meshValue = SceneBase::GEO_ENEMY_SOLDIER_ATTACK;
 		}
 	}
 	else if (enemyType == ENEMY_TYPE::E_ARCHER)
@@ -92,11 +92,11 @@ void Enemy::update()
 		if (!StopToAttack)
 		{
 			pos += vel * theScene->_dt;
-			meshValue = SceneBase::GEO_ARCHER;
+			meshValue = SceneBase::GEO_ENEMY_ARCHER;
 		}
 		else
 		{
-			meshValue = SceneBase::GEO_ARCHER_ATTACK;
+			meshValue = SceneBase::GEO_ENEMY_ARCHER_ATTACK;
 		}
 	}
 	else if (enemyType == ENEMY_TYPE::E_WIZARD)
@@ -104,6 +104,11 @@ void Enemy::update()
 		if (!StopToAttack)
 		{
 			pos += vel * theScene->_dt;
+			meshValue = SceneBase::GEO_ENEMY_WIZARD;
+		}
+		else
+		{
+			meshValue = SceneBase::GEO_ENEMY_WIZARD_ATTACK;
 		}
 	}
 	if (Attacked)

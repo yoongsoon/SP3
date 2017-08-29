@@ -32,6 +32,7 @@ AICastle::~AICastle()
 
 void AICastle::update()
 {	
+	
 	// update the pos when resizing the screen
 	if(Application::b_isResize)
 		pos = Vector3((theScene->m_worldWidth * 3) - 15.f, 35.f, 1.f);
@@ -74,13 +75,18 @@ void AICastle::update()
 				}
 			}
 		}
-
-		theAIweapon->Update(theScene->_dt);
+		if (active)
+		{
+			theAIweapon->Update(theScene->_dt);
+		}
 
 		//Destroy the castle if hp goes below 0
-		if (hitpoints < 0)
+		if (hitpoints <= 0)
 		{
+			theScene->b_isWon = true;
+			cout << "MEOWWWW" << endl;
 			hitpoints = 0;
+			isDead = true;
 			active = false;
 			return;
 		}

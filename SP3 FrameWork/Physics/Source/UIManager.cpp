@@ -217,7 +217,8 @@ void UIManager::Update()
 			if (theScene->menuWin == SceneBase::WIN_CONTINUE)
 			{
 				theScene->b_isWon = false;
-				SceneManager::getInstance()->SetActiveScene("Credits");
+				//SceneManager::getInstance()->SetActiveScene("Credits");
+				SceneManager::getInstance()->SetActiveScene("Stage2");
 			}
 			else if (theScene->menuWin == SceneBase::WIN_RESTART)
 			{

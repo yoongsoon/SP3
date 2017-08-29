@@ -16,7 +16,7 @@ PlayerTroop::PlayerTroop(GAMEOBJECT_TYPE GO_PLAYER, SceneBase * scene, PLAYER_TY
 		active = true;
 		meshValue = SceneBase::GEO_SOLDIER;
 		scale.Set(10, 10, 1.f);
-		vel.Set(10.f, 0.f, 0.f);
+		vel.Set(30.f, 0.f, 0.f);
 		if (FileConfiguration::b_isLoadLevel == false)
 		{
 			pos.Set(theScene->theCastle->pos.x, theScene->theCastle->pos.y - (theScene->theCastle->scale.y / 3) + theScene->player_yaxis, theScene->zaxis);

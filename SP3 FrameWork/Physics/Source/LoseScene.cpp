@@ -40,6 +40,7 @@ void LoseScene::Update(double dt)
 				SceneManager::getInstance()->SetActiveScene("Stage1");
 				break;
 			case 2:
+				SceneManager::getInstance()->SetActiveScene("Stage2");
 				break;
 			case 3:
 				break;

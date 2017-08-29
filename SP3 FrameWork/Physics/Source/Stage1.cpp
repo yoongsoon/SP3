@@ -573,9 +573,14 @@ void Stage1::Update(double dt)
 	{
 		b_isWon = true;
 	}
-
 	theUIManager->Update();
 	theUIManager->UpdateText();
+
+	if (theAICastle->isDead)
+	{
+		FileConfiguration::b_isLoadLevel = false;
+		SceneManager::getInstance()->SetActiveScene("Stage2");
+	}
 }
 
 void Stage1::Render()
