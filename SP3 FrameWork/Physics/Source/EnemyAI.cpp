@@ -14,6 +14,7 @@ EnemyAI::~EnemyAI()
 
 void EnemyAI::Update(double dt)
 {
+
 	int steps = theScene->theAICastle->m_DefaultHp / theScene->theAICastle->hitpoints;
 	timer += dt;
 	if (timer >= 4.f)
@@ -40,7 +41,6 @@ void EnemyAI::Update(double dt)
 		cout << "surge 2" << endl;
 	}
 	//cout << "step " << steps << endl;
-
 }
 
 

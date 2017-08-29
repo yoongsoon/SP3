@@ -18,6 +18,13 @@ MainMenu::~MainMenu()
 void MainMenu::Init()
 {
 	SceneBase::Init();
+	for (int i = 0; i < 5; ++i)
+	{
+		m_highScore[i] = 0;
+	}
+	theFile->setScene(this);
+	theFile->loadScoreFromFile("Data.txt");
+
 }
 
 void MainMenu::Update(double dt)
