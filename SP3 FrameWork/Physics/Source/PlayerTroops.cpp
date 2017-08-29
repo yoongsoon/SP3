@@ -2,6 +2,7 @@
 #include "SceneBase.h"
 #include "Application.h"
 #include "GL\glew.h"
+#include "FileConfiguration.h"
 
 PlayerTroop::PlayerTroop(GAMEOBJECT_TYPE GO_PLAYER, SceneBase * scene, PLAYER_TYPE meshvalue) :GameObject(GO_PLAYER, scene)
 {
@@ -16,6 +17,7 @@ PlayerTroop::PlayerTroop(GAMEOBJECT_TYPE GO_PLAYER, SceneBase * scene, PLAYER_TY
 		meshValue = SceneBase::GEO_SOLDIER;
 		scale.Set(10, 10, 1.f);
 		vel.Set(10.f, 0.f, 0.f);
+		if (FileConfiguration::b_isLoadLevel == false)
 		pos.Set(theScene->theCastle->pos.x, theScene->theCastle->pos.y - (theScene->theCastle->scale.y / 3), theScene->zaxis);
 		playerType = PlayerTroop::P_SOLDIER;
 		hp = 100.f;

@@ -13,6 +13,7 @@ UIManager::UIManager(SceneBase * scene)
 
 UIManager::~UIManager()
 {
+
 }
 
 void UIManager::UpdateText()
@@ -167,6 +168,7 @@ void UIManager::Update()
 			}
 			else if (theScene->menuPause == SceneBase::PAUSE_MAINMENU)
 			{
+				theScene->b_isPause = false;
 				SceneManager::getInstance()->SetActiveScene("MainMenu");
 			}
 			theScene->pressDelay = 0.f;
@@ -332,3 +334,4 @@ void UIManager::RenderText()
 		theScene->RenderTextOnScreen(theScene->meshList[SceneBase::GEO_TEXT], arr_highscore[0], Color(1, 1, 1), 10, 3, 50);
 	}
 }
+

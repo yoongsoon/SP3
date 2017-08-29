@@ -101,7 +101,7 @@ void Stage1::Init()
 			Buildings * theWall = new Buildings(GameObject::GO_AI_BRICK, this, m_wallStackCounter);
 			theFactory->createGameObject(theWall);
 		}
-	     theAICastle = new AICastle(GameObject::GO_AI_CASTLE, this);
+		AICastle * theAICastle  = new AICastle(GameObject::GO_AI_CASTLE, this);
 		theFactory->createGameObject(theAICastle);
 	}
 

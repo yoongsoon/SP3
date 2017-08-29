@@ -19,7 +19,7 @@ public:
 	void Render();
 	// Render of Text
 	void RenderText();
-
+	
 private:
 	SceneBase * theScene;
 

@@ -195,7 +195,6 @@ void FileConfiguration::loadFile(string _fileName)
 						case 5:
 						{
 							Enemy * theEnemy;
-
 							if (tempTroopType == 0)
 							{
 								theEnemy = new Enemy(GameObject::GO_ENEMY, _scene, Enemy::E_SOLDIER);

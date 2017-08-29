@@ -4,6 +4,7 @@
 EnemyAI::EnemyAI(SceneBase * scene, AI_LEVEL _levelAi)
 	:theScene(scene)
 	, levelAI(_levelAi)
+
 {
 }
 
@@ -14,14 +15,13 @@ EnemyAI::~EnemyAI()
 
 void EnemyAI::Update(double dt)
 {
-	float steps = theScene->theAICastle->m_DefaultHp / theScene->theAICastle->hitpoints;
+	/*float steps = theScene->theAICastle->m_DefaultHp / theScene->theAICastle->hitpoints;*/
 	timer += dt;
 	if (timer >= 5.f)
 	{
 		timer = 0.0f;
 		CreateEnemySoldier();
 	}
-	cout << "step " << steps << endl;
 	//if (steps > 2 && steps < 3|| steps > 3 && steps < 4|| steps > 4 && steps < 5|| steps > 5)
 	//{
 	//	surge = true;
@@ -79,3 +79,4 @@ void EnemyAI::CreateEnemyWizard()
 		cout << theScene->zaxis << endl;
 	}
 }
+

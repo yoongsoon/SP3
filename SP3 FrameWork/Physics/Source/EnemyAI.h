@@ -22,7 +22,9 @@ public:
 	void CreateEnemySoldier();
 	void CreateEnemyArcher();
 	void CreateEnemyWizard();
+
 private:
 	float timer = 0.0f;
 	bool surge = false;
+
 };
