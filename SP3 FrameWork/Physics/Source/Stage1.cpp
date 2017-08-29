@@ -96,7 +96,7 @@ void Stage1::Init()
 			Buildings * theWall = new Buildings(GameObject::GO_P_BRICK, this, m_wallStackCounter);
 			theFactory->createGameObject(theWall);
 		}
-		 theCastle = new Buildings(GameObject::GO_P_CASTLE, this, 0);
+		theCastle = new Buildings(GameObject::GO_P_CASTLE, this, 0);
 		theFactory->createGameObject(theCastle);
 
 		for (int m_wallStackCounter = 1; m_wallStackCounter <= 6; ++m_wallStackCounter)
@@ -104,7 +104,7 @@ void Stage1::Init()
 			Buildings * theWall = new Buildings(GameObject::GO_AI_BRICK, this, m_wallStackCounter);
 			theFactory->createGameObject(theWall);
 		}
-	     theAICastle = new AICastle(GameObject::GO_AI_CASTLE, this);
+	    theAICastle = new AICastle(GameObject::GO_AI_CASTLE, this);
 		theFactory->createGameObject(theAICastle);
 	}
 
@@ -114,6 +114,9 @@ void Stage1::Init()
 
 	theplayer = new Player();
 	theplayer->setScene(this);
+
+	theEnemy = new Enemy(GameObject::GO_ENEMY,this,Enemy::E_SOLDIER);
+
 	gom = new GameObjectManager(this);
 
 	/*scenebase = new SceneBase();*/
@@ -484,6 +487,7 @@ void Stage1::Update(double dt)
 		{
 			sprite[a]->Update(dt);
 			sprite[a]->m_anim->animActive = true;
+			//cout << theEnemy->Attacked << endl;
 		}
 
 		//distance of click and drag
@@ -700,6 +704,7 @@ void Stage1::CreateFriendlySoldier()
 		theFactory->createGameObject(tempPlayer);
 		cout << "friend Soldier" << endl;
 		zaxis += 0.001f;
+		player_yaxis += 0.05f;
 		cout << zaxis << endl;
 	}
 }
@@ -715,6 +720,7 @@ void Stage1::CreateFriendlyArcher()
 		theFactory->createGameObject(tempPlayer);
 		cout << "friend Archer" << endl;
 		zaxis += 0.001f;
+		player_yaxis += 0.05f;
 		cout << zaxis << endl;
 	}
 }
@@ -729,6 +735,7 @@ void Stage1::CreateFriendlyWizard()
 		theplayer->ReduceWalletAmount(tempPlayer->cost);
 		theFactory->createGameObject(tempPlayer);
 		cout << "friend Wizard" << endl;
+		player_yaxis += 0.05f;
 		zaxis += 0.001f;
 		cout << zaxis << endl;
 	}

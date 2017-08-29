@@ -1,7 +1,7 @@
 #include "WeaponInfo.h"
 #include "Projectile.h"
-#include "GameObject.h"
 #include "SoundEngine.h"
+#include "SceneBase.h"
 
 void Weapon_Info::setFireMode(FIRE_MODE FireMode)
 {
@@ -226,7 +226,7 @@ void Weapon_Info::Discharge(Vector3 position, Vector3 target, SceneBase *_scene)
 			aProjectile->typeOfMotion = Projectile::PROJECTILE_MOTION;
 			aProjectile->whoseProjectile = Projectile::PROJECTILE_WHOSE::PLAYER_PROJECTILE;
 			//where projectile shoots from
-			aProjectile->pos = Vector3(20, 50, 5);
+			aProjectile->pos.Set(20, 50, 0.5f);
 			aProjectile->rotateZ = Math::RadianToDegree(atan2f(position.y - target.y, position.x - target.x));
 			//aProjectile->pos = position;
 			//aProjectile->pos.z = 5;
@@ -238,6 +238,7 @@ void Weapon_Info::Discharge(Vector3 position, Vector3 target, SceneBase *_scene)
 			i_bulletcount++;
 			b_Burst_Fire = false;
 			b_Fire = false;
+			pin_scene->zaxis += 0.001f;
 		}
 	}
 }

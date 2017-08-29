@@ -16,7 +16,7 @@ PlayerTroop::PlayerTroop(GAMEOBJECT_TYPE GO_PLAYER, SceneBase * scene, PLAYER_TY
 		meshValue = SceneBase::GEO_SOLDIER;
 		scale.Set(10, 10, 1.f);
 		vel.Set(10.f, 0.f, 0.f);
-		pos.Set(theScene->theCastle->pos.x, theScene->theCastle->pos.y - (theScene->theCastle->scale.y / 3), theScene->zaxis);
+		pos.Set(theScene->theCastle->pos.x, theScene->theCastle->pos.y - (theScene->theCastle->scale.y / 3) + theScene->player_yaxis, theScene->zaxis);
 		playerType = PlayerTroop::P_SOLDIER;
 		hp = 100.f;
 		range = 1.f;
@@ -34,7 +34,7 @@ PlayerTroop::PlayerTroop(GAMEOBJECT_TYPE GO_PLAYER, SceneBase * scene, PLAYER_TY
 		meshValue = SceneBase::GEO_ARCHER;
 		scale.Set(20, 15, 1);
 		vel.Set(10.f, 0.f, 0.f);
-		pos.Set(theScene->theCastle->pos.x, theScene->theCastle->pos.y - (theScene->theCastle->scale.y / 3) + 2.f, theScene->zaxis);
+		pos.Set(theScene->theCastle->pos.x, theScene->theCastle->pos.y - (theScene->theCastle->scale.y / 3) + 2.f + theScene->player_yaxis, theScene->zaxis);
 		playerType = PlayerTroop::P_ARCHER;
 		hp = 50.f;
 		range = 10.f;
@@ -51,7 +51,7 @@ PlayerTroop::PlayerTroop(GAMEOBJECT_TYPE GO_PLAYER, SceneBase * scene, PLAYER_TY
 		meshValue = SceneBase::GEO_WIZARD;
 		scale.Set(10, 10, 1);
 		vel.Set(10.f, 0.f, 0.f);
-		pos.Set(theScene->theCastle->pos.x, theScene->theCastle->pos.y - (theScene->theCastle->scale.y / 3), theScene->zaxis);
+		pos.Set(theScene->theCastle->pos.x, theScene->theCastle->pos.y - (theScene->theCastle->scale.y / 3) + theScene->player_yaxis, theScene->zaxis);
 		playerType = PlayerTroop::P_WIZARD;
 		hp = 70.f;
 		range = 10.f;
@@ -130,7 +130,10 @@ void PlayerTroop::update()
 	{
 		active = false;
 	}
-
+	if (theScene->player_yaxis > 1)
+	{
+		theScene->player_yaxis = 0.005f;
+	}
 }
 
 void PlayerTroop::render()
