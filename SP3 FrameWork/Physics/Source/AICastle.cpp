@@ -2,6 +2,7 @@
 #include "Projectile.h"
 #include "Cannon.h"
 #include "Application.h"
+#include "SceneManager.h"
 //#include "Bow.h"
 AICastle::AICastle(GAMEOBJECT_TYPE typeValue, SceneBase * scene)
 	:GameObject(typeValue, scene)
@@ -80,7 +81,7 @@ void AICastle::update()
 		if (hitpoints < 0)
 		{
 			hitpoints = 0;
-			isDestroyed = true;
+			active = false;
 			return;
 		}
 }
