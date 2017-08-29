@@ -19,7 +19,7 @@ Buildings::Buildings(GAMEOBJECT_TYPE typeValue, SceneBase * scene, unsigned offs
 			dir.Set(0, 1, 0);
 			scale.Set(12, 4, 1);
 			m_canFall = true;
-			m_groundLevel = theScene->m_worldHeight * 0.1f;
+			m_groundLevel = theScene->m_worldHeight * 0.2f - scale.y;
 			debugTag = "pWall";
 			debugTag += to_string(offset);
 			theScene->zaxis += 0.001f;
@@ -42,6 +42,7 @@ Buildings::Buildings(GAMEOBJECT_TYPE typeValue, SceneBase * scene, unsigned offs
 			dir.Set(0, 1, 0);
 			scale.Set(12, 4, 1);
 			m_canFall = true;
+			m_groundLevel = theScene->m_worldHeight * 0.2f - scale.y;
 			debugTag = "aiWall";
 			debugTag += to_string(offset);
 			theScene->zaxis += 0.001f;
@@ -57,6 +58,7 @@ Buildings::Buildings(GAMEOBJECT_TYPE typeValue, SceneBase * scene, unsigned offs
 			break;
 		}
 	}
+	cout << debugTag << "Pos(xyz): " << pos << endl;
 }
 
 Buildings::~Buildings()
@@ -96,4 +98,6 @@ void Buildings::update()
 	}
 
 	pos += vel;
+	if (Application::IsKeyPressed('M'))
+		cout << debugTag << " " << pos << endl;
 }

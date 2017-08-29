@@ -26,6 +26,12 @@ void Stage1::Init()
 {
 	SceneBase::Init();
 	
+	for (int i = 0; i < 5; ++i)
+	{
+		m_highScore[i] = 0;
+	}
+	
+	
 	m_sceneID = SceneBase::SC_01;
 	ghost_exist = false;
 	release_ghost_exist = false;
@@ -37,10 +43,7 @@ void Stage1::Init()
 	//Physics code here
 	m_speed = 1.f;
 	m_levelScore = 10000;
-	for (int i = 0; i < 5; ++i)
-	{
-		m_highScore[i] = 0;
-	}
+	
 	
 	//theFile->loadFile("scorefile.txt");
 
@@ -179,7 +182,7 @@ void Stage1::Init()
 
 	//Init scene
 	theFile->setScene(this);
-
+	theFile->loadScoreFromFile("Data.txt");
 	// if the load function is called , then load file
 	if(FileConfiguration::b_isLoadLevel == true)
 	theFile->loadFile("Data.txt");
@@ -208,6 +211,7 @@ void Stage1::Update(double dt)
 			if (m_levelScore > m_highScore[i])
 			{
 				m_highScore[i] = m_levelScore;
+				break;
 			}
 		}
 		//theFile->saveFile("scorefile.txt");

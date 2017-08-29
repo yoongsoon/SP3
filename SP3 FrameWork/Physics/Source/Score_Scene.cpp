@@ -30,12 +30,7 @@ void Score_Scene::Init()
 	//Calculating aspect ratio
 	m_worldHeight = 100.f;
 	m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
-	if (Application::IsKeyPressed(VK_RETURN))
-	{
-
-		SceneManager::getInstance()->SetActiveScene("MainMenu");
-
-	}
+	
 	theFile->setScene(this);
 	theFile->loadScoreFromFile("Data.txt");
 }
@@ -50,6 +45,8 @@ void Score_Scene::Update(double dt)
 	m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
 
 	theUIManager->UpdateText();
+	if (Application::IsKeyPressed(VK_RETURN))
+		SceneManager::getInstance()->SetActiveScene("MainMenu");
 }
 
 void Score_Scene::Render()
